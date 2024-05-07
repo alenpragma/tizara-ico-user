@@ -1,7 +1,5 @@
 import React, { CSSProperties, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import Logo from '../../assets/Biz Favicon legal Dark White-01.png';
-import Logoblack from '../../assets/biz.png';
 import Swal from 'sweetalert2';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { PuffLoader } from 'react-spinners';
@@ -81,8 +79,8 @@ const SignIn: React.FC = () => {
                   className="mb-5.5 flex gap-2 justify-center place-items-center "
                   to="/"
                 >
-                  <img className="w-10  hidden dark:block" src={Logo} alt="" />
-                  <img className="w-10 dark:hidden" src={Logoblack} alt="" />
+                  <img className="w-10  hidden dark:block" src={''} alt="" />
+                  <img className="w-10 dark:hidden" src={''} alt="" />
                   <h2 className="text-2xl font-bold text-black dark:text-white">
                     TIZARA TOKEN
                   </h2>

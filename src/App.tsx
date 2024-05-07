@@ -51,7 +51,6 @@ function App() {
   const [colorMode] = useColorMode();
 
   const [theme, setTheme] = useState<string | any>(colorMode);
-  console.log(theme);
 
   const contextValues = {
     theme,
@@ -66,6 +65,7 @@ function App() {
           highlightColor="#47566c"
         >
           <Routes>
+            {/* 
             <Route
               index
               element={
@@ -74,8 +74,18 @@ function App() {
                   <SignIn />
                 </>
               }
-            />
+            /> */}
 
+            <Route
+              // path="/dashboard"
+              index
+              element={
+                <>
+                  <PageTitle title="Tizara Dashboard" />
+                  <BizTokenDashboard />
+                </>
+              }
+            />
             <Route
               path="/dashboard"
               element={
