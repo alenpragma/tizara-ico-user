@@ -24,7 +24,7 @@ const BizTokenDashboard: React.FC = () => {
         <Link to={'/users/all-user'}>
           <CardDataStats
             title="Native Wallet"
-            total={'500 BIZ'}
+            total={'500 TIZARA'}
             // rate="0.95%"
             // levelDown
           >
