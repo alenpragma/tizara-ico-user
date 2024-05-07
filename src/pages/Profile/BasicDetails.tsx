@@ -36,7 +36,7 @@ const BasicDetails = ({ profile }: any) => {
             type="text"
             placeholder="Enter your last name"
             {...register('name')}
-            defaultValue={profile.name as string}
+            defaultValue={profile?.name as string}
             className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
           />
         </div>
@@ -48,7 +48,7 @@ const BasicDetails = ({ profile }: any) => {
           <input
             type="email"
             {...register('email')}
-            defaultValue={profile.email as string}
+            defaultValue={profile?.email as string}
             placeholder="Enter your email address"
             className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
           />
@@ -61,7 +61,7 @@ const BasicDetails = ({ profile }: any) => {
           <input
             type="phone"
             {...register('phone')}
-            defaultValue={profile.phone as string}
+            defaultValue={profile?.phone as string}
             placeholder="Phone"
             className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
           />
