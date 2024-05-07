@@ -1,7 +1,6 @@
 import { Link, useNavigate } from 'react-router-dom';
 import DropdownUser from './DropdownUser';
-import LogoIcon from '../../assets/Biz Favicon legal Dark White-01.png';
-import DarkModeSwitcher from './DarkModeSwitcher';
+ import DarkModeSwitcher from './DarkModeSwitcher';
 
 const Header = (props: {
   sidebarOpen: string | boolean | undefined;
