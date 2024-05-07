@@ -76,7 +76,9 @@ const BizTokenDashboard: React.FC = () => {
         <Link to={'/'}>
           <CardDataStats
             title="Native Wallet"
-            total={`${profile?.nativeWallet} TIZARA`}
+            total={`${
+              profile?.nativeWallet ? profile?.nativeWallet : '00'
+            } TIZARA`}
             // rate="0.95%"
             // levelDown
           >
@@ -98,7 +100,7 @@ const BizTokenDashboard: React.FC = () => {
         <Link to={'/'}>
           <CardDataStats
             title="My Team"
-            total={`${profile?.referralCount}`}
+            total={`${profile?.referralCount ? profile?.referralCount : '00'}`}
 
             // rate="0.95%"
             // levelDown
