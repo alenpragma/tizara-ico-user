@@ -1,11 +1,62 @@
 import Breadcrumb from '../components/Breadcrumbs/Breadcrumb';
 import DefaultLayout from '../layout/DefaultLayout';
 import userSix from '../images/user/user-06.png';
-import AuthDetails from './Profile/AuthDetails';
 import SocialIcons from './Profile/SocialIcons';
 import BasicDetails from './Profile/BasicDetails';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
+
+interface ApiResponse {
+  statusCode: number;
+  success: boolean;
+  message: string;
+  data: UserProfile;
+}
+
+interface UserProfile {
+  id: string;
+  name: string;
+  email: string;
+  phone: string;
+  password: string;
+  referralCode: string;
+  myReferralCode: string;
+  role: string;
+  profileImage: string | null;
+  referralCount: number;
+  nativeWallet: number;
+  createdAt: string;
+  updatedAt: string;
+}
 
 const Profile = () => {
+  const [profile, setProfile] = useState<UserProfile | null>(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const token = localStorage.getItem('tizaraToken');
+
+        const response = await axios.get<ApiResponse>(
+          'https://tizara.vercel.app/api/v1/profile',
+          {
+            headers: {
+              Authorization: `${token}`,
+              'Content-Type': 'application/json',
+            },
+          },
+        );
+
+        if (response?.data?.success) {
+          setProfile(response.data.data);
+        }
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+    fetchData();
+  }, []);
+
   return (
     <DefaultLayout>
       <Breadcrumb pageName="Profile" />
@@ -50,22 +101,25 @@ const Profile = () => {
               </label>
             </div>
           </div>
+
           <div className="mt-4">
             <h3 className="mb-1.5 text-2xl font-semibold text-black dark:text-white">
               Danish Heilium
             </h3>
-            <p className="font-medium">Super Admin</p>
 
-            <div className="mt-5 mx-auto ">
+            <h3 className="mb-1.5 text-2xl font-semibold text-black dark:text-white">
+              Reffer: {profile?.myReferralCode}
+            </h3>
+            <div className="mt-2 mx-auto ">
               <h4 className="font-semibold text-black dark:text-white">
                 About Me
               </h4>
               {/* <!-- Contact Form --> */}
               <div className="lg:flex w-full gap-5 text-start justify-center">
-                <BasicDetails />
+                <BasicDetails profile={profile} />
 
                 {/*  */}
-                <AuthDetails />
+                {/* <AuthDetails /> */}
               </div>
             </div>
 

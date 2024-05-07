@@ -9,14 +9,7 @@ import ActiveUser from './pages/Users/ActiveUser';
 import InacticeUser from './pages/Users/InacticeUser';
 import PackageList from './pages/Package/PackageList';
 import PendingDeposits from './pages/Deposits/PendingDeposits';
-import SuccessDeposits from './pages/Deposits/SuccessDeposits';
-import AllWithdraws from './pages/Withdrawls/AllWithdraws';
-import PendingWithdraws from './pages/Withdrawls/PendingWithdraws';
-import SuccessWithdraws from './pages/Withdrawls/SuccessWithdraws';
 import BonusSettings from './pages/BonusSettings';
-import DepositSettings from './pages/Deposits/DepositSettings';
-import WihtdrawMethods from './pages/PaymentSettings/WihtdrawMethods';
-import BizTokenDashboard from './pages/Dashboard/BizTokenDashboard';
 import PurchaseHistory from './pages/Purchase/PurchaseHistory';
 import ProtectedRoute from './hooks/ProtectedRoute';
 
@@ -25,9 +18,6 @@ const GeneralSettings = lazy(() => import('./pages/GeneralSettings'));
 
 const AllDeposits = lazy(() => import('./pages/Deposits/AllDeposits'));
 const PackageSettings = lazy(() => import('./pages/Package/PackageSettings'));
-const DepositMethods = lazy(
-  () => import('./pages/PaymentSettings/DepositMethods'),
-);
 
 import MyContext from './hooks/MyContext';
 import { SkeletonTheme } from 'react-loading-skeleton';
@@ -36,6 +26,8 @@ import Lazyloding from './components/Lazyloding';
 import DepositWallet from './pages/WalletHistory/DepositWallet';
 import NativeWallet from './pages/WalletHistory/NativeWallet';
 import IcoWallet from './pages/WalletHistory/IcoWallet';
+import BizTokenDashboard from './pages/Dashboard/TizaraTokenDashboard';
+import Transaction from './pages/Transaction/Transaction';
 
 function App() {
   const { pathname } = useLocation();
@@ -65,7 +57,6 @@ function App() {
           highlightColor="#47566c"
         >
           <Routes>
-            {/* 
             <Route
               index
               element={
@@ -74,11 +65,10 @@ function App() {
                   <SignIn />
                 </>
               }
-            /> */}
+            />
 
             <Route
-              // path="/dashboard"
-              index
+              path="/dashboard"
               element={
                 <>
                   <PageTitle title="Tizara Dashboard" />
@@ -86,12 +76,13 @@ function App() {
                 </>
               }
             />
+
             <Route
-              path="/dashboard"
+              path="/history/transaction-history"
               element={
                 <>
-                  <PageTitle title="Tizara Dashboard" />
-                  <BizTokenDashboard />
+                  <PageTitle title="Transaction" />
+                  <Transaction />
                 </>
               }
             />
@@ -224,7 +215,7 @@ function App() {
                 </>
               }
             />
-
+            {/* 
             <Route
               path="/deposits/success-deposit"
               element={
@@ -235,8 +226,8 @@ function App() {
                   </ProtectedRoute>
                 </>
               }
-            />
-            <Route
+            /> */}
+            {/* <Route
               path="/deposits/deposit-settings"
               element={
                 <>
@@ -246,11 +237,11 @@ function App() {
                   </ProtectedRoute>
                 </>
               }
-            />
+            /> */}
 
             {/* Deposits  end*/}
 
-            <Route
+            {/* <Route
               path="/withdraw/all-withdraws"
               element={
                 <>
@@ -260,8 +251,8 @@ function App() {
                   </ProtectedRoute>
                 </>
               }
-            />
-            <Route
+            /> */}
+            {/* <Route
               path="/withdraw/pending-withdraws"
               element={
                 <>
@@ -271,8 +262,8 @@ function App() {
                   </ProtectedRoute>
                 </>
               }
-            />
-            <Route
+            /> */}
+            {/* <Route
               path="/withdraw/success-withdraws"
               element={
                 <>
@@ -282,8 +273,8 @@ function App() {
                   </ProtectedRoute>
                 </>
               }
-            />
-            <Route
+            /> */}
+            {/* <Route
               path="/payment-settings/deposit-methods"
               element={
                 <>
@@ -295,8 +286,8 @@ function App() {
                   </Suspense>
                 </>
               }
-            />
-            <Route
+            /> */}
+            {/* <Route
               path="/payment-settings/withdraw-methods"
               element={
                 <>
@@ -306,16 +297,14 @@ function App() {
                   </ProtectedRoute>
                 </>
               }
-            />
+            /> */}
             <Route
               path="/profile"
               element={
                 <>
                   <PageTitle title="Profile" />
                   <Suspense fallback={<Lazyloding />}>
-                    <ProtectedRoute>
-                      <Profile />
-                    </ProtectedRoute>
+                    <Profile />
                   </Suspense>
                 </>
               }
@@ -349,9 +338,7 @@ function App() {
               element={
                 <>
                   <PageTitle title="Settings" />
-                  <ProtectedRoute>
-                    <Settings />
-                  </ProtectedRoute>
+                  <Settings />
                 </>
               }
             />
@@ -360,9 +347,7 @@ function App() {
               element={
                 <>
                   <PageTitle title="Signin" />
-                  <ProtectedRoute>
-                    <SignIn />
-                  </ProtectedRoute>
+                  <SignIn />
                 </>
               }
             />
@@ -371,9 +356,7 @@ function App() {
               element={
                 <>
                   <PageTitle title="Signup" />
-                  <ProtectedRoute>
-                    <SignUp />
-                  </ProtectedRoute>
+                  <SignUp />
                 </>
               }
             />

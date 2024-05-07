@@ -29,17 +29,21 @@ const SignIn: React.FC = () => {
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     setLoading(true);
-
     try {
-      const response = await fetch('http://localhost:5000/api/v1/auth/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
+      const response = await fetch(
+        'https://tizara.vercel.app/api/v1/auth/login',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data),
         },
-        body: JSON.stringify(data),
-      });
+      );
+
       const responseData = await response.json();
-      if (responseData.token) {
+      console.log(responseData);
+      if (responseData.success) {
         localStorage.setItem('tizaraToken', responseData?.data?.token);
         Swal.fire({
           title: 'success',
@@ -48,10 +52,10 @@ const SignIn: React.FC = () => {
         }).then(() => {
           navigate('/dashboard');
         });
-      } else {
+      } else if (responseData.success == false) {
         Swal.fire({
           title: 'Error',
-          text: 'Something wrong',
+          text: `${responseData?.message}`,
           icon: 'error',
         });
       }
@@ -291,7 +295,6 @@ const SignIn: React.FC = () => {
                       </span>
                     </div>
                   </div>
-
                   <div className="mb-5">
                     {!loding ? (
                       <input
@@ -306,6 +309,14 @@ const SignIn: React.FC = () => {
                         size={40}
                       />
                     )}
+                  </div>
+                  <div className="mt-6 text-center">
+                    <p className="font-medium">
+                      Don’t have any account?
+                      <Link to="/auth/signup" className="text-primary">
+                        Sign Up
+                      </Link>
+                    </p>
                   </div>
                 </form>
               </div>

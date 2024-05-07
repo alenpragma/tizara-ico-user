@@ -2,7 +2,7 @@ import React, { ReactNode } from 'react';
 
 interface CardDataStatsProps {
   title: string;
-  total: string | number;
+  total: number | string;
   rate?: string;
   levelUp?: boolean;
   levelDown?: boolean;
