@@ -32,10 +32,14 @@ const SignUp: React.FC = () => {
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     console.log(data);
+    if (data.referralCode === '') {
+      delete data.referralCode;
+    }
+    console.log(data);
 
     setLoading(true);
     try {
-      const response = await fetch('https://tizara.vercel.app/api/v1/auth', {
+      const response = await fetch('http://localhost:5000/api/v1/auth', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -106,6 +110,7 @@ const SignUp: React.FC = () => {
                       <div className="relative">
                         <input
                           type="text"
+                          {...register('name', { required: true })}
                           placeholder="Enter your full name"
                           className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                         />
@@ -245,7 +250,7 @@ const SignUp: React.FC = () => {
                         <input
                           type="text"
                           {...register('referralCode')}
-                          placeholder="Enter your full name"
+                          placeholder="Referral"
                           className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                         />
 
