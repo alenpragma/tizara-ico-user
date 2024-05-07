@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import SvgImage from './SvgImage';
+import { PuffLoader } from 'react-spinners';
 
 type Inputs = {
   email: string;
@@ -31,11 +32,9 @@ const SignUp: React.FC = () => {
   } = useForm<Inputs>();
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    console.log(data);
     if (data.referralCode === '') {
       delete data.referralCode;
     }
-    console.log(data);
 
     setLoading(true);
     try {
@@ -61,7 +60,7 @@ const SignUp: React.FC = () => {
       } else if (!responseData.success) {
         Swal.fire({
           title: 'Error',
-          text: `${responseData.message}`,
+          text: `${responseData?.message}`,
           icon: 'error',
         });
       } else {
@@ -79,7 +78,7 @@ const SignUp: React.FC = () => {
 
   return (
     <>
-      <div className="min-h-screen flex justify-center items-center place-items-center ">
+      <div className="min-h-screen flex justify-center mt-2 items-center place-items-center ">
         <div className="w-[90%] md:w-[80%] lg:w-[70%]">
           <div className=" rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
             <div className="flex items-center">
@@ -90,7 +89,7 @@ const SignUp: React.FC = () => {
                     to="/"
                   >
                     <h2 className="text-2xl font-bold text-black dark:text-white">
-                      BIZ TOKEN register
+                      TIZARA TOKEN
                     </h2>
                   </Link>
                   <p className="2xl:px-20">
@@ -283,13 +282,20 @@ const SignUp: React.FC = () => {
                         </span>
                       </div>
                     </div>
-
                     <div className="mb-5">
-                      <input
-                        type="submit"
-                        value="Create account"
-                        className="w-full cursor-pointer rounded-lg border border-primary bg-primary p-4 text-white transition hover:bg-opacity-90"
-                      />
+                      {!loding ? (
+                        <input
+                          type="submit"
+                          value="Create account"
+                          className="w-full cursor-pointer rounded-lg border border-primary bg-primary p-4 text-white transition hover:bg-opacity-90"
+                        />
+                      ) : (
+                        <PuffLoader
+                          className="mx-auto"
+                          color="#36d7b7"
+                          size={40}
+                        />
+                      )}
                     </div>
 
                     <div className="mt-6 text-center">
