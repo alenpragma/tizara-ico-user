@@ -58,6 +58,12 @@ const SignUp: React.FC = () => {
         }).then(() => {
           navigate('/dashboard');
         });
+      } else if (!responseData.success) {
+        Swal.fire({
+          title: 'Error',
+          text: `${responseData.message}`,
+          icon: 'error',
+        });
       } else {
         Swal.fire({
           title: 'Error',
