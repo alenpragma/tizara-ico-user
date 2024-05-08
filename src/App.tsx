@@ -28,6 +28,7 @@ import NativeWallet from './pages/WalletHistory/NativeWallet';
 import IcoWallet from './pages/WalletHistory/IcoWallet';
 import BizTokenDashboard from './pages/Dashboard/TizaraTokenDashboard';
 import Transaction from './pages/Transaction/Transaction';
+import MyTeam from './pages/MyTeam/MyTeam';
 
 function App() {
   const { pathname } = useLocation();
@@ -83,6 +84,16 @@ function App() {
                 <>
                   <PageTitle title="Transaction" />
                   <Transaction />
+                </>
+              }
+            />
+
+            <Route
+              path="/my-team"
+              element={
+                <>
+                  <PageTitle title="My Team" />
+                  <MyTeam />
                 </>
               }
             />

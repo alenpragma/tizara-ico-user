@@ -14,6 +14,15 @@ interface ApiResponse {
   data: UserProfile;
 }
 
+interface Wallet {
+  id: string;
+  depositWallet: number;
+  icotWallet: number;
+  nativeWallet: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
 interface UserProfile {
   id: string;
   name: string;
@@ -28,6 +37,7 @@ interface UserProfile {
   nativeWallet: number;
   createdAt: string;
   updatedAt: string;
+  wallet: Wallet;
 }
 
 const BizTokenDashboard: React.FC = () => {
@@ -47,6 +57,7 @@ const BizTokenDashboard: React.FC = () => {
             },
           },
         );
+        console.log(response);
 
         if (response?.data?.success) {
           setProfile(response.data.data);
@@ -77,7 +88,9 @@ const BizTokenDashboard: React.FC = () => {
           <CardDataStats
             title="Native Wallet"
             total={`${
-              profile?.nativeWallet ? profile?.nativeWallet : '00'
+              profile?.wallet?.nativeWallet
+                ? profile?.wallet?.nativeWallet
+                : '00'
             } TIZARA`}
             // rate="0.95%"
             // levelDown
