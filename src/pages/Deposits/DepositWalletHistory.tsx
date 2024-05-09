@@ -38,7 +38,7 @@ const DepositWalletHistory = () => {
   ];
   return (
     <DefaultLayout>
-      <Breadcrumb pageName="Deposit Wallet History" />
+      <Breadcrumb pageName="Deposit History" />
 
       <div className="py-3">
         <button
