@@ -29,6 +29,7 @@ import IcoWallet from './pages/WalletHistory/IcoWallet';
 import BizTokenDashboard from './pages/Dashboard/TizaraTokenDashboard';
 import Transaction from './pages/Transaction/Transaction';
 import MyTeam from './pages/MyTeam/MyTeam';
+import DepositWalletHistory from './pages/Deposits/DepositWalletHistory';
 
 function App() {
   const { pathname } = useLocation();
@@ -94,6 +95,16 @@ function App() {
                 <>
                   <PageTitle title="My Team" />
                   <MyTeam />
+                </>
+              }
+            />
+
+            <Route
+              path="/deposit-wallet-history"
+              element={
+                <>
+                  <PageTitle title="My Team" />
+                  <DepositWalletHistory />
                 </>
               }
             />
