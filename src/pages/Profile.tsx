@@ -108,7 +108,7 @@ const Profile = () => {
             </h3>
 
             <h3 className="mb-1.5 text-2xl font-semibold text-black dark:text-white">
-              My Referr: {profile?.myReferralCode}
+              My Refer code: {profile?.myReferralCode}
             </h3>
             <div className="mt-2 mx-auto ">
               <h4 className="font-semibold text-black dark:text-white">

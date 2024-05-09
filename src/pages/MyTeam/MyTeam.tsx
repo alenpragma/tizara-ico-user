@@ -53,6 +53,10 @@ const MyTeam = () => {
                 <th className="min-w-[150px] py-4 px-4 font-medium text-black dark:text-white">
                   Email
                 </th>
+
+                <th className="min-w-[150px] py-4 px-4 font-medium text-black dark:text-white">
+                  Reffer
+                </th>
                 <th className="min-w-[120px] py-4 px-4 font-medium text-black dark:text-white">
                   Join date
                 </th>
@@ -76,6 +80,12 @@ const MyTeam = () => {
                   <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                     <p className="text-black dark:text-white">
                       {packageItem?.email}
+                    </p>
+                  </td>
+
+                  <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+                    <p className="text-black dark:text-white">
+                      {packageItem?.myReferralCode}
                     </p>
                   </td>
 
