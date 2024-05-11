@@ -1,1 +1,1 @@
-export const userToken = localStorage.getItem('biztoken');
+export const userToken = localStorage.getItem('tizaraToken');

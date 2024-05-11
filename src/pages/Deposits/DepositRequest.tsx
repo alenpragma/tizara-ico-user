@@ -1,43 +1,78 @@
 import { SubmitHandler, useForm } from 'react-hook-form';
 import Swal from 'sweetalert2';
 import Button from '../../Ui/Button';
+import { userToken } from '../../hooks/getTokenFromstorage';
+import axios from 'axios';
+import { useEffect, useState } from 'react';
 
 type Inputs = {
-  wallet_name: string;
-  wallet_no: string;
+  paymentMethod: string;
+  walletNo: string;
   network: string;
-  min_token: string;
-  max_token: string;
+  trxId: string;
+  amount: string;
+  depositMethodId: string;
 };
 
 const DepositRequest = ({ fetchData, closeModal }: any) => {
   const { register, handleSubmit } = useForm<Inputs>();
 
-  const onSubmit: SubmitHandler<Inputs> = async (data: Inputs) => {
-    const newData = { ...data };
-    // console.log(newData);
+  const [depositMethod, setDepositMethod] = useState<any>();
+  const [selectedMethod, setSelectedMethod] = useState<any>();
+  const [wallet, setWallet] = useState<any>();
+
+  const getPaymentMethod = async () => {
     try {
-      const token = localStorage.getItem('biztoken');
+      const response = await axios.get(
+        'https://tizara.vercel.app/api/v1/deposit-method',
+        {
+          headers: {
+            Authorization: `${userToken}`,
+            'Content-Type': 'application/json',
+          },
+        },
+      );
+      setDepositMethod(response?.data?.data);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
+
+  useEffect(() => {
+    getPaymentMethod();
+  }, []);
+
+  const onSubmit: SubmitHandler<Inputs> = async (data: Inputs) => {
+    const { trxId, amount, ...rest } = data;
+
+    const reqData = {
+      depositMethodId: wallet.id,
+      trxId,
+      amount,
+    };
+    console.log(userToken);
+
+    console.log(reqData, 'req data');
+
+    try {
       const response = await fetch(
-        'https://biztoken.fecotrade.com/api/admin-wallet/store',
+        'https://tizara.vercel.app/api/v1/deposit-request',
         {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            Authorization: `Bearer ${token}`,
+            Authorization: `${userToken}`,
           },
-          body: JSON.stringify(newData),
+          body: JSON.stringify(reqData),
         },
       );
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
+
       const responseData = await response.json();
       if (responseData.success) {
         fetchData();
         Swal.fire({
           title: 'success',
-          text: 'Successfully updated package',
+          text: 'Deposit request success',
           icon: 'success',
         }).then(() => {
           closeModal();
@@ -51,6 +86,18 @@ const DepositRequest = ({ fetchData, closeModal }: any) => {
       });
     }
   };
+
+  // Function to set wallet name based on selected method
+  useEffect(() => {
+    const selectedMethodObject = depositMethod?.data?.find(
+      (method: any) => method.id === selectedMethod,
+    );
+    if (selectedMethodObject) {
+      setWallet(selectedMethodObject);
+    } else {
+      setWallet(undefined);
+    }
+  }, [selectedMethod, depositMethod]);
 
   return (
     <div className="fixed left-0 top-0 z-999 flex h-full min-h-screen w-full items-center justify-center bg-black/90 py-5">
@@ -84,10 +131,19 @@ const DepositRequest = ({ fetchData, closeModal }: any) => {
                 >
                   Payment Method
                 </label>
-                <input
-                  className="w-full rounded border border-stroke bg-gray py-2 pl-3 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
-                  {...register('wallet_name', { required: true })}
-                />
+
+                <select
+                  id="paymentMethod"
+                  onClick={(e: any) => setSelectedMethod(e?.target?.value)}
+                  className="py-3 w-full rounded-md dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
+                >
+                  {/* Map through paymentMethods and render options */}
+                  {depositMethod?.data?.map((method: any) => (
+                    <option className=" " key={method.id} value={method.id}>
+                      {method.paymentMethod}
+                    </option>
+                  ))}
+                </select>
               </div>
               <div>
                 <label
@@ -98,7 +154,9 @@ const DepositRequest = ({ fetchData, closeModal }: any) => {
                 </label>
                 <input
                   className="w-full rounded border border-stroke bg-gray py-2 pl-3 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
-                  {...register('network', { required: true })}
+                  {...register('network')}
+                  value={wallet?.network}
+                  readOnly
                 />
               </div>
 
@@ -111,7 +169,8 @@ const DepositRequest = ({ fetchData, closeModal }: any) => {
                 </label>
                 <input
                   className="w-full rounded border border-stroke bg-gray py-2 pl-3 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
-                  {...register('wallet_no', { required: true })}
+                  {...register('walletNo')}
+                  value={wallet?.walletNo}
                 />
               </div>
               <div>
@@ -123,7 +182,19 @@ const DepositRequest = ({ fetchData, closeModal }: any) => {
                 </label>
                 <input
                   className="w-full rounded border border-stroke bg-gray py-2 pl-3 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
-                  {...register('min_token', { required: true })}
+                  {...register('amount', { required: true })}
+                />
+              </div>
+              <div>
+                <label
+                  className="mb-2 block text-sm font-medium text-black dark:text-white"
+                  htmlFor="type"
+                >
+                  Transaction Id
+                </label>
+                <input
+                  className="w-full rounded border border-stroke bg-gray py-2 pl-3 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
+                  {...register('trxId', { required: true })}
                 />
               </div>
 

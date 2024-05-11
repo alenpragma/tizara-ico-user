@@ -4,8 +4,11 @@ import DefaultLayout from '../../layout/DefaultLayout';
 import DepositRequest from './DepositRequest';
 import { userToken } from '../../hooks/getTokenFromstorage';
 import axios from 'axios';
+import { formatToLocalDate } from '../../hooks/formatDate';
 
 const DepositWalletHistory = () => {
+  const [depositHistory, setDepositHistory] = useState<any>();
+
   const [isModalOpenAddMethod, setIsModalOpenAddMethod] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
@@ -21,22 +24,28 @@ const DepositWalletHistory = () => {
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        'https://biztoken.fecotrade.com/api/usdt-add-request',
+        'https://tizara.vercel.app/api/v1/deposit-request',
         {
           headers: {
-            Authorization: `Bearer ${userToken}`,
+            Authorization: `${userToken}`,
             'Content-Type': 'application/json',
           },
         },
       );
+
+      if (response?.data?.success) {
+        setDepositHistory(response?.data?.data);
+      }
     } catch (error) {
       console.error('Error fetching data:', error);
     }
   };
 
   useEffect(() => {
-    // fetchData();
+    fetchData();
   }, []);
+
+  console.log(depositHistory);
 
   return (
     <DefaultLayout>
@@ -82,11 +91,68 @@ const DepositWalletHistory = () => {
                 </th>
               </tr>
             </thead>
-            <tbody></tbody>
+            <tbody>
+              {depositHistory?.map((user: any, key: string) => {
+                return (
+                  <tr key={key}>
+                    <td className="border-b border-[#eee] py-5 px-4 pl-9 dark:border-strokedark xl:pl-11">
+                      <h5 className="font-medium text-black dark:text-white">
+                        {Number(key) + 1}
+                      </h5>
+                    </td>
+                    <td className="border-b border-[#eee] py-5 px-4 pl-4 dark:border-strokedark xl:pl-11">
+                      <h5 className="font-medium text-black dark:text-white">
+                        {formatToLocalDate(user?.createdAt)}
+                      </h5>
+                    </td>
+
+                    <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+                      <p className="text-black dark:text-white">
+                        {user?.depositMethod?.paymentMethod}
+                      </p>
+                    </td>
+
+                    <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+                      <p className="text-black dark:text-white">
+                        {user?.depositMethod?.network}
+                      </p>
+                    </td>
+
+                    <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+                      <p className="text-black dark:text-white">
+                        {user?.depositMethod?.walletNo}
+                      </p>
+                    </td>
+
+                    <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+                      <p className="text-black dark:text-white">
+                        {user?.trxId}
+                      </p>
+                    </td>
+                    <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+                      <p className="text-black dark:text-white">
+                        {user?.amount}
+                      </p>
+                    </td>
+
+                    <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+                      <p
+                        className={`inline-flex rounded-full bg-opacity-10 py-1 px-3 text-sm font-medium ${
+                          user?.status === 'APPROVED'
+                            ? 'bg-success text-success'
+                            : user?.status === 'REJECT'
+                            ? 'bg-danger text-danger'
+                            : 'bg-warning text-warning'
+                        }`}
+                      >
+                        {user?.status}
+                      </p>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
           </table>
-          <h2 className="text-center pb-4 text-title-md2 font-semibold text-success dark:text-white">
-            In Development
-          </h2>
         </div>
       </div>
 
