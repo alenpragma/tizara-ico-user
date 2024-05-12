@@ -50,7 +50,6 @@ const DepositRequest = ({ fetchData, closeModal }: any) => {
       trxId,
       amount,
     };
-    console.log(userToken);
 
     console.log(reqData, 'req data');
 
