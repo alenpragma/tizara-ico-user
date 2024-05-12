@@ -1,9 +1,9 @@
 import { SubmitHandler, useForm } from 'react-hook-form';
 import Swal from 'sweetalert2';
 import Button from '../../Ui/Button';
-import { getTizaraUserToken } from '../../hooks/getTokenFromstorage';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
+import { getTizaraUserToken } from '../../hooks/getTokenFromstorage';
 
 type Inputs = {
   paymentMethod: string;
@@ -20,6 +20,7 @@ const DepositRequest = ({ fetchData, closeModal }: any) => {
   const [depositMethod, setDepositMethod] = useState<any>();
   const [selectedMethod, setSelectedMethod] = useState<any>();
   const [wallet, setWallet] = useState<any>();
+  const token = getTizaraUserToken();
 
   const getPaymentMethod = async () => {
     try {
@@ -27,7 +28,7 @@ const DepositRequest = ({ fetchData, closeModal }: any) => {
         'https://tizara.vercel.app/api/v1/deposit-method',
         {
           headers: {
-            Authorization: `${getTizaraUserToken}`,
+            Authorization: `${token}`,
             'Content-Type': 'application/json',
           },
         },
