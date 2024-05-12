@@ -3,16 +3,16 @@ import DefaultLayout from '../../layout/DefaultLayout';
 import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
 import axios from 'axios';
 import { formatToLocalDate } from '../../hooks/formatDate';
+import { getTizaraUserToken } from '../../hooks/getTokenFromstorage';
 
 const MyTeam = () => {
   const [history, sethistory] = useState([]);
   const [loading, setLoading] = useState<any>(false);
+  const token = getTizaraUserToken();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const token = localStorage.getItem('tizaraToken');
-
         const response = await axios.get(
           'https://tizara.vercel.app/api/v1/profile/my-team',
           {

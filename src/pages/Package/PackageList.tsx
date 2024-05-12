@@ -6,7 +6,6 @@ import { UpdatePackageModal } from './UpdatePackageModal';
 import Skeleton from 'react-loading-skeleton';
 import ViewpackageModal from './ViewpackageModal';
 import { IPackage } from '../../types/packages';
-import { userToken } from '../../hooks/getTokenFromstorage';
 
 const PackageList = () => {
   const [packages, setPackages] = useState<IPackage[]>([]);
@@ -43,7 +42,7 @@ const PackageList = () => {
         'https://biztoken.fecotrade.com/api/packages',
         {
           headers: {
-            Authorization: `Bearer ${userToken}`,
+            Authorization: ` `,
             'Content-Type': 'application/json',
           },
         },

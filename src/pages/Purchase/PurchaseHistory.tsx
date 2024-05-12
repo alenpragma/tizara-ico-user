@@ -7,7 +7,6 @@ import { IPurchaseHistory } from '../../types/purchesHistory';
 import SearchInput from '../../components/SearchInput';
 import Skeleton from 'react-loading-skeleton';
 import PaginationButtons from '../../components/Pagination/PaginationButtons';
-import { userToken } from '../../hooks/getTokenFromstorage';
 import { getPasDay } from './dateToDay';
 
 const PurchaseHistory = () => {
@@ -30,7 +29,7 @@ const PurchaseHistory = () => {
         'https://biztoken.fecotrade.com/api/admin/package-purchase-history',
         {
           headers: {
-            Authorization: `Bearer ${userToken}`,
+            Authorization: `  `,
             'Content-Type': 'application/json',
           },
         },

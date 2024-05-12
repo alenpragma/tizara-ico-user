@@ -1,8 +1,7 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import Swal from 'sweetalert2';
 import SelectOptions from '../../Ui/SelectOptions';
-import { userToken } from '../../hooks/getTokenFromstorage';
 import { PuffLoader } from 'react-spinners';
 
 type status = {
@@ -56,7 +55,7 @@ export const ApprovedRejectModal = ({
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            Authorization: `Bearer ${userToken}`,
+            Authorization: ` `,
           },
           body: JSON.stringify(newData),
         },

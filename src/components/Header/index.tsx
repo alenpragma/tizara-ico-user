@@ -1,6 +1,7 @@
 import { Link, useNavigate } from 'react-router-dom';
 import DropdownUser from './DropdownUser';
 import DarkModeSwitcher from './DarkModeSwitcher';
+import { removeTizaraUserToken } from '../../hooks/getTokenFromstorage';
 
 const Header = (props: {
   sidebarOpen: string | boolean | undefined;
@@ -8,7 +9,7 @@ const Header = (props: {
 }) => {
   const navigate = useNavigate();
   const logout = () => {
-    localStorage.removeItem('tizaraToken');
+    removeTizaraUserToken();
     navigate('/');
   };
 

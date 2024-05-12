@@ -1,7 +1,7 @@
 import { SubmitHandler, useForm } from 'react-hook-form';
 import Swal from 'sweetalert2';
 import Button from '../../Ui/Button';
-import { userToken } from '../../hooks/getTokenFromstorage';
+import { getTizaraUserToken } from '../../hooks/getTokenFromstorage';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 
@@ -27,7 +27,7 @@ const DepositRequest = ({ fetchData, closeModal }: any) => {
         'https://tizara.vercel.app/api/v1/deposit-method',
         {
           headers: {
-            Authorization: `${userToken}`,
+            Authorization: `${getTizaraUserToken}`,
             'Content-Type': 'application/json',
           },
         },
@@ -60,7 +60,7 @@ const DepositRequest = ({ fetchData, closeModal }: any) => {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            Authorization: `${userToken}`,
+            Authorization: `${getTizaraUserToken}`,
           },
           body: JSON.stringify(reqData),
         },

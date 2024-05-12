@@ -68,13 +68,14 @@ function App() {
                 </>
               }
             />
-
             <Route
               path="/dashboard"
               element={
                 <>
-                  <PageTitle title="Tizara Dashboard" />
-                  <BizTokenDashboard />
+                  <PageTitle title="Tizara  Dashboard" />
+                  <ProtectedRoute>
+                    <BizTokenDashboard />
+                  </ProtectedRoute>
                 </>
               }
             />
@@ -103,7 +104,7 @@ function App() {
               path="/deposit-wallet-history"
               element={
                 <>
-                  <PageTitle title="My Team" />
+                  <PageTitle title="Deposit History" />
                   <DepositWalletHistory />
                 </>
               }
@@ -139,39 +140,10 @@ function App() {
               }
             />
 
-            <Route
-              path="/users/all-user"
-              element={
-                <>
-                  <PageTitle title="All Users" />
-                  <AllUsers />
-                </>
-              }
-            />
-
-            <Route
-              path="/users/active-user"
-              element={
-                <>
-                  <PageTitle title="All Users" />
-                  <ActiveUser />
-                </>
-              }
-            />
-            <Route
-              path="/users/inactive-user"
-              element={
-                <>
-                  <PageTitle title="inactive Users" />
-                  <InacticeUser />
-                </>
-              }
-            />
-
             {/* user end */}
 
             {/* Packages */}
-            <Route
+            {/* <Route
               path="/package/package-list"
               element={
                 <>
@@ -181,7 +153,7 @@ function App() {
                   </ProtectedRoute>
                 </>
               }
-            />
+            /> */}
             <Route
               path="/package/package-settings"
               element={

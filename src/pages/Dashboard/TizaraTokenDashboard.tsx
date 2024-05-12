@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import { FaUserCheck } from 'react-icons/fa6';
 import { PiPackage } from 'react-icons/pi';
 import axios from 'axios';
+import { getTizaraUserToken } from '../../hooks/getTokenFromstorage';
 
 interface ApiResponse {
   statusCode: number;
@@ -42,12 +43,11 @@ interface UserProfile {
 
 const BizTokenDashboard: React.FC = () => {
   const [profile, setProfile] = useState<UserProfile | null>(null);
+  const token = getTizaraUserToken();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const token = localStorage.getItem('tizaraToken');
-
         const response = await axios.get<ApiResponse>(
           'https://tizara.vercel.app/api/v1/profile',
           {

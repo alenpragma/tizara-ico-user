@@ -2,13 +2,13 @@ import { useEffect, useState } from 'react';
 import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
 import DefaultLayout from '../../layout/DefaultLayout';
 import DepositRequest from './DepositRequest';
-import { userToken } from '../../hooks/getTokenFromstorage';
 import axios from 'axios';
 import { formatToLocalDate } from '../../hooks/formatDate';
+import { getTizaraUserToken } from '../../hooks/getTokenFromstorage';
 
 const DepositWalletHistory = () => {
   const [depositHistory, setDepositHistory] = useState<any>();
-
+  const token = getTizaraUserToken();
   const [isModalOpenAddMethod, setIsModalOpenAddMethod] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
@@ -27,7 +27,7 @@ const DepositWalletHistory = () => {
         'https://tizara.vercel.app/api/v1/deposit-request',
         {
           headers: {
-            Authorization: `${userToken}`,
+            Authorization: `${token}`,
             'Content-Type': 'application/json',
           },
         },

@@ -5,7 +5,6 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import Swal from 'sweetalert2';
 import axios from 'axios';
 import { PuffLoader } from 'react-spinners';
-import { userToken } from '../hooks/getTokenFromstorage';
 
 interface IInput {
   free_mining_rewards: string;
@@ -31,7 +30,7 @@ const BonusSettings = () => {
         'https://biztoken.fecotrade.com/api/comission-setting',
         {
           headers: {
-            Authorization: `Bearer ${userToken}`,
+            Authorization: ` `,
             'Content-Type': 'application/json',
           },
         },

@@ -5,6 +5,7 @@ import SocialIcons from './Profile/SocialIcons';
 import BasicDetails from './Profile/BasicDetails';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import { getTizaraUserToken } from '../hooks/getTokenFromstorage';
 
 interface ApiResponse {
   statusCode: number;
@@ -31,12 +32,11 @@ interface UserProfile {
 
 const Profile = () => {
   const [profile, setProfile] = useState<UserProfile | null>(null);
+  const token = getTizaraUserToken();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const token = localStorage.getItem('tizaraToken');
-
         const response = await axios.get<ApiResponse>(
           'https://tizara.vercel.app/api/v1/profile',
           {
