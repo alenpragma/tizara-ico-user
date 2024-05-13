@@ -52,7 +52,7 @@ const DepositRequest = ({ fetchData, closeModal }: any) => {
       amount,
     };
 
-    console.log(reqData, 'req data');
+    console.log(reqData, token, 'req data');
 
     try {
       const response = await fetch(
@@ -61,7 +61,7 @@ const DepositRequest = ({ fetchData, closeModal }: any) => {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            Authorization: `${getTizaraUserToken}`,
+            Authorization: `${token}`,
           },
           body: JSON.stringify(reqData),
         },

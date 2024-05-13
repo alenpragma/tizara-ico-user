@@ -63,7 +63,7 @@ const AllDeposits = () => {
   };
 
   useEffect(() => {
-    fetchData();
+    // fetchData();
   }, []);
 
   const filteredDeposits = depositsData?.filter(

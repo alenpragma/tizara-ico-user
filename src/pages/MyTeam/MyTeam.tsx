@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import DefaultLayout from '../../layout/DefaultLayout';
 import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
 import axios from 'axios';
@@ -7,7 +7,7 @@ import { getTizaraUserToken } from '../../hooks/getTokenFromstorage';
 
 const MyTeam = () => {
   const [history, sethistory] = useState([]);
-  const [loading, setLoading] = useState<any>(false);
+  // const [loading, setLoading] = useState<any>(false);
   const token = getTizaraUserToken();
 
   useEffect(() => {
@@ -25,7 +25,7 @@ const MyTeam = () => {
         console.log(response?.data);
 
         if (response?.data?.success) {
-          sethistory(response.data.data);
+          sethistory(response?.data?.data);
         }
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -33,7 +33,6 @@ const MyTeam = () => {
     };
     fetchData();
   }, []);
-  console.log(history);
 
   return (
     <DefaultLayout>

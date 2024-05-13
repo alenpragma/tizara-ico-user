@@ -21,7 +21,7 @@ const SignIn: React.FC = () => {
     if (token) {
       navigate('/dashboard');
     }
-  }, [getTizaraUserToken]);
+  }, []);
 
   const {
     register,

@@ -2,7 +2,6 @@ import DefaultLayout from '../../layout/DefaultLayout';
 import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { IPackage } from '../../types/packages';
 import { IPurchaseHistory } from '../../types/purchesHistory';
 import SearchInput from '../../components/SearchInput';
 import Skeleton from 'react-loading-skeleton';

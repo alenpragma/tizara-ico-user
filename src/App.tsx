@@ -4,10 +4,7 @@ import PageTitle from './components/PageTitle';
 import SignIn from './pages/Authentication/SignIn';
 import SignUp from './pages/Authentication/SignUp';
 import Settings from './pages/Settings';
-import AllUsers from './pages/Users/AllUsers';
-import ActiveUser from './pages/Users/ActiveUser';
-import InacticeUser from './pages/Users/InacticeUser';
-import PackageList from './pages/Package/PackageList';
+
 import PendingDeposits from './pages/Deposits/PendingDeposits';
 import BonusSettings from './pages/BonusSettings';
 import PurchaseHistory from './pages/Purchase/PurchaseHistory';

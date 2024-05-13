@@ -9,7 +9,7 @@ import { getTizaraUserToken } from '../../hooks/getTokenFromstorage';
 const DepositWalletHistory = () => {
   const [depositHistory, setDepositHistory] = useState<any>();
   const token = getTizaraUserToken();
-  const [isModalOpenAddMethod, setIsModalOpenAddMethod] = useState(false);
+  // const [isModalOpenAddMethod, setIsModalOpenAddMethod] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
   // edit modal
@@ -45,7 +45,7 @@ const DepositWalletHistory = () => {
     fetchData();
   }, []);
 
-  console.log(depositHistory);
+  // console.log(depositHistory);
 
   return (
     <DefaultLayout>
