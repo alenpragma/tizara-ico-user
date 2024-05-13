@@ -76,7 +76,11 @@ const BizTokenDashboard: React.FC = () => {
         <Link to={'/'}>
           <CardDataStats
             title="Deposit Wallet"
-            total={'00 USD'}
+            total={`${
+              profile?.wallet?.depositWallet
+                ? profile?.wallet?.depositWallet
+                : '00'
+            } TIZARA`}
             // rate="0.95%"
             // levelDown
           >
