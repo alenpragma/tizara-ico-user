@@ -4,7 +4,6 @@ import DefaultLayout from '../../layout/DefaultLayout';
 import axios from 'axios';
 import { formatToLocalDate } from '../../hooks/formatDate';
 import Skeleton from 'react-loading-skeleton';
-import { getTizaraUserToken } from '../../hooks/getTokenFromstorage';
 
 interface IHistory {
   id: string;
@@ -27,11 +26,13 @@ interface ApiResponse {
 const Transaction = () => {
   const [history, sethistory] = useState<any>([]);
   const [loading, setLoading] = useState<any>(false);
-  const token = getTizaraUserToken();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
+        const token = localStorage.getItem('tizaraUserToken');
+        console.log(token);
+
         const response = await axios.get<ApiResponse>(
           ' https://tizara.vercel.app/api/v1/transaction-history',
           {

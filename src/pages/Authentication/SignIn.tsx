@@ -45,9 +45,7 @@ const SignIn: React.FC = () => {
 
       const responseData = await response.json();
       if (responseData.success) {
-        console.log(responseData?.data?.token);
         localStorage.setItem('tizaraUserToken', responseData?.data?.token);
-        // setTizaraUserToken(responseData?.data?.token);
         Swal.fire({
           title: 'success',
           text: 'Login successfull',
