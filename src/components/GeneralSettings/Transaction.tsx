@@ -1,7 +1,6 @@
 import { SubmitHandler, useForm } from 'react-hook-form';
 import SelectOptions from '../../Ui/SelectOptions';
 import Button from '../../Ui/Button';
-import { userToken } from '../../hooks/getTokenFromstorage';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import Swal from 'sweetalert2';
@@ -36,7 +35,7 @@ const Transaction = () => {
         'https://biztoken.fecotrade.com/api/transfer-setting',
         {
           headers: {
-            Authorization: `Bearer ${userToken}`,
+            Authorization: `${''}`,
             'Content-Type': 'application/json',
           },
         },
@@ -49,7 +48,7 @@ const Transaction = () => {
   };
 
   useEffect(() => {
-    fetchData();
+    // fetchData();
   }, []);
 
   const onSubmit: SubmitHandler<IInput> = async (data: IInput) => {
@@ -72,7 +71,7 @@ const Transaction = () => {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            Authorization: `Bearer ${userToken}`,
+            Authorization: `Bearer ${' '}`,
           },
           body: JSON.stringify(newData),
         },

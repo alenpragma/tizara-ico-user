@@ -181,7 +181,7 @@ function App() {
 
             {/* Deposits start */}
 
-            <Route
+            {/* <Route
               path="/deposits/all-deposit"
               element={
                 <>
@@ -193,9 +193,9 @@ function App() {
                   </Suspense>
                 </>
               }
-            />
+            /> */}
 
-            <Route
+            {/* <Route
               path="/deposits/pending-deposit"
               element={
                 <>
@@ -205,7 +205,7 @@ function App() {
                   </ProtectedRoute>
                 </>
               }
-            />
+            /> */}
             {/* 
             <Route
               path="/deposits/success-deposit"
@@ -300,7 +300,7 @@ function App() {
                 </>
               }
             />
-            <Route
+            {/* <Route
               path="/general-settings"
               element={
                 <>
@@ -312,8 +312,8 @@ function App() {
                   </Suspense>
                 </>
               }
-            />
-            <Route
+            /> */}
+            {/* <Route
               path="/bonus-settings"
               element={
                 <>
@@ -323,8 +323,8 @@ function App() {
                   </ProtectedRoute>
                 </>
               }
-            />
-            <Route
+            /> */}
+            {/* <Route
               path="/settings"
               element={
                 <>
@@ -332,7 +332,7 @@ function App() {
                   <Settings />
                 </>
               }
-            />
+            /> */}
             <Route
               path="/auth/signin"
               element={

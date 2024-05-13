@@ -61,7 +61,7 @@ const PendingDeposits = () => {
         'https://biztoken.fecotrade.com/api/usdt-add-request',
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            Authorization: `${token}`,
             'Content-Type': 'application/json',
           },
         },
@@ -73,7 +73,7 @@ const PendingDeposits = () => {
   };
 
   useEffect(() => {
-    fetchData();
+    // fetchData();
   }, []);
 
   const pending = depositsData?.filter(
