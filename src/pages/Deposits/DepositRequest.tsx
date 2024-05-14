@@ -13,8 +13,15 @@ type Inputs = {
   amount: string;
   depositMethodId: string;
 };
+interface ComponentProps {
+  fetchData: () => void;
+  closeModal: () => void;
+}
 
-const DepositRequest = ({ fetchData, closeModal }: any) => {
+const DepositRequest: React.FC<ComponentProps> = ({
+  fetchData,
+  closeModal,
+}) => {
   const { register, handleSubmit } = useForm<Inputs>();
 
   const [depositMethod, setDepositMethod] = useState<any>();
