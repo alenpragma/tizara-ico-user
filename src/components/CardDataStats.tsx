@@ -3,10 +3,10 @@ import React, { ReactNode } from 'react';
 interface CardDataStatsProps {
   title: string;
   total: number | string;
+  children: ReactNode;
   rate?: string;
   levelUp?: boolean;
   levelDown?: boolean;
-  children: ReactNode;
 }
 
 const CardDataStats: React.FC<CardDataStatsProps> = ({
@@ -18,18 +18,21 @@ const CardDataStats: React.FC<CardDataStatsProps> = ({
   children,
 }) => {
   return (
-    <div className="rounded-sm cursor-pointer border border-stroke bg-white py-6 px-7.5 shadow-default dark:border-strokedark dark:bg-boxdark">
+    <div className="rounded-sm cursor-pointer border border-stroke bg-white py-2 px-3 lg:py-6 lg:px-4.5 shadow-default dark:border-strokedark dark:bg-boxdark">
       {/* icon */}
 
-      <div className="mt-4 flex items-end justify-between">
-        <div className="flex h-11.5 w-11.5 items-center justify-center rounded-full bg-meta-2 dark:bg-meta-4">
+      <div className="mt-0 flex items-center justify-between">
+        <div className="flex h-7.5 w-7.5 lg:h-11.5 lg:w-11.5 items-center justify-center rounded-full bg-meta-2 dark:bg-meta-4">
           {children}
         </div>
+        {/* <div className="flex h-7.5 w-7.5 lg:h-11.5 lg:w-11.5 items-center justify-center rounded-full bg-meta-2 dark:bg-meta-4">
+          {children}
+        </div> */}
         <div>
-          <h4 className="text-title-md font-bold text-black dark:text-white">
+          <h4 className="text-[14px] md:text-[20px] font-semibold text-black dark:text-white">
             {total}
           </h4>
-          <span className="text-xl font-medium">{title}</span>
+          <span className="text-sm md:text-[18px] font-medium">{title}</span>
         </div>
 
         {/* <span

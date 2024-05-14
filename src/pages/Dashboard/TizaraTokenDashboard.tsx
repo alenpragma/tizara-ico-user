@@ -8,6 +8,7 @@ import { PiPackage } from 'react-icons/pi';
 import axios from 'axios';
 import { getTizaraUserToken } from '../../hooks/getTokenFromstorage';
 import WelcomeSection from './WelcomeSection';
+import Wallets from './Wallets';
 
 interface ApiResponse {
   statusCode: number;
@@ -67,125 +68,56 @@ const BizTokenDashboard: React.FC = () => {
         console.error('Error fetching data:', error);
       }
     };
-    // fetchData();
+    fetchData();
   }, []);
-  console.log(profile);
 
   return (
     <DefaultLayout>
       <WelcomeSection />
 
       <div className="grid grid-cols-1 lg:grid-cols-6 gap-y-5 lg:gap-5">
+        {/* users wallets  */}
         <div className="col-span-4">
-          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 xl:grid-cols-2 2xl:gap-7.5">
-            <Link to={'/'}>
-              <CardDataStats
-                title="Deposit Wallet"
-                total={`${
-                  profile?.wallet?.depositWallet
-                    ? profile?.wallet?.depositWallet
-                    : '00'
-                } TIZARA`}
-                // rate="0.95%"
-                // levelDown
-              >
-                <PiPackage className="text-2xl dark:text-white text-primary" />
-              </CardDataStats>
-            </Link>
-
-            <Link to={'/'}>
-              <CardDataStats
-                title="Deposit Wallet"
-                total={`${
-                  profile?.wallet?.depositWallet
-                    ? profile?.wallet?.depositWallet
-                    : '00'
-                } TIZARA`}
-                // rate="0.95%"
-                // levelDown
-              >
-                <PiPackage className="text-2xl dark:text-white text-primary" />
-              </CardDataStats>
-            </Link>
-
-            <Link to={'/'}>
-              <CardDataStats
-                title="Native Wallet"
-                total={`${
-                  profile?.wallet?.nativeWallet
-                    ? profile?.wallet?.nativeWallet
-                    : '00'
-                } TIZARA`}
-                // rate="0.95%"
-                // levelDown
-              >
-                <UserIcon />
-              </CardDataStats>
-            </Link>
-
-            <Link to={'/'}>
-              <CardDataStats
-                title="Deposit Wallet"
-                total={`${
-                  profile?.wallet?.depositWallet
-                    ? profile?.wallet?.depositWallet
-                    : '00'
-                } TIZARA`}
-                // rate="0.95%"
-                // levelDown
-              >
-                <PiPackage className="text-2xl dark:text-white text-primary" />
-              </CardDataStats>
-            </Link>
-          </div>
+          <Wallets profile={profile} />
         </div>
 
         <div className="col-span-2  rounded-sm cursor-pointer border border-stroke bg-white py-5 px-6 shadow-default dark:border-strokedark dark:bg-boxdark">
+          <h2 className="font-semibold text-center pb-4 text-black dark:text-white">
+            TIZARA COIN
+          </h2>
+
           <div className=" flex justify-between flex-col ">
-            <div className="flex flex-col gap-5">
-              <div className="flex justify-between">
-                <h4 className="text-title-sm font-bold text-black dark:text-white">
-                  Token Name:
-                </h4>
-                <h4 className="text-title-sm font-bold text-black dark:text-white">
-                  Tizara
-                </h4>
+            <div className="flex flex-col gap-2">
+              <div className="flex justify-between font-medium text-black dark:text-white">
+                <h4 className="">Token Name:</h4>
+                <h4 className="">Tizara</h4>
               </div>
-              <div className="flex justify-between">
-                <h4 className="text-title-sm font-bold text-black dark:text-white">
-                  Blockchain:
-                </h4>
-                <h4 className="text-title-sm font-bold text-black dark:text-white">
-                  Binance
-                </h4>
+
+              <div className="flex justify-between font-medium text-black dark:text-white">
+                <h4 className=" ">Blockchain:</h4>
+                <h4 className=" ">Binance</h4>
               </div>
-              <div className="flex justify-between">
-                <h4 className="text-title-sm font-bold text-black dark:text-white">
-                  Total Supply:
-                </h4>
-                <h4 className="text-title-sm font-bold text-black dark:text-white">
-                  2343423
-                </h4>
+
+              <div className="flex justify-between font-medium text-black dark:text-white">
+                <h4 className=" ">Total Supply:</h4>
+                <h4 className=" ">15 Billion</h4>
               </div>
-              <div className="flex justify-between">
-                <h4 className="text-title-sm font-bold text-black dark:text-white">
-                  Current Price:
-                </h4>
-                <h4 className="text-title-sm font-bold text-black dark:text-white">
-                  300$
-                </h4>
+
+              <div className="flex justify-between font-medium text-black dark:text-white">
+                <h4 className=" ">Current Price:</h4>
+                <h4 className=" ">$0.001</h4>
               </div>
             </div>
-            <button className=" justify-end mt-10 px-10 rounded-full bg-meta-7 py-3 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10">
-              DEPOSIT
+            <button className="mt-4 px-10 rounded-full bg-meta-8 py-2.5 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10">
+              Buy
             </button>
           </div>
         </div>
       </div>
 
-      <hr />
+      <hr className="my-5 border-danger border-[1px]" />
 
-      <div className="mt-10 grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 xl:grid-cols-4 2xl:gap-7.5">
+      <div className="mt-10 grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6  lg:grid-cols-3  xl:grid-cols-4 2xl:gap-7.5">
         <Link to={'/'}>
           <CardDataStats
             title="Deposit Wallet"
@@ -197,7 +129,7 @@ const BizTokenDashboard: React.FC = () => {
             // rate="0.95%"
             // levelDown
           >
-            <PiPackage className="text-2xl dark:text-white text-primary" />
+            <PiPackage className="text-xl dark:text-white text-primary" />
           </CardDataStats>
         </Link>
 

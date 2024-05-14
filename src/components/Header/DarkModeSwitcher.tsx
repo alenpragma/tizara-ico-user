@@ -6,13 +6,11 @@ const DarkModeSwitcher = () => {
   const [colorMode, setColorMode] = useColorMode();
   const { theme, setTheme } = useContext(MyContext);
 
-  console.log(theme);
-
   return (
     <li>
       <label
         className={`relative m-0 block h-7.5 w-14 rounded-full ${
-          colorMode === 'dark' ? 'bg-primary' : 'bg-stroke'
+          colorMode === 'dark' ? 'bg-meta-3' : 'bg-stroke'
         }`}
       >
         <input
