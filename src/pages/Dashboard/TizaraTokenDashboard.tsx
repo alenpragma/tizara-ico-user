@@ -74,6 +74,7 @@ const BizTokenDashboard: React.FC = () => {
   return (
     <DefaultLayout>
       <WelcomeSection />
+
       <div className="grid grid-cols-1 lg:grid-cols-6 gap-y-5 lg:gap-5">
         <div className="col-span-4">
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 xl:grid-cols-2 2xl:gap-7.5">
@@ -141,21 +142,41 @@ const BizTokenDashboard: React.FC = () => {
 
         <div className="col-span-2  rounded-sm cursor-pointer border border-stroke bg-white py-5 px-6 shadow-default dark:border-strokedark dark:bg-boxdark">
           <div className=" flex justify-between flex-col ">
-            <div className="flex flex-col gap-3">
-              <h4 className="text-title-sm font-bold text-black dark:text-white">
-                Token Name: Tizara
-              </h4>
-              <h4 className="text-title-sm font-bold text-black dark:text-white">
-                Blockchain: Binance
-              </h4>
-              <h4 className="text-title-sm font-bold text-black dark:text-white">
-                Total Supply: 2343423
-              </h4>
-              <h4 className="text-title-sm font-bold text-black dark:text-white">
-                Current Price: 300$
-              </h4>
+            <div className="flex flex-col gap-5">
+              <div className="flex justify-between">
+                <h4 className="text-title-sm font-bold text-black dark:text-white">
+                  Token Name:
+                </h4>
+                <h4 className="text-title-sm font-bold text-black dark:text-white">
+                  Tizara
+                </h4>
+              </div>
+              <div className="flex justify-between">
+                <h4 className="text-title-sm font-bold text-black dark:text-white">
+                  Blockchain:
+                </h4>
+                <h4 className="text-title-sm font-bold text-black dark:text-white">
+                  Binance
+                </h4>
+              </div>
+              <div className="flex justify-between">
+                <h4 className="text-title-sm font-bold text-black dark:text-white">
+                  Total Supply:
+                </h4>
+                <h4 className="text-title-sm font-bold text-black dark:text-white">
+                  2343423
+                </h4>
+              </div>
+              <div className="flex justify-between">
+                <h4 className="text-title-sm font-bold text-black dark:text-white">
+                  Current Price:
+                </h4>
+                <h4 className="text-title-sm font-bold text-black dark:text-white">
+                  300$
+                </h4>
+              </div>
             </div>
-            <button className="ms-auto justify-end mt-10 w-fit px-10  rounded-md bg-secondary py-3 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10">
+            <button className=" justify-end mt-10 px-10 rounded-full bg-meta-7 py-3 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10">
               DEPOSIT
             </button>
           </div>
