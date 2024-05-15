@@ -1,4 +1,4 @@
-const WelcomeSection = () => {
+const WelcomeSection = ({ profile }: any) => {
   return (
     <>
       <div className="flex flex-col lg:flex-row  gap-4 py-4 lg:place-items-center justify-between">
@@ -9,8 +9,8 @@ const WelcomeSection = () => {
             alt=""
           />
           <div>
-            <h2 className="text-title-md lg:text-2xl font-semibold">
-              Welcome Mr. Tom Cruise
+            <h2 className="text-title-md capitalize lg:text-2xl font-semibold">
+              Welcome, {profile?.name}
             </h2>
             <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit.</p>
           </div>

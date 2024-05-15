@@ -4,6 +4,10 @@ import Swal from 'sweetalert2';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import SvgImage from './SvgImage';
 import { PuffLoader } from 'react-spinners';
+import {
+  getTizaraUserToken,
+  setTizaraUserToken,
+} from '../../hooks/getTokenFromstorage';
 
 type Inputs = {
   email: string;
@@ -15,8 +19,7 @@ type Inputs = {
 
 const SignUp: React.FC = () => {
   const [loding, setLoading] = useState(false);
-
-  const token = localStorage.getItem('tizaraToken');
+  const token = getTizaraUserToken();
 
   const navigate = useNavigate();
   useEffect(() => {
@@ -49,7 +52,7 @@ const SignUp: React.FC = () => {
       console.log(responseData);
 
       if (responseData.success) {
-        localStorage.setItem('tizaraToken', responseData?.data?.token);
+        setTizaraUserToken(responseData?.data?.token);
         Swal.fire({
           title: 'success',
           text: 'Register successfull',

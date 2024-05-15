@@ -3,17 +3,11 @@ import { Route, Routes, useLocation } from 'react-router-dom';
 import PageTitle from './components/PageTitle';
 import SignIn from './pages/Authentication/SignIn';
 import SignUp from './pages/Authentication/SignUp';
-import Settings from './pages/Settings';
-
-import PendingDeposits from './pages/Deposits/PendingDeposits';
-import BonusSettings from './pages/BonusSettings';
 import PurchaseHistory from './pages/Purchase/PurchaseHistory';
 import ProtectedRoute from './hooks/ProtectedRoute';
 
 const Profile = lazy(() => import('./pages/Profile'));
-const GeneralSettings = lazy(() => import('./pages/GeneralSettings'));
 
-const AllDeposits = lazy(() => import('./pages/Deposits/AllDeposits'));
 const PackageSettings = lazy(() => import('./pages/Package/PackageSettings'));
 
 import MyContext from './hooks/MyContext';

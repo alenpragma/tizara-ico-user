@@ -11,20 +11,11 @@ import WelcomeSection from './WelcomeSection';
 import Wallets from './Wallets';
 import TizaraCoin from './TizaraCoin';
 
-interface ApiResponse {
+interface ApiResponse<T> {
   statusCode: number;
   success: boolean;
   message: string;
-  data: UserProfile;
-}
-
-interface Wallet {
-  id: string;
-  depositWallet: number;
-  icotWallet: number;
-  nativeWallet: string;
-  createdAt: string;
-  updatedAt: string;
+  data: T;
 }
 
 interface UserProfile {
@@ -41,7 +32,6 @@ interface UserProfile {
   nativeWallet: number;
   createdAt: string;
   updatedAt: string;
-  wallet: Wallet;
 }
 
 const BizTokenDashboard: React.FC = () => {
@@ -51,7 +41,7 @@ const BizTokenDashboard: React.FC = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get<ApiResponse>(
+        const response = await axios.get<ApiResponse<UserProfile>>(
           'https://tizara.vercel.app/api/v1/profile',
           {
             headers: {
@@ -74,12 +64,12 @@ const BizTokenDashboard: React.FC = () => {
 
   return (
     <DefaultLayout>
-      <WelcomeSection />
+      <WelcomeSection profile={profile} />
 
       <div className="grid grid-cols-1 lg:grid-cols-6 gap-y-5 lg:gap-5">
         {/* users wallets  */}
         <div className="col-span-4">
-          <Wallets profile={profile} />
+          <Wallets />
         </div>
 
         <div className="col-span-2  rounded-sm border border-stroke bg-white py-5 px-6 shadow-default dark:border-strokedark dark:bg-boxdark">
@@ -92,45 +82,26 @@ const BizTokenDashboard: React.FC = () => {
       <div className="mt-10 grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6  lg:grid-cols-3  xl:grid-cols-4 2xl:gap-7.5">
         <Link to={'/'}>
           <CardDataStats
-            title="Deposit Wallet"
-            total={`${
-              profile?.wallet?.depositWallet
-                ? profile?.wallet?.depositWallet
-                : '00'
-            } TIZARA`}
+            title="My Team"
+            total={`${profile?.referralCount ? profile?.referralCount : '00'}`}
+
             // rate="0.95%"
             // levelDown
           >
-            <PiPackage className="text-xl dark:text-white text-primary" />
+            <PiPackage className="text-2xl dark:text-white text-primary" />
           </CardDataStats>
         </Link>
-
         <Link to={'/'}>
           <CardDataStats
-            title="Native Wallet"
-            total={`${
-              profile?.wallet?.nativeWallet
-                ? profile?.wallet?.nativeWallet
-                : '00'
-            } TIZARA`}
+            title="My Team"
+            total={`${profile?.referralCount ? profile?.referralCount : '00'}`}
+
             // rate="0.95%"
             // levelDown
           >
-            <UserIcon />
+            <PiPackage className="text-2xl dark:text-white text-primary" />
           </CardDataStats>
         </Link>
-
-        <Link to={'/'}>
-          <CardDataStats
-            title="ICO Wallet"
-            total="00"
-            // rate="0.95%"
-            // levelDown
-          >
-            <FaUserCheck className="text-xl dark:text-white text-primary" />
-          </CardDataStats>
-        </Link>
-
         <Link to={'/'}>
           <CardDataStats
             title="My Team"
