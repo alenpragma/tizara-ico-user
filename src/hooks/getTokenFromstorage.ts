@@ -1,6 +1,5 @@
 export const getTizaraUserToken = () => {
   const token = localStorage.getItem('tizaraUserToken');
-  console.log(token);
 
   return token;
 };

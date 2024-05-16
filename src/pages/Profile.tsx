@@ -1,7 +1,6 @@
 import Breadcrumb from '../components/Breadcrumbs/Breadcrumb';
 import DefaultLayout from '../layout/DefaultLayout';
 import userSix from '../images/user/user-06.png';
-import SocialIcons from './Profile/SocialIcons';
 import BasicDetails from './Profile/BasicDetails';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
