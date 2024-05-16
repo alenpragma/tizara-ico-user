@@ -72,7 +72,7 @@ const BizTokenDashboard: React.FC = () => {
           <Wallets />
         </div>
 
-        <div className="col-span-2  rounded-sm border border-stroke bg-white py-5 px-6 shadow-default dark:border-strokedark dark:bg-boxdark">
+        <div className="col-span-2 rounded-sm border border-stroke bg-white py-5 px-6 shadow-default dark:border-strokedark dark:bg-boxdark">
           <TizaraCoin />
         </div>
       </div>

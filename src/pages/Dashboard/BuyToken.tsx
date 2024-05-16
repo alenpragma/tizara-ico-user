@@ -3,12 +3,8 @@ import Button from '../../Ui/Button';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 type Inputs = {
-  paymentMethod: string;
-  walletNo: string;
-  network: string;
-  trxId: string;
-  amount: string;
-  depositMethodId: string;
+  coinPrice: number;
+  coinAmount: number;
 };
 interface ComponentProps {
   // fetchData: () => void;
@@ -19,10 +15,6 @@ const BuyToken: React.FC<ComponentProps> = ({ closeModal }) => {
   const { register, handleSubmit } = useForm<Inputs>();
 
   const onSubmit: SubmitHandler<Inputs> = async (data: Inputs) => {
-    const { trxId, amount, ...rest } = data;
-
-    console.log(amount);
-
     console.log(data);
   };
 
@@ -62,8 +54,8 @@ const BuyToken: React.FC<ComponentProps> = ({ closeModal }) => {
                     Coin Price:
                   </label>
                   <input
-                    className=" rounded text-end border border-stroke bg-gray py-2 pl-3 pr-4.5 text-black-2 focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
-                    {...register('amount', { required: true })}
+                    className="w-30 rounded text-end border border-stroke bg-gray py-2 pl-3 pr-4.5 text-black-2 focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
+                    {...register('coinPrice', { required: true })}
                     value={'0.002'}
                   />
                 </div>
@@ -75,8 +67,9 @@ const BuyToken: React.FC<ComponentProps> = ({ closeModal }) => {
                     Coin Amount:
                   </label>
                   <input
-                    className="text-end rounded border border-stroke bg-gray py-2 pl-3 pr-4.5 text-black-2 focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
-                    {...register('amount', { required: true })}
+                    type="number"
+                    className="text-end w-30 rounded border border-stroke bg-gray py-2 pl-3 pr-4.5 text-black-2 focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
+                    {...register('coinAmount', { required: true })}
                   />
                 </div>
                 <hr />

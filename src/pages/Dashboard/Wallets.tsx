@@ -16,8 +16,9 @@ interface ApiResponse<T> {
 interface IWallet {
   id: string;
   depositWallet: number;
-  icotWallet: number;
+  icoWallet: number;
   nativeWallet: number;
+  stackWallet: number;
   createdAt: string;
   updatedAt: string;
   userId: string;
@@ -58,9 +59,7 @@ const Wallets = () => {
       <Link to={'/'}>
         <CardDataStats
           title="Deposit Wallet"
-          total={`${
-            wallet?.depositWallet ? wallet?.depositWallet : '00'
-          } TIZARA`}
+          total={`${wallet?.depositWallet ? wallet?.depositWallet : '00'} USD`}
           // rate="0.95%"
           // levelDown
         >
@@ -82,7 +81,7 @@ const Wallets = () => {
       <Link to={'/'}>
         <CardDataStats
           title="ICO Wallet"
-          total={`${wallet?.icotWallet ? wallet?.icotWallet : '00'} TIZARA`}
+          total={`${wallet?.icoWallet ? wallet?.icoWallet : '00'} TIZARA`}
           // rate="0.95%"
           // levelDown
         >
@@ -93,9 +92,7 @@ const Wallets = () => {
       <Link to={'/'}>
         <CardDataStats
           title="Stack Wallet"
-          total={`${
-            wallet?.depositWallet ? wallet?.depositWallet : '00'
-          } TIZARA`}
+          total={`${wallet?.stackWallet ? wallet?.stackWallet : '00'} TIZARA`}
           // rate="0.95%"
           // levelDown
         >

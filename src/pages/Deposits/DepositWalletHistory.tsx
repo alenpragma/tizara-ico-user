@@ -10,15 +10,15 @@ const DepositWalletHistory = () => {
   const [depositHistory, setDepositHistory] = useState<any>();
   const token = getTizaraUserToken();
   // const [isModalOpenAddMethod, setIsModalOpenAddMethod] = useState(false);
-  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [isDepositModalOpen, setIsDepositModalOpen] = useState(false);
 
   // edit modal
   const openEditModal = () => {
-    setIsEditModalOpen(true);
+    setIsDepositModalOpen(true);
   };
 
   const closeEditModal = () => {
-    setIsEditModalOpen(false);
+    setIsDepositModalOpen(false);
   };
 
   const fetchData = async () => {
@@ -157,7 +157,7 @@ const DepositWalletHistory = () => {
       </div>
 
       <div>
-        {isEditModalOpen && (
+        {isDepositModalOpen && (
           <DepositRequest closeModal={closeEditModal} fetchData={fetchData} />
         )}
       </div>

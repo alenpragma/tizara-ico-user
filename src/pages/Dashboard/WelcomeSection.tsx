@@ -1,4 +1,18 @@
+import { useState } from 'react';
+import DepositRequest from '../Deposits/DepositRequest';
+
 const WelcomeSection = ({ profile }: any) => {
+  const [isDepositModalOpen, setIsDepositModalOpen] = useState(false);
+
+  // edit modal
+  const openEditModal = () => {
+    setIsDepositModalOpen(true);
+  };
+
+  const closeEditModal = () => {
+    setIsDepositModalOpen(false);
+  };
+
   return (
     <>
       <div className="flex flex-col lg:flex-row  gap-4 py-4 lg:place-items-center justify-between">
@@ -18,7 +32,10 @@ const WelcomeSection = ({ profile }: any) => {
 
         <div>
           <div className="flex gap-2">
-            <button className="items-center justify-center rounded-md bg-meta-6 py-2 px-6 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10">
+            <button
+              onClick={() => openEditModal()}
+              className="items-center justify-center rounded-md bg-meta-6 py-2 px-6 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
+            >
               Deposit
             </button>
 
@@ -27,6 +44,9 @@ const WelcomeSection = ({ profile }: any) => {
             </button>
           </div>
         </div>
+      </div>
+      <div>
+        {isDepositModalOpen && <DepositRequest closeModal={closeEditModal} />}
       </div>
     </>
   );

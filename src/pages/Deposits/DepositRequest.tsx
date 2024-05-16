@@ -14,7 +14,7 @@ type Inputs = {
   depositMethodId: string;
 };
 interface ComponentProps {
-  fetchData: () => void;
+  fetchData?: () => void;
   closeModal: () => void;
 }
 
@@ -76,7 +76,9 @@ const DepositRequest: React.FC<ComponentProps> = ({
 
       const responseData = await response.json();
       if (responseData.success) {
-        fetchData();
+        if (fetchData) {
+          fetchData();
+        }
         Swal.fire({
           title: 'success',
           text: 'Deposit request success',

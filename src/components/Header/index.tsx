@@ -75,13 +75,6 @@ const Header = (props: {
           {/* <!-- User Area --> */}
           <DropdownUser />
           {/* <!-- User Area --> */}
-
-          <button
-            onClick={logout}
-            className="inline-flex items-center justify-center rounded-md bg-meta-7  py-2 px-4 text-center font-medium text-white hover:bg-opacity-90"
-          >
-            Logout
-          </button>
         </div>
       </div>
     </header>
