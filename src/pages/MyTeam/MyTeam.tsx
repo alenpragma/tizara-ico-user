@@ -8,10 +8,10 @@ import { getTizaraUserToken } from '../../hooks/getTokenFromstorage';
 const MyTeam = () => {
   const [history, sethistory] = useState([]);
   // const [loading, setLoading] = useState<any>(false);
-  const token = getTizaraUserToken();
 
   useEffect(() => {
     const fetchData = async () => {
+      const token = getTizaraUserToken();
       try {
         const response = await axios.get(
           'https://tizara.vercel.app/api/v1/profile/my-team',
