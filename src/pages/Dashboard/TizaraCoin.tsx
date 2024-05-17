@@ -1,5 +1,9 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import BuyToken from './BuyToken';
+import { getTizaraUserToken } from '../../hooks/getTokenFromstorage';
+import axios from 'axios';
+import { ApiResponse } from '../../types/global';
+import { ICoinPrice } from '../../types/dashboard';
 
 const TizaraCoin = () => {
   // edit
@@ -7,12 +11,38 @@ const TizaraCoin = () => {
   const [updateItem, setUpdateItem] = useState();
   // edit
 
+  const [coinPrice, setCoinPrice] = useState<ICoinPrice[] | any>();
+
+  const token = getTizaraUserToken();
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get<ApiResponse<ICoinPrice>>(
+          'https://tizara.vercel.app/api/v1/general-settings',
+          {
+            headers: {
+              Authorization: `${token}`,
+              'Content-Type': 'application/json',
+            },
+          },
+        );
+        if (response?.data?.success) {
+          setCoinPrice(response?.data.data);
+        }
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+    fetchData();
+  }, []);
+
   const openEditModal = () => {
     setIsEditModalOpen(true);
   };
   const closeEditModal = () => {
     setIsEditModalOpen(false);
   };
+
   return (
     <>
       <div>
@@ -23,21 +53,21 @@ const TizaraCoin = () => {
           <div className="flex flex-col gap-2">
             <div className="flex justify-between font-medium text-black dark:text-white">
               <h4 className="">Token Name:</h4>
-              <h4 className="">Tizara</h4>
+              <h4 className="uppercase">Tizara</h4>
             </div>
             <div className="flex justify-between font-medium text-black dark:text-white">
               <h4 className=" ">Blockchain:</h4>
-              <h4 className=" ">Binance</h4>
+              <h4 className=" ">BSC (Bep-20)</h4>
             </div>
 
             <div className="flex justify-between font-medium text-black dark:text-white">
               <h4 className=" ">Total Supply:</h4>
-              <h4 className=" ">15 Billion</h4>
+              <h4 className=" ">15 B</h4>
             </div>
 
             <div className="flex justify-between font-medium text-black dark:text-white">
               <h4 className=" ">Current Price:</h4>
-              <h4 className=" ">$0.001</h4>
+              <h4 className=" "> {coinPrice && coinPrice[0]?.coinPrice} </h4>
             </div>
           </div>
           <button
@@ -49,7 +79,11 @@ const TizaraCoin = () => {
         </div>
       </div>
 
-      <div>{isEditModalOpen && <BuyToken closeModal={closeEditModal} />}</div>
+      <div>
+        {isEditModalOpen && (
+          <BuyToken coinPrice={coinPrice} closeModal={closeEditModal} />
+        )}
+      </div>
     </>
   );
 };

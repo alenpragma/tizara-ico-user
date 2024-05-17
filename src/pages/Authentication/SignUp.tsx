@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import SvgImage from './SvgImage';
@@ -17,9 +17,16 @@ type Inputs = {
   referralCode?: string;
 };
 
+function useQuery() {
+  return new URLSearchParams(useLocation().search);
+}
 const SignUp: React.FC = () => {
   const [loding, setLoading] = useState(false);
   const token = getTizaraUserToken();
+  const query = useQuery();
+
+  const referralCode = query.get('referralCode');
+  console.log(referralCode);
 
   const navigate = useNavigate();
   useEffect(() => {
@@ -187,7 +194,7 @@ const SignUp: React.FC = () => {
                         <input
                           type="text"
                           {...register('phone', { required: true })}
-                          placeholder="Enter your full name"
+                          placeholder="Enter your phone"
                           className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                         />
 
@@ -252,13 +259,14 @@ const SignUp: React.FC = () => {
 
                     <div className="mb-4">
                       <label className="mb-2.5 block font-medium text-black dark:text-white">
-                        Referral Code
+                        Referral Code (optional)
                       </label>
                       <div className="relative">
                         <input
                           type="text"
                           {...register('referralCode')}
                           placeholder="Referral"
+                          defaultValue={referralCode as string}
                           className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                         />
 

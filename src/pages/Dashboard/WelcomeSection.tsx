@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import DepositRequest from '../Deposits/DepositRequest';
+import Swal from 'sweetalert2';
+import { FaRegCopy } from 'react-icons/fa6';
 
 const WelcomeSection = ({ profile }: any) => {
   const [isDepositModalOpen, setIsDepositModalOpen] = useState(false);
@@ -11,6 +13,21 @@ const WelcomeSection = ({ profile }: any) => {
 
   const closeEditModal = () => {
     setIsDepositModalOpen(false);
+  };
+  const [copySuccess, setCopySuccess] = useState('');
+
+  const copyToClipboard = async (textToCopy: any) => {
+    try {
+      await navigator.clipboard.writeText(textToCopy);
+      Swal.fire({
+        title: 'Copyed',
+        text: 'Copied success',
+        icon: 'success',
+      });
+    } catch (err) {
+      console.error('Failed to copy: ', err);
+      setCopySuccess('Copy failed');
+    }
   };
 
   return (
@@ -26,7 +43,21 @@ const WelcomeSection = ({ profile }: any) => {
             <h2 className="text-title-md capitalize lg:text-2xl font-semibold">
               Welcome, {profile?.name}
             </h2>
-            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit.</p>
+            <div className="flex gap-2">
+              <p>
+                https://official.tizaracoin.com/auth/signup?referralCode=$
+                {profile?.myReferralCode}
+              </p>
+              <div
+                onClick={() =>
+                  copyToClipboard(
+                    `https://official.tizaracoin.com/auth/signup?referralCode=${profile?.myReferralCode}`,
+                  )
+                }
+              >
+                <FaRegCopy className="text-2xl" />
+              </div>
+            </div>
           </div>
         </div>
 

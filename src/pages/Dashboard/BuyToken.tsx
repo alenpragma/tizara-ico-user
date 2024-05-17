@@ -3,8 +3,7 @@ import Button from '../../Ui/Button';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import Swal from 'sweetalert2';
 import { getTizaraUserToken } from '../../hooks/getTokenFromstorage';
-import axios from 'axios';
-import { ApiResponse } from '../../types/global';
+import { ICoinPrice } from '../../types/dashboard';
 
 type Inputs = {
   coinPrice: number;
@@ -13,17 +12,11 @@ type Inputs = {
 interface ComponentProps {
   // fetchData: () => void;
   closeModal: () => void;
-}
-interface ICoinPrice {
-  id: string;
-  coinPrice: number;
-  createdAt: string;
-  updatedAt: string;
+  coinPrice: ICoinPrice[];
 }
 
-const BuyToken: React.FC<ComponentProps> = ({ closeModal }) => {
+const BuyToken: React.FC<ComponentProps> = ({ closeModal, coinPrice }) => {
   const { register, handleSubmit } = useForm<Inputs>();
-  const [coinPrice, setCoinPrice] = useState<ICoinPrice[] | any>();
   const [amount, setAmount] = useState<number>(0);
 
   let totalPrice: any = 0;
@@ -32,31 +25,8 @@ const BuyToken: React.FC<ComponentProps> = ({ closeModal }) => {
   }
 
   const token = getTizaraUserToken();
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get<ApiResponse<ICoinPrice>>(
-          'http://localhost:5000/api/v1/general-settings',
-          {
-            headers: {
-              Authorization: `${token}`,
-              'Content-Type': 'application/json',
-            },
-          },
-        );
-        if (response?.data?.success) {
-          setCoinPrice(response?.data.data);
-        }
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    };
-    fetchData();
-  }, []);
 
   const onSubmit: SubmitHandler<Inputs> = async (data: Inputs) => {
-    console.log(data);
-
     const buyDetail = { ...data, totalPrice };
 
     const aa = buyDetail.totalPrice.toFixed(3);
