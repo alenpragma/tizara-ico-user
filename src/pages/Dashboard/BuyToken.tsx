@@ -35,7 +35,6 @@ const BuyToken: React.FC<ComponentProps> = ({ closeModal, coinPrice }) => {
       totalPrice: parseFloat(buyDetail.totalPrice.toFixed(5)),
     };
     console.log(buyDetails);
-    return;
 
     try {
       const response = await fetch('http://localhost:5000/api/v1/buy-token', {
