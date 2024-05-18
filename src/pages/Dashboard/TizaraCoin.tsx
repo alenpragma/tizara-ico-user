@@ -18,7 +18,7 @@ const TizaraCoin = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get<ApiResponse<ICoinPrice>>(
-          'https://tizara.vercel.app/api/v1/general-settings',
+          'http://localhost:5000/api/v1/general-settings',
           {
             headers: {
               Authorization: `${token}`,

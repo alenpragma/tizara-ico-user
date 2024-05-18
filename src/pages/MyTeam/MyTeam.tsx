@@ -14,7 +14,7 @@ const MyTeam = () => {
       const token = getTizaraUserToken();
       try {
         const response = await axios.get(
-          'https://tizara.vercel.app/api/v1/profile/my-team',
+          'http://localhost:5000/api/v1/profile/my-team',
           {
             headers: {
               Authorization: `${token}`,

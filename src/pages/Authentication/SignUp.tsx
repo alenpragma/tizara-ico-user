@@ -48,7 +48,7 @@ const SignUp: React.FC = () => {
 
     setLoading(true);
     try {
-      const response = await fetch('https://tizara.vercel.app/api/v1/auth', {
+      const response = await fetch('http://localhost:5000/api/v1/auth', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
