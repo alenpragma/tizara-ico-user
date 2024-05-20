@@ -5,7 +5,11 @@ import axios from 'axios';
 import { ApiResponse } from '../../types/global';
 import { ICoinPrice } from '../../types/dashboard';
 
-const TizaraCoin = () => {
+interface ComponentProps {
+  setGetWallet: (value: boolean) => void;
+}
+
+const TizaraCoin = ({ setGetWallet }: ComponentProps) => {
   // edit
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [updateItem, setUpdateItem] = useState();
@@ -81,7 +85,11 @@ const TizaraCoin = () => {
 
       <div>
         {isEditModalOpen && (
-          <BuyToken coinPrice={coinPrice} closeModal={closeEditModal} />
+          <BuyToken
+            setGetWallet={setGetWallet}
+            coinPrice={coinPrice}
+            closeModal={closeEditModal}
+          />
         )}
       </div>
     </>

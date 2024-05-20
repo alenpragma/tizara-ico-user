@@ -24,35 +24,35 @@ interface IWallet {
   userId: string;
 }
 
-const Wallets = () => {
+const Wallets = ({ getWallet }: any) => {
   const [wallet, setWallet] = useState<IWallet | null>(null);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const token = getTizaraUserToken();
-      try {
-        const response = await axios.get<ApiResponse<IWallet>>(
-          'http://localhost:5000/api/v1/user-wallet',
-          {
-            headers: {
-              Authorization: `${token}`,
-              'Content-Type': 'application/json',
-            },
+  const fetchData = async () => {
+    const token = getTizaraUserToken();
+    try {
+      const response = await axios.get<ApiResponse<IWallet>>(
+        'http://localhost:5000/api/v1/user-wallet',
+        {
+          headers: {
+            Authorization: `${token}`,
+            'Content-Type': 'application/json',
           },
-        );
-        // console.log(response);
+        },
+      );
+      // console.log(response);
 
-        if (response?.data?.success) {
-          // console.log(response.data.data);
-          setWallet(response.data.data);
-        }
-      } catch (error) {
-        console.error('Error fetching data:', error);
+      if (response?.data?.success) {
+        // console.log(response.data.data);
+        setWallet(response.data.data);
       }
-    };
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
+
+  useEffect(() => {
     fetchData();
-  }, []);
-  console.log(wallet);
+  }, [getWallet]);
 
   return (
     <div className="grid grid-cols-2 gap-2 lg:gap-4 md:grid-cols-2 md:gap-6 xl:grid-cols-2 2xl:gap-7.5">

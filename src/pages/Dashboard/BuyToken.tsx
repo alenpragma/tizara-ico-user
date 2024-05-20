@@ -12,10 +12,15 @@ type Inputs = {
 interface ComponentProps {
   // fetchData: () => void;
   closeModal: () => void;
+  setGetWallet: (value: boolean) => void;
   coinPrice: ICoinPrice[];
 }
 
-const BuyToken: React.FC<ComponentProps> = ({ closeModal, coinPrice }) => {
+const BuyToken: React.FC<ComponentProps> = ({
+  closeModal,
+  coinPrice,
+  setGetWallet,
+}) => {
   const { register, handleSubmit } = useForm<Inputs>();
   const [amount, setAmount] = useState<number>(0);
 
@@ -47,12 +52,12 @@ const BuyToken: React.FC<ComponentProps> = ({ closeModal, coinPrice }) => {
       });
 
       const responseData = await response.json();
-      console.log(responseData);
 
+      setGetWallet(true);
       if (responseData.success) {
         Swal.fire({
           title: 'success',
-          text: 'Deposit request success',
+          text: 'Successfully Buy token',
           icon: 'success',
         }).then(() => {
           closeModal();
@@ -137,7 +142,7 @@ const BuyToken: React.FC<ComponentProps> = ({ closeModal, coinPrice }) => {
                 <h3 className="flex justify-between text-black-2 font-medium dark:text-white text-lg">
                   <span>Total Price:</span>
                   <span>
-                    {totalPrice ? parseFloat(totalPrice.toFixed(5)) : '00'}
+                    $ {totalPrice ? parseFloat(totalPrice.toFixed(5)) : '00'}
                   </span>
                 </h3>
                 <Button btnName="Buy" />

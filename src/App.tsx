@@ -21,6 +21,7 @@ import BizTokenDashboard from './pages/Dashboard/TizaraTokenDashboard';
 import Transaction from './pages/Transaction/Transaction';
 import MyTeam from './pages/MyTeam/MyTeam';
 import DepositWalletHistory from './pages/Deposits/DepositWalletHistory';
+import BuyTokenHistory from './pages/BuyTokenHistory/BuyTokenHistory';
 
 function App() {
   const { pathname } = useLocation();
@@ -102,6 +103,16 @@ function App() {
             />
 
             <Route
+              path="/buy-token-history"
+              element={
+                <>
+                  <PageTitle title="Deposit History" />
+                  <BuyTokenHistory />
+                </>
+              }
+            />
+
+            <Route
               path="/history/deposit-wallet"
               element={
                 <>
@@ -131,20 +142,6 @@ function App() {
               }
             />
 
-            {/* user end */}
-
-            {/* Packages */}
-            {/* <Route
-              path="/package/package-list"
-              element={
-                <>
-                  <PageTitle title="package-list" />
-                  <ProtectedRoute>
-                    <PackageList />
-                  </ProtectedRoute>
-                </>
-              }
-            /> */}
             <Route
               path="/package/package-settings"
               element={
