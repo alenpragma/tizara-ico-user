@@ -71,7 +71,12 @@ const TizaraCoin = ({ setGetWallet }: ComponentProps) => {
 
             <div className="flex justify-between font-medium text-black dark:text-white">
               <h4 className=" ">Current Price:</h4>
-              <h4 className=" "> {coinPrice && coinPrice[0]?.coinPrice} </h4>
+              <h4 className=" ">
+                {' '}
+                {coinPrice && coinPrice.length > 0
+                  ? coinPrice[0].coinPrice
+                  : '00'}
+              </h4>
             </div>
           </div>
           <button
