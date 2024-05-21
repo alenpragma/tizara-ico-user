@@ -22,7 +22,7 @@ const TizaraCoin = ({ setGetWallet }: ComponentProps) => {
     const fetchData = async () => {
       try {
         const response = await axios.get<ApiResponse<ICoinPrice>>(
-          'http://localhost:5000/api/v1/general-settings',
+          'https://tizara-backend.vercel.app/api/v1/general-settings',
           {
             headers: {
               Authorization: `${token}`,

@@ -34,7 +34,7 @@ const Transaction = () => {
         console.log(token);
 
         const response = await axios.get<ApiResponse>(
-          ' http://localhost:5000/api/v1/transaction-history',
+          ' https://tizara-backend.vercel.app/api/v1/transaction-history',
           {
             headers: {
               Authorization: `${token}`,
