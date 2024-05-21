@@ -22,6 +22,7 @@ import Transaction from './pages/Transaction/Transaction';
 import MyTeam from './pages/MyTeam/MyTeam';
 import DepositWalletHistory from './pages/Deposits/DepositWalletHistory';
 import BuyTokenHistory from './pages/BuyTokenHistory/BuyTokenHistory';
+import Stake from './pages/Stake/Stake';
 
 function App() {
   const { pathname } = useLocation();
@@ -68,6 +69,16 @@ function App() {
                   <ProtectedRoute>
                     <BizTokenDashboard />
                   </ProtectedRoute>
+                </>
+              }
+            />
+
+            <Route
+              path="/stack-coin"
+              element={
+                <>
+                  <PageTitle title="stake coin" />
+                  <Stake />
                 </>
               }
             />

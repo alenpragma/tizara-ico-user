@@ -13,7 +13,7 @@ interface ComponentProps {
   // fetchData: () => void;
   closeModal: () => void;
   setGetWallet: (value: boolean) => void;
-  coinPrice: ICoinPrice[];
+  coinPrice: ICoinPrice;
 }
 
 const BuyToken: React.FC<ComponentProps> = ({
@@ -26,7 +26,7 @@ const BuyToken: React.FC<ComponentProps> = ({
 
   let totalPrice: any = 0;
   if (coinPrice) {
-    totalPrice = Number(coinPrice[0]?.coinPrice) * amount;
+    totalPrice = Number(coinPrice?.coinPrice) * amount;
   }
 
   const token = getTizaraUserToken();
@@ -117,7 +117,7 @@ const BuyToken: React.FC<ComponentProps> = ({
                     className="w-35 rounded text-end border border-stroke bg-gray py-2 pl-3 pr-4.5 text-black-2 focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
                     {...register('coinPrice')}
                     type="number"
-                    value={coinPrice && coinPrice[0]?.coinPrice} // Null check added
+                    value={coinPrice && coinPrice.coinPrice} // Null check added
                   />
                 </div>
                 <div className="flex justify-between place-items-center gap-3">

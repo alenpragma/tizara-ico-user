@@ -154,6 +154,7 @@ const DepositRequest: React.FC<ComponentProps> = ({
                   ))}
                 </select>
               </div>
+
               <div>
                 <label
                   className="mb-2 block text-sm font-medium text-black dark:text-white"
