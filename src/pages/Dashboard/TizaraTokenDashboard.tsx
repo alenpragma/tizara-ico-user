@@ -41,7 +41,7 @@ const BizTokenDashboard: React.FC = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get<ApiResponse<UserProfile>>(
-          'https://tizara-backend.vercel.app/api/v1/profile',
+          'http://localhost:5000/api/v1/profile',
           {
             headers: {
               Authorization: `${token}`,
