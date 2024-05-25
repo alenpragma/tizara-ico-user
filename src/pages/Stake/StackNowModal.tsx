@@ -1,0 +1,160 @@
+import { useState } from 'react';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import Swal from 'sweetalert2';
+import { PuffLoader } from 'react-spinners';
+import Button from '../../Ui/Button';
+
+type Inputs = {
+  id: number;
+  planName: string;
+  apy: number;
+  duration: string;
+  minimum: string;
+  amount: string;
+};
+
+export const StackNowModal = ({ closeModal, updateItem }: any) => {
+  const [lodaing, setLoading] = useState(false);
+  const { register, handleSubmit } = useForm<Inputs>();
+
+  const onSubmit: SubmitHandler<Inputs> = async (data: Inputs) => {
+    console.log(data);
+    return;
+
+    try {
+      setLoading(true);
+
+      const response = await fetch('', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: ` `,
+        },
+        body: JSON.stringify(''),
+      });
+      setLoading(false);
+
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      const responseData = await response.json();
+    } catch (error) {
+      Swal.fire({
+        title: 'error',
+        text: 'Something wrong',
+        icon: 'error',
+      });
+    }
+  };
+
+  return (
+    <div className="fixed left-0 top-0 z-999 flex h-full min-h-screen w-full items-center justify-center bg-black/90 py-5">
+      <div
+        className="overflow-auto max-h-[80%] w-full max-w-fit rounded-lg bg-white   dark:bg-boxdark "
+        onClick={(e) => {
+          const target = e.target as HTMLDivElement;
+          if (target.className === 'modal-container') closeModal();
+        }}
+      >
+        <div className="modal  min-h-[400px] rounded-sm border border-stroke bg-white shadow-8 dark:border-strokedark dark:bg-boxdark overflow-auto">
+          <div className="min-w-full max-w-full w-[400px] lg:w-[600px] pb-4 px-1 dark:border-strokedark">
+            <div className="w-full flex justify-between px-3 place-items-center py-3">
+              <h2 className="text-xl font-bold text-black dark:text-white">
+                Stake Now
+              </h2>
+              <strong
+                className="text-4xl align-center cursor-pointer  hover:text-black dark:hover:text-white"
+                onClick={closeModal}
+              >
+                &times;
+              </strong>
+            </div>
+            <hr />
+            <form
+              onSubmit={handleSubmit(onSubmit)}
+              className="flex flex-col w-full gap-5.5 p-6.5"
+            >
+              <div>
+                <label
+                  className="mb-1 block text-sm font-medium text-black dark:text-white"
+                  htmlFor="type"
+                >
+                  Plan Name
+                </label>
+                <input
+                  className="w-full rounded border border-stroke bg-gray py-2 pl-3 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
+                  {...register('planName', { required: true })}
+                  value={updateItem.planName}
+                />
+              </div>
+              <div>
+                <label
+                  className="mb-1  block text-sm font-medium text-black dark:text-white"
+                  htmlFor="type"
+                >
+                  Duration
+                </label>
+                <input
+                  className="w-full rounded border border-stroke bg-gray py-2 pl-3 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
+                  {...register('duration', { required: true })}
+                  value={updateItem.duration}
+                />
+              </div>
+              <div>
+                <label
+                  className="mb-1  block text-sm font-medium text-black dark:text-white"
+                  htmlFor="type"
+                >
+                  Minimum
+                </label>
+                <input
+                  className="w-full rounded border border-stroke bg-gray py-2 pl-3 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
+                  {...register('minimum', { required: true })}
+                  value={updateItem.minimum}
+                />
+              </div>
+              <div>
+                <label
+                  className="mb-1 block text-sm font-medium text-black dark:text-white"
+                  htmlFor="type"
+                >
+                  APY %
+                </label>
+                <input
+                  className="w-full rounded border border-stroke bg-gray py-2 pl-3 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
+                  {...register('apy', { required: true })}
+                  value={updateItem.apy}
+                />
+              </div>
+              <div>
+                <label
+                  className="mb-1  block text-sm font-medium text-black dark:text-white"
+                  htmlFor="type"
+                >
+                  Amount
+                </label>
+                <input
+                  className="w-full rounded border border-stroke bg-gray py-2 pl-3 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
+                  {...register('amount', { required: true })}
+                />
+              </div>
+
+              <div>
+                {lodaing ? (
+                  <PuffLoader className="mx-auto" color="#36d7b7" size={40} />
+                ) : (
+                  <button
+                    className="btn flex justify-center rounded bg-primary py-2 px-6 font-medium text-gray hover:shadow-1"
+                    type="submit"
+                  >
+                    Update
+                  </button>
+                )}
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};

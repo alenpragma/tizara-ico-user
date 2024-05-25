@@ -2,80 +2,107 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import Button from '../../Ui/Button';
 import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
 import DefaultLayout from '../../layout/DefaultLayout';
+import axios from 'axios';
+import { getTizaraUserToken } from '../../hooks/getTokenFromstorage';
+import { useEffect, useState } from 'react';
+import { StackNowModal } from './StackNowModal';
 
 type Inputs = {
   paymentMethod: string;
 };
 const Stake = () => {
-  const { register, handleSubmit } = useForm();
+  const [depositMethod, setDepositMethod] = useState<any>();
+  const [selected, setSelected] = useState<any>();
+  const [plan, setPlan] = useState<any>();
+
+  // edit
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [updateItem, setUpdateItem] = useState<any>();
+  // edit
+
+  const openEditModal = (data: any) => {
+    setUpdateItem(data);
+    setIsEditModalOpen(true);
+  };
+
+  const closeEditModal = () => {
+    setIsEditModalOpen(false);
+  };
+
+  const token = getTizaraUserToken();
+  const getPaymentMethod = async () => {
+    try {
+      const response = await axios.get(
+        'https://tizara-backend.vercel.app/api/v1/stack-coin-settings?status=ACTIVE',
+        {
+          headers: {
+            Authorization: `${token}`,
+            'Content-Type': 'application/json',
+          },
+        },
+      );
+      setDepositMethod(response?.data?.data);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
+
+  useEffect(() => {
+    getPaymentMethod();
+  }, []);
+  console.log(depositMethod);
 
   const onSubmit: SubmitHandler<Inputs> = async (data: Inputs) => {
     console.log(data);
   };
 
+  // Function to set wallet name based on selected method
+  useEffect(() => {
+    const selectedMethodObject = depositMethod?.data?.find(
+      (method: any) => method.id === selected,
+    );
+    if (selectedMethodObject) {
+      setPlan(selectedMethodObject);
+    } else {
+      setPlan(undefined);
+    }
+  }, [selected, depositMethod]);
+
   return (
     <DefaultLayout>
       <Breadcrumb pageName="Stake Now" />
       <div className="lg:max-w-[50%] mx-auto">
-        <form
-          // onSubmit={handleSubmit(onSubmit)}
-          className="flex  flex-col w-full gap-5.5 p-6.5  dark:bg-meta-4"
-        >
-          <div className="border p-3 rounded-md">
-            <h3 className="dark:text-white font-semibold text-md">
-              Available Tizara: 99999
-            </h3>
-          </div>
+        <div className="border p-3 rounded-md">
+          <h3 className="dark:text-white font-semibold text-md">
+            Available Tizara: 99999
+          </h3>
+        </div>
 
-          <div className="flex justify-between place-items-center gap-3">
-            <label
-              className=" block  text-sm font-medium text-black dark:text-white"
-              htmlFor="type"
-            >
-              Duration
-            </label>
-            <select
-              name=""
-              id=""
-              className="w-89 h-10 w-70 border-strokedark  border-[1.5px] bg-transparent  rounded-sm dark:bg-form-input"
-            >
-              <option value="180"> 180 day</option>
-              <option value="180"> 365 day</option>
-            </select>
-          </div>
-          <div className="flex justify-between place-items-center gap-3">
-            <label
-              className="mb-2 block text-sm font-medium text-black-2 dark:text-white"
-              htmlFor="type"
-            >
-              Daily ROI
-            </label>
-            <input
-              className="w-70 rounded border-[1.5px] text-end border-strokedark bg-transparent py-2 px-5 text-black outline-none transition focus:border-primary active:border-primary   dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-              {...register('coinPrice')}
-              type="number"
-            />
-          </div>
-          <div className="flex justify-between place-items-center gap-3">
-            <label
-              className="mb-2 block text-sm font-medium text-black-2 dark:text-white"
-              htmlFor="type"
-            >
-              Token Amount:
-            </label>
-            <input
-              className="w-70 rounded border-[1.5px] text-end border-strokedark bg-transparent py-2 px-5 text-black outline-none transition focus:border-primary active:border-primary   dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-              {...register('coinPrice')}
-              type="number"
-            />
-          </div>
-
-          <hr />
-          <div className="mx-auto">
-            <Button btnName="Submit" />
-          </div>
-        </form>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 my-4">
+          {depositMethod?.map((item: any) => {
+            return (
+              <div
+                className=" w-50 mx-auto border p-3 rounded-md dark:bg-black"
+                key={item._id}
+              >
+                <p className=" font-medium">Name: {item.planName}</p>
+                <p className=" font-medium">Duration: {item.duration} day</p>
+                <p className=" font-medium">Minimum: {item.minimum} Tizara</p>
+                <p className=" font-medium">APY: {item.apy} %</p>
+                <button
+                  onClick={() => openEditModal(item)}
+                  className={`px-6 bg-primary btn flex justify-center rounded  py-1  mt-2  font-normal text-gray hover:shadow-1`}
+                >
+                  Stake Now
+                </button>
+              </div>
+            );
+          })}
+        </div>
       </div>
+      {isEditModalOpen && (
+        <StackNowModal closeModal={closeEditModal} updateItem={updateItem} />
+      )}
     </DefaultLayout>
   );
 };
