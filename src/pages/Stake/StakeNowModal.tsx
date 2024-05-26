@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import Swal from 'sweetalert2';
 import { PuffLoader } from 'react-spinners';
-import Button from '../../Ui/Button';
+import { getTizaraUserToken } from '../../hooks/getTokenFromstorage';
 
 type Inputs = {
   id: number;
@@ -10,34 +10,58 @@ type Inputs = {
   apy: number;
   duration: string;
   minimum: string;
-  amount: string;
+  stakeAmount: string;
+  dailyRoy: number;
 };
 
-export const StackNowModal = ({ closeModal, updateItem }: any) => {
+export const StakeNowModal = ({ closeModal, selectedPlan }: any) => {
   const [lodaing, setLoading] = useState(false);
   const { register, handleSubmit } = useForm<Inputs>();
+  const [amount, setAmount] = useState<number>(0);
+  const token = getTizaraUserToken();
+
+  // dayly ROI
+  const yearlyRoy = selectedPlan ? (amount / 100) * selectedPlan.apy : 0;
+
+  const dailyRoy = selectedPlan ? yearlyRoy / selectedPlan.duration : 0;
 
   const onSubmit: SubmitHandler<Inputs> = async (data: Inputs) => {
-    console.log(data);
-    return;
-
+    const planData = {
+      dailyRoy,
+      planName: data.planName,
+      duration: data.duration,
+      apy: Number(data.apy),
+      stakeAmount: Number(data.stakeAmount),
+      planId: selectedPlan.id,
+    };
     try {
       setLoading(true);
 
-      const response = await fetch('', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: ` `,
+      const response = await fetch(
+        'https://tizara-backend.vercel.app/api/v1/stack-now',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `${token}`,
+          },
+          body: JSON.stringify(planData),
         },
-        body: JSON.stringify(''),
-      });
+      );
       setLoading(false);
 
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
       const responseData = await response.json();
+      closeModal();
+      if (responseData) {
+        Swal.fire({
+          title: 'success',
+          text: 'Successfully stake amount',
+          icon: 'success',
+        });
+      }
     } catch (error) {
       Swal.fire({
         title: 'error',
@@ -84,7 +108,7 @@ export const StackNowModal = ({ closeModal, updateItem }: any) => {
                 <input
                   className="w-full rounded border border-stroke bg-gray py-2 pl-3 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
                   {...register('planName', { required: true })}
-                  value={updateItem.planName}
+                  value={selectedPlan.planName}
                 />
               </div>
               <div>
@@ -97,7 +121,7 @@ export const StackNowModal = ({ closeModal, updateItem }: any) => {
                 <input
                   className="w-full rounded border border-stroke bg-gray py-2 pl-3 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
                   {...register('duration', { required: true })}
-                  value={updateItem.duration}
+                  value={selectedPlan.duration}
                 />
               </div>
               <div>
@@ -110,7 +134,7 @@ export const StackNowModal = ({ closeModal, updateItem }: any) => {
                 <input
                   className="w-full rounded border border-stroke bg-gray py-2 pl-3 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
                   {...register('minimum', { required: true })}
-                  value={updateItem.minimum}
+                  value={selectedPlan.minimum}
                 />
               </div>
               <div>
@@ -123,7 +147,7 @@ export const StackNowModal = ({ closeModal, updateItem }: any) => {
                 <input
                   className="w-full rounded border border-stroke bg-gray py-2 pl-3 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
                   {...register('apy', { required: true })}
-                  value={updateItem.apy}
+                  value={selectedPlan.apy}
                 />
               </div>
               <div>
@@ -135,7 +159,21 @@ export const StackNowModal = ({ closeModal, updateItem }: any) => {
                 </label>
                 <input
                   className="w-full rounded border border-stroke bg-gray py-2 pl-3 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
-                  {...register('amount', { required: true })}
+                  {...register('stakeAmount', { required: true })}
+                  onChange={(e) => setAmount(parseFloat(e.target.value))}
+                />
+              </div>
+
+              <div>
+                <label
+                  className="mb-1  block text-sm font-medium text-black dark:text-white"
+                  htmlFor="type"
+                >
+                  Daily ROI
+                </label>
+                <input
+                  className="w-full rounded border border-stroke bg-gray py-2 pl-3 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
+                  value={dailyRoy ? dailyRoy.toFixed(5) : ''}
                 />
               </div>
 
@@ -147,7 +185,7 @@ export const StackNowModal = ({ closeModal, updateItem }: any) => {
                     className="btn flex justify-center rounded bg-primary py-2 px-6 font-medium text-gray hover:shadow-1"
                     type="submit"
                   >
-                    Update
+                    Submit
                   </button>
                 )}
               </div>

@@ -23,6 +23,7 @@ import MyTeam from './pages/MyTeam/MyTeam';
 import DepositWalletHistory from './pages/Deposits/DepositWalletHistory';
 import BuyTokenHistory from './pages/BuyTokenHistory/BuyTokenHistory';
 import Stake from './pages/Stake/Stake';
+import AllStake from './pages/Stake/AllStake';
 
 function App() {
   const { pathname } = useLocation();
@@ -79,6 +80,16 @@ function App() {
                 <>
                   <PageTitle title="stake coin" />
                   <Stake />
+                </>
+              }
+            />
+
+            <Route
+              path="/my-stack-coin"
+              element={
+                <>
+                  <PageTitle title="stake coin" />
+                  <AllStake />
                 </>
               }
             />

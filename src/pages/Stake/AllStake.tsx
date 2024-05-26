@@ -1,0 +1,151 @@
+import DefaultLayout from '../../layout/DefaultLayout';
+import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
+import axios from 'axios';
+import { useEffect, useState } from 'react';
+import { IPurchaseHistory } from '../../types/purchesHistory';
+import SearchInput from '../../components/SearchInput';
+import Skeleton from 'react-loading-skeleton';
+import { getTizaraUserToken } from '../../hooks/getTokenFromstorage';
+import { formatToLocalDate } from '../../hooks/formatDate';
+
+const AllStake = () => {
+  const [search, setSearch] = useState('');
+  const [purchaseHistorys, setPurchaseHistorys] = useState<IPurchaseHistory[]>(
+    [],
+  );
+  const token = getTizaraUserToken();
+
+  // pagination calculate
+  const [currentPage, setCurrentPage] = useState(0);
+  const [perPage, setparePage] = useState(25);
+
+  const from = currentPage * perPage;
+  const to = from + perPage;
+  //  pagination end
+
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(
+        'https://tizara-backend.vercel.app/api/v1/stack-now',
+        {
+          headers: {
+            Authorization: `${token}`,
+            'Content-Type': 'application/json',
+          },
+        },
+      );
+      setPurchaseHistorys(response?.data?.data);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  return (
+    <DefaultLayout>
+      <Breadcrumb pageName="My Stake Coin" />
+      <div className="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
+        <div className="max-w-full w-100 mb-4">
+          <SearchInput placeholder="Search..." setSearch={setSearch} />
+        </div>
+        <div className="max-w-full overflow-x-auto">
+          {purchaseHistorys.length == 0 ? (
+            <div>
+              <Skeleton height={40} count={6} />
+            </div>
+          ) : (
+            <table className="w-full table-auto">
+              <thead>
+                <tr className="bg-gray-2 text-left dark:bg-meta-4">
+                  <th className="min-w-[90px] py-4 px-4 font-medium text-black dark:text-white xl:pl-11">
+                    SL NO
+                  </th>
+                  <th className="min-w-[220px] py-4 px-4 font-medium text-black dark:text-white xl:pl-11">
+                    Date
+                  </th>
+                  <th className="min-w-[220px] py-4 px-4 font-medium text-black dark:text-white xl:pl-11">
+                    Plan Name
+                  </th>
+                  <th className="min-w-[220px] py-4 px-4 font-medium text-black dark:text-white xl:pl-11">
+                    Duration
+                  </th>
+                  <th className="min-w-[150px] py-4 px-4 font-medium text-black dark:text-white">
+                    APY
+                  </th>
+                  <th className="min-w-[150px] py-4 px-4 font-medium text-black dark:text-white">
+                    Daily ROY
+                  </th>
+                  <th className="min-w-[150px] py-4 px-4 font-medium text-black dark:text-white">
+                    Start date
+                  </th>
+
+                  {/* <th className="min-w-[150px] py-4 px-4 font-medium text-black dark:text-white">
+                    End Data
+                  </th> */}
+
+                  <th className="min-w-[120px] py-4 px-4 font-medium text-black dark:text-white">
+                    Status
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {purchaseHistorys?.map((purchaseHistory: any, key: any) => (
+                  <tr key={key}>
+                    <td className="border-b border-[#eee] py-5 px-4 pl-9 dark:border-strokedark xl:pl-11">
+                      <h5 className="font-medium text-black dark:text-white">
+                        {key + 1}
+                      </h5>
+                    </td>
+                    <td className="border-b border-[#eee] py-5 px-4 pl-4 dark:border-strokedark xl:pl-11">
+                      <h5 className="font-medium text-black dark:text-white">
+                        {formatToLocalDate(purchaseHistory?.createdAt)}
+                      </h5>
+                    </td>
+                    <td className="border-b border-[#eee] py-5 px-4 pl-4 dark:border-strokedark xl:pl-11">
+                      <h5 className="font-medium text-black dark:text-white">
+                        {purchaseHistory?.planName}
+                      </h5>
+                    </td>
+                    <td className="border-b border-[#eee] py-5 px-4 pl-4 dark:border-strokedark xl:pl-11">
+                      <h5 className="font-medium text-black dark:text-white">
+                        {purchaseHistory.duration} D
+                      </h5>
+                    </td>
+                    <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+                      <p className="text-black dark:text-white">
+                        {purchaseHistory.apy} %
+                      </p>
+                    </td>
+                    <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+                      <p className="text-black dark:text-white">
+                        {purchaseHistory.dailyRoy}
+                      </p>
+                    </td>
+
+                    {/* <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+                      <p className="text-black dark:text-white">
+                        {purchaseHistory.status == 1 ? 'Running' : 'Expired'}
+                      </p>
+                    </td> */}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          )}
+        </div>
+        {/* <div className="my-4">
+          <PaginationButtons
+            totalPages={Math.ceil(filteredPurchaseHistorys.length / perPage)}
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+          />
+        </div> */}
+      </div>
+    </DefaultLayout>
+  );
+};
+
+export default AllStake;

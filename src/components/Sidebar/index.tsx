@@ -4,6 +4,7 @@ import SidebarLinkGroup from './SidebarLinkGroup';
 import { MdOutlineSettingsSuggest } from 'react-icons/md';
 import { TbSettingsDown } from 'react-icons/tb';
 import DashboardIcon from '../../images/sidebarIcon/DashboardIcon';
+import { PiPackage } from 'react-icons/pi';
 
 interface SidebarProps {
   sidebarOpen: boolean;
@@ -130,10 +131,23 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                     }`}
                 >
                   <DashboardIcon />
-                  Stack Now
+                  stake Now
                 </NavLink>
               </li>
-
+              <li>
+                <NavLink
+                  to="/my-stack-coin"
+                  className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+                    (pathname === '/transaction' ||
+                      pathname.includes('transaction-history')) &&
+                    'bg-graydark dark:bg-meta-4'
+                  }'
+                    }`}
+                >
+                  <PiPackage className="text-xl dark:bg-meta-4" />
+                  Stake History
+                </NavLink>
+              </li>
               <li>
                 <NavLink
                   to="/my-team"
@@ -173,7 +187,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                   }'
                     }`}
                 >
-                  <DashboardIcon />
+                  <PiPackage className="text-xl dark:bg-meta-4" />
                   Transaction History
                 </NavLink>
               </li>

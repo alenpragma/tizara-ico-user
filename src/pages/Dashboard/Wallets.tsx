@@ -18,7 +18,7 @@ interface IWallet {
   depositWallet: number;
   icoWallet: number;
   nativeWallet: number;
-  stackWallet: number;
+  stakeWallet: number;
   createdAt: string;
   updatedAt: string;
   userId: string;
@@ -91,8 +91,8 @@ const Wallets = ({ getWallet }: any) => {
 
       <Link to={'/'}>
         <CardDataStats
-          title="Stack Wallet"
-          total={`${wallet?.stackWallet ? wallet?.stackWallet : '00'} TIZARA`}
+          title="Stake Wallet"
+          total={`${wallet?.stakeWallet ? wallet?.stakeWallet : '00'} TIZARA`}
           // rate="0.95%"
           // levelDown
         >

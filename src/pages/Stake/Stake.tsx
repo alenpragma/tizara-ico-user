@@ -1,11 +1,10 @@
 import { SubmitHandler, useForm } from 'react-hook-form';
-import Button from '../../Ui/Button';
 import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
 import DefaultLayout from '../../layout/DefaultLayout';
 import axios from 'axios';
 import { getTizaraUserToken } from '../../hooks/getTokenFromstorage';
 import { useEffect, useState } from 'react';
-import { StackNowModal } from './StackNowModal';
+import { StakeNowModal } from './StakeNowModal';
 
 type Inputs = {
   paymentMethod: string;
@@ -101,7 +100,7 @@ const Stake = () => {
         </div>
       </div>
       {isEditModalOpen && (
-        <StackNowModal closeModal={closeEditModal} updateItem={updateItem} />
+        <StakeNowModal closeModal={closeEditModal} selectedPlan={updateItem} />
       )}
     </DefaultLayout>
   );
