@@ -24,6 +24,7 @@ import DepositWalletHistory from './pages/Deposits/DepositWalletHistory';
 import BuyTokenHistory from './pages/BuyTokenHistory/BuyTokenHistory';
 import Stake from './pages/Stake/Stake';
 import AllStake from './pages/Stake/AllStake';
+import StakeBonusHistory from './pages/StakeBonusHistory/StakeBonusHistory';
 
 function App() {
   const { pathname } = useLocation();
@@ -90,6 +91,16 @@ function App() {
                 <>
                   <PageTitle title="stake coin" />
                   <AllStake />
+                </>
+              }
+            />
+
+            <Route
+              path="/history/stake-bonus-history"
+              element={
+                <>
+                  <PageTitle title=" Stake Bonus History" />
+                  <StakeBonusHistory />
                 </>
               }
             />

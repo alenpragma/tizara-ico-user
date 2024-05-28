@@ -5,6 +5,8 @@ import axios from 'axios';
 import { getTizaraUserToken } from '../../hooks/getTokenFromstorage';
 import { useEffect, useState } from 'react';
 import { StakeNowModal } from './StakeNowModal';
+import { ApiResponse } from '../../types/global';
+import { IWallet } from '../../types/wallet';
 
 type Inputs = {
   paymentMethod: string;
@@ -13,6 +15,7 @@ const Stake = () => {
   const [depositMethod, setDepositMethod] = useState<any>();
   const [selected, setSelected] = useState<any>();
   const [plan, setPlan] = useState<any>();
+  const [wallet, setWallet] = useState<IWallet>();
 
   // edit
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -29,10 +32,34 @@ const Stake = () => {
   };
 
   const token = getTizaraUserToken();
+
+  const getWllet = async () => {
+    const token = getTizaraUserToken();
+    try {
+      const response = await axios.get<ApiResponse<IWallet>>(
+        'http://localhost:5000/api/v1/user-wallet',
+        {
+          headers: {
+            Authorization: `${token}`,
+            'Content-Type': 'application/json',
+          },
+        },
+      );
+      if (response?.data?.success) {
+        setWallet(response.data.data);
+      }
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
+  useEffect(() => {
+    getWllet();
+  }, []);
+
   const getPaymentMethod = async () => {
     try {
       const response = await axios.get(
-        'https://tizara-backend.vercel.app/api/v1/stack-coin-settings?status=ACTIVE',
+        'http://localhost:5000/api/v1/stack-coin-settings?status=ACTIVE',
         {
           headers: {
             Authorization: `${token}`,
@@ -49,7 +76,6 @@ const Stake = () => {
   useEffect(() => {
     getPaymentMethod();
   }, []);
-  console.log(depositMethod);
 
   const onSubmit: SubmitHandler<Inputs> = async (data: Inputs) => {
     console.log(data);
@@ -73,7 +99,7 @@ const Stake = () => {
       <div className="lg:max-w-[50%] mx-auto">
         <div className="border p-3 rounded-md">
           <h3 className="dark:text-white font-semibold text-md">
-            Available Tizara: 99999
+            Available Tizara: {wallet?.nativeWallet}
           </h3>
         </div>
 
@@ -100,7 +126,11 @@ const Stake = () => {
         </div>
       </div>
       {isEditModalOpen && (
-        <StakeNowModal closeModal={closeEditModal} selectedPlan={updateItem} />
+        <StakeNowModal
+          getWllet={getWllet}
+          closeModal={closeEditModal}
+          selectedPlan={updateItem}
+        />
       )}
     </DefaultLayout>
   );

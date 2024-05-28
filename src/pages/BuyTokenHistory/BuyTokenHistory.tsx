@@ -33,7 +33,7 @@ const BuyTokenHistory = () => {
         console.log(token);
 
         const response = await axios.get<ApiResponse>(
-          'https://tizara-backend.vercel.app/api/v1/buy-token',
+          'http://localhost:5000/api/v1/buy-token',
           {
             headers: {
               Authorization: `${token}`,

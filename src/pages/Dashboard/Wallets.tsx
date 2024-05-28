@@ -5,24 +5,8 @@ import UserIcon from '../../assets/icon/UserIcon';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { getTizaraUserToken } from '../../hooks/getTokenFromstorage';
-
-interface ApiResponse<T> {
-  statusCode: number;
-  success: boolean;
-  message: string;
-  data: T;
-}
-
-interface IWallet {
-  id: string;
-  depositWallet: number;
-  icoWallet: number;
-  nativeWallet: number;
-  stakeWallet: number;
-  createdAt: string;
-  updatedAt: string;
-  userId: string;
-}
+import { IWallet } from '../../types/wallet';
+import { ApiResponse } from '../../types/global';
 
 const Wallets = ({ getWallet }: any) => {
   const [wallet, setWallet] = useState<IWallet | null>(null);
@@ -31,7 +15,7 @@ const Wallets = ({ getWallet }: any) => {
     const token = getTizaraUserToken();
     try {
       const response = await axios.get<ApiResponse<IWallet>>(
-        'https://tizara-backend.vercel.app/api/v1/user-wallet',
+        'http://localhost:5000/api/v1/user-wallet',
         {
           headers: {
             Authorization: `${token}`,

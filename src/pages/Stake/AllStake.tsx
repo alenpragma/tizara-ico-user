@@ -26,7 +26,7 @@ const AllStake = () => {
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        'https://tizara-backend.vercel.app/api/v1/stack-now',
+        'http://localhost:5000/api/v1/stack-now',
         {
           headers: {
             Authorization: `${token}`,
@@ -43,6 +43,7 @@ const AllStake = () => {
   useEffect(() => {
     fetchData();
   }, []);
+  console.log(purchaseHistorys);
 
   return (
     <DefaultLayout>
@@ -125,11 +126,17 @@ const AllStake = () => {
                       </p>
                     </td>
 
-                    {/* <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+                    <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                       <p className="text-black dark:text-white">
-                        {purchaseHistory.status == 1 ? 'Running' : 'Expired'}
+                        {formatToLocalDate(purchaseHistory.createdAt)}
                       </p>
-                    </td> */}
+                    </td>
+
+                    <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+                      <p className="text-black dark:text-white">
+                        {purchaseHistory.status}
+                      </p>
+                    </td>
                   </tr>
                 ))}
               </tbody>

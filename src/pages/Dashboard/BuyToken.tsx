@@ -41,7 +41,7 @@ const BuyToken: React.FC<ComponentProps> = ({
     };
 
     try {
-      const response = await fetch('https://tizara-backend.vercel.app/api/v1/buy-token', {
+      const response = await fetch('http://localhost:5000/api/v1/buy-token', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
