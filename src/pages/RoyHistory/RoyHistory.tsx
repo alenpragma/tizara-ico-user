@@ -1,25 +1,33 @@
 import DefaultLayout from '../../layout/DefaultLayout';
 import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
-import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { IPurchaseHistory } from '../../types/purchesHistory';
+import { getTizaraUserToken } from '../../hooks/getTokenFromstorage';
+import axios from 'axios';
 import SearchInput from '../../components/SearchInput';
 import Skeleton from 'react-loading-skeleton';
 import PaginationButtons from '../../components/Pagination/PaginationButtons';
-import { getPasDay } from './dateToDay';
-import { getTizaraUserToken } from '../../hooks/getTokenFromstorage';
 
-const PurchaseHistory = () => {
+type IROYHistory = {
+  id: string;
+  planName: string;
+  duration: string;
+  apy: number;
+  stakeAmount: number;
+  dailyRoy: number;
+  status: string;
+  userId: string;
+  createdAt: Date;
+  updatedAt: Date;
+};
+
+const RoyHistory = () => {
   const [search, setSearch] = useState('');
-  const [purchaseHistorys, setPurchaseHistorys] = useState<IPurchaseHistory[]>(
-    [],
-  );
-  console.log(purchaseHistorys);
-  const token = getTizaraUserToken();
+  const [royHistorys, setRoyHistorys] = useState<IROYHistory[]>([]);
+  console.log(royHistorys);
   // pagination calculate
   const [currentPage, setCurrentPage] = useState(0);
   const [perPage, setparePage] = useState(25);
-
+  const token = getTizaraUserToken();
   const from = currentPage * perPage;
   const to = from + perPage;
   //  pagination end
@@ -27,7 +35,7 @@ const PurchaseHistory = () => {
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        'https://tizara-backend.vercel.app/api/admin/package-purchase-history',
+        'https://tizara-backend.vercel.app/api/v1/roy-bonus-historys',
         {
           headers: {
             Authorization: `${token}`,
@@ -35,7 +43,9 @@ const PurchaseHistory = () => {
           },
         },
       );
-      setPurchaseHistorys(response?.data?.data);
+      console.log(response);
+
+      setRoyHistorys(response?.data?.data);
     } catch (error) {
       console.error('Error fetching data:', error);
     }
@@ -45,20 +55,20 @@ const PurchaseHistory = () => {
     fetchData();
   }, []);
 
-  const filteredPurchaseHistorys = purchaseHistorys?.filter(
-    (purchaseHistory) =>
-      purchaseHistory?.email?.toLowerCase().includes(search.toLowerCase()),
-  );
+  // const filteredRoyHistorys = royHistorys?.filter(
+  //   (royHistorys) => royHistorys?.dailyRoy == search,
+  // );
 
   return (
     <DefaultLayout>
-      <Breadcrumb pageName="Purchase History" />
+      <Breadcrumb pageName="Roy History" />
+
       <div className="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
         <div className="max-w-full w-100 mb-4">
           <SearchInput placeholder="Search..." setSearch={setSearch} />
         </div>
         <div className="max-w-full overflow-x-auto">
-          {purchaseHistorys.length == 0 ? (
+          {royHistorys.length == 0 ? (
             <div>
               <Skeleton height={40} count={6} />
             </div>
@@ -72,14 +82,14 @@ const PurchaseHistory = () => {
                   <th className="min-w-[220px] py-4 px-4 font-medium text-black dark:text-white xl:pl-11">
                     Date
                   </th>
-                  <th className="min-w-[220px] py-4 px-4 font-medium text-black dark:text-white xl:pl-11">
+                  {/* <th className="min-w-[220px] py-4 px-4 font-medium text-black dark:text-white xl:pl-11">
                     Email
-                  </th>
+                  </th> */}
                   <th className="min-w-[220px] py-4 px-4 font-medium text-black dark:text-white xl:pl-11">
-                    Package Name
+                    Plan Name
                   </th>
                   <th className="min-w-[150px] py-4 px-4 font-medium text-black dark:text-white">
-                    Price
+                    Stake Amount
                   </th>
                   <th className="min-w-[150px] py-4 px-4 font-medium text-black dark:text-white">
                     Daily Token
@@ -96,7 +106,7 @@ const PurchaseHistory = () => {
                 </tr>
               </thead>
               <tbody>
-                {filteredPurchaseHistorys
+                {royHistorys
                   ?.slice(from, to)
                   ?.map((purchaseHistory: any, key: any) => (
                     <tr key={key}>
@@ -107,43 +117,32 @@ const PurchaseHistory = () => {
                       </td>
                       <td className="border-b border-[#eee] py-5 px-4 pl-4 dark:border-strokedark xl:pl-11">
                         <h5 className="font-medium text-black dark:text-white">
-                          {purchaseHistory?.date}
+                          {purchaseHistory?.createdAt}
                         </h5>
                       </td>
                       <td className="border-b border-[#eee] py-5 px-4 pl-4 dark:border-strokedark xl:pl-11">
                         <h5 className="font-medium text-black dark:text-white">
-                          {purchaseHistory?.email}
+                          {purchaseHistory?.userStake?.planName}
                         </h5>
                       </td>
+
                       <td className="border-b border-[#eee] py-5 px-4 pl-4 dark:border-strokedark xl:pl-11">
                         <h5 className="font-medium text-black dark:text-white">
-                          {purchaseHistory.package_name}
+                          {purchaseHistory?.userStake?.stakeAmount}
                         </h5>
                       </td>
-                      <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-                        <p className="text-black dark:text-white">
-                          {purchaseHistory.package_price}
-                        </p>
+
+                      <td className="border-b border-[#eee] py-5 px-4 pl-4 dark:border-strokedark xl:pl-11">
+                        <h5 className="font-medium text-black dark:text-white">
+                          {purchaseHistory?.userStake?.dailyRoy}
+                        </h5>
                       </td>
+
                       <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                         <p className="text-black dark:text-white">
-                          {Number(purchaseHistory.daily_token)}
-                        </p>
-                      </td>
-                      <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-                        <p className="text-black dark:text-white">
-                          {getPasDay(purchaseHistory?.date)}
-                        </p>
-                      </td>
-                      <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-                        <p className="text-black dark:text-white">
-                          {purchaseHistory?.duration -
-                            getPasDay(purchaseHistory?.date)}
-                        </p>
-                      </td>
-                      <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-                        <p className="text-black dark:text-white">
-                          {purchaseHistory.status == 1 ? 'Running' : 'Expired'}
+                          {purchaseHistory?.userStake?.status == 'ACTIVE'
+                            ? 'Running'
+                            : 'Expired'}
                         </p>
                       </td>
                     </tr>
@@ -154,7 +153,7 @@ const PurchaseHistory = () => {
         </div>
         <div className="my-4">
           <PaginationButtons
-            totalPages={Math.ceil(filteredPurchaseHistorys.length / perPage)}
+            totalPages={Math.ceil(royHistorys.length / perPage)}
             currentPage={currentPage}
             setCurrentPage={setCurrentPage}
           />
@@ -164,4 +163,4 @@ const PurchaseHistory = () => {
   );
 };
 
-export default PurchaseHistory;
+export default RoyHistory;

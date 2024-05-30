@@ -4,6 +4,7 @@ import DefaultLayout from '../../layout/DefaultLayout';
 import axios from 'axios';
 import { formatToLocalDate } from '../../hooks/formatDate';
 import Skeleton from 'react-loading-skeleton';
+import { getTizaraUserToken } from '../../hooks/getTokenFromstorage';
 
 interface IStackBonusHistory {
   id: string;
@@ -26,15 +27,14 @@ interface ApiResponse {
 const StakeBonusHistory = () => {
   const [history, sethistory] = useState<any>([]);
   const [loading, setLoading] = useState<any>(false);
+  const token = getTizaraUserToken();
 
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
       try {
-        const token = localStorage.getItem('tizaraUserToken');
-
         const response = await axios.get<ApiResponse>(
-          ' http://localhost:5000/api/v1/stack-bonus-history',
+          'https://tizara-backend.vercel.app/api/v1/stack-bonus-history',
           {
             headers: {
               Authorization: `${token}`,
@@ -57,14 +57,9 @@ const StakeBonusHistory = () => {
   return (
     <>
       <DefaultLayout>
-        <Breadcrumb pageName="Stake Bonus History" />
+        <Breadcrumb pageName="Level Bonus History" />
 
         <div className="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
-          <div className="flex justify-between">
-            <div className="max-w-full w-100 mb-4">
-              {/* <SearchInput placeholder="Search..." setSearch={setSearch} /> */}
-            </div>
-          </div>
           <div className="max-w-full overflow-x-auto">
             {loading == true ? (
               <div>

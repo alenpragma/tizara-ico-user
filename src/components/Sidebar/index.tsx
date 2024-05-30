@@ -131,7 +131,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                     }`}
                 >
                   <DashboardIcon />
-                  stake Now
+                  Stake Now
                 </NavLink>
               </li>
               <li>
@@ -203,7 +203,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                     }`}
                 >
                   <PiPackage className="text-xl dark:bg-meta-4" />
-                  Stake Bonus History
+                  Level Bonus
                 </NavLink>
               </li>
 
@@ -219,6 +219,21 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                 >
                   <DashboardIcon />
                   Buy Token History
+                </NavLink>
+              </li>
+
+              <li>
+                <NavLink
+                  to="/roy-history"
+                  className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+                    (pathname === '/transaction' ||
+                      pathname.includes('transaction-history')) &&
+                    'bg-graydark dark:bg-meta-4'
+                  }'
+                    }`}
+                >
+                  <PiPackage className="text-xl dark:bg-meta-4" />
+                  Roy Historys
                 </NavLink>
               </li>
 

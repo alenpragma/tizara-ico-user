@@ -26,7 +26,7 @@ const AllStake = () => {
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        'http://localhost:5000/api/v1/stack-now',
+        'https://tizara-backend.vercel.app/api/v1/stack-now',
         {
           headers: {
             Authorization: `${token}`,
@@ -49,9 +49,9 @@ const AllStake = () => {
     <DefaultLayout>
       <Breadcrumb pageName="My Stake Coin" />
       <div className="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
-        <div className="max-w-full w-100 mb-4">
+        {/* <div className="max-w-full w-100 mb-4">
           <SearchInput placeholder="Search..." setSearch={setSearch} />
-        </div>
+        </div> */}
         <div className="max-w-full overflow-x-auto">
           {purchaseHistorys.length == 0 ? (
             <div>
@@ -69,6 +69,9 @@ const AllStake = () => {
                   </th>
                   <th className="min-w-[220px] py-4 px-4 font-medium text-black dark:text-white xl:pl-11">
                     Plan Name
+                  </th>
+                  <th className="min-w-[220px] py-4 px-4 font-medium text-black dark:text-white xl:pl-11">
+                    Amount
                   </th>
                   <th className="min-w-[220px] py-4 px-4 font-medium text-black dark:text-white xl:pl-11">
                     Duration
@@ -108,6 +111,11 @@ const AllStake = () => {
                     <td className="border-b border-[#eee] py-5 px-4 pl-4 dark:border-strokedark xl:pl-11">
                       <h5 className="font-medium text-black dark:text-white">
                         {purchaseHistory?.planName}
+                      </h5>
+                    </td>
+                    <td className="border-b border-[#eee] py-5 px-4 pl-4 dark:border-strokedark xl:pl-11">
+                      <h5 className="font-medium text-black dark:text-white">
+                        {purchaseHistory?.stakeAmount}
                       </h5>
                     </td>
                     <td className="border-b border-[#eee] py-5 px-4 pl-4 dark:border-strokedark xl:pl-11">

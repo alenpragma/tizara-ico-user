@@ -15,7 +15,7 @@ const Wallets = ({ getWallet }: any) => {
     const token = getTizaraUserToken();
     try {
       const response = await axios.get<ApiResponse<IWallet>>(
-        'http://localhost:5000/api/v1/user-wallet',
+        'https://tizara-backend.vercel.app/api/v1/user-wallet',
         {
           headers: {
             Authorization: `${token}`,

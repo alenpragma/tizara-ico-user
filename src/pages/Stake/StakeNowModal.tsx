@@ -24,7 +24,6 @@ export const StakeNowModal = ({ closeModal, selectedPlan, getWllet }: any) => {
   const yearlyRoy = selectedPlan ? (amount / 100) * selectedPlan.apy : 0;
 
   const dailyRoy = selectedPlan ? yearlyRoy / selectedPlan.duration : 0;
-
   const onSubmit: SubmitHandler<Inputs> = async (data: Inputs) => {
     const planData = {
       dailyRoy: Number(dailyRoy.toFixed(5)),
@@ -37,34 +36,45 @@ export const StakeNowModal = ({ closeModal, selectedPlan, getWllet }: any) => {
     try {
       setLoading(true);
 
-      const response = await fetch('http://localhost:5000/api/v1/stack-now', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `${token}`,
+      const response = await fetch(
+        'https://tizara-backend.vercel.app/api/v1/stack-now',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `${token}`,
+          },
+          body: JSON.stringify(planData),
         },
-        body: JSON.stringify(planData),
-      });
+      );
+
+      const responseData = await response.json();
+      console.log(responseData);
+
       setLoading(false);
       getWllet();
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-      const responseData = await response.json();
-      closeModal();
-      if (responseData) {
+
+      console.log(responseData?.message);
+
+      if (responseData?.success) {
         Swal.fire({
-          title: 'success',
-          text: 'Successfully stake amount',
+          title: 'Success',
+          text: 'Successfully staked amount',
           icon: 'success',
+        }).then(() => {
+          closeModal();
+        });
+      } else if (responseData.success == false) {
+        Swal.fire({
+          title: 'Error',
+          text: `${responseData?.message}`,
+          icon: 'error',
         });
       }
     } catch (error) {
-      Swal.fire({
-        title: 'error',
-        text: 'Something wrong',
-        icon: 'error',
-      });
+      setLoading(false);
+
+      console.log(error);
     }
   };
 
@@ -106,6 +116,7 @@ export const StakeNowModal = ({ closeModal, selectedPlan, getWllet }: any) => {
                   className="w-full rounded border border-stroke bg-gray py-2 pl-3 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
                   {...register('planName', { required: true })}
                   value={selectedPlan.planName}
+                  readOnly
                 />
               </div>
               <div>
@@ -119,6 +130,7 @@ export const StakeNowModal = ({ closeModal, selectedPlan, getWllet }: any) => {
                   className="w-full rounded border border-stroke bg-gray py-2 pl-3 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
                   {...register('duration', { required: true })}
                   value={selectedPlan.duration}
+                  readOnly
                 />
               </div>
               <div>
@@ -132,6 +144,7 @@ export const StakeNowModal = ({ closeModal, selectedPlan, getWllet }: any) => {
                   className="w-full rounded border border-stroke bg-gray py-2 pl-3 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
                   {...register('minimum', { required: true })}
                   value={selectedPlan.minimum}
+                  readOnly
                 />
               </div>
               <div>
@@ -145,6 +158,7 @@ export const StakeNowModal = ({ closeModal, selectedPlan, getWllet }: any) => {
                   className="w-full rounded border border-stroke bg-gray py-2 pl-3 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
                   {...register('apy', { required: true })}
                   value={selectedPlan.apy}
+                  readOnly
                 />
               </div>
               <div>

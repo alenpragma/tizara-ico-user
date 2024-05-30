@@ -37,7 +37,7 @@ const Stake = () => {
     const token = getTizaraUserToken();
     try {
       const response = await axios.get<ApiResponse<IWallet>>(
-        'http://localhost:5000/api/v1/user-wallet',
+        'https://tizara-backend.vercel.app/api/v1/user-wallet',
         {
           headers: {
             Authorization: `${token}`,
@@ -59,7 +59,7 @@ const Stake = () => {
   const getPaymentMethod = async () => {
     try {
       const response = await axios.get(
-        'http://localhost:5000/api/v1/stack-coin-settings?status=ACTIVE',
+        'https://tizara-backend.vercel.app/api/v1/stack-coin-settings?status=ACTIVE',
         {
           headers: {
             Authorization: `${token}`,
@@ -107,8 +107,8 @@ const Stake = () => {
           {depositMethod?.map((item: any) => {
             return (
               <div
-                className=" w-50 mx-auto border p-3 rounded-md dark:bg-black"
                 key={item._id}
+                className=" w-50 mx-auto border p-3 rounded-md dark:bg-black"
               >
                 <p className=" font-medium">Name: {item.planName}</p>
                 <p className=" font-medium">Duration: {item.duration} day</p>

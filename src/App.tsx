@@ -25,6 +25,7 @@ import BuyTokenHistory from './pages/BuyTokenHistory/BuyTokenHistory';
 import Stake from './pages/Stake/Stake';
 import AllStake from './pages/Stake/AllStake';
 import StakeBonusHistory from './pages/StakeBonusHistory/StakeBonusHistory';
+import RoyHistory from './pages/RoyHistory/RoyHistory';
 
 function App() {
   const { pathname } = useLocation();
@@ -91,6 +92,16 @@ function App() {
                 <>
                   <PageTitle title="stake coin" />
                   <AllStake />
+                </>
+              }
+            />
+
+            <Route
+              path="/roy-history"
+              element={
+                <>
+                  <PageTitle title="stake coin" />
+                  <RoyHistory />
                 </>
               }
             />
