@@ -125,7 +125,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                 <NavLink
                   to="/stack-coin"
                   className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-                    (pathname === '/my-team' || pathname.includes('my-team')) &&
+                    (pathname === '/stack-coin' ||
+                      pathname.includes('/stack-coin')) &&
                     'bg-graydark dark:bg-meta-4'
                   }'
                     }`}
@@ -138,8 +139,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                 <NavLink
                   to="/my-stack-coin"
                   className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-                    (pathname === '/transaction' ||
-                      pathname.includes('transaction-history')) &&
+                    (pathname === '/my-stack-coin' ||
+                      pathname.includes('my-stack-coin')) &&
                     'bg-graydark dark:bg-meta-4'
                   }'
                     }`}
@@ -182,7 +183,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                   to="/history/transaction-history"
                   className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
                     (pathname === '/transaction' ||
-                      pathname.includes('transaction-history')) &&
+                      pathname.includes('transaction')) &&
                     'bg-graydark dark:bg-meta-4'
                   }'
                     }`}
@@ -211,8 +212,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                 <NavLink
                   to="/buy-token-history"
                   className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-                    (pathname === '/transaction' ||
-                      pathname.includes('transaction-history')) &&
+                    (pathname === '/buy-token-history' ||
+                      pathname.includes('buy-token-history')) &&
                     'bg-graydark dark:bg-meta-4'
                   }'
                     }`}
@@ -226,14 +227,14 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                 <NavLink
                   to="/roy-history"
                   className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-                    (pathname === '/transaction' ||
-                      pathname.includes('transaction-history')) &&
+                    (pathname === '/roy-history' ||
+                      pathname.includes('roy-history')) &&
                     'bg-graydark dark:bg-meta-4'
                   }'
                     }`}
                 >
                   <PiPackage className="text-xl dark:bg-meta-4" />
-                  Roy Historys
+                  ROY Historys
                 </NavLink>
               </li>
 

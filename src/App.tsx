@@ -80,7 +80,7 @@ function App() {
               path="/stack-coin"
               element={
                 <>
-                  <PageTitle title="stake coin" />
+                  <PageTitle title="Stake coin" />
                   <Stake />
                 </>
               }
@@ -90,7 +90,7 @@ function App() {
               path="/my-stack-coin"
               element={
                 <>
-                  <PageTitle title="stake coin" />
+                  <PageTitle title="My stake coin" />
                   <AllStake />
                 </>
               }

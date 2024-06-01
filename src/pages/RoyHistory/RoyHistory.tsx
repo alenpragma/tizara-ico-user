@@ -35,7 +35,7 @@ const RoyHistory = () => {
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        'https://tizara-backend.vercel.app/api/v1/roy-bonus-historys',
+        'http://localhost:5000/api/v1/roy-bonus-historys',
         {
           headers: {
             Authorization: `${token}`,
@@ -43,7 +43,6 @@ const RoyHistory = () => {
           },
         },
       );
-      console.log(response);
 
       setRoyHistorys(response?.data?.data);
     } catch (error) {
@@ -58,6 +57,8 @@ const RoyHistory = () => {
   // const filteredRoyHistorys = royHistorys?.filter(
   //   (royHistorys) => royHistorys?.dailyRoy == search,
   // );
+
+  console.log(royHistorys);
 
   return (
     <DefaultLayout>
@@ -92,61 +93,51 @@ const RoyHistory = () => {
                     Stake Amount
                   </th>
                   <th className="min-w-[150px] py-4 px-4 font-medium text-black dark:text-white">
-                    Daily Token
+                    APY
                   </th>
                   <th className="min-w-[150px] py-4 px-4 font-medium text-black dark:text-white">
-                    Received
-                  </th>
-                  <th className="min-w-[120px] py-4 px-4 font-medium text-black dark:text-white">
-                    Remaining
-                  </th>
-                  <th className="min-w-[120px] py-4 px-4 font-medium text-black dark:text-white">
-                    Status
+                    Daily Token
                   </th>
                 </tr>
               </thead>
               <tbody>
-                {royHistorys
-                  ?.slice(from, to)
-                  ?.map((purchaseHistory: any, key: any) => (
-                    <tr key={key}>
-                      <td className="border-b border-[#eee] py-5 px-4 pl-9 dark:border-strokedark xl:pl-11">
-                        <h5 className="font-medium text-black dark:text-white">
-                          {key + 1}
-                        </h5>
-                      </td>
-                      <td className="border-b border-[#eee] py-5 px-4 pl-4 dark:border-strokedark xl:pl-11">
-                        <h5 className="font-medium text-black dark:text-white">
-                          {purchaseHistory?.createdAt}
-                        </h5>
-                      </td>
-                      <td className="border-b border-[#eee] py-5 px-4 pl-4 dark:border-strokedark xl:pl-11">
-                        <h5 className="font-medium text-black dark:text-white">
-                          {purchaseHistory?.userStake?.planName}
-                        </h5>
-                      </td>
+                {royHistorys?.map((purchaseHistory: any, key: any) => (
+                  <tr key={key}>
+                    <td className="border-b border-[#eee] py-5 px-4 pl-9 dark:border-strokedark xl:pl-11">
+                      <h5 className="font-medium text-black dark:text-white">
+                        {key + 1}
+                      </h5>
+                    </td>
+                    <td className="border-b border-[#eee] py-5 px-4 pl-4 dark:border-strokedark xl:pl-11">
+                      <h5 className="font-medium text-black dark:text-white">
+                        {purchaseHistory?.createdAt}
+                      </h5>
+                    </td>
+                    <td className="border-b border-[#eee] py-5 px-4 pl-4 dark:border-strokedark xl:pl-11">
+                      <h5 className="font-medium text-black dark:text-white">
+                        {purchaseHistory?.userStake?.planName}
+                      </h5>
+                    </td>
 
-                      <td className="border-b border-[#eee] py-5 px-4 pl-4 dark:border-strokedark xl:pl-11">
-                        <h5 className="font-medium text-black dark:text-white">
-                          {purchaseHistory?.userStake?.stakeAmount}
-                        </h5>
-                      </td>
+                    <td className="border-b border-[#eee] py-5 px-4 pl-4 dark:border-strokedark xl:pl-11">
+                      <h5 className="font-medium text-black dark:text-white">
+                        {purchaseHistory?.userStake?.stakeAmount}
+                      </h5>
+                    </td>
 
-                      <td className="border-b border-[#eee] py-5 px-4 pl-4 dark:border-strokedark xl:pl-11">
-                        <h5 className="font-medium text-black dark:text-white">
-                          {purchaseHistory?.userStake?.dailyRoy}
-                        </h5>
-                      </td>
+                    <td className="border-b border-[#eee] py-5 px-4 pl-4 dark:border-strokedark xl:pl-11">
+                      <h5 className="font-medium text-black dark:text-white">
+                        {purchaseHistory?.userStake?.apy}
+                      </h5>
+                    </td>
 
-                      <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-                        <p className="text-black dark:text-white">
-                          {purchaseHistory?.userStake?.status == 'ACTIVE'
-                            ? 'Running'
-                            : 'Expired'}
-                        </p>
-                      </td>
-                    </tr>
-                  ))}
+                    <td className="border-b border-[#eee] py-5 px-4 pl-4 dark:border-strokedark xl:pl-11">
+                      <h5 className="font-medium text-black dark:text-white">
+                        {purchaseHistory?.userStake?.dailyRoy}
+                      </h5>
+                    </td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           )}
