@@ -4,6 +4,7 @@ import DefaultLayout from '../../layout/DefaultLayout';
 import axios from 'axios';
 import { formatToLocalDate } from '../../hooks/formatDate';
 import Skeleton from 'react-loading-skeleton';
+import NotFound from '../../components/NotFound/NotFound';
 
 interface IHistory {
   id: string;
@@ -25,16 +26,16 @@ interface ApiResponse {
 
 const Transaction = () => {
   const [history, sethistory] = useState<any>([]);
-  const [loading, setLoading] = useState<any>(false);
+  const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
     const fetchData = async () => {
+      setLoading(true);
       try {
         const token = localStorage.getItem('tizaraUserToken');
-        console.log(token);
 
         const response = await axios.get<ApiResponse>(
-          'https://tizara-backend.vercel.app/api/v1/transaction-history',
+          'http://localhost:5000/api/v1/transaction-history',
           {
             headers: {
               Authorization: `${token}`,
@@ -42,8 +43,7 @@ const Transaction = () => {
             },
           },
         );
-        console.log(response?.data);
-
+        setLoading(false);
         if (response?.data?.success) {
           sethistory(response.data.data);
         }
@@ -53,7 +53,6 @@ const Transaction = () => {
     };
     fetchData();
   }, []);
-  console.log(history);
 
   return (
     <>
@@ -69,7 +68,7 @@ const Transaction = () => {
           <div className="max-w-full overflow-x-auto">
             {loading == true ? (
               <div>
-                <Skeleton height={40} count={3} />
+                <Skeleton height={35} count={4} />
               </div>
             ) : (
               <table className="w-full table-auto">
@@ -127,6 +126,7 @@ const Transaction = () => {
               </table>
             )}
           </div>
+          <div>{!loading && history?.length == 0 && <NotFound />}</div>
         </div>
       </DefaultLayout>
     </>

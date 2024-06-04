@@ -5,6 +5,7 @@ import SignIn from './pages/Authentication/SignIn';
 import SignUp from './pages/Authentication/SignUp';
 import PurchaseHistory from './pages/Purchase/PurchaseHistory';
 import ProtectedRoute from './hooks/ProtectedRoute';
+import 'react-loading-skeleton/dist/skeleton.css';
 
 const Profile = lazy(() => import('./pages/Profile'));
 

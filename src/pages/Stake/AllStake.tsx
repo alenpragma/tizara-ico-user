@@ -2,17 +2,16 @@ import DefaultLayout from '../../layout/DefaultLayout';
 import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { IPurchaseHistory } from '../../types/purchesHistory';
-import SearchInput from '../../components/SearchInput';
 import Skeleton from 'react-loading-skeleton';
 import { getTizaraUserToken } from '../../hooks/getTokenFromstorage';
 import { formatToLocalDate } from '../../hooks/formatDate';
+import { IStake } from '../../types/stake';
+import NotFound from '../../components/NotFound/NotFound';
 
 const AllStake = () => {
   const [search, setSearch] = useState('');
-  const [purchaseHistorys, setPurchaseHistorys] = useState<IPurchaseHistory[]>(
-    [],
-  );
+  const [loading, setLoading] = useState(false);
+  const [stakes, setStakes] = useState<IStake[]>([]);
   const token = getTizaraUserToken();
 
   // pagination calculate
@@ -24,9 +23,10 @@ const AllStake = () => {
   //  pagination end
 
   const fetchData = async () => {
+    setLoading(true);
     try {
       const response = await axios.get(
-        'https://tizara-backend.vercel.app/api/v1/stack-now',
+        'http://localhost:5000/api/v1/stack-now',
         {
           headers: {
             Authorization: `${token}`,
@@ -34,7 +34,9 @@ const AllStake = () => {
           },
         },
       );
-      setPurchaseHistorys(response?.data?.data);
+      setLoading(false);
+
+      setStakes(response?.data?.data);
     } catch (error) {
       console.error('Error fetching data:', error);
     }
@@ -43,7 +45,6 @@ const AllStake = () => {
   useEffect(() => {
     fetchData();
   }, []);
-  console.log(purchaseHistorys);
 
   return (
     <DefaultLayout>
@@ -53,9 +54,9 @@ const AllStake = () => {
           <SearchInput placeholder="Search..." setSearch={setSearch} />
         </div> */}
         <div className="max-w-full overflow-x-auto">
-          {purchaseHistorys.length == 0 ? (
+          {loading ? (
             <div>
-              <Skeleton height={40} count={6} />
+              <Skeleton height={30} count={6} />
             </div>
           ) : (
             <table className="w-full table-auto">
@@ -80,7 +81,7 @@ const AllStake = () => {
                     APY
                   </th>
                   <th className="min-w-[150px] py-4 px-4 font-medium text-black dark:text-white">
-                    Daily ROY
+                    Daily ROI
                   </th>
                   <th className="min-w-[150px] py-4 px-4 font-medium text-black dark:text-white">
                     Start date
@@ -96,7 +97,7 @@ const AllStake = () => {
                 </tr>
               </thead>
               <tbody>
-                {purchaseHistorys?.map((purchaseHistory: any, key: any) => (
+                {stakes?.map((stake: IStake, key: any) => (
                   <tr key={key}>
                     <td className="border-b border-[#eee] py-5 px-4 pl-9 dark:border-strokedark xl:pl-11">
                       <h5 className="font-medium text-black dark:text-white">
@@ -105,44 +106,56 @@ const AllStake = () => {
                     </td>
                     <td className="border-b border-[#eee] py-5 px-4 pl-4 dark:border-strokedark xl:pl-11">
                       <h5 className="font-medium text-black dark:text-white">
-                        {formatToLocalDate(purchaseHistory?.createdAt)}
+                        {formatToLocalDate(stake?.createdAt)}
                       </h5>
                     </td>
                     <td className="border-b border-[#eee] py-5 px-4 pl-4 dark:border-strokedark xl:pl-11">
                       <h5 className="font-medium text-black dark:text-white">
-                        {purchaseHistory?.planName}
+                        {stake?.planName}
                       </h5>
                     </td>
                     <td className="border-b border-[#eee] py-5 px-4 pl-4 dark:border-strokedark xl:pl-11">
                       <h5 className="font-medium text-black dark:text-white">
-                        {purchaseHistory?.stakeAmount}
+                        {stake?.stakeAmount}
                       </h5>
                     </td>
                     <td className="border-b border-[#eee] py-5 px-4 pl-4 dark:border-strokedark xl:pl-11">
                       <h5 className="font-medium text-black dark:text-white">
-                        {purchaseHistory.duration} D
+                        {stake.duration} D
                       </h5>
                     </td>
                     <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                       <p className="text-black dark:text-white">
-                        {purchaseHistory.apy} %
+                        {stake.apy} %
                       </p>
                     </td>
                     <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                       <p className="text-black dark:text-white">
-                        {purchaseHistory.dailyRoy}
-                      </p>
-                    </td>
-
-                    <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-                      <p className="text-black dark:text-white">
-                        {formatToLocalDate(purchaseHistory.createdAt)}
+                        {stake.dailyRoy}
                       </p>
                     </td>
 
                     <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                       <p className="text-black dark:text-white">
-                        {purchaseHistory.status}
+                        {formatToLocalDate(stake.createdAt)}
+                      </p>
+                    </td>
+
+                    <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+                      <p className="text-black dark:text-white">
+                        {stake.status}
+                      </p>
+                    </td>
+
+                    <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+                      <p
+                        className={`inline-flex rounded-full bg-opacity-10 py-1 px-3 text-sm font-medium ${
+                          stake.status == 'ACTIVE'
+                            ? 'bg-success text-success'
+                            : 'bg-danger text-danger'
+                        }`}
+                      >
+                        {stake.status}
                       </p>
                     </td>
                   </tr>
@@ -151,9 +164,10 @@ const AllStake = () => {
             </table>
           )}
         </div>
+        <div>{!loading && stakes.length == 0 && <NotFound />}</div>
         {/* <div className="my-4">
           <PaginationButtons
-            totalPages={Math.ceil(filteredPurchaseHistorys.length / perPage)}
+            totalPages={Math.ceil(seredsetStakes.length / perPage)}
             currentPage={currentPage}
             setCurrentPage={setCurrentPage}
           />

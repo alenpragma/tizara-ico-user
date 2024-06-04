@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import { formatToLocalDate } from '../../hooks/formatDate';
 import Skeleton from 'react-loading-skeleton';
 import { getTizaraUserToken } from '../../hooks/getTokenFromstorage';
+import NotFound from '../../components/NotFound/NotFound';
 
 interface IHistory {
   id: string;
@@ -25,13 +26,14 @@ interface ApiResponse {
 
 const BuyTokenHistory = () => {
   const [history, sethistory] = useState<any>([]);
-  const [loading, setLoading] = useState<any>(false);
+  const [loading, setLoading] = useState<boolean>(false);
   const token = getTizaraUserToken();
   useEffect(() => {
     const fetchData = async () => {
       try {
+        setLoading(true);
         const response = await axios.get<ApiResponse>(
-          'https://tizara-backend.vercel.app/api/v1/buy-token',
+          'http://localhost:5000/api/v1/buy-token',
           {
             headers: {
               Authorization: `${token}`,
@@ -39,7 +41,7 @@ const BuyTokenHistory = () => {
             },
           },
         );
-
+        setLoading(false);
         if (response?.data?.success) {
           sethistory(response.data.data);
         }
@@ -52,7 +54,7 @@ const BuyTokenHistory = () => {
 
   return (
     <DefaultLayout>
-      <Breadcrumb pageName="" />
+      <Breadcrumb pageName="Buy token history" />
 
       <div className="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
         <div className="flex justify-between">
@@ -127,6 +129,7 @@ const BuyTokenHistory = () => {
             </table>
           )}
         </div>
+        <div>{!loading && history?.length == 0 && <NotFound />}</div>
       </div>
     </DefaultLayout>
   );

@@ -55,7 +55,7 @@ const WelcomeSection = ({ profile }: any) => {
                   )
                 }
               >
-                <FaRegCopy className="text-2xl" />
+                <FaRegCopy className="text-2xl cursor-pointer" />
               </div>
             </div>
           </div>

@@ -34,7 +34,7 @@ const StakeBonusHistory = () => {
       setLoading(true);
       try {
         const response = await axios.get<ApiResponse>(
-          'https://tizara-backend.vercel.app/api/v1/stack-bonus-history',
+          'http://localhost:5000/api/v1/stack-bonus-history',
           {
             headers: {
               Authorization: `${token}`,

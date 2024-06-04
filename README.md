@@ -1,5 +1,5 @@
-https://tizara-backend.vercel.app
+http://localhost:5000
 
-<!-- base  api https://tizara-backend.vercel.app -->
+<!-- base  api http://localhost:5000 -->
 
-<!-- https://tizara-backend.vercel.app/ -->
+<!-- http://localhost:5000/ -->

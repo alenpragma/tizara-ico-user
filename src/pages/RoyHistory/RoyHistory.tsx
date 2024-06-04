@@ -7,6 +7,7 @@ import SearchInput from '../../components/SearchInput';
 import Skeleton from 'react-loading-skeleton';
 import PaginationButtons from '../../components/Pagination/PaginationButtons';
 import { formatToLocalDate } from '../../hooks/formatDate';
+import NotFound from '../../components/NotFound/NotFound';
 
 type IROYHistory = {
   id: string;
@@ -23,9 +24,10 @@ type IROYHistory = {
 
 const RoyHistory = () => {
   const [search, setSearch] = useState('');
+  const [loading, setLoading] = useState(false);
   const [royHistorys, setRoyHistorys] = useState<IROYHistory[]>([]);
   console.log(royHistorys);
-  // pagination calculate
+
   const [currentPage, setCurrentPage] = useState(0);
   const [perPage, setparePage] = useState(25);
   const token = getTizaraUserToken();
@@ -35,8 +37,9 @@ const RoyHistory = () => {
 
   const fetchData = async () => {
     try {
+      setLoading(true);
       const response = await axios.get(
-        'https://tizara-backend.vercel.app/api/v1/roy-bonus-historys',
+        'http://localhost:5000/api/v1/roy-bonus-historys',
         {
           headers: {
             Authorization: `${token}`,
@@ -44,8 +47,7 @@ const RoyHistory = () => {
           },
         },
       );
-      console.log(response?.data);
-
+      setLoading(false);
       setRoyHistorys(response?.data?.data);
     } catch (error) {
       console.error('Error fetching data:', error);
@@ -64,16 +66,16 @@ const RoyHistory = () => {
 
   return (
     <DefaultLayout>
-      <Breadcrumb pageName="Roy History" />
+      <Breadcrumb pageName="ROI History" />
 
       <div className="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
         <div className="max-w-full w-100 mb-4">
           <SearchInput placeholder="Search..." setSearch={setSearch} />
         </div>
         <div className="max-w-full overflow-x-auto">
-          {royHistorys?.length == 0 ? (
+          {loading ? (
             <div>
-              <Skeleton height={40} count={6} />
+              <Skeleton height={35} count={6} />
             </div>
           ) : (
             <table className="w-full table-auto">
@@ -144,6 +146,8 @@ const RoyHistory = () => {
             </table>
           )}
         </div>
+        <div>{!loading && royHistorys?.length == 0 && <NotFound />}</div>
+
         <div className="my-4">
           <PaginationButtons
             totalPages={Math.ceil(royHistorys.length / perPage)}

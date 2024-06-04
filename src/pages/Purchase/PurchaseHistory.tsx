@@ -27,7 +27,7 @@ const PurchaseHistory = () => {
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        'https://tizara-backend.vercel.app/api/admin/package-purchase-history',
+        'http://localhost:5000/api/admin/package-purchase-history',
         {
           headers: {
             Authorization: `${token}`,
