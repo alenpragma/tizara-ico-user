@@ -234,7 +234,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                     }`}
                 >
                   <PiPackage className="text-xl dark:bg-meta-4" />
-                  ROY Historys
+                  ROI History
                 </NavLink>
               </li>
 

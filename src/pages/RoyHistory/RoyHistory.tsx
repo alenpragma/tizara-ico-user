@@ -6,6 +6,7 @@ import axios from 'axios';
 import SearchInput from '../../components/SearchInput';
 import Skeleton from 'react-loading-skeleton';
 import PaginationButtons from '../../components/Pagination/PaginationButtons';
+import { formatToLocalDate } from '../../hooks/formatDate';
 
 type IROYHistory = {
   id: string;
@@ -35,7 +36,7 @@ const RoyHistory = () => {
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        'http://localhost:5000/api/v1/roy-bonus-historys',
+        'https://tizara-backend.vercel.app/api/v1/roy-bonus-historys',
         {
           headers: {
             Authorization: `${token}`,
@@ -43,6 +44,7 @@ const RoyHistory = () => {
           },
         },
       );
+      console.log(response?.data);
 
       setRoyHistorys(response?.data?.data);
     } catch (error) {
@@ -69,7 +71,7 @@ const RoyHistory = () => {
           <SearchInput placeholder="Search..." setSearch={setSearch} />
         </div>
         <div className="max-w-full overflow-x-auto">
-          {royHistorys.length == 0 ? (
+          {royHistorys?.length == 0 ? (
             <div>
               <Skeleton height={40} count={6} />
             </div>
@@ -110,7 +112,7 @@ const RoyHistory = () => {
                     </td>
                     <td className="border-b border-[#eee] py-5 px-4 pl-4 dark:border-strokedark xl:pl-11">
                       <h5 className="font-medium text-black dark:text-white">
-                        {purchaseHistory?.createdAt}
+                        {formatToLocalDate(purchaseHistory?.createdAt)}
                       </h5>
                     </td>
                     <td className="border-b border-[#eee] py-5 px-4 pl-4 dark:border-strokedark xl:pl-11">
