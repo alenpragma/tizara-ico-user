@@ -7,13 +7,15 @@ import SearchInput from '../../components/SearchInput';
 import Skeleton from 'react-loading-skeleton';
 import PaginationButtons from '../../components/Pagination/PaginationButtons';
 import { getPasDay } from './dateToDay';
+import { getTizaraUserToken } from '../../hooks/getTokenFromstorage';
 
 const PurchaseHistory = () => {
   const [search, setSearch] = useState('');
   const [purchaseHistorys, setPurchaseHistorys] = useState<IPurchaseHistory[]>(
     [],
   );
-
+  console.log(purchaseHistorys);
+  const token = getTizaraUserToken();
   // pagination calculate
   const [currentPage, setCurrentPage] = useState(0);
   const [perPage, setparePage] = useState(25);
@@ -25,15 +27,15 @@ const PurchaseHistory = () => {
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        'https://biztoken.fecotrade.com/api/admin/package-purchase-history',
+        'https://tizara-backend.vercel.app/api/admin/package-purchase-history',
         {
           headers: {
-            Authorization: `  `,
+            Authorization: `${token}`,
             'Content-Type': 'application/json',
           },
         },
       );
-      setPurchaseHistorys(response?.data?.purchase_history);
+      setPurchaseHistorys(response?.data?.data);
     } catch (error) {
       console.error('Error fetching data:', error);
     }

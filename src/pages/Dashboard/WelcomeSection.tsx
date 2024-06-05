@@ -45,7 +45,7 @@ const WelcomeSection = ({ profile }: any) => {
             </h2>
             <div className="flex gap-2">
               <p>
-                https://official.tizaracoin.com/auth/signup?referralCode=$
+                https://official.tizaracoin.com/signup?referralCode=
                 {profile?.myReferralCode}
               </p>
               <div
@@ -55,7 +55,7 @@ const WelcomeSection = ({ profile }: any) => {
                   )
                 }
               >
-                <FaRegCopy className="text-2xl" />
+                <FaRegCopy className="text-2xl cursor-pointer" />
               </div>
             </div>
           </div>

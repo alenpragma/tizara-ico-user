@@ -5,54 +5,38 @@ import UserIcon from '../../assets/icon/UserIcon';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { getTizaraUserToken } from '../../hooks/getTokenFromstorage';
+import { IWallet } from '../../types/wallet';
+import { ApiResponse } from '../../types/global';
 
-interface ApiResponse<T> {
-  statusCode: number;
-  success: boolean;
-  message: string;
-  data: T;
-}
-
-interface IWallet {
-  id: string;
-  depositWallet: number;
-  icoWallet: number;
-  nativeWallet: number;
-  stackWallet: number;
-  createdAt: string;
-  updatedAt: string;
-  userId: string;
-}
-
-const Wallets = () => {
+const Wallets = ({ getWallet }: any) => {
   const [wallet, setWallet] = useState<IWallet | null>(null);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const token = getTizaraUserToken();
-      try {
-        const response = await axios.get<ApiResponse<IWallet>>(
-          'https://tizara.vercel.app/api/v1/user-wallet',
-          {
-            headers: {
-              Authorization: `${token}`,
-              'Content-Type': 'application/json',
-            },
+  const fetchData = async () => {
+    const token = getTizaraUserToken();
+    try {
+      const response = await axios.get<ApiResponse<IWallet>>(
+        'https://tizara-backend.vercel.app/api/v1/user-wallet',
+        {
+          headers: {
+            Authorization: `${token}`,
+            'Content-Type': 'application/json',
           },
-        );
-        // console.log(response);
+        },
+      );
+      // console.log(response);
 
-        if (response?.data?.success) {
-          // console.log(response.data.data);
-          setWallet(response.data.data);
-        }
-      } catch (error) {
-        console.error('Error fetching data:', error);
+      if (response?.data?.success) {
+        // console.log(response.data.data);
+        setWallet(response.data.data);
       }
-    };
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
+
+  useEffect(() => {
     fetchData();
-  }, []);
-  console.log(wallet);
+  }, [getWallet]);
 
   return (
     <div className="grid grid-cols-2 gap-2 lg:gap-4 md:grid-cols-2 md:gap-6 xl:grid-cols-2 2xl:gap-7.5">
@@ -91,8 +75,8 @@ const Wallets = () => {
 
       <Link to={'/'}>
         <CardDataStats
-          title="Stack Wallet"
-          total={`${wallet?.stackWallet ? wallet?.stackWallet : '00'} TIZARA`}
+          title="Stake Wallet"
+          total={`${wallet?.stakeWallet ? wallet?.stakeWallet : '00'} TIZARA`}
           // rate="0.95%"
           // levelDown
         >

@@ -5,7 +5,11 @@ import axios from 'axios';
 import { ApiResponse } from '../../types/global';
 import { ICoinPrice } from '../../types/dashboard';
 
-const TizaraCoin = () => {
+interface ComponentProps {
+  setGetWallet: (value: boolean) => void;
+}
+
+const TizaraCoin = ({ setGetWallet }: ComponentProps) => {
   // edit
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [updateItem, setUpdateItem] = useState();
@@ -18,7 +22,7 @@ const TizaraCoin = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get<ApiResponse<ICoinPrice>>(
-          'https://tizara.vercel.app/api/v1/general-settings',
+          'https://tizara-backend.vercel.app/api/v1/general-settings',
           {
             headers: {
               Authorization: `${token}`,
@@ -42,6 +46,7 @@ const TizaraCoin = () => {
   const closeEditModal = () => {
     setIsEditModalOpen(false);
   };
+  console.log(coinPrice);
 
   return (
     <>
@@ -67,7 +72,7 @@ const TizaraCoin = () => {
 
             <div className="flex justify-between font-medium text-black dark:text-white">
               <h4 className=" ">Current Price:</h4>
-              <h4 className=" "> {coinPrice && coinPrice[0]?.coinPrice} </h4>
+              <h4 className=" "> {coinPrice && coinPrice.coinPrice}</h4>
             </div>
           </div>
           <button
@@ -81,7 +86,11 @@ const TizaraCoin = () => {
 
       <div>
         {isEditModalOpen && (
-          <BuyToken coinPrice={coinPrice} closeModal={closeEditModal} />
+          <BuyToken
+            setGetWallet={setGetWallet}
+            coinPrice={coinPrice}
+            closeModal={closeEditModal}
+          />
         )}
       </div>
     </>

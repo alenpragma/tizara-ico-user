@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import CardDataStats from '../../components/CardDataStats';
 import DefaultLayout from '../../layout/DefaultLayout';
-import UserIcon from '../../assets/icon/UserIcon';
 import { Link } from 'react-router-dom';
-import { FaUserCheck } from 'react-icons/fa6';
 import { PiPackage } from 'react-icons/pi';
 import axios from 'axios';
 import { getTizaraUserToken } from '../../hooks/getTokenFromstorage';
@@ -37,12 +35,13 @@ interface UserProfile {
 const BizTokenDashboard: React.FC = () => {
   const [profile, setProfile] = useState<UserProfile | null>(null);
   const token = getTizaraUserToken();
+  const [getWallet, setGetWallet] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get<ApiResponse<UserProfile>>(
-          'https://tizara.vercel.app/api/v1/profile',
+          'https://tizara-backend.vercel.app/api/v1/profile',
           {
             headers: {
               Authorization: `${token}`,
@@ -69,11 +68,11 @@ const BizTokenDashboard: React.FC = () => {
       <div className="grid grid-cols-1 lg:grid-cols-6 gap-y-5 lg:gap-5">
         {/* users wallets  */}
         <div className="col-span-4">
-          <Wallets />
+          <Wallets getWallet={getWallet} />
         </div>
 
         <div className="col-span-2 rounded-sm border border-stroke bg-white py-5 px-6 shadow-default dark:border-strokedark dark:bg-boxdark">
-          <TizaraCoin />
+          <TizaraCoin setGetWallet={setGetWallet} />
         </div>
       </div>
 

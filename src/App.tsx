@@ -5,6 +5,7 @@ import SignIn from './pages/Authentication/SignIn';
 import SignUp from './pages/Authentication/SignUp';
 import PurchaseHistory from './pages/Purchase/PurchaseHistory';
 import ProtectedRoute from './hooks/ProtectedRoute';
+import 'react-loading-skeleton/dist/skeleton.css';
 
 const Profile = lazy(() => import('./pages/Profile'));
 
@@ -21,6 +22,11 @@ import BizTokenDashboard from './pages/Dashboard/TizaraTokenDashboard';
 import Transaction from './pages/Transaction/Transaction';
 import MyTeam from './pages/MyTeam/MyTeam';
 import DepositWalletHistory from './pages/Deposits/DepositWalletHistory';
+import BuyTokenHistory from './pages/BuyTokenHistory/BuyTokenHistory';
+import Stake from './pages/Stake/Stake';
+import AllStake from './pages/Stake/AllStake';
+import StakeBonusHistory from './pages/StakeBonusHistory/StakeBonusHistory';
+import RoyHistory from './pages/RoyHistory/RoyHistory';
 
 function App() {
   const { pathname } = useLocation();
@@ -72,6 +78,46 @@ function App() {
             />
 
             <Route
+              path="/stack-coin"
+              element={
+                <>
+                  <PageTitle title="Stake coin" />
+                  <Stake />
+                </>
+              }
+            />
+
+            <Route
+              path="/my-stack-coin"
+              element={
+                <>
+                  <PageTitle title="My stake coin" />
+                  <AllStake />
+                </>
+              }
+            />
+
+            <Route
+              path="/roy-history"
+              element={
+                <>
+                  <PageTitle title="stake coin" />
+                  <RoyHistory />
+                </>
+              }
+            />
+
+            <Route
+              path="/history/stake-bonus-history"
+              element={
+                <>
+                  <PageTitle title=" Stake Bonus History" />
+                  <StakeBonusHistory />
+                </>
+              }
+            />
+
+            <Route
               path="/history/transaction-history"
               element={
                 <>
@@ -97,6 +143,16 @@ function App() {
                 <>
                   <PageTitle title="Deposit History" />
                   <DepositWalletHistory />
+                </>
+              }
+            />
+
+            <Route
+              path="/buy-token-history"
+              element={
+                <>
+                  <PageTitle title="Deposit History" />
+                  <BuyTokenHistory />
                 </>
               }
             />
@@ -131,20 +187,6 @@ function App() {
               }
             />
 
-            {/* user end */}
-
-            {/* Packages */}
-            {/* <Route
-              path="/package/package-list"
-              element={
-                <>
-                  <PageTitle title="package-list" />
-                  <ProtectedRoute>
-                    <PackageList />
-                  </ProtectedRoute>
-                </>
-              }
-            /> */}
             <Route
               path="/package/package-settings"
               element={

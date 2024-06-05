@@ -12,16 +12,21 @@ type Inputs = {
 interface ComponentProps {
   // fetchData: () => void;
   closeModal: () => void;
-  coinPrice: ICoinPrice[];
+  setGetWallet: (value: boolean) => void;
+  coinPrice: ICoinPrice;
 }
 
-const BuyToken: React.FC<ComponentProps> = ({ closeModal, coinPrice }) => {
+const BuyToken: React.FC<ComponentProps> = ({
+  closeModal,
+  coinPrice,
+  setGetWallet,
+}) => {
   const { register, handleSubmit } = useForm<Inputs>();
   const [amount, setAmount] = useState<number>(0);
 
   let totalPrice: any = 0;
   if (coinPrice) {
-    totalPrice = Number(coinPrice[0]?.coinPrice) * amount;
+    totalPrice = Number(coinPrice?.coinPrice) * amount;
   }
 
   const token = getTizaraUserToken();
@@ -29,30 +34,41 @@ const BuyToken: React.FC<ComponentProps> = ({ closeModal, coinPrice }) => {
   const onSubmit: SubmitHandler<Inputs> = async (data: Inputs) => {
     const buyDetail = { ...data, totalPrice };
 
-    const aa = buyDetail.totalPrice.toFixed(3);
-
-    console.log(buyDetail, aa);
-
-    return;
+    const buyDetails = {
+      coinPrice: Number(buyDetail.coinPrice),
+      coinAmount: Number(buyDetail.coinAmount),
+      totalPrice: parseFloat(buyDetail.totalPrice.toFixed(5)),
+    };
 
     try {
-      const response = await fetch('localhost:/api/v1/general-settings', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `${token}`,
+      const response = await fetch(
+        'https://tizara-backend.vercel.app/api/v1/buy-token',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `${token}`,
+          },
+          body: JSON.stringify(buyDetails),
         },
-        body: JSON.stringify(data),
-      });
+      );
 
       const responseData = await response.json();
+
+      setGetWallet(true);
       if (responseData.success) {
         Swal.fire({
           title: 'success',
-          text: 'Deposit request success',
+          text: 'Successfully Buy token',
           icon: 'success',
         }).then(() => {
           closeModal();
+        });
+      } else if (!responseData.success) {
+        Swal.fire({
+          title: 'error',
+          text: `${responseData?.message}`,
+          icon: 'error',
         });
       }
     } catch (error) {
@@ -102,7 +118,8 @@ const BuyToken: React.FC<ComponentProps> = ({ closeModal, coinPrice }) => {
                   <input
                     className="w-35 rounded text-end border border-stroke bg-gray py-2 pl-3 pr-4.5 text-black-2 focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
                     {...register('coinPrice')}
-                    value={coinPrice && coinPrice[0]?.coinPrice} // Null check added
+                    type="number"
+                    value={coinPrice && coinPrice.coinPrice} // Null check added
                   />
                 </div>
                 <div className="flex justify-between place-items-center gap-3">
@@ -115,7 +132,7 @@ const BuyToken: React.FC<ComponentProps> = ({ closeModal, coinPrice }) => {
                   </label>
                   <input
                     type="number"
-                    min={500}
+                    min={1}
                     placeholder="Minimum 500"
                     className="text-end w-35 rounded border border-stroke bg-gray py-2 pl-3 pr-4.5 text-black-2 focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
                     {...register('coinAmount', { required: true })}
@@ -126,7 +143,9 @@ const BuyToken: React.FC<ComponentProps> = ({ closeModal, coinPrice }) => {
 
                 <h3 className="flex justify-between text-black-2 font-medium dark:text-white text-lg">
                   <span>Total Price:</span>
-                  <span>{totalPrice ? totalPrice : '00'}</span>
+                  <span>
+                    $ {totalPrice ? parseFloat(totalPrice.toFixed(5)) : '00'}
+                  </span>
                 </h3>
                 <Button btnName="Buy" />
                 {/* <button className="btn flex justify-center rounded bg-primary py-2 px-6 font-medium text-gray hover:shadow-1"

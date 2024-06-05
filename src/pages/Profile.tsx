@@ -37,7 +37,7 @@ const Profile = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get<ApiResponse>(
-          'https://tizara.vercel.app/api/v1/profile',
+          'https://tizara-backend.vercel.app/api/v1/profile',
           {
             headers: {
               Authorization: `${token}`,

@@ -32,7 +32,7 @@ const DepositRequest: React.FC<ComponentProps> = ({
   const getPaymentMethod = async () => {
     try {
       const response = await axios.get(
-        'https://tizara.vercel.app/api/v1/deposit-method',
+        'https://tizara-backend.vercel.app/api/v1/deposit-method',
         {
           headers: {
             Authorization: `${token}`,
@@ -63,7 +63,7 @@ const DepositRequest: React.FC<ComponentProps> = ({
 
     try {
       const response = await fetch(
-        'https://tizara.vercel.app/api/v1/deposit-request',
+        'https://tizara-backend.vercel.app/api/v1/deposit-request',
         {
           method: 'POST',
           headers: {
@@ -154,6 +154,7 @@ const DepositRequest: React.FC<ComponentProps> = ({
                   ))}
                 </select>
               </div>
+
               <div>
                 <label
                   className="mb-2 block text-sm font-medium text-black dark:text-white"

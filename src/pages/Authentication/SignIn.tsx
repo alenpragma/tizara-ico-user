@@ -33,7 +33,7 @@ const SignIn: React.FC = () => {
     setLoading(true);
     try {
       const response = await fetch(
-        'https://tizara.vercel.app/api/v1/auth/login',
+        'https://tizara-backend.vercel.app/api/v1/auth/login',
         {
           method: 'POST',
           headers: {
