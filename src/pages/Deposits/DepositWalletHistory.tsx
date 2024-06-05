@@ -27,7 +27,7 @@ const DepositWalletHistory = () => {
     setLoading(true);
     try {
       const response = await axios.get(
-        'http://localhost:5000/api/v1/deposit-request',
+        'https://tizara-backend.vercel.app/api/v1/deposit-request',
         {
           headers: {
             Authorization: `${token}`,

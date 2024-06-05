@@ -26,7 +26,7 @@ const AllStake = () => {
     setLoading(true);
     try {
       const response = await axios.get(
-        'http://localhost:5000/api/v1/stack-now',
+        'https://tizara-backend.vercel.app/api/v1/stack-now',
         {
           headers: {
             Authorization: `${token}`,

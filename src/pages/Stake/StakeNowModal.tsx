@@ -36,14 +36,17 @@ export const StakeNowModal = ({ closeModal, selectedPlan, getWllet }: any) => {
     try {
       setLoading(true);
 
-      const response = await fetch('http://localhost:5000/api/v1/stack-now', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `${token}`,
+      const response = await fetch(
+        'https://tizara-backend.vercel.app/api/v1/stack-now',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `${token}`,
+          },
+          body: JSON.stringify(planData),
         },
-        body: JSON.stringify(planData),
-      });
+      );
 
       const responseData = await response.json();
       console.log(responseData);

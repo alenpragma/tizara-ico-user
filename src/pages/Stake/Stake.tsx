@@ -37,7 +37,7 @@ const Stake = () => {
     const token = getTizaraUserToken();
     try {
       const response = await axios.get<ApiResponse<IWallet>>(
-        'http://localhost:5000/api/v1/user-wallet',
+        'https://tizara-backend.vercel.app/api/v1/user-wallet',
         {
           headers: {
             Authorization: `${token}`,
@@ -59,7 +59,7 @@ const Stake = () => {
   const getPaymentMethod = async () => {
     try {
       const response = await axios.get(
-        'http://localhost:5000/api/v1/stack-coin-settings?status=ACTIVE',
+        'https://tizara-backend.vercel.app/api/v1/stack-coin-settings?status=ACTIVE',
         {
           headers: {
             Authorization: `${token}`,
@@ -96,27 +96,34 @@ const Stake = () => {
   return (
     <DefaultLayout>
       <Breadcrumb pageName="Stake Now" />
-      <div className="lg:max-w-[50%] mx-auto">
+      <div className="lg:max-w-[70%] mx-auto">
         <div className="border p-3 rounded-md">
           <h3 className="dark:text-white font-semibold text-md">
             Available Tizara: {wallet?.nativeWallet}
           </h3>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 my-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3 my-4 mt-5">
           {depositMethod?.map((item: any) => {
             return (
               <div
                 key={item._id}
-                className=" w-50 mx-auto border p-3 rounded-md dark:bg-black"
+                className=" w-50 mx-auto flex flex-col justify-between border p-3 rounded-md h-55 dark:bg-black"
               >
-                <p className=" font-medium">Name: {item.planName}</p>
-                <p className=" font-medium">Duration: {item.duration} day</p>
-                <p className=" font-medium">Minimum: {item.minimum} Tizara</p>
-                <p className=" font-medium">APY: {item.apy} %</p>
+                <div>
+                  <p className=" font-medium text-xl">Name: {item.planName}</p>
+                  <p className=" font-medium pt-1">
+                    Duration: {item.duration} day
+                  </p>
+                  <p className=" font-medium pt-1">
+                    Minimum: {item.minimum} Tizara
+                  </p>
+                  <p className=" font-medium pt-1">APY: {item.apy} %</p>
+                </div>
+
                 <button
                   onClick={() => openEditModal(item)}
-                  className={`px-6 bg-primary btn flex justify-center rounded  py-1  mt-2  font-normal text-gray hover:shadow-1`}
+                  className={`px-6  w-fit mx-auto bg-emerald-500 btn flex justify-center rounded  py-1   font-normal text-gray hover:shadow-1`}
                 >
                   Stake Now
                 </button>

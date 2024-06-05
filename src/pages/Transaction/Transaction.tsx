@@ -35,7 +35,7 @@ const Transaction = () => {
         const token = localStorage.getItem('tizaraUserToken');
 
         const response = await axios.get<ApiResponse>(
-          'http://localhost:5000/api/v1/transaction-history',
+          'https://tizara-backend.vercel.app/api/v1/transaction-history',
           {
             headers: {
               Authorization: `${token}`,

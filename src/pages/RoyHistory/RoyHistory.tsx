@@ -39,7 +39,7 @@ const RoyHistory = () => {
     try {
       setLoading(true);
       const response = await axios.get(
-        'http://localhost:5000/api/v1/roy-bonus-historys',
+        'https://tizara-backend.vercel.app/api/v1/roy-bonus-historys',
         {
           headers: {
             Authorization: `${token}`,
