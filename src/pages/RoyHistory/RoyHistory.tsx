@@ -9,7 +9,7 @@ import PaginationButtons from '../../components/Pagination/PaginationButtons';
 import { formatToLocalDate } from '../../hooks/formatDate';
 import NotFound from '../../components/NotFound/NotFound';
 
-type IROYHistory = {
+export type IROYHistory = {
   id: string;
   planName: string;
   duration: string;

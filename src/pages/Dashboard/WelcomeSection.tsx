@@ -38,7 +38,7 @@ const WelcomeSection = ({ profile }: any) => {
           <img src={userImage} alt="" className="w-30 h-30 rounded-full" />
           <div>
             <h2 className="text-title-md capitalize lg:text-2xl font-semibold">
-              Welcome to Tizara {profile?.name}!
+              Welcome to Tizara, {profile?.name}!
             </h2>
             <div className="flex gap-2">
               <p>

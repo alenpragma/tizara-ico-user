@@ -8,6 +8,7 @@ import { getTizaraUserToken } from '../../hooks/getTokenFromstorage';
 import WelcomeSection from './WelcomeSection';
 import Wallets from './Wallets';
 import TizaraCoin from './TizaraCoin';
+import { IROYHistory } from '../RoyHistory/RoyHistory';
 
 interface ApiResponse<T> {
   statusCode: number;
@@ -36,6 +37,7 @@ const BizTokenDashboard: React.FC = () => {
   const [profile, setProfile] = useState<UserProfile | null>(null);
   const token = getTizaraUserToken();
   const [getWallet, setGetWallet] = useState(false);
+  const [royHistorys, setRoyHistorys] = useState<IROYHistory[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -60,6 +62,35 @@ const BizTokenDashboard: React.FC = () => {
     };
     fetchData();
   }, []);
+
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(
+        'https://tizara-backend.vercel.app/api/v1/roy-bonus-historys',
+        {
+          headers: {
+            Authorization: `${token}`,
+            'Content-Type': 'application/json',
+          },
+        },
+      );
+      setRoyHistorys(response?.data?.data);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+  console.log(royHistorys);
+
+  // Loop through the array and sum the dailyRoy values
+  let sum = 0;
+  for (let i = 0; i < royHistorys.length; i++) {
+    sum += royHistorys[i].dailyRoy;
+  }
+  console.log(sum);
 
   return (
     <DefaultLayout>
@@ -90,10 +121,11 @@ const BizTokenDashboard: React.FC = () => {
             <PiPackage className="text-2xl dark:text-white text-primary" />
           </CardDataStats>
         </Link>
+
         <Link to={'/'}>
           <CardDataStats
-            title="My Team"
-            total={`${profile?.referralCount ? profile?.referralCount : '00'}`}
+            title="Total ROI"
+            total={`${sum ? sum : '00'}`}
 
             // rate="0.95%"
             // levelDown
@@ -103,7 +135,19 @@ const BizTokenDashboard: React.FC = () => {
         </Link>
         <Link to={'/'}>
           <CardDataStats
-            title="My Team"
+            title="Total Deposit"
+            total={`${profile?.referralCount ? profile?.referralCount : '00'}`}
+
+            // rate="0.95%"
+            // levelDown
+          >
+            <PiPackage className="text-2xl dark:text-white text-primary" />
+          </CardDataStats>
+        </Link>
+
+        <Link to={'/'}>
+          <CardDataStats
+            title="Level Bonus"
             total={`${profile?.referralCount ? profile?.referralCount : '00'}`}
 
             // rate="0.95%"

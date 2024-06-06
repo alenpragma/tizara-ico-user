@@ -159,12 +159,10 @@ const DepositWalletHistory = () => {
                   );
                 })}
               </tbody>
-              <div>
-                {!loading && depositHistory?.length == 0 && <NotFound />}
-              </div>
             </table>
           )}
         </div>
+        <div>{!loading && depositHistory?.length == 0 && <NotFound />}</div>
       </div>
 
       <div>
