@@ -159,7 +159,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                     }`}
                 >
                   <DashboardIcon />
-                  MY Team
+                  My Team
                 </NavLink>
               </li>
 
