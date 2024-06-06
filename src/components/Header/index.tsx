@@ -1,17 +1,42 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import DropdownUser from './DropdownUser';
 import DarkModeSwitcher from './DarkModeSwitcher';
-import { removeTizaraUserToken } from '../../hooks/getTokenFromstorage';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
+import { ApiResponse } from '../../types/global';
+import { getTizaraUserToken } from '../../hooks/getTokenFromstorage';
+import { UserProfile } from '../../pages/Profile';
 
 const Header = (props: {
   sidebarOpen: string | boolean | undefined;
   setSidebarOpen: (arg0: boolean) => void;
 }) => {
-  const navigate = useNavigate();
-  const logout = () => {
-    removeTizaraUserToken();
-    navigate('/');
-  };
+  const [profile, setProfile] = useState<UserProfile | null>(null);
+
+  const token = getTizaraUserToken();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get<ApiResponse<UserProfile>>(
+          'https://tizara-backend.vercel.app/api/v1/profile',
+          {
+            headers: {
+              Authorization: `${token}`,
+              'Content-Type': 'application/json',
+            },
+          },
+        );
+
+        if (response?.data?.success) {
+          setProfile(response.data.data);
+        }
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+    fetchData();
+  }, []);
 
   return (
     <header className="sticky top-0 z-999 flex w-full bg-white drop-shadow-1 dark:bg-boxdark dark:drop-shadow-none">
@@ -73,7 +98,7 @@ const Header = (props: {
           </ul>
 
           {/* <!-- User Area --> */}
-          <DropdownUser />
+          <DropdownUser profile={profile} />
           {/* <!-- User Area --> */}
         </div>
       </div>

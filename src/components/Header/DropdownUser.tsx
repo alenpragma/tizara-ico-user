@@ -1,11 +1,12 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
-import UserOne from '../../images/user/user-06.png';
+import userImage from '../../images/user.jpg';
 import { removeTizaraUserToken } from '../../hooks/getTokenFromstorage';
 
-const DropdownUser = () => {
+const DropdownUser = ({ profile }: any) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  console.log(profile);
 
   const trigger = useRef<any>(null);
   const dropdown = useRef<any>(null);
@@ -51,14 +52,16 @@ const DropdownUser = () => {
         to="#"
       >
         <span className="hidden text-right lg:block">
-          <span className="block text-sm font-medium text-black dark:text-white">
-            Thomas Anree
+          <span className="block uppercase text-sm font-medium text-black dark:text-white">
+            {profile?.name}
           </span>
-          <span className="block text-xs">Designer</span>
+          <span className="block text-xs">
+            {profile?.isActive ? 'ACTIVE' : 'INACTIVE'}
+          </span>
         </span>
 
         <span className="h-12 w-12 rounded-full">
-          <img src={UserOne} alt="User" />
+          <img src={userImage} alt="User" className="rounded-full" />
         </span>
 
         <svg
