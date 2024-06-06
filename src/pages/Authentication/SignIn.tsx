@@ -88,9 +88,11 @@ const SignIn: React.FC = () => {
                     TIZARA TOKEN
                   </h2>
                 </Link>
-                <p className="lg:px-5">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit
-                  suspendisse.
+                <p className="lg:px-5 leading-5">
+                  Welcome back to Tizara! Log in to access your personalized
+                  dashboard, track your progress, and stay updated with the
+                  latest resources. Let's continue your journey towards success!
+                  🚀
                 </p>
 
                 <SvgImage />
@@ -189,7 +191,7 @@ const SignIn: React.FC = () => {
                   <div className="mt-6 text-center">
                     <p className="font-medium">
                       Don’t have any account?
-                      <Link to="/auth/signup" className="text-primary">
+                      <Link to="/auth/signup" className="text-primary ms-1">
                         Sign Up
                       </Link>
                     </p>

@@ -91,11 +91,11 @@ const SignUp: React.FC = () => {
 
   return (
     <>
-      <div className="min-h-screen flex justify-center mt-2 items-center place-items-center ">
+      <div className="min-h-screen flex justify-center items-center place-items-center ">
         <div className="w-[90%] md:w-[80%] lg:w-[70%]">
           <div className=" rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
             <div className="flex items-center">
-              <div className="hidden w-full xl:block xl:w-1/2">
+              <div className="hidden w-full lg:block lg:w-1/2">
                 <div className="py-17.5 px-26 text-center">
                   <Link
                     className="mb-5.5 flex gap-2 justify-center place-items-center "
@@ -105,9 +105,8 @@ const SignUp: React.FC = () => {
                       TIZARA TOKEN
                     </h2>
                   </Link>
-                  <p className="2xl:px-20">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit
-                    suspendisse.
+                  <p className="2xl:px-20 leading-5">
+                    Join Tizara today! Start your journey to success with us! 🚀
                   </p>
 
                   <SvgImage />
@@ -130,7 +129,7 @@ const SignUp: React.FC = () => {
                           type="text"
                           {...register('name', { required: true })}
                           placeholder="Enter your full name"
-                          className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                          className="w-full rounded-lg border border-stroke bg-transparent py-3 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                         />
 
                         <span className="absolute right-4 top-4">
@@ -198,7 +197,7 @@ const SignUp: React.FC = () => {
                           type="text"
                           {...register('phone', { required: true })}
                           placeholder="Enter your phone"
-                          className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                          className="w-full rounded-lg border border-stroke bg-transparent py-3 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                         />
 
                         <span className="absolute right-4 top-4">
@@ -270,7 +269,7 @@ const SignUp: React.FC = () => {
                           {...register('referralCode')}
                           placeholder="Referral"
                           defaultValue={referralCode as string}
-                          className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                          className="w-full rounded-lg border border-stroke bg-transparent py-3 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                         />
 
                         <span className="absolute right-4 top-4">
@@ -301,7 +300,7 @@ const SignUp: React.FC = () => {
                         <input
                           type="submit"
                           value="Create account"
-                          className="w-full cursor-pointer rounded-lg border border-primary bg-primary p-4 text-white transition hover:bg-opacity-90"
+                          className="w-full cursor-pointer rounded-lg border border-primary bg-primary p-3 text-white transition hover:bg-opacity-90"
                         />
                       ) : (
                         <PuffLoader

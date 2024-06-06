@@ -51,7 +51,6 @@ const BizTokenDashboard: React.FC = () => {
             },
           },
         );
-        console.log(response);
 
         if (response?.data?.success) {
           setProfile(response.data.data);
@@ -83,14 +82,44 @@ const BizTokenDashboard: React.FC = () => {
   useEffect(() => {
     fetchData();
   }, []);
-  console.log(royHistorys);
 
-  // Loop through the array and sum the dailyRoy values
-  let sum = 0;
+  const [history, sethistory] = useState<any>([]);
+
+  const fetchStakeLevelBonus = async () => {
+    try {
+      const response = await axios.get(
+        'https://tizara-backend.vercel.app/api/v1/stack-bonus-history',
+        {
+          headers: {
+            Authorization: `${token}`,
+            'Content-Type': 'application/json',
+          },
+        },
+      );
+
+      if (response?.data?.success) {
+        sethistory(response.data.data);
+      }
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
+
+  useEffect(() => {
+    fetchStakeLevelBonus();
+  }, []);
+
+  // sum the dailyRoy values
+  let totalRoy = 0;
   for (let i = 0; i < royHistorys.length; i++) {
-    sum += royHistorys[i].dailyRoy;
+    totalRoy += royHistorys[i].dailyRoy;
   }
-  console.log(sum);
+
+  // sum the level bonusAmount values
+  let stakeLevelBonus = 0;
+  for (let i = 0; i < history.length; i++) {
+    stakeLevelBonus += history[i].bonusAmount;
+  }
 
   return (
     <DefaultLayout>
@@ -125,7 +154,7 @@ const BizTokenDashboard: React.FC = () => {
         <Link to={'/'}>
           <CardDataStats
             title="Total ROI"
-            total={`${sum ? sum : '00'}`}
+            total={`${totalRoy ? totalRoy : '00'}`}
 
             // rate="0.95%"
             // levelDown
@@ -136,7 +165,7 @@ const BizTokenDashboard: React.FC = () => {
         <Link to={'/'}>
           <CardDataStats
             title="Total Deposit"
-            total={`${profile?.referralCount ? profile?.referralCount : '00'}`}
+            total={`${'00'}`}
 
             // rate="0.95%"
             // levelDown
@@ -148,7 +177,7 @@ const BizTokenDashboard: React.FC = () => {
         <Link to={'/'}>
           <CardDataStats
             title="Level Bonus"
-            total={`${profile?.referralCount ? profile?.referralCount : '00'}`}
+            total={`${stakeLevelBonus ? stakeLevelBonus : '00'}`}
 
             // rate="0.95%"
             // levelDown
