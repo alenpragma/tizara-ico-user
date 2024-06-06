@@ -24,7 +24,6 @@ const DepositWalletHistory = () => {
   };
 
   const fetchData = async () => {
-    setLoading(true);
     try {
       const response = await axios.get(
         'https://tizara-backend.vercel.app/api/v1/deposit-request',
@@ -35,7 +34,6 @@ const DepositWalletHistory = () => {
           },
         },
       );
-      setLoading(false);
 
       if (response?.data?.success) {
         setDepositHistory(response?.data?.data);

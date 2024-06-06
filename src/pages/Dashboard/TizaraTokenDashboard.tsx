@@ -32,81 +32,131 @@ interface UserProfile {
   createdAt: string;
   updatedAt: string;
 }
+interface ApiResponse<T> {
+  success: boolean;
+  data: T;
+}
 
+interface UserProfile {
+  id: string;
+  name: string;
+  email: string;
+  // Add other user profile fields as needed
+}
+
+interface RoyHistory {
+  // Define fields as per the API response
+}
+
+interface StakeLevelBonus {
+  // Define fields as per the API response
+}
+
+interface DepositHistory {
+  status: string;
+  amount: number;
+  // Add other fields as needed
+}
+
+type SetState<T> = React.Dispatch<React.SetStateAction<T>>;
 const BizTokenDashboard: React.FC = () => {
   const [profile, setProfile] = useState<UserProfile | null>(null);
   const token = getTizaraUserToken();
   const [getWallet, setGetWallet] = useState(false);
   const [royHistorys, setRoyHistorys] = useState<IROYHistory[]>([]);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get<ApiResponse<UserProfile>>(
-          'https://tizara-backend.vercel.app/api/v1/profile',
-          {
-            headers: {
-              Authorization: `${token}`,
-              'Content-Type': 'application/json',
-            },
-          },
-        );
-
-        if (response?.data?.success) {
-          setProfile(response.data.data);
-        }
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    };
-    fetchData();
-  }, []);
-
-  const fetchData = async () => {
-    try {
-      const response = await axios.get(
-        'https://tizara-backend.vercel.app/api/v1/roy-bonus-historys',
-        {
-          headers: {
-            Authorization: `${token}`,
-            'Content-Type': 'application/json',
-          },
-        },
-      );
-      setRoyHistorys(response?.data?.data);
-    } catch (error) {
-      console.error('Error fetching data:', error);
-    }
-  };
-
-  useEffect(() => {
-    fetchData();
-  }, []);
-
   const [history, sethistory] = useState<any>([]);
+  const [depositHistory, setDepositHistory] = useState<any>();
 
-  const fetchStakeLevelBonus = async () => {
+  const axiosInstance = axios.create({
+    baseURL: 'https://tizara-backend.vercel.app/api/v1',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+
+  const fetchProfileData = async (token: string) => {
     try {
-      const response = await axios.get(
-        'https://tizara-backend.vercel.app/api/v1/stack-bonus-history',
-        {
-          headers: {
-            Authorization: `${token}`,
-            'Content-Type': 'application/json',
-          },
-        },
-      );
-
+      const response = await axiosInstance.get('/profile', {
+        headers: { Authorization: `${token}` },
+      });
       if (response?.data?.success) {
-        sethistory(response.data.data);
+        return response.data.data;
       }
     } catch (error) {
-      console.error('Error fetching data:', error);
+      console.error('Error fetching profile data:', error);
+    }
+  };
+
+  const fetchData = async (token: string) => {
+    try {
+      const response = await axiosInstance.get('/roy-bonus-historys', {
+        headers: { Authorization: `${token}` },
+      });
+      return response?.data?.data;
+    } catch (error) {
+      console.error('Error fetching roy-bonus-historys data:', error);
+    }
+  };
+
+  const fetchStakeLevelBonus = async (token: string) => {
+    try {
+      const response = await axiosInstance.get('/stack-bonus-history', {
+        headers: { Authorization: `${token}` },
+      });
+      if (response?.data?.success) {
+        return response.data.data;
+      }
+    } catch (error) {
+      console.error('Error fetching stack-bonus-history data:', error);
+    }
+  };
+
+  const fetchDepositData = async (token: string) => {
+    try {
+      const response = await axiosInstance.get('/deposit-request', {
+        headers: { Authorization: `${token}` },
+      });
+      if (response?.data?.success) {
+        return response.data.data;
+      }
+    } catch (error) {
+      console.error('Error fetching deposit-request data:', error);
+    }
+  };
+
+  const fetchAllData = async (
+    token: string | any,
+    setProfile: SetState<UserProfile | any>,
+    setRoyHistorys: SetState<RoyHistory[] | any>,
+    sethistory: SetState<StakeLevelBonus[] | any>,
+    setDepositHistory: SetState<DepositHistory[] | any>,
+  ) => {
+    try {
+      const [profileData, royData, stakeBonusData, depositData] =
+        await Promise.all([
+          fetchProfileData(token),
+          fetchData(token),
+          fetchStakeLevelBonus(token),
+          fetchDepositData(token),
+        ]);
+
+      if (profileData) setProfile(profileData);
+      if (royData) setRoyHistorys(royData);
+      if (stakeBonusData) sethistory(stakeBonusData);
+      if (depositData) setDepositHistory(depositData);
+    } catch (error) {
+      console.error('Error fetching all data:', error);
     }
   };
 
   useEffect(() => {
-    fetchStakeLevelBonus();
+    fetchAllData(
+      token,
+      setProfile,
+      setRoyHistorys,
+      sethistory,
+      setDepositHistory,
+    );
   }, []);
 
   // sum the dailyRoy values
@@ -117,8 +167,16 @@ const BizTokenDashboard: React.FC = () => {
 
   // sum the level bonusAmount values
   let stakeLevelBonus = 0;
-  for (let i = 0; i < history.length; i++) {
+  for (let i = 0; i < history?.length; i++) {
     stakeLevelBonus += history[i].bonusAmount;
+  }
+
+  let totalDeposit = 0;
+
+  for (let i = 0; i < depositHistory?.length; i++) {
+    if (depositHistory[i].status == 'APPROVE') {
+      totalDeposit += Number(depositHistory[i].amount);
+    }
   }
 
   return (
@@ -165,7 +223,7 @@ const BizTokenDashboard: React.FC = () => {
         <Link to={'/'}>
           <CardDataStats
             title="Total Deposit"
-            total={`${'00'}`}
+            total={`${totalDeposit ? totalDeposit : '00'}`}
 
             // rate="0.95%"
             // levelDown
