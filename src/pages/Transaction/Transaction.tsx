@@ -77,11 +77,11 @@ const Transaction = () => {
                     <th className="min-w-[90px] py-4 px-4 font-medium text-black dark:text-white xl:pl-11">
                       SL NO
                     </th>
-                    <th className="min-w-[220px] py-4 px-4 font-medium text-black dark:text-white xl:pl-11">
+                    <th className="min-w-[120px] py-4 px-4 font-medium text-black dark:text-white xl:pl-11">
                       Amount
                     </th>
 
-                    <th className="min-w-[120px] py-4 px-4 font-medium text-black dark:text-white">
+                    <th className="min-w-[150px] py-4 px-4 font-medium text-black dark:text-white">
                       Details
                     </th>
 
