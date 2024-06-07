@@ -42,7 +42,7 @@ const WelcomeSection = ({ profile }: any) => {
             </h2>
             <div className="flex gap-2">
               <p>
-                https://official.tizaracoin.com/signup?referralCode=
+                https://official.tizaracoin...reffer=
                 {profile?.myReferralCode}
               </p>
               <div

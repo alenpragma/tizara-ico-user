@@ -1,5 +1,4 @@
-import { SubmitHandler, useForm } from 'react-hook-form';
-import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
+ import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
 import DefaultLayout from '../../layout/DefaultLayout';
 import axios from 'axios';
 import { getTizaraUserToken } from '../../hooks/getTokenFromstorage';
@@ -77,9 +76,9 @@ const Stake = () => {
     getPaymentMethod();
   }, []);
 
-  const onSubmit: SubmitHandler<Inputs> = async (data: Inputs) => {
-    console.log(data);
-  };
+  // const onSubmit: SubmitHandler<Inputs> = async (data: Inputs) => {
+  //   console.log(data);
+  // };
 
   // Function to set wallet name based on selected method
   useEffect(() => {
@@ -103,27 +102,51 @@ const Stake = () => {
           </h3>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3 my-4 mt-5">
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 my-4 mt-5">
           {depositMethod?.map((item: any) => {
             return (
               <div
                 key={item._id}
-                className=" w-50 mx-auto flex flex-col justify-between border p-3 rounded-md h-55 dark:bg-black"
+                className="w-[300px]   md:w-59 mx-auto flex flex-col justify-between border border-secondary py-5 rounded-xl hover:bg-slate-200  dark:bg-black"
               >
                 <div>
-                  <p className=" font-medium text-xl">Name: {item.planName}</p>
-                  <p className=" font-medium pt-1">
-                    Duration: {item.duration} day
-                  </p>
-                  <p className=" font-medium pt-1">
-                    Minimum: {item.minimum} Tizara
-                  </p>
-                  <p className=" font-medium pt-1">APY: {item.apy} %</p>
+                  <div className='flex justify-between font-bold  px-3 py-1'>
+                    <span>Name: </span>
+                    <span>{item.planName}</span>
+                  </div>
+                  <hr className='py-1 mt-1' />
+
+                  <div className='flex justify-between '>
+
+                    <p className=" font-medium px-3 py-1">
+                      Duration:
+                    </p>
+                    <p className=" font-medium px-3 py-1">
+                      {item.duration} day
+                    </p>
+                  </div>
+                  <hr className='py-1 mt-1' />
+                  <div className='flex justify-between '>
+
+                    <p className=" font-medium px-3 py-1">
+                      Minimum:
+                    </p>
+                    <p className=" font-medium px-3 py-1">
+                      {item.minimum} Tizara
+                    </p>
+                  </div>
+                  <hr className='py-1 mt-1' />
+                  <div className='flex justify-between '>
+                    <p className=" font-medium px-3 py-1">APY:</p>
+                    <p className=" font-medium px-3 py-1">{item.apy} %</p>
+                  </div>
+                  <hr className='py-1 mt-1' />
+
                 </div>
 
                 <button
                   onClick={() => openEditModal(item)}
-                  className={`px-6  w-fit mx-auto bg-emerald-500 btn flex justify-center rounded  py-1   font-normal text-gray hover:shadow-1`}
+                  className={`px-6  w-fit mx-auto bg-emerald-500 btn flex justify-center rounded  py-2   font-normal text-gray hover:shadow-1`}
                 >
                   Stake Now
                 </button>

@@ -120,7 +120,7 @@ const DepositRequest: React.FC<ComponentProps> = ({
         <div className="modal rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark overflow-auto">
           <div className="min-w-full w-[350px] md-w-[420px] lg:w-[600px] border-b border-stroke   pb-4 px-1 dark:border-strokedark">
             <div className="w-full flex justify-between px-3 place-items-center py-3">
-              <h2 className="text-xl font-bold text-white">Deposit Request</h2>
+              <h2 className="text-xl font-bold dark:text-white text-black ">Deposit Request</h2>
               <strong
                 className="text-3xl align-center dark:text-white  cursor-pointer hover:text-black dark:hover:text-white"
                 onClick={closeModal}
@@ -135,7 +135,7 @@ const DepositRequest: React.FC<ComponentProps> = ({
             >
               <div>
                 <label
-                  className="mb-2 block text-sm font-medium text-black dark:text-white"
+                  className="mb-2 block  dark:border-strokedark dark:focus:border-primary text-sm font-medium text-black dark:text-white"
                   htmlFor="type"
                 >
                   Payment Method
@@ -144,7 +144,7 @@ const DepositRequest: React.FC<ComponentProps> = ({
                 <select
                   id="paymentMethod"
                   onClick={(e: any) => setSelectedMethod(e?.target?.value)}
-                  className="py-3 w-full rounded-md dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
+                  className="py-3 w-full rounded-md  dark:border-strokedark border-[1.5px] dark:text-white dark:focus:border-primary outline-none"
                 >
                   {/* Map through paymentMethods and render options */}
                   {depositMethod?.data?.map((method: any) => (
