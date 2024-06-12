@@ -120,7 +120,9 @@ const DepositRequest: React.FC<ComponentProps> = ({
         <div className="modal rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark overflow-auto">
           <div className="min-w-full w-[350px] md-w-[420px] lg:w-[600px] border-b border-stroke   pb-4 px-1 dark:border-strokedark">
             <div className="w-full flex justify-between px-3 place-items-center py-3">
-              <h2 className="text-xl font-bold dark:text-white text-black ">Deposit Request</h2>
+              <h2 className="text-xl font-bold dark:text-white text-black ">
+                Deposit Request
+              </h2>
               <strong
                 className="text-3xl align-center dark:text-white  cursor-pointer hover:text-black dark:hover:text-white"
                 onClick={closeModal}

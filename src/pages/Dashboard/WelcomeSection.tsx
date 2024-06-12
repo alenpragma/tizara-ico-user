@@ -62,7 +62,7 @@ const WelcomeSection = ({ profile }: any) => {
           <div className="flex gap-2">
             <button
               onClick={() => openEditModal()}
-              className="items-center justify-center rounded-md bg-meta-6 py-2 px-6 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
+              className="items-center justify-center rounded-md bg-meta-8 py-2 px-6 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
             >
               Deposit
             </button>
