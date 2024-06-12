@@ -8,7 +8,7 @@ const options: ApexOptions = {
     fontFamily: 'Satoshi, sans-serif',
     type: 'bar',
     height: 335,
-    stakeed: true,
+    // stakeed: true,
     toolbar: {
       show: false,
     },

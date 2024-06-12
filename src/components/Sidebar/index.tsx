@@ -1,10 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import SidebarLinkGroup from './SidebarLinkGroup';
-import { MdOutlineSettingsSuggest } from 'react-icons/md';
-import { TbSettingsDown } from 'react-icons/tb';
 import DashboardIcon from '../../images/sidebarIcon/DashboardIcon';
 import { PiPackage } from 'react-icons/pi';
+import logo from '../../assets/tizara.png';
 
 interface SidebarProps {
   sidebarOpen: boolean;
@@ -61,13 +60,15 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
   return (
     <aside
       ref={sidebar}
-      className={`absolute left-0 top-0 z-999 flex h-screen w-67 flex-col overflow-y-hidden bg-black duration-300 ease-linear dark:bg-boxdark lg:static lg:translate-x-0 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'
-        }`}
+      className={`absolute left-0 top-0 z-999 flex h-screen w-67 flex-col overflow-y-hidden bg-black duration-300 ease-linear dark:bg-boxdark lg:static lg:translate-x-0 ${
+        sidebarOpen ? 'translate-x-0' : '-translate-x-full'
+      }`}
     >
       {/* <!-- SIDEBAR HEADER --> */}
-      <div className="flex items-center justify-between gap-2 px-6 py-5.5 lg:py-6.5">
+      <div className="flex items-center justify-between gap-2 px-6 py-2 lg:py-2.5">
         <NavLink to="/dashboard">
-          <h1 className="text-3xl font-semibold text-white">Tizara</h1>
+          {/* <h1 className="text-3xl font-semibold text-white">Tizara</h1> */}
+          <img className="h-15" src={logo} alt="" />
         </NavLink>
 
         <button
@@ -109,9 +110,10 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               <li>
                 <NavLink
                   to="/dashboard"
-                  className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${(pathname === '/' || pathname.includes('dashboard')) &&
+                  className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+                    (pathname === '/' || pathname.includes('dashboard')) &&
                     'bg-graydark dark:bg-meta-4'
-                    }'
+                  }'
                     }`}
                 >
                   <DashboardIcon />
@@ -122,10 +124,11 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               <li>
                 <NavLink
                   to="/stack-coin"
-                  className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${(pathname === '/stack-coin' ||
-                    pathname.includes('/stack-coin')) &&
+                  className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+                    (pathname === '/stack-coin' ||
+                      pathname.includes('/stack-coin')) &&
                     'bg-graydark dark:bg-meta-4'
-                    }'
+                  }'
                     }`}
                 >
                   <DashboardIcon />
@@ -135,10 +138,11 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               <li>
                 <NavLink
                   to="/my-stack-coin"
-                  className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${(pathname === '/my-stack-coin' ||
-                    pathname.includes('my-stack-coin')) &&
+                  className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+                    (pathname === '/my-stack-coin' ||
+                      pathname.includes('my-stack-coin')) &&
                     'bg-graydark dark:bg-meta-4'
-                    }'
+                  }'
                     }`}
                 >
                   <PiPackage className="text-xl dark:bg-meta-4" />
@@ -148,9 +152,10 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               <li>
                 <NavLink
                   to="/my-team"
-                  className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${(pathname === '/my-team' || pathname.includes('my-team')) &&
+                  className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+                    (pathname === '/my-team' || pathname.includes('my-team')) &&
                     'bg-graydark dark:bg-meta-4'
-                    }'
+                  }'
                     }`}
                 >
                   <DashboardIcon />
@@ -158,17 +163,14 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                 </NavLink>
               </li>
 
-
-
-
-
               <li>
                 <NavLink
                   to="/history/stake-bonus-history"
-                  className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${(pathname === '/stake-bonus-history' ||
-                    pathname.includes('stake-bonus-history')) &&
+                  className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+                    (pathname === '/stake-bonus-history' ||
+                      pathname.includes('stake-bonus-history')) &&
                     'bg-graydark dark:bg-meta-4'
-                    }'
+                  }'
                     }`}
                 >
                   <PiPackage className="text-xl dark:bg-meta-4" />
@@ -190,8 +192,6 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                 </NavLink>
               </li> */}
 
-
-           
               {/* Menu item Dashbord */}
 
               {/* Users start */}
@@ -206,10 +206,11 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                     <React.Fragment>
                       <NavLink
                         to="#"
-                        className={`  group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${(pathname === '/history' ||
-                          pathname.includes('history')) &&
+                        className={`  group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+                          (pathname === '/history' ||
+                            pathname.includes('history')) &&
                           'bg-graydark dark:bg-meta-4'
-                          }`}
+                        }`}
                         onClick={(e) => {
                           e.preventDefault();
                           sidebarExpanded
@@ -235,8 +236,9 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                         </svg>
                         History
                         <svg
-                          className={`absolute right-4 top-1/2 -translate-y-1/2 fill-current ${open && 'rotate-180'
-                            }`}
+                          className={`absolute right-4 top-1/2 -translate-y-1/2 fill-current ${
+                            open && 'rotate-180'
+                          }`}
                           width="20"
                           height="20"
                           viewBox="0 0 20 20"
@@ -254,12 +256,11 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
 
                       {/* <!-- Dropdown Menu Start --> */}
                       <div
-                        className={`translate transform overflow-hidden ${!open && 'hidden'
-                          }`}
+                        className={`translate transform overflow-hidden ${
+                          !open && 'hidden'
+                        }`}
                       >
                         <ul className="mt-4 mb-5.5 flex flex-col gap-2.5 pl-6">
-
-
                           <li>
                             <NavLink
                               to="/history/transaction-history"
@@ -307,10 +308,6 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                               ROI History
                             </NavLink>
                           </li>
-
-
-
-
                         </ul>
                       </div>
                       {/* <!-- Dropdown Menu End --> */}
@@ -323,8 +320,9 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               <li>
                 <NavLink
                   to="/profile"
-                  className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${pathname.includes('profile') && 'bg-graydark dark:bg-meta-4'
-                    }`}
+                  className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+                    pathname.includes('profile') && 'bg-graydark dark:bg-meta-4'
+                  }`}
                 >
                   <svg
                     className="fill-current"
@@ -346,10 +344,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                   Profile
                 </NavLink>
               </li>
-
             </ul>
           </div>
-
         </nav>
         {/* <!-- Sidebar Menu --> */}
       </div>

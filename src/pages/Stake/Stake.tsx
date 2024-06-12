@@ -1,4 +1,4 @@
- import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
+import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
 import DefaultLayout from '../../layout/DefaultLayout';
 import axios from 'axios';
 import { getTizaraUserToken } from '../../hooks/getTokenFromstorage';
@@ -110,38 +110,31 @@ const Stake = () => {
                 className="w-[300px]   md:w-59 mx-auto flex flex-col justify-between border border-secondary py-5 rounded-xl hover:bg-slate-200  dark:bg-black"
               >
                 <div>
-                  <div className='flex justify-between font-bold  px-3 py-1'>
+                  <div className="flex justify-between font-bold  px-3 py-1">
                     <span>Name: </span>
                     <span>{item.planName}</span>
                   </div>
-                  <hr className='py-1 mt-1' />
+                  <hr className="py-1 mt-1" />
 
-                  <div className='flex justify-between '>
-
-                    <p className=" font-medium px-3 py-1">
-                      Duration:
-                    </p>
+                  <div className="flex justify-between ">
+                    <p className=" font-medium px-3 py-1">Duration:</p>
                     <p className=" font-medium px-3 py-1">
                       {item.duration} day
                     </p>
                   </div>
-                  <hr className='py-1 mt-1' />
-                  <div className='flex justify-between '>
-
-                    <p className=" font-medium px-3 py-1">
-                      Minimum:
-                    </p>
+                  <hr className="py-1 mt-1" />
+                  <div className="flex justify-between ">
+                    <p className=" font-medium px-3 py-1">Minimum:</p>
                     <p className=" font-medium px-3 py-1">
                       {item.minimum} Tizara
                     </p>
                   </div>
-                  <hr className='py-1 mt-1' />
-                  <div className='flex justify-between '>
+                  <hr className="py-1 mt-1" />
+                  <div className="flex justify-between ">
                     <p className=" font-medium px-3 py-1">APY:</p>
                     <p className=" font-medium px-3 py-1">{item.apy} %</p>
                   </div>
-                  <hr className='py-1 mt-1' />
-
+                  <hr className="py-1 mt-1" />
                 </div>
 
                 <button

@@ -65,17 +65,14 @@ const Transaction = () => {
     };
 
     try {
-      const response = await fetch(
-        'https://biztoken.fecotrade.com/api/transfer-setting/update',
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${' '}`,
-          },
-          body: JSON.stringify(newData),
+      const response = await fetch(' ', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${' '}`,
         },
-      );
+        body: JSON.stringify(newData),
+      });
 
       if (!response.ok) {
         throw new Error('Network response was not ok');
