@@ -23,7 +23,6 @@ const Wallets = ({ getWallet }: any) => {
           },
         },
       );
-      // console.log(response);
 
       if (response?.data?.success) {
         // console.log(response.data.data);
@@ -40,49 +39,41 @@ const Wallets = ({ getWallet }: any) => {
 
   return (
     <div className="grid grid-cols-2 gap-2 lg:gap-4 md:grid-cols-2 md:gap-6 xl:grid-cols-2 2xl:gap-7.5">
-      <Link to={'/'}>
+      <div>
         <CardDataStats
           title="Deposit Wallet"
           total={`${wallet?.depositWallet ? wallet?.depositWallet : '00'} USD`}
-          // rate="0.95%"
-          // levelDown
         >
           <PiPackage className="lg:text-2xl dark:text-white text-primary" />
         </CardDataStats>
-      </Link>
+      </div>
 
-      <Link to={'/'}>
+      <div>
         <CardDataStats
           title="Native Wallet"
           total={`${wallet?.nativeWallet ? wallet?.nativeWallet : '00'} TIZARA`}
-          // rate="0.95%"
-          // levelDown
         >
           <PiPackage className="lg:text-2xl dark:text-white text-primary" />
         </CardDataStats>
-      </Link>
+      </div>
 
-      <Link to={'/'}>
+      <div>
         <CardDataStats
           title="ICO Wallet"
           total={`${wallet?.icoWallet ? wallet?.icoWallet : '00'} TIZARA`}
-          // rate="0.95%"
-          // levelDown
         >
           <UserIcon />
         </CardDataStats>
-      </Link>
+      </div>
 
-      <Link to={'/'}>
+      <div>
         <CardDataStats
           title="Stake Wallet"
           total={`${wallet?.stakeWallet ? wallet?.stakeWallet : '00'} TIZARA`}
-          // rate="0.95%"
-          // levelDown
         >
           <PiPackage className="lg:text-2xl dark:text-white text-primary" />
         </CardDataStats>
-      </Link>
+      </div>
     </div>
   );
 };
