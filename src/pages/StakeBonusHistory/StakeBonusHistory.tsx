@@ -57,7 +57,7 @@ const StakeBonusHistory = () => {
   return (
     <>
       <DefaultLayout>
-        <Breadcrumb pageName="Level Bonus History" />
+        <Breadcrumb pageName="Level Reward History" />
 
         <div className="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
           <div className="max-w-full overflow-x-auto">
@@ -107,7 +107,7 @@ const StakeBonusHistory = () => {
 
                           <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                             <p className="text-black dark:text-white">
-                              Bonus from {user.email}
+                              Reward from {user.email}
                             </p>
                           </td>
 
