@@ -165,16 +165,16 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
 
               <li>
                 <NavLink
-                  to="/history/stake-bonus-history"
+                  to="/history/stake-reward"
                   className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-                    (pathname === '/stake-bonus-history' ||
-                      pathname.includes('stake-bonus-history')) &&
+                    (pathname === '/stake-reward-history' ||
+                      pathname.includes('stake-reward-history')) &&
                     'bg-graydark dark:bg-meta-4'
                   }'
                     }`}
                 >
                   <PiPackage className="text-xl dark:bg-meta-4" />
-                  Level Bonus
+                  Level Reward
                 </NavLink>
               </li>
 
@@ -198,7 +198,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
 
               <SidebarLinkGroup
                 activeCondition={
-                  pathname === '/users' || pathname.includes('user')
+                  pathname === '/history' || pathname.includes('history')
                 }
               >
                 {(handleClick, open) => {
@@ -206,7 +206,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                     <React.Fragment>
                       <NavLink
                         to="#"
-                        className={`  group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+                        className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
                           (pathname === '/history' ||
                             pathname.includes('history')) &&
                           'bg-graydark dark:bg-meta-4'

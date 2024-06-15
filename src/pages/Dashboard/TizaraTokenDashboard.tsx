@@ -197,48 +197,37 @@ const BizTokenDashboard: React.FC = () => {
       <hr className="my-5 border-danger border-[1px]" />
 
       <div className="mt-10 grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6  lg:grid-cols-3  xl:grid-cols-4 2xl:gap-7.5">
-        <Link to={'/'}>
+        <Link to="/my-team">
           <CardDataStats
             title="My Team"
             total={`${profile?.referralCount ? profile?.referralCount : '00'}`}
-
-            // rate="0.95%"
-            // levelDown
           >
             <PiPackage className="text-2xl dark:text-white text-primary" />
           </CardDataStats>
         </Link>
 
-        <Link to={'/'}>
+        <Link to={'/roy-history'}>
           <CardDataStats
             title="Total ROI"
             total={`${totalRoy ? totalRoy : '00'}`}
-
-            // rate="0.95%"
-            // levelDown
           >
             <PiPackage className="text-2xl dark:text-white text-primary" />
           </CardDataStats>
         </Link>
-        <Link to={'/'}>
+
+        <Link to={'/deposit-wallet-history'}>
           <CardDataStats
             title="Total Deposit"
             total={`${totalDeposit ? totalDeposit : '00'}`}
-
-            // rate="0.95%"
-            // levelDown
           >
             <PiPackage className="text-2xl dark:text-white text-primary" />
           </CardDataStats>
         </Link>
 
-        <Link to={'/'}>
+        <Link to={'/history/stake-reward'}>
           <CardDataStats
-            title="Level Bonus"
+            title="Level Reward"
             total={`${stakeLevelBonus ? stakeLevelBonus : '00'}`}
-
-            // rate="0.95%"
-            // levelDown
           >
             <PiPackage className="text-2xl dark:text-white text-primary" />
           </CardDataStats>
