@@ -1,11 +1,10 @@
 import { useEffect, useState } from 'react';
 import DefaultLayout from '../../layout/DefaultLayout';
 import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
-import axios from 'axios';
 import { formatToLocalDate } from '../../hooks/formatDate';
-import { getTizaraUserToken } from '../../hooks/getTokenFromstorage';
 import NotFound from '../../components/NotFound/NotFound';
 import Skeleton from 'react-loading-skeleton';
+import axiosInstance from '../../utils/axiosConfig';
 
 const MyTeam = () => {
   const [teams, setTeams] = useState([]);
@@ -14,17 +13,8 @@ const MyTeam = () => {
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
-      const token = getTizaraUserToken();
       try {
-        const response = await axios.get(
-          'https://tizara-backend.vercel.app/api/v1/profile/my-team',
-          {
-            headers: {
-              Authorization: `${token}`,
-              'Content-Type': 'application/json',
-            },
-          },
-        );
+        const response = await axiosInstance.get('/profile/my-team');
         setLoading(false);
 
         if (response?.data?.success) {

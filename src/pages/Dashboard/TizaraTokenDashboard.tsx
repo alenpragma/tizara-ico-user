@@ -9,6 +9,7 @@ import WelcomeSection from './WelcomeSection';
 import Wallets from './Wallets';
 import TizaraCoin from './TizaraCoin';
 import { IROYHistory } from '../RoyHistory/RoyHistory';
+import axiosInstance from '../../utils/axiosConfig';
 
 interface ApiResponse<T> {
   statusCode: number;
@@ -59,26 +60,18 @@ interface DepositHistory {
 }
 
 type SetState<T> = React.Dispatch<React.SetStateAction<T>>;
+
 const BizTokenDashboard: React.FC = () => {
-  const [profile, setProfile] = useState<UserProfile | null>(null);
   const token = getTizaraUserToken();
   const [getWallet, setGetWallet] = useState(false);
+  const [profile, setProfile] = useState<UserProfile | null>(null);
   const [royHistorys, setRoyHistorys] = useState<IROYHistory[]>([]);
-  const [history, sethistory] = useState<any>([]);
+  const [history, setHistory] = useState<any>([]);
   const [depositHistory, setDepositHistory] = useState<any>();
 
-  const axiosInstance = axios.create({
-    baseURL: 'https://tizara-backend.vercel.app/api/v1',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  });
-
-  const fetchProfileData = async (token: string) => {
+  const fetchProfileData = async () => {
     try {
-      const response = await axiosInstance.get('/profile', {
-        headers: { Authorization: `${token}` },
-      });
+      const response = await axiosInstance.get('/profile');
       if (response?.data?.success) {
         return response.data.data;
       }
@@ -87,22 +80,20 @@ const BizTokenDashboard: React.FC = () => {
     }
   };
 
-  const fetchData = async (token: string) => {
+  const fetchRoyHistoryData = async () => {
     try {
-      const response = await axiosInstance.get('/roy-bonus-historys', {
-        headers: { Authorization: `${token}` },
-      });
-      return response?.data?.data;
+      const response = await axiosInstance.get('/roy-bonus-historys');
+      if (response?.data?.success) {
+        return response.data.data;
+      }
     } catch (error) {
       console.error('Error fetching roy-bonus-historys data:', error);
     }
   };
 
-  const fetchStakeLevelBonus = async (token: string) => {
+  const fetchStakeLevelBonus = async () => {
     try {
-      const response = await axiosInstance.get('/stack-bonus-history', {
-        headers: { Authorization: `${token}` },
-      });
+      const response = await axiosInstance.get('/stack-bonus-history');
       if (response?.data?.success) {
         return response.data.data;
       }
@@ -111,11 +102,9 @@ const BizTokenDashboard: React.FC = () => {
     }
   };
 
-  const fetchDepositData = async (token: string) => {
+  const fetchDepositData = async () => {
     try {
-      const response = await axiosInstance.get('/deposit-request', {
-        headers: { Authorization: `${token}` },
-      });
+      const response = await axiosInstance.get('/deposit-request');
       if (response?.data?.success) {
         return response.data.data;
       }
@@ -124,45 +113,28 @@ const BizTokenDashboard: React.FC = () => {
     }
   };
 
-  const fetchAllData = async (
-    token: string | any,
-    setProfile: SetState<UserProfile | any>,
-    setRoyHistorys: SetState<RoyHistory[] | any>,
-    sethistory: SetState<StakeLevelBonus[] | any>,
-    setDepositHistory: SetState<DepositHistory[] | any>,
-  ) => {
-    try {
-      const [profileData, royData, stakeBonusData, depositData] =
-        await Promise.all([
-          fetchProfileData(token),
-          fetchData(token),
-          fetchStakeLevelBonus(token),
-          fetchDepositData(token),
-        ]);
-
-      if (profileData) setProfile(profileData);
-      if (royData) setRoyHistorys(royData);
-      if (stakeBonusData) sethistory(stakeBonusData);
-      if (depositData) setDepositHistory(depositData);
-    } catch (error) {
-      console.error('Error fetching all data:', error);
-    }
-  };
-
   useEffect(() => {
-    fetchAllData(
-      token,
-      setProfile,
-      setRoyHistorys,
-      sethistory,
-      setDepositHistory,
-    );
+    const fetchData = async () => {
+      const profileData = await fetchProfileData();
+      setProfile(profileData);
+
+      const royHistoryData = await fetchRoyHistoryData();
+      setRoyHistorys(royHistoryData);
+
+      const stakeLevelBonusData = await fetchStakeLevelBonus();
+      setHistory(stakeLevelBonusData);
+
+      const depositData = await fetchDepositData();
+      setDepositHistory(depositData);
+    };
+
+    fetchData();
   }, []);
 
   // sum the dailyRoy values
   let totalRoy = 0;
-  for (let i = 0; i < royHistorys.length; i++) {
-    totalRoy += royHistorys[i].dailyRoy;
+  for (let i = 0; i < royHistorys?.length; i++) {
+    totalRoy += royHistorys[i]?.dailyRoy;
   }
 
   // sum the level bonusAmount values

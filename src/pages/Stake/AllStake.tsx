@@ -7,6 +7,7 @@ import { getTizaraUserToken } from '../../hooks/getTokenFromstorage';
 import { formatToLocalDate } from '../../hooks/formatDate';
 import { IStake } from '../../types/stake';
 import NotFound from '../../components/NotFound/NotFound';
+import axiosInstance from '../../utils/axiosConfig';
 
 const AllStake = () => {
   const [search, setSearch] = useState('');
@@ -25,15 +26,7 @@ const AllStake = () => {
   const fetchData = async () => {
     setLoading(true);
     try {
-      const response = await axios.get(
-        'https://tizara-backend.vercel.app/api/v1/stack-now',
-        {
-          headers: {
-            Authorization: `${token}`,
-            'Content-Type': 'application/json',
-          },
-        },
-      );
+      const response = await axiosInstance.get('/stack-now');
       setLoading(false);
 
       setStakes(response?.data?.data);

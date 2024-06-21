@@ -2,11 +2,11 @@ import { useEffect, useState } from 'react';
 import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
 import DefaultLayout from '../../layout/DefaultLayout';
 import DepositRequest from './DepositRequest';
-import axios from 'axios';
 import { formatToLocalDate } from '../../hooks/formatDate';
 import { getTizaraUserToken } from '../../hooks/getTokenFromstorage';
 import Skeleton from 'react-loading-skeleton';
 import NotFound from '../../components/NotFound/NotFound';
+import axiosInstance from '../../utils/axiosConfig';
 
 const DepositWalletHistory = () => {
   const [depositHistory, setDepositHistory] = useState<any>();
@@ -25,15 +25,7 @@ const DepositWalletHistory = () => {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get(
-        'https://tizara-backend.vercel.app/api/v1/deposit-request',
-        {
-          headers: {
-            Authorization: `${token}`,
-            'Content-Type': 'application/json',
-          },
-        },
-      );
+      const response = await axiosInstance.get('/deposit-request');
 
       if (response?.data?.success) {
         setDepositHistory(response?.data?.data);

@@ -46,7 +46,7 @@ const TizaraCoin = ({ setGetWallet }: ComponentProps) => {
   const closeEditModal = () => {
     setIsEditModalOpen(false);
   };
-  console.log(coinPrice);
+  // console.log(coinPrice);
 
   return (
     <>

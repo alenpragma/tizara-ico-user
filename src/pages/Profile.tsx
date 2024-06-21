@@ -6,6 +6,8 @@ import axios from 'axios';
 import userImage from '../images/user.jpg';
 
 import { getTizaraUserToken } from '../hooks/getTokenFromstorage';
+import { baseUrl } from '../utils/api';
+import axiosInstance from '../utils/axiosConfig';
 
 interface ApiResponse {
   statusCode: number;
@@ -37,15 +39,7 @@ const Profile = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get<ApiResponse>(
-          'https://tizara-backend.vercel.app/api/v1/profile',
-          {
-            headers: {
-              Authorization: `${token}`,
-              'Content-Type': 'application/json',
-            },
-          },
-        );
+        const response = await axiosInstance.get<ApiResponse>(`/profile`);
 
         if (response?.data?.success) {
           setProfile(response.data.data);

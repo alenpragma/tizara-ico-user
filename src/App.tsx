@@ -9,8 +9,6 @@ import 'react-loading-skeleton/dist/skeleton.css';
 
 const Profile = lazy(() => import('./pages/Profile'));
 
-const PackageSettings = lazy(() => import('./pages/Package/PackageSettings'));
-
 import MyContext from './hooks/MyContext';
 import { SkeletonTheme } from 'react-loading-skeleton';
 import useColorMode from './hooks/useColorMode';
@@ -27,6 +25,8 @@ import Stake from './pages/Stake/Stake';
 import AllStake from './pages/Stake/AllStake';
 import StakeBonusHistory from './pages/StakeBonusHistory/StakeBonusHistory';
 import RoyHistory from './pages/RoyHistory/RoyHistory';
+import ForgotPass from './pages/Authentication/ForgotPass';
+import ResetPassword from './pages/Authentication/ResetPassword';
 
 function App() {
   const { pathname } = useLocation();
@@ -82,7 +82,9 @@ function App() {
               element={
                 <>
                   <PageTitle title="Stake coin" />
-                  <Stake />
+                  <ProtectedRoute>
+                    <Stake />
+                  </ProtectedRoute>
                 </>
               }
             />
@@ -92,7 +94,9 @@ function App() {
               element={
                 <>
                   <PageTitle title="My stake coin" />
-                  <AllStake />
+                  <ProtectedRoute>
+                    <AllStake />
+                  </ProtectedRoute>
                 </>
               }
             />
@@ -102,7 +106,9 @@ function App() {
               element={
                 <>
                   <PageTitle title="stake coin" />
-                  <RoyHistory />
+                  <ProtectedRoute>
+                    <RoyHistory />
+                  </ProtectedRoute>
                 </>
               }
             />
@@ -111,8 +117,10 @@ function App() {
               path="/history/stake-reward"
               element={
                 <>
-                  <PageTitle title=" Stake Bonus History" />
-                  <StakeBonusHistory />
+                  <PageTitle title=" Stake reward History" />
+                  <ProtectedRoute>
+                    <StakeBonusHistory />
+                  </ProtectedRoute>
                 </>
               }
             />
@@ -122,7 +130,9 @@ function App() {
               element={
                 <>
                   <PageTitle title="Transaction" />
-                  <Transaction />
+                  <ProtectedRoute>
+                    <Transaction />
+                  </ProtectedRoute>
                 </>
               }
             />
@@ -132,7 +142,9 @@ function App() {
               element={
                 <>
                   <PageTitle title="My Team" />
-                  <MyTeam />
+                  <ProtectedRoute>
+                    <MyTeam />
+                  </ProtectedRoute>
                 </>
               }
             />
@@ -142,7 +154,9 @@ function App() {
               element={
                 <>
                   <PageTitle title="Deposit History" />
-                  <DepositWalletHistory />
+                  <ProtectedRoute>
+                    <DepositWalletHistory />
+                  </ProtectedRoute>
                 </>
               }
             />
@@ -152,7 +166,9 @@ function App() {
               element={
                 <>
                   <PageTitle title="Deposit History" />
-                  <BuyTokenHistory />
+                  <ProtectedRoute>
+                    <BuyTokenHistory />
+                  </ProtectedRoute>
                 </>
               }
             />
@@ -162,7 +178,9 @@ function App() {
               element={
                 <>
                   <PageTitle title="Deposit Wallet" />
-                  <DepositWallet />
+                  <ProtectedRoute>
+                    <DepositWallet />
+                  </ProtectedRoute>
                 </>
               }
             />
@@ -172,7 +190,9 @@ function App() {
               element={
                 <>
                   <PageTitle title="Native Wallet" />
-                  <NativeWallet />
+                  <ProtectedRoute>
+                    <NativeWallet />
+                  </ProtectedRoute>
                 </>
               }
             />
@@ -182,12 +202,14 @@ function App() {
               element={
                 <>
                   <PageTitle title="Ico Wallet" />
-                  <IcoWallet />
+                  <ProtectedRoute>
+                    <IcoWallet />
+                  </ProtectedRoute>
                 </>
               }
             />
 
-            <Route
+            {/* <Route
               path="/package/package-settings"
               element={
                 <>
@@ -199,7 +221,7 @@ function App() {
                   </Suspense>
                 </>
               }
-            />
+            /> */}
 
             <Route
               path="/purchase/purchase-history"
@@ -209,6 +231,57 @@ function App() {
                   <ProtectedRoute>
                     <PurchaseHistory />
                   </ProtectedRoute>
+                </>
+              }
+            />
+
+            <Route
+              path="/profile"
+              element={
+                <>
+                  <PageTitle title="Profile" />
+                  <Suspense fallback={<Lazyloding />}>
+                    <Profile />
+                  </Suspense>
+                </>
+              }
+            />
+
+            <Route
+              path="/auth/signin"
+              element={
+                <>
+                  <PageTitle title="Signin" />
+                  <SignIn />
+                </>
+              }
+            />
+            <Route
+              path="/auth/signup"
+              element={
+                <>
+                  <PageTitle title="Signup" />
+                  <SignUp />
+                </>
+              }
+            />
+
+            <Route
+              path="/auth/forgot-password"
+              element={
+                <>
+                  <PageTitle title="Forgot Password" />
+                  <ForgotPass />
+                </>
+              }
+            />
+
+            <Route
+              path="/auth/reset-password"
+              element={
+                <>
+                  <PageTitle title="Reset-Password" />
+                  <ResetPassword />
                 </>
               }
             />
@@ -325,17 +398,7 @@ function App() {
                 </>
               }
             /> */}
-            <Route
-              path="/profile"
-              element={
-                <>
-                  <PageTitle title="Profile" />
-                  <Suspense fallback={<Lazyloding />}>
-                    <Profile />
-                  </Suspense>
-                </>
-              }
-            />
+
             {/* <Route
               path="/general-settings"
               element={
@@ -369,24 +432,6 @@ function App() {
                 </>
               }
             /> */}
-            <Route
-              path="/auth/signin"
-              element={
-                <>
-                  <PageTitle title="Signin" />
-                  <SignIn />
-                </>
-              }
-            />
-            <Route
-              path="/auth/signup"
-              element={
-                <>
-                  <PageTitle title="Signup" />
-                  <SignUp />
-                </>
-              }
-            />
           </Routes>
         </SkeletonTheme>
       </MyContext.Provider>
