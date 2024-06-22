@@ -188,6 +188,9 @@ const SignIn: React.FC = () => {
                         )}
                       </span>
                     </div>
+                    <Link to="/auth/forgot-password" className="text-primary ">
+                      Forget password
+                    </Link>
                   </div>
                   <div className="mb-5">
                     {!loding ? (

@@ -6,6 +6,8 @@ import axios from 'axios';
 import userImage from '../images/user.jpg';
 
 import { getTizaraUserToken } from '../hooks/getTokenFromstorage';
+import { baseUrl } from '../utils/api';
+import axiosInstance from '../utils/axiosConfig';
 
 interface ApiResponse {
   statusCode: number;
@@ -32,20 +34,11 @@ export interface UserProfile {
 
 const Profile = () => {
   const [profile, setProfile] = useState<UserProfile | null>(null);
-  const token = getTizaraUserToken();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get<ApiResponse>(
-          'https://tizara-backend.vercel.app/api/v1/profile',
-          {
-            headers: {
-              Authorization: `${token}`,
-              'Content-Type': 'application/json',
-            },
-          },
-        );
+        const response = await axiosInstance.get<ApiResponse>(`/profile`);
 
         if (response?.data?.success) {
           setProfile(response.data.data);
@@ -76,12 +69,15 @@ const Profile = () => {
 
           <div className="mt-4">
             <h3 className="mb-1.5 text-2xl font-semibold text-black dark:text-white">
-              My Reffer Code: {profile?.myReferralCode}
+              <span className="text-meta-3"> My Rank Status:</span> Rare Club
+              Member (RCM)
+            </h3>
+
+            <h3 className="mb-1.5 text-2xl font-semibold text-black dark:text-white">
+              <span className="text-meta-3"> My Reffer Code:</span>{' '}
+              {profile?.myReferralCode}
             </h3>
             <div className="mt-2 mx-auto ">
-              <h4 className="font-semibold text-black dark:text-white">
-                About Me
-              </h4>
               {/* <!-- Contact Form --> */}
               <div className="lg:flex w-full gap-5 text-start justify-center">
                 <BasicDetails profile={profile} />

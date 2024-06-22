@@ -1,10 +1,10 @@
 import { Key, useEffect, useState } from 'react';
 import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
 import DefaultLayout from '../../layout/DefaultLayout';
-import axios from 'axios';
 import { formatToLocalDate } from '../../hooks/formatDate';
 import Skeleton from 'react-loading-skeleton';
 import NotFound from '../../components/NotFound/NotFound';
+import axiosInstance from '../../utils/axiosConfig';
 
 interface IHistory {
   id: string;
@@ -32,16 +32,8 @@ const Transaction = () => {
     const fetchData = async () => {
       setLoading(true);
       try {
-        const token = localStorage.getItem('tizaraUserToken');
-
-        const response = await axios.get<ApiResponse>(
-          'https://tizara-backend.vercel.app/api/v1/transaction-history',
-          {
-            headers: {
-              Authorization: `${token}`,
-              'Content-Type': 'application/json',
-            },
-          },
+        const response = await axiosInstance.get<ApiResponse>(
+          '/transaction-history',
         );
         setLoading(false);
         if (response?.data?.success) {

@@ -1,11 +1,21 @@
-// src/utils/axiosConfig.js
 import axios from 'axios';
 import { logout } from './auth';
 import { getTizaraUserToken } from '../hooks/getTokenFromstorage';
 
+export type IGenericErrorResponse = {
+  statusCode?: number;
+  message?: string;
+  success?: string;
+  errorMessages?: IGenericErrorMessage[];
+};
+export type IGenericErrorMessage = {
+  path: string | number;
+  message: string;
+};
+
 const axiosInstance = axios.create({
-  baseURL: '',
-  timeout: 10000,
+  baseURL: 'https://tizara-backend.vercel.app/api/v1',
+  timeout: 30000,
   headers: {
     'Content-Type': 'application/json',
   },
@@ -18,6 +28,7 @@ axiosInstance.interceptors.request.use((config) => {
   if (token) {
     config.headers.Authorization = `${token}`;
   }
+
   return config;
 });
 
@@ -31,7 +42,16 @@ axiosInstance.interceptors.response.use(
     ) {
       logout();
     }
-    return Promise.reject(error);
+    // console.log(error, 'eeee');
+
+    const responseObject: IGenericErrorResponse = {
+      statusCode: error?.response?.status || 500,
+      message: error?.response?.data?.message || 'Something went wrong',
+      errorMessages: error?.response?.data?.errorMessages,
+      success: error?.response?.data?.success,
+    };
+    // return responseObject;
+    return Promise.reject(responseObject);
   },
 );
 

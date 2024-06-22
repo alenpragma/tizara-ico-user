@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import { StakeNowModal } from './StakeNowModal';
 import { ApiResponse } from '../../types/global';
 import { IWallet } from '../../types/wallet';
+import axiosInstance from '../../utils/axiosConfig';
 
 type Inputs = {
   paymentMethod: string;
@@ -33,16 +34,9 @@ const Stake = () => {
   const token = getTizaraUserToken();
 
   const getWllet = async () => {
-    const token = getTizaraUserToken();
     try {
-      const response = await axios.get<ApiResponse<IWallet>>(
-        'https://tizara-backend.vercel.app/api/v1/user-wallet',
-        {
-          headers: {
-            Authorization: `${token}`,
-            'Content-Type': 'application/json',
-          },
-        },
+      const response = await axiosInstance.get<ApiResponse<IWallet>>(
+        '/user-wallet',
       );
       if (response?.data?.success) {
         setWallet(response.data.data);
@@ -57,14 +51,8 @@ const Stake = () => {
 
   const getPaymentMethod = async () => {
     try {
-      const response = await axios.get(
-        'https://tizara-backend.vercel.app/api/v1/stack-coin-settings?status=ACTIVE',
-        {
-          headers: {
-            Authorization: `${token}`,
-            'Content-Type': 'application/json',
-          },
-        },
+      const response = await axiosInstance.get(
+        '/stack-coin-settings?status=ACTIVE',
       );
       setDepositMethod(response?.data?.data);
     } catch (error) {
@@ -119,7 +107,7 @@ const Stake = () => {
                   <div className="flex justify-between ">
                     <p className=" font-medium px-3 py-1">Duration:</p>
                     <p className=" font-medium px-3 py-1">
-                      {item.duration} day
+                      {item.duration} Day
                     </p>
                   </div>
                   <hr className="py-1 mt-1" />

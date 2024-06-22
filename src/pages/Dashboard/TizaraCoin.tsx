@@ -46,7 +46,7 @@ const TizaraCoin = ({ setGetWallet }: ComponentProps) => {
   const closeEditModal = () => {
     setIsEditModalOpen(false);
   };
-  console.log(coinPrice);
+  // console.log(coinPrice);
 
   return (
     <>
@@ -77,9 +77,9 @@ const TizaraCoin = ({ setGetWallet }: ComponentProps) => {
           </div>
           <button
             onClick={() => openEditModal()}
-            className="mt-4 px-10 rounded-full bg-success py-2.5 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
+            className="mt-4 px-10 rounded-lg bg-success py-2.5 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
           >
-            Buy
+            Buy Now
           </button>
         </div>
       </div>

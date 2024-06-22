@@ -8,6 +8,7 @@ import Skeleton from 'react-loading-skeleton';
 import PaginationButtons from '../../components/Pagination/PaginationButtons';
 import { formatToLocalDate } from '../../hooks/formatDate';
 import NotFound from '../../components/NotFound/NotFound';
+import axiosInstance from '../../utils/axiosConfig';
 
 export type IROYHistory = {
   id: string;
@@ -26,11 +27,9 @@ const RoyHistory = () => {
   const [search, setSearch] = useState('');
   const [loading, setLoading] = useState(false);
   const [royHistorys, setRoyHistorys] = useState<IROYHistory[]>([]);
-  console.log(royHistorys);
 
   const [currentPage, setCurrentPage] = useState(0);
   const [perPage, setparePage] = useState(25);
-  const token = getTizaraUserToken();
   const from = currentPage * perPage;
   const to = from + perPage;
   //  pagination end
@@ -38,15 +37,7 @@ const RoyHistory = () => {
   const fetchData = async () => {
     try {
       setLoading(true);
-      const response = await axios.get(
-        'https://tizara-backend.vercel.app/api/v1/roy-bonus-historys',
-        {
-          headers: {
-            Authorization: `${token}`,
-            'Content-Type': 'application/json',
-          },
-        },
-      );
+      const response = await axiosInstance.get('/roy-bonus-historys');
       setLoading(false);
       setRoyHistorys(response?.data?.data);
     } catch (error) {
@@ -62,7 +53,7 @@ const RoyHistory = () => {
   //   (royHistorys) => royHistorys?.dailyRoy == search,
   // );
 
-  console.log(royHistorys);
+  // console.log(royHistorys);
 
   return (
     <DefaultLayout>
@@ -70,7 +61,7 @@ const RoyHistory = () => {
 
       <div className="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
         <div className="max-w-full w-100 mb-4">
-          <SearchInput placeholder="Search..." setSearch={setSearch} />
+          {/* <SearchInput placeholder="Search..." setSearch={setSearch} /> */}
         </div>
         <div className="max-w-full overflow-x-auto">
           {loading ? (

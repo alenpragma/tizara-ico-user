@@ -73,7 +73,7 @@ const BonusSettings = () => {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            Authorization: `Bearer ${userToken}`,
+            Authorization: `Bearer `,
           },
           body: JSON.stringify(newData),
         },

@@ -1,11 +1,10 @@
 import { useEffect, useState } from 'react';
 import DefaultLayout from '../../layout/DefaultLayout';
 import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
-import axios from 'axios';
 import { formatToLocalDate } from '../../hooks/formatDate';
-import { getTizaraUserToken } from '../../hooks/getTokenFromstorage';
 import NotFound from '../../components/NotFound/NotFound';
 import Skeleton from 'react-loading-skeleton';
+import axiosInstance from '../../utils/axiosConfig';
 
 const MyTeam = () => {
   const [teams, setTeams] = useState([]);
@@ -14,17 +13,8 @@ const MyTeam = () => {
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
-      const token = getTizaraUserToken();
       try {
-        const response = await axios.get(
-          'https://tizara-backend.vercel.app/api/v1/profile/my-team',
-          {
-            headers: {
-              Authorization: `${token}`,
-              'Content-Type': 'application/json',
-            },
-          },
-        );
+        const response = await axiosInstance.get('/profile/my-team');
         setLoading(false);
 
         if (response?.data?.success) {
@@ -39,7 +29,7 @@ const MyTeam = () => {
 
   return (
     <DefaultLayout>
-      <Breadcrumb pageName="My Team" />
+      <Breadcrumb pageName="My Referrals" />
 
       <div className="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
         <div className="max-w-full overflow-x-auto">
@@ -62,7 +52,7 @@ const MyTeam = () => {
                   </th>
 
                   <th className="min-w-[150px] py-4 px-4 font-medium text-black dark:text-white">
-                    Reffer
+                    Refer-Code
                   </th>
                   <th className="min-w-[120px] py-4 px-4 font-medium text-black dark:text-white">
                     Join date

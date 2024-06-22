@@ -1,10 +1,9 @@
 import { Key, useEffect, useState } from 'react';
 import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
 import DefaultLayout from '../../layout/DefaultLayout';
-import axios from 'axios';
 import { formatToLocalDate } from '../../hooks/formatDate';
 import Skeleton from 'react-loading-skeleton';
-import { getTizaraUserToken } from '../../hooks/getTokenFromstorage';
+import axiosInstance from '../../utils/axiosConfig';
 
 interface IStackBonusHistory {
   id: string;
@@ -27,20 +26,13 @@ interface ApiResponse {
 const StakeBonusHistory = () => {
   const [history, sethistory] = useState<any>([]);
   const [loading, setLoading] = useState<any>(false);
-  const token = getTizaraUserToken();
 
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
       try {
-        const response = await axios.get<ApiResponse>(
-          'https://tizara-backend.vercel.app/api/v1/stack-bonus-history',
-          {
-            headers: {
-              Authorization: `${token}`,
-              'Content-Type': 'application/json',
-            },
-          },
+        const response = await axiosInstance.get<ApiResponse>(
+          '/stack-bonus-history',
         );
         setLoading(false);
 
@@ -57,7 +49,7 @@ const StakeBonusHistory = () => {
   return (
     <>
       <DefaultLayout>
-        <Breadcrumb pageName="Level Bonus History" />
+        <Breadcrumb pageName="Level Reward History" />
 
         <div className="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
           <div className="max-w-full overflow-x-auto">
@@ -83,7 +75,6 @@ const StakeBonusHistory = () => {
                     <th className="min-w-[120px] py-4 px-4 font-medium text-black dark:text-white">
                       Details
                     </th>
-
                     <th className="min-w-[120px] py-4 px-4 font-medium text-black dark:text-white">
                       Time
                     </th>
@@ -107,7 +98,7 @@ const StakeBonusHistory = () => {
 
                           <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                             <p className="text-black dark:text-white">
-                              Bonus from {user.email}
+                              Reward from {user.email}
                             </p>
                           </td>
 

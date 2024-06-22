@@ -1,11 +1,10 @@
-import axios from 'axios';
 import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
 import DefaultLayout from '../../layout/DefaultLayout';
 import { useEffect, useState } from 'react';
 import { formatToLocalDate } from '../../hooks/formatDate';
 import Skeleton from 'react-loading-skeleton';
-import { getTizaraUserToken } from '../../hooks/getTokenFromstorage';
 import NotFound from '../../components/NotFound/NotFound';
+import axiosInstance from '../../utils/axiosConfig';
 
 interface IHistory {
   id: string;
@@ -27,20 +26,11 @@ interface ApiResponse {
 const BuyTokenHistory = () => {
   const [history, sethistory] = useState<any>([]);
   const [loading, setLoading] = useState<boolean>(false);
-  const token = getTizaraUserToken();
   useEffect(() => {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const response = await axios.get<ApiResponse>(
-          'https://tizara-backend.vercel.app/api/v1/buy-token',
-          {
-            headers: {
-              Authorization: `${token}`,
-              'Content-Type': 'application/json',
-            },
-          },
-        );
+        const response = await axiosInstance.get<ApiResponse>('/buy-token');
         setLoading(false);
         if (response?.data?.success) {
           sethistory(response.data.data);

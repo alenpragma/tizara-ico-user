@@ -4,6 +4,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import Swal from 'sweetalert2';
 import { getTizaraUserToken } from '../../hooks/getTokenFromstorage';
 import { ICoinPrice } from '../../types/dashboard';
+import axiosInstance from '../../utils/axiosConfig';
 
 type Inputs = {
   coinPrice: number;
@@ -14,6 +15,13 @@ interface ComponentProps {
   closeModal: () => void;
   setGetWallet: (value: boolean) => void;
   coinPrice: ICoinPrice;
+}
+
+interface ApiResponse<T> {
+  success?: boolean;
+  data?: T | any;
+  message?: string;
+  statusCode?: number;
 }
 
 const BuyToken: React.FC<ComponentProps> = ({
@@ -29,8 +37,6 @@ const BuyToken: React.FC<ComponentProps> = ({
     totalPrice = Number(coinPrice?.coinPrice) * amount;
   }
 
-  const token = getTizaraUserToken();
-
   const onSubmit: SubmitHandler<Inputs> = async (data: Inputs) => {
     const buyDetail = { ...data, totalPrice };
 
@@ -41,41 +47,26 @@ const BuyToken: React.FC<ComponentProps> = ({
     };
 
     try {
-      const response = await fetch(
-        'https://tizara-backend.vercel.app/api/v1/buy-token',
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `${token}`,
-          },
-          body: JSON.stringify(buyDetails),
-        },
+      const res = await axiosInstance.post<ApiResponse<any>>(
+        '/buy-token',
+        buyDetails,
       );
+      console.log(res);
 
-      const responseData = await response.json();
-
-      setGetWallet(true);
-      if (responseData.success) {
+      if (res?.data.success) {
         Swal.fire({
-          title: 'success',
-          text: 'Successfully Buy token',
+          title: 'Success!',
+          text: `${res?.data?.message}`,
           icon: 'success',
-        }).then(() => {
-          closeModal();
-        });
-      } else if (!responseData.success) {
-        Swal.fire({
-          title: 'error',
-          text: `${responseData?.message}`,
-          icon: 'error',
+          confirmButtonText: 'OK',
         });
       }
-    } catch (error) {
+    } catch (error: any) {
       Swal.fire({
-        title: 'error',
-        text: 'Something wrong',
+        title: 'Error!',
+        text: error.message,
         icon: 'error',
+        confirmButtonText: 'OK',
       });
     }
   };
