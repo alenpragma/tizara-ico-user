@@ -34,7 +34,6 @@ export interface UserProfile {
 
 const Profile = () => {
   const [profile, setProfile] = useState<UserProfile | null>(null);
-  const token = getTizaraUserToken();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -70,12 +69,15 @@ const Profile = () => {
 
           <div className="mt-4">
             <h3 className="mb-1.5 text-2xl font-semibold text-black dark:text-white">
-              My Reffer Code: {profile?.myReferralCode}
+              <span className="text-meta-3"> My Rank Status:</span> Rare Club
+              Member (RCM)
+            </h3>
+
+            <h3 className="mb-1.5 text-2xl font-semibold text-black dark:text-white">
+              <span className="text-meta-3"> My Reffer Code:</span>{' '}
+              {profile?.myReferralCode}
             </h3>
             <div className="mt-2 mx-auto ">
-              <h4 className="font-semibold text-black dark:text-white">
-                About Me
-              </h4>
               {/* <!-- Contact Form --> */}
               <div className="lg:flex w-full gap-5 text-start justify-center">
                 <BasicDetails profile={profile} />

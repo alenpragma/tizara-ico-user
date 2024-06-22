@@ -107,7 +107,7 @@ const Stake = () => {
                   <div className="flex justify-between ">
                     <p className=" font-medium px-3 py-1">Duration:</p>
                     <p className=" font-medium px-3 py-1">
-                      {item.duration} day
+                      {item.duration} Day
                     </p>
                   </div>
                   <hr className="py-1 mt-1" />

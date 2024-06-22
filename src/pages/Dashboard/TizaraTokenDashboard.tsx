@@ -80,6 +80,26 @@ const BizTokenDashboard: React.FC = () => {
     }
   };
 
+  const [teams, setTeams] = useState([]);
+  const [loading, setLoading] = useState<boolean>(false);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true);
+      try {
+        const response = await axiosInstance.get('/profile/my-team');
+        setLoading(false);
+
+        if (response?.data?.success) {
+          setTeams(response?.data?.data);
+        }
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+    fetchData();
+  }, []);
+
   const fetchRoyHistoryData = async () => {
     try {
       const response = await axiosInstance.get('/roy-bonus-historys');
@@ -166,13 +186,22 @@ const BizTokenDashboard: React.FC = () => {
         </div>
       </div>
 
-      <hr className="my-5 border-danger border-[1px]" />
+      <hr className="my-5 border-success border-[1px]" />
 
       <div className="mt-10 grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6  lg:grid-cols-3  xl:grid-cols-4 2xl:gap-7.5">
         <Link to="/my-team">
           <CardDataStats
             title="My Team"
             total={`${profile?.referralCount ? profile?.referralCount : '00'}`}
+          >
+            <PiPackage className="text-2xl dark:text-white text-primary" />
+          </CardDataStats>
+        </Link>
+
+        <Link to="/my-team">
+          <CardDataStats
+            title="Direct Refer"
+            total={`${teams ? teams.length : '00'}`}
           >
             <PiPackage className="text-2xl dark:text-white text-primary" />
           </CardDataStats>
