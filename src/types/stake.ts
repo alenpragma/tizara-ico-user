@@ -6,6 +6,7 @@ export interface IStake {
   stakeAmount: number;
   dailyRoy: number;
   status: string;
+  wallet?: string;
   userId: string;
   createdAt: string;
   updatedAt: string;
