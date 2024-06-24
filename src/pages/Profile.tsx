@@ -2,11 +2,9 @@ import Breadcrumb from '../components/Breadcrumbs/Breadcrumb';
 import DefaultLayout from '../layout/DefaultLayout';
 import BasicDetails from './Profile/BasicDetails';
 import { useEffect, useState } from 'react';
-import axios from 'axios';
 import userImage from '../images/user.jpg';
+import rcmImage from '../assets/Rcm-01.png';
 
-import { getTizaraUserToken } from '../hooks/getTokenFromstorage';
-import { baseUrl } from '../utils/api';
 import axiosInstance from '../utils/axiosConfig';
 
 interface ApiResponse {
@@ -61,7 +59,8 @@ const Profile = () => {
             <div className="relative drop-shadow-2">
               <img
                 className="w-full rounded-full"
-                src={userImage}
+                src={rcmImage}
+                // src={userImage}
                 alt="profile"
               />
             </div>
