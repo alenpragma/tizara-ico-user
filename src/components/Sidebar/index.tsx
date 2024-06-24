@@ -159,7 +159,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                     }`}
                 >
                   <DashboardIcon />
-                  My Refferal
+                  My Referrals
                 </NavLink>
               </li>
 

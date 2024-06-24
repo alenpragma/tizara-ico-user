@@ -3,6 +3,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import Swal from 'sweetalert2';
 import { PuffLoader } from 'react-spinners';
 import { getTizaraUserToken } from '../../hooks/getTokenFromstorage';
+import { baseUrl } from '../../utils/api';
 
 type Inputs = {
   id: number;
@@ -36,17 +37,14 @@ export const StakeNowModal = ({ closeModal, selectedPlan, getWllet }: any) => {
     try {
       setLoading(true);
 
-      const response = await fetch(
-        'https://tizara-backend.vercel.app/api/v1/stack-now',
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `${token}`,
-          },
-          body: JSON.stringify(planData),
+      const response = await fetch(`${baseUrl}/stack-now`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `${token}`,
         },
-      );
+        body: JSON.stringify(planData),
+      });
 
       const responseData = await response.json();
       console.log(responseData);
