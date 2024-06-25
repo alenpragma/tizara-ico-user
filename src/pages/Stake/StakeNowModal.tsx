@@ -1,9 +1,11 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import Swal from 'sweetalert2';
 import { PuffLoader } from 'react-spinners';
 import { getTizaraUserToken } from '../../hooks/getTokenFromstorage';
 import { baseUrl } from '../../utils/api';
+import InputField from '../../components/Forms/InputField';
+import SelectOptions from '../../Ui/SelectOptions';
 
 type Inputs = {
   id: number;
@@ -13,11 +15,23 @@ type Inputs = {
   minimum: string;
   stakeAmount: string;
   dailyRoy: number;
+  wallet: string;
 };
 
-export const StakeNowModal = ({ closeModal, selectedPlan, getWllet }: any) => {
+export const StakeNowModal = ({
+  wallet,
+  closeModal,
+  selectedPlan,
+  getWllet,
+}: any) => {
+  const [wallets, setWallets] = useState(() => [
+    { value: '0', label: 'Select..' },
+    { value: 'Native', label: `Native wallet ${wallet.nativeWallet}` },
+    { value: 'Ico', label: `ICO wallet ${wallet.icoWallet}` },
+  ]);
+
   const [lodaing, setLoading] = useState(false);
-  const { register, handleSubmit } = useForm<Inputs>();
+  const { register, handleSubmit, control } = useForm<Inputs>();
   const [amount, setAmount] = useState<number>(0);
   const token = getTizaraUserToken();
 
@@ -47,12 +61,9 @@ export const StakeNowModal = ({ closeModal, selectedPlan, getWllet }: any) => {
       });
 
       const responseData = await response.json();
-      console.log(responseData);
 
       setLoading(false);
       getWllet();
-
-      console.log(responseData?.message);
 
       if (responseData?.success) {
         Swal.fire({
@@ -74,6 +85,13 @@ export const StakeNowModal = ({ closeModal, selectedPlan, getWllet }: any) => {
 
       console.log(error);
     }
+  };
+
+  const [selectedOption, setSelectedOption] = useState<string>('');
+  const [isOptionSelected, setIsOptionSelected] = useState<boolean>(false);
+
+  const changeTextColor = () => {
+    setIsOptionSelected(true);
   };
 
   return (
@@ -104,6 +122,17 @@ export const StakeNowModal = ({ closeModal, selectedPlan, getWllet }: any) => {
               className="flex flex-col w-full gap-5.5 p-6.5"
             >
               <div>
+                <SelectOptions
+                  control={control}
+                  options={wallets}
+                  label="Select Wallet"
+                  name="wallet"
+                  defaultValue={0}
+                  placeholder={'Wallet...'}
+                />{' '}
+              </div>
+
+              <div>
                 <label
                   className="mb-1 block text-sm font-medium text-black dark:text-white"
                   htmlFor="type"
@@ -113,7 +142,7 @@ export const StakeNowModal = ({ closeModal, selectedPlan, getWllet }: any) => {
                 <input
                   className="w-full rounded border border-stroke bg-gray py-2 pl-3 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
                   {...register('planName', { required: true })}
-                  value={selectedPlan.planName}
+                  defaultValue={selectedPlan.planName}
                   readOnly
                 />
               </div>
@@ -127,7 +156,7 @@ export const StakeNowModal = ({ closeModal, selectedPlan, getWllet }: any) => {
                 <input
                   className="w-full rounded border border-stroke bg-gray py-2 pl-3 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
                   {...register('duration', { required: true })}
-                  value={selectedPlan.duration}
+                  defaultValue={selectedPlan.duration}
                   readOnly
                 />
               </div>
@@ -141,7 +170,7 @@ export const StakeNowModal = ({ closeModal, selectedPlan, getWllet }: any) => {
                 <input
                   className="w-full rounded border border-stroke bg-gray py-2 pl-3 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
                   {...register('minimum', { required: true })}
-                  value={selectedPlan.minimum}
+                  defaultValue={selectedPlan.minimum}
                   readOnly
                 />
               </div>
@@ -155,7 +184,7 @@ export const StakeNowModal = ({ closeModal, selectedPlan, getWllet }: any) => {
                 <input
                   className="w-full rounded border border-stroke bg-gray py-2 pl-3 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
                   {...register('apy', { required: true })}
-                  value={selectedPlan.apy}
+                  defaultValue={selectedPlan.apy}
                   readOnly
                 />
               </div>
@@ -173,7 +202,15 @@ export const StakeNowModal = ({ closeModal, selectedPlan, getWllet }: any) => {
                 />
               </div>
 
-              <div>
+              <InputField
+                label="Daily ROI"
+                name="dailyRoy"
+                defaultValue={dailyRoy ? dailyRoy.toFixed(5) : ''}
+                register={register}
+                readOnly
+              />
+
+              {/* <div>
                 <label
                   className="mb-1  block text-sm font-medium text-black dark:text-white"
                   htmlFor="type"
@@ -182,9 +219,10 @@ export const StakeNowModal = ({ closeModal, selectedPlan, getWllet }: any) => {
                 </label>
                 <input
                   className="w-full rounded border border-stroke bg-gray py-2 pl-3 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
-                  value={dailyRoy ? dailyRoy.toFixed(5) : ''}
+                  defaultValue={dailyRoy ? dailyRoy.toFixed(5) : ''}
+                  readOnly
                 />
-              </div>
+              </div> */}
 
               <div>
                 {lodaing ? (

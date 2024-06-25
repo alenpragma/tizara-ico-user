@@ -4,6 +4,7 @@ import { getTizaraUserToken } from '../../hooks/getTokenFromstorage';
 import axios from 'axios';
 import { ApiResponse } from '../../types/global';
 import { ICoinPrice } from '../../types/dashboard';
+import { baseUrl } from '../../utils/api';
 
 interface ComponentProps {
   setGetWallet: (value: boolean) => void;
@@ -22,7 +23,7 @@ const TizaraCoin = ({ setGetWallet }: ComponentProps) => {
     const fetchData = async () => {
       try {
         const response = await axios.get<ApiResponse<ICoinPrice>>(
-          'https://tizara-backend.vercel.app/api/v1/general-settings',
+          `${baseUrl}/general-settings`,
           {
             headers: {
               Authorization: `${token}`,

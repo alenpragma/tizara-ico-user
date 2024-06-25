@@ -7,6 +7,7 @@ import { StakeNowModal } from './StakeNowModal';
 import { ApiResponse } from '../../types/global';
 import { IWallet } from '../../types/wallet';
 import axiosInstance from '../../utils/axiosConfig';
+import Button from '../../Ui/Button';
 
 type Inputs = {
   paymentMethod: string;
@@ -31,8 +32,6 @@ const Stake = () => {
     setIsEditModalOpen(false);
   };
 
-  const token = getTizaraUserToken();
-
   const getWllet = async () => {
     try {
       const response = await axiosInstance.get<ApiResponse<IWallet>>(
@@ -45,9 +44,6 @@ const Stake = () => {
       console.error('Error fetching data:', error);
     }
   };
-  useEffect(() => {
-    getWllet();
-  }, []);
 
   const getPaymentMethod = async () => {
     try {
@@ -60,15 +56,22 @@ const Stake = () => {
     }
   };
 
+  // useEffect(() => {
+  //   getWllet();
+  // }, []);
+
   useEffect(() => {
-    getPaymentMethod();
+    const initializeData = async () => {
+      console.log(new Date());
+
+      await getWllet();
+      await getPaymentMethod();
+      console.log(new Date());
+    };
+
+    initializeData();
   }, []);
 
-  // const onSubmit: SubmitHandler<Inputs> = async (data: Inputs) => {
-  //   console.log(data);
-  // };
-
-  // Function to set wallet name based on selected method
   useEffect(() => {
     const selectedMethodObject = depositMethod?.data?.find(
       (method: any) => method.id === selected,
@@ -94,7 +97,7 @@ const Stake = () => {
           {depositMethod?.map((item: any) => {
             return (
               <div
-                key={item._id}
+                key={item.id}
                 className="w-[300px]   md:w-59 mx-auto flex flex-col justify-between border border-secondary py-5 rounded-xl hover:bg-slate-200  dark:bg-black"
               >
                 <div>
@@ -141,6 +144,7 @@ const Stake = () => {
           getWllet={getWllet}
           closeModal={closeEditModal}
           selectedPlan={updateItem}
+          wallet={wallet}
         />
       )}
     </DefaultLayout>

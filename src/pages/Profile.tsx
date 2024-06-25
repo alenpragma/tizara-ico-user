@@ -24,6 +24,7 @@ export interface UserProfile {
   myReferralCode: string;
   role: string;
   profileImage: string | null;
+  isRcm: boolean;
   referralCount: number;
   nativeWallet: number;
   createdAt: string;
@@ -32,6 +33,7 @@ export interface UserProfile {
 
 const Profile = () => {
   const [profile, setProfile] = useState<UserProfile | null>(null);
+  console.log(profile);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -56,11 +58,10 @@ const Profile = () => {
         <div className="relative z-20 h-35 md:h-65"></div>
         <div className="px-4 pb-6 text-center lg:pb-8 xl:pb-11.5">
           <div className="relative z-30 mx-auto -mt-22 h-20 w-20 md:w-40 md:h-40 rounded-full bg-white/20 p-1 backdrop-blur   sm:p-3">
-            <div className="relative drop-shadow-2">
+            <div className="relative flex drop-shadow-2">
               <img
                 className="w-full rounded-full"
-                src={rcmImage}
-                // src={userImage}
+                src={userImage}
                 alt="profile"
               />
             </div>

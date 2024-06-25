@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { logout } from './auth';
 import { getTizaraUserToken } from '../hooks/getTokenFromstorage';
+import { baseUrl } from './api';
 
 export type IGenericErrorResponse = {
   statusCode?: number;
@@ -14,7 +15,7 @@ export type IGenericErrorMessage = {
 };
 
 const axiosInstance = axios.create({
-  baseURL: 'https://tizara-backend.vercel.app/api/v1',
+  baseURL: `${baseUrl}`,
   timeout: 30000,
   headers: {
     'Content-Type': 'application/json',

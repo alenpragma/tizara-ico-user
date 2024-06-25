@@ -4,6 +4,7 @@ import Button from '../../Ui/Button';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { getTizaraUserToken } from '../../hooks/getTokenFromstorage';
+import { baseUrl } from '../../utils/api';
 
 type Inputs = {
   paymentMethod: string;
@@ -31,15 +32,12 @@ const DepositRequest: React.FC<ComponentProps> = ({
 
   const getPaymentMethod = async () => {
     try {
-      const response = await axios.get(
-        'https://tizara-backend.vercel.app/api/v1/deposit-method',
-        {
-          headers: {
-            Authorization: `${token}`,
-            'Content-Type': 'application/json',
-          },
+      const response = await axios.get(`${baseUrl}/deposit-method`, {
+        headers: {
+          Authorization: `${token}`,
+          'Content-Type': 'application/json',
         },
-      );
+      });
       setDepositMethod(response?.data?.data);
     } catch (error) {
       console.error('Error fetching data:', error);
@@ -62,17 +60,14 @@ const DepositRequest: React.FC<ComponentProps> = ({
     console.log(reqData, token, 'req data');
 
     try {
-      const response = await fetch(
-        'https://tizara-backend.vercel.app/api/v1/deposit-request',
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `${token}`,
-          },
-          body: JSON.stringify(reqData),
+      const response = await fetch(`${baseUrl}/deposit-request`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `${token}`,
         },
-      );
+        body: JSON.stringify(reqData),
+      });
 
       const responseData = await response.json();
       if (responseData.success) {
