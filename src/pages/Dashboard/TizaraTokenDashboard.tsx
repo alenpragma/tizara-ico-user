@@ -3,7 +3,6 @@ import CardDataStats from '../../components/CardDataStats';
 import DefaultLayout from '../../layout/DefaultLayout';
 import { Link } from 'react-router-dom';
 import { PiPackage } from 'react-icons/pi';
-import axios from 'axios';
 import { getTizaraUserToken } from '../../hooks/getTokenFromstorage';
 import WelcomeSection from './WelcomeSection';
 import Wallets from './Wallets';

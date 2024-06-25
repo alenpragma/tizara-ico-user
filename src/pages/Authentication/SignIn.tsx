@@ -7,6 +7,7 @@ import SvgImage from './SvgImage';
 import { getTizaraUserToken } from '../../hooks/getTokenFromstorage';
 
 import { IoLockOpenOutline } from 'react-icons/io5';
+import { baseUrl } from '../../utils/api';
 
 type Inputs = {
   email: string;
@@ -34,16 +35,13 @@ const SignIn: React.FC = () => {
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     setLoading(true);
     try {
-      const response = await fetch(
-        'https://tizara-backend.vercel.app/api/v1/auth/login',
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(data),
+      const response = await fetch(`${baseUrl}/auth/login`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
         },
-      );
+        body: JSON.stringify(data),
+      });
 
       const responseData = await response.json();
       if (responseData.success) {
@@ -110,7 +108,7 @@ const SignIn: React.FC = () => {
             <div className="w-full border-stroke dark:border-strokedark xl:w-1/2 xl:border-l-2">
               <div className="w-full p-4 sm:p-12.5 xl:p-17.5">
                 <h2 className="mb-9 text-lg font-bold text-black dark:text-white sm:text-title-md">
-                  User Sign In
+                  User Sign To Tizara Token
                 </h2>
 
                 <form onSubmit={handleSubmit(onSubmit)}>

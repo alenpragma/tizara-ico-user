@@ -26,24 +26,17 @@ const PurchaseHistory = () => {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get(
-        'https://tizara-backend.vercel.app/api/admin/package-purchase-history',
-        {
-          headers: {
-            Authorization: `${token}`,
-            'Content-Type': 'application/json',
-          },
+      const response = await axios.get(' ', {
+        headers: {
+          Authorization: `${token}`,
+          'Content-Type': 'application/json',
         },
-      );
+      });
       setPurchaseHistorys(response?.data?.data);
     } catch (error) {
       console.error('Error fetching data:', error);
     }
   };
-
-  useEffect(() => {
-    fetchData();
-  }, []);
 
   const filteredPurchaseHistorys = purchaseHistorys?.filter(
     (purchaseHistory) =>
@@ -53,7 +46,7 @@ const PurchaseHistory = () => {
   return (
     <DefaultLayout>
       <Breadcrumb pageName="Purchase History" />
-      <div className="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
+      {/* <div className="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
         <div className="max-w-full w-100 mb-4">
           <SearchInput placeholder="Search..." setSearch={setSearch} />
         </div>
@@ -159,7 +152,7 @@ const PurchaseHistory = () => {
             setCurrentPage={setCurrentPage}
           />
         </div>
-      </div>
+      </div> */}
     </DefaultLayout>
   );
 };

@@ -6,6 +6,7 @@ import axios from 'axios';
 import { ApiResponse } from '../../types/global';
 import { getTizaraUserToken } from '../../hooks/getTokenFromstorage';
 import { UserProfile } from '../../pages/Profile';
+import { baseUrl } from '../../utils/api';
 
 const Header = (props: {
   sidebarOpen: string | boolean | undefined;
@@ -19,7 +20,7 @@ const Header = (props: {
     const fetchData = async () => {
       try {
         const response = await axios.get<ApiResponse<UserProfile>>(
-          'https://tizara-backend.vercel.app/api/v1/profile',
+          `${baseUrl}/profile`,
           {
             headers: {
               Authorization: `${token}`,

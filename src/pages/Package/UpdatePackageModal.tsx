@@ -4,8 +4,7 @@ import Swal from 'sweetalert2';
 import SelectOptions from '../../Ui/SelectOptions';
 import { IPackage } from '../../types/packages';
 import { PuffLoader } from 'react-spinners';
-import Button from '../../Ui/Button';
-
+ 
 interface IUpdatePackage {
   fetchData: () => void;
   closeModal: () => void;

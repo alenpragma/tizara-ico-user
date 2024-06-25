@@ -2,7 +2,7 @@ import { useState } from 'react';
 import DepositRequest from '../Deposits/DepositRequest';
 import Swal from 'sweetalert2';
 import { FaRegCopy } from 'react-icons/fa6';
-// import userImage from '../../images/user.jpg';
+import userImage from '../../images/user.jpg';
 import rcmImage from '../../assets/Rcm-01.png';
 
 const WelcomeSection = ({ profile }: any) => {
@@ -36,11 +36,21 @@ const WelcomeSection = ({ profile }: any) => {
     <>
       <div className="flex flex-col lg:flex-row  gap-4 py-4 lg:place-items-center justify-between">
         <div className="flex  lg:place-items-center flex-col lg:flex-row gap-3 ">
-          <img
-            src={rcmImage}
-            alt=""
-            className="w-30 border-4 h-30 rounded-full"
-          />
+          <div className="flex gap-3">
+            <img
+              src={userImage}
+              alt=""
+              className="w-30 border-4 h-30 rounded-full"
+            />
+
+            {profile?.isRcm && (
+              <img
+                src={rcmImage}
+                alt=""
+                className="w-30 border-4 h-30 rounded-full"
+              />
+            )}
+          </div>
           <div>
             <h2 className="text-title-md capitalize lg:text-2xl font-semibold">
               Welcome to Tizara, {profile?.name}!

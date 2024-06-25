@@ -35,7 +35,7 @@ const SelectOptions = ({
     control: (baseStyles: any, state: any) => ({
       ...baseStyles,
       borderColor: state.isFocused ? '#3cb7ed' : '#3d4d60',
-      borderRadius: '10px',
+      borderRadius: '4px',
       height: 'full',
       padding: '5px',
       backgroundColor: 'transparent',
@@ -43,6 +43,7 @@ const SelectOptions = ({
     }),
     option: (provided: any, state: any) => ({
       ...provided,
+
       backgroundColor: state.isSelected ? '#3cb7ed' : 'white',
       color: state.isSelected ? '#3d4d60' : 'black',
       '&:hover': {

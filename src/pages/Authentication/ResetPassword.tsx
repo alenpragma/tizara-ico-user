@@ -5,6 +5,7 @@ import Swal from 'sweetalert2';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import SvgImage from './SvgImage';
 import { IoLockOpenOutline } from 'react-icons/io5';
+import { baseUrl } from '../../utils/api';
 
 type IInput = {
   confirmPassword: string;
@@ -30,17 +31,14 @@ const ResetPassword = () => {
 
       setLoading(true);
 
-      const response = await fetch(
-        'https://tizara-backend.vercel.app/api/v1/auth/reset-password',
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `${token}`,
-          },
-          body: JSON.stringify(data),
+      const response = await fetch(`${baseUrl}/auth/reset-password`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `${token}`,
         },
-      );
+        body: JSON.stringify(data),
+      });
 
       const responseData = await response.json();
       console.log(responseData);

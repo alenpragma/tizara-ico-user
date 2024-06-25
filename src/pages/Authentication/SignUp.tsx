@@ -8,6 +8,7 @@ import {
   getTizaraUserToken,
   setTizaraUserToken,
 } from '../../hooks/getTokenFromstorage';
+import { baseUrl } from '../../utils/api';
 
 type Inputs = {
   email: string;
@@ -48,16 +49,13 @@ const SignUp: React.FC = () => {
 
     setLoading(true);
     try {
-      const response = await fetch(
-        'https://tizara-backend.vercel.app/api/v1/auth',
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(data),
+      const response = await fetch(`${baseUrl}/auth`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
         },
-      );
+        body: JSON.stringify(data),
+      });
       const responseData = await response.json();
       console.log(responseData);
 

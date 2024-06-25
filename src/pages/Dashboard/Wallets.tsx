@@ -1,31 +1,20 @@
-import { Link } from 'react-router-dom';
 import CardDataStats from '../../components/CardDataStats';
 import { PiPackage } from 'react-icons/pi';
 import UserIcon from '../../assets/icon/UserIcon';
 import { useEffect, useState } from 'react';
-import axios from 'axios';
-import { getTizaraUserToken } from '../../hooks/getTokenFromstorage';
 import { IWallet } from '../../types/wallet';
 import { ApiResponse } from '../../types/global';
+import axiosInstance from '../../utils/axiosConfig';
 
 const Wallets = ({ getWallet }: any) => {
   const [wallet, setWallet] = useState<IWallet | null>(null);
 
   const fetchData = async () => {
-    const token = getTizaraUserToken();
     try {
-      const response = await axios.get<ApiResponse<IWallet>>(
-        'https://tizara-backend.vercel.app/api/v1/user-wallet',
-        {
-          headers: {
-            Authorization: `${token}`,
-            'Content-Type': 'application/json',
-          },
-        },
+      const response = await axiosInstance.get<ApiResponse<IWallet>>(
+        '/user-wallet',
       );
-
       if (response?.data?.success) {
-        // console.log(response.data.data);
         setWallet(response.data.data);
       }
     } catch (error) {
