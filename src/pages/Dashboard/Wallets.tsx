@@ -6,7 +6,7 @@ import { IWallet } from '../../types/wallet';
 import { ApiResponse } from '../../types/global';
 import axiosInstance from '../../utils/axiosConfig';
 
-const Wallets = ({ getWallet }: any) => {
+const Wallets = ({ getWallet }: { getWallet: boolean }) => {
   const [wallet, setWallet] = useState<IWallet | null>(null);
 
   const fetchData = async () => {

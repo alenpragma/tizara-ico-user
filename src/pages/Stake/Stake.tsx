@@ -1,13 +1,10 @@
 import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
 import DefaultLayout from '../../layout/DefaultLayout';
-import axios from 'axios';
-import { getTizaraUserToken } from '../../hooks/getTokenFromstorage';
 import { useEffect, useState } from 'react';
 import { StakeNowModal } from './StakeNowModal';
 import { ApiResponse } from '../../types/global';
 import { IWallet } from '../../types/wallet';
 import axiosInstance from '../../utils/axiosConfig';
-import Button from '../../Ui/Button';
 
 type Inputs = {
   paymentMethod: string;
@@ -37,6 +34,7 @@ const Stake = () => {
       const response = await axiosInstance.get<ApiResponse<IWallet>>(
         '/user-wallet',
       );
+
       if (response?.data?.success) {
         setWallet(response.data.data);
       }

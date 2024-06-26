@@ -15,7 +15,7 @@ type Inputs = {
   minimum: string;
   stakeAmount: string;
   dailyRoy: number;
-  wallet: string;
+  wallet: any;
 };
 
 export const StakeNowModal = ({
@@ -25,9 +25,17 @@ export const StakeNowModal = ({
   getWllet,
 }: any) => {
   const [wallets, setWallets] = useState(() => [
-    { value: '0', label: 'Select..' },
-    { value: 'Native', label: `Native wallet ${wallet.nativeWallet}` },
-    { value: 'Ico', label: `ICO wallet ${wallet.icoWallet}` },
+    // { value: '0', label: 'Select..' },
+    {
+      balance: `${wallet?.nativeWallet}`,
+      value: 'Native',
+      label: `Native wallet ${wallet?.nativeWallet}`,
+    },
+    {
+      balance: `${wallet?.icoWallet}`,
+      value: 'Ico',
+      label: `ICO wallet ${wallet?.icoWallet}`,
+    },
   ]);
 
   const [lodaing, setLoading] = useState(false);
@@ -37,17 +45,31 @@ export const StakeNowModal = ({
 
   // dayly ROI
   const yearlyRoy = selectedPlan ? (amount / 100) * selectedPlan.apy : 0;
-
   const dailyRoy = selectedPlan ? yearlyRoy / selectedPlan.duration : 0;
+
   const onSubmit: SubmitHandler<Inputs> = async (data: Inputs) => {
+    console.log(data);
+    if (!data.wallet) {
+      alert('Please Select wallet');
+    }
+
+    if (Number(data?.stakeAmount) > Number(data?.wallet?.balance)) {
+      return Swal.fire({
+        title: 'Error',
+        text: 'insufficient Balance',
+        icon: 'error',
+      });
+    }
     const planData = {
-      dailyRoy: Number(dailyRoy.toFixed(5)),
+      dailyRoy: Number(dailyRoy.toFixed(2)),
       planName: data.planName,
       duration: data.duration,
       apy: Number(data.apy),
       stakeAmount: Number(data.stakeAmount),
       planId: selectedPlan.id,
+      wallet: data.wallet.value,
     };
+
     try {
       setLoading(true);
 
@@ -87,13 +109,6 @@ export const StakeNowModal = ({
     }
   };
 
-  const [selectedOption, setSelectedOption] = useState<string>('');
-  const [isOptionSelected, setIsOptionSelected] = useState<boolean>(false);
-
-  const changeTextColor = () => {
-    setIsOptionSelected(true);
-  };
-
   return (
     <div className="fixed left-0 top-0 z-999 flex h-full min-h-screen w-full items-center justify-center bg-black/90 py-5">
       <div
@@ -127,9 +142,9 @@ export const StakeNowModal = ({
                   options={wallets}
                   label="Select Wallet"
                   name="wallet"
-                  defaultValue={0}
-                  placeholder={'Wallet...'}
-                />{' '}
+                  defaultValue={99}
+                  placeholder={'Select Wallet...'}
+                />
               </div>
 
               <div>
@@ -205,7 +220,7 @@ export const StakeNowModal = ({
               <InputField
                 label="Daily ROI"
                 name="dailyRoy"
-                defaultValue={dailyRoy ? dailyRoy.toFixed(5) : ''}
+                defaultValue={dailyRoy ? dailyRoy.toFixed(2) : ''}
                 register={register}
                 readOnly
               />

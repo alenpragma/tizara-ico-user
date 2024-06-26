@@ -165,10 +165,10 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
 
               <li>
                 <NavLink
-                  to="/history/stake-reward"
+                  to="/stake-reward"
                   className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-                    (pathname === '/stake-reward-history' ||
-                      pathname.includes('stake-reward-history')) &&
+                    (pathname === '/stake-reward' ||
+                      pathname.includes('stake-reward')) &&
                     'bg-graydark dark:bg-meta-4'
                   }'
                     }`}

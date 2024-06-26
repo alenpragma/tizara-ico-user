@@ -114,7 +114,7 @@ function App() {
             />
 
             <Route
-              path="/history/stake-reward"
+              path="/stake-reward"
               element={
                 <>
                   <PageTitle title=" Stake reward History" />

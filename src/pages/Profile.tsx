@@ -55,9 +55,9 @@ const Profile = () => {
       <Breadcrumb pageName="Profile" />
 
       <div className="overflow-hidden rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-        <div className="relative z-20 h-35 md:h-65"></div>
-        <div className="px-4 pb-6 text-center lg:pb-8 xl:pb-11.5">
-          <div className="relative z-30 mx-auto -mt-22 h-20 w-20 md:w-40 md:h-40 rounded-full bg-white/20 p-1 backdrop-blur   sm:p-3">
+        {/* <div className="relative z-20 h-35 md:h-65"></div> */}
+        <div className="px-4 mt-4 pb-6 text-center  ">
+          <div className=" z-30 mx-auto  h-20 w-20 md:w-40 md:h-40 rounded-full bg-white/20 p-1 backdrop-blur   sm:p-3">
             <div className="relative flex drop-shadow-2">
               <img
                 className="w-full rounded-full"
@@ -68,10 +68,10 @@ const Profile = () => {
           </div>
 
           <div className="mt-4">
-            <h3 className="mb-1.5 text-2xl font-semibold text-black dark:text-white">
+            {/* <h3 className="mb-1.5 text-2xl font-semibold text-black dark:text-white">
               <span className="text-meta-3"> My Rank Status:</span> Rare Club
               Member (RCM)
-            </h3>
+            </h3> */}
 
             <h3 className="mb-1.5 text-2xl font-semibold text-black dark:text-white">
               <span className="text-meta-3"> My Reffer Code:</span>{' '}

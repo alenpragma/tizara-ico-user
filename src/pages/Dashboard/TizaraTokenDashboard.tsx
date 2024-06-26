@@ -58,11 +58,10 @@ interface DepositHistory {
   // Add other fields as needed
 }
 
-type SetState<T> = React.Dispatch<React.SetStateAction<T>>;
+// type SetState<T> = React.Dispatch<React.SetStateAction<T>>;
 
 const BizTokenDashboard: React.FC = () => {
-  const token = getTizaraUserToken();
-  const [getWallet, setGetWallet] = useState(false);
+  const [getWallet, setGetWallet] = useState<boolean>(false);
   const [profile, setProfile] = useState<UserProfile | null>(null);
   const [royHistorys, setRoyHistorys] = useState<IROYHistory[]>([]);
   const [history, setHistory] = useState<any>([]);
@@ -209,7 +208,7 @@ const BizTokenDashboard: React.FC = () => {
         <Link to={'/roy-history'}>
           <CardDataStats
             title="Total ROI"
-            total={`${totalRoy ? totalRoy : '00'}`}
+            total={`${totalRoy ? totalRoy.toFixed(2) : '00'}`}
           >
             <PiPackage className="text-2xl dark:text-white text-primary" />
           </CardDataStats>
@@ -224,7 +223,7 @@ const BizTokenDashboard: React.FC = () => {
           </CardDataStats>
         </Link>
 
-        <Link to={'/history/stake-reward'}>
+        <Link to={'/stake-reward'}>
           <CardDataStats
             title="Level Reward"
             total={`${stakeLevelBonus ? stakeLevelBonus : '00'}`}

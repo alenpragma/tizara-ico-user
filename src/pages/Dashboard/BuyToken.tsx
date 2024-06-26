@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import Button from '../../Ui/Button';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import Swal from 'sweetalert2';
-import { getTizaraUserToken } from '../../hooks/getTokenFromstorage';
 import { ICoinPrice } from '../../types/dashboard';
 import axiosInstance from '../../utils/axiosConfig';
 
@@ -43,7 +42,7 @@ const BuyToken: React.FC<ComponentProps> = ({
     const buyDetails = {
       coinPrice: Number(buyDetail.coinPrice),
       coinAmount: Number(buyDetail.coinAmount),
-      totalPrice: parseFloat(buyDetail.totalPrice.toFixed(5)),
+      totalPrice: parseFloat(buyDetail.totalPrice.toFixed(2)),
     };
 
     try {
@@ -51,9 +50,9 @@ const BuyToken: React.FC<ComponentProps> = ({
         '/buy-token',
         buyDetails,
       );
-      console.log(res);
 
       if (res?.data.success) {
+        await setGetWallet(true);
         Swal.fire({
           title: 'Success!',
           text: `${res?.data?.message}`,
@@ -135,7 +134,7 @@ const BuyToken: React.FC<ComponentProps> = ({
                 <h3 className="flex justify-between text-black-2 font-medium dark:text-white text-lg">
                   <span>Total Price:</span>
                   <span>
-                    $ {totalPrice ? parseFloat(totalPrice.toFixed(5)) : '00'}
+                    $ {totalPrice ? parseFloat(totalPrice.toFixed(2)) : '00'}
                   </span>
                 </h3>
                 <Button btnName="Buy" />

@@ -7,6 +7,7 @@ import { formatToLocalDate } from '../../hooks/formatDate';
 import { IStake } from '../../types/stake';
 import NotFound from '../../components/NotFound/NotFound';
 import axiosInstance from '../../utils/axiosConfig';
+import TableRow from '../../components/Tables/TableRow';
 
 const AllStake = () => {
   const [search, setSearch] = useState('');
@@ -100,6 +101,7 @@ const AllStake = () => {
                         {key + 1}
                       </h5>
                     </td>
+                    {/* <TableRow/> */}
                     <td className="border-b border-[#eee] py-5 px-4 pl-4 dark:border-strokedark xl:pl-11">
                       <h5 className="font-medium text-black dark:text-white">
                         {formatToLocalDate(stake?.createdAt)}
