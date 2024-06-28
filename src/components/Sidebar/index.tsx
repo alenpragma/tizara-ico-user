@@ -2,13 +2,12 @@ import React, { useEffect, useRef, useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import SidebarLinkGroup from './SidebarLinkGroup';
 import DashboardIcon from '../../images/sidebarIcon/DashboardIcon';
-import { PiPackage } from 'react-icons/pi';
 import logo from '../../assets/tizara.png';
 import HistoryIcon from '../../images/sidebarIcon/HistoryIcon';
-import StakeNowIcon from '../../images/sidebarIcon/stakeNowIcon';
-import StackHistory from '../../images/sidebarIcon/stackHistory';
+import StakeNowIcon from '../../images/sidebarIcon/StakeNowIcon';
 import RefferalIcon from '../../images/sidebarIcon/RefferalIcon';
 import RewardIcon from '../../images/sidebarIcon/RewardIcon';
+import StackNowIcon from '../../images/sidebarIcon/StackNowIcon';
 
 interface SidebarProps {
   sidebarOpen: boolean;
@@ -144,7 +143,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                   }'
                     }`}
                 >
-                  <StackHistory />
+                  <StackNowIcon />
                   Stake History
                 </NavLink>
               </li>

@@ -1,8 +1,8 @@
 import React from 'react';
 
-const StackHistory = () => {
+const StackNowIcon = () => {
   return (
-    <>
+    <div>
       <svg
         version="1.1"
         id="Uploaded to svgrepo.com"
@@ -24,8 +24,8 @@ const StackHistory = () => {
 	"
         />
       </svg>
-    </>
+    </div>
   );
 };
 
-export default StackHistory;
+export default StackNowIcon;
