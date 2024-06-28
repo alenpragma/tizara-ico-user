@@ -50,7 +50,7 @@ const ForgotPass = () => {
         });
       }
     } finally {
-      setLoading(false); // Ensure loading is set to false regardless of success or error
+      setLoading(false);
     }
   };
 

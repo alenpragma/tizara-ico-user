@@ -2,8 +2,12 @@ import React, { useEffect, useRef, useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import SidebarLinkGroup from './SidebarLinkGroup';
 import DashboardIcon from '../../images/sidebarIcon/DashboardIcon';
-import { PiPackage } from 'react-icons/pi';
 import logo from '../../assets/tizara.png';
+import HistoryIcon from '../../images/sidebarIcon/HistoryIcon';
+import StakeNowIcon from '../../images/sidebarIcon/StakeNowIcon';
+import RefferalIcon from '../../images/sidebarIcon/RefferalIcon';
+import RewardIcon from '../../images/sidebarIcon/RewardIcon';
+import StackNowIcon from '../../images/sidebarIcon/StackNowIcon';
 
 interface SidebarProps {
   sidebarOpen: boolean;
@@ -100,13 +104,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
         <nav className="mt-0 py-4 px-4 lg:mt-0 lg:px-6">
           {/* <!-- Menu Group --> */}
           <div>
-            {/* <h3 className="mb-4 ml-4 text-sm font-semibold text-bodydark2">
-              MENU
-            </h3> */}
-
             <ul className="mb-6 flex flex-col gap-1.5">
-              {/* Menu item Dashbord */}
-
               <li>
                 <NavLink
                   to="/dashboard"
@@ -131,7 +129,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                   }'
                     }`}
                 >
-                  <DashboardIcon />
+                  <StakeNowIcon />
                   Stake Now
                 </NavLink>
               </li>
@@ -145,7 +143,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                   }'
                     }`}
                 >
-                  <PiPackage className="text-xl dark:bg-meta-4" />
+                  <StackNowIcon />
                   Stake History
                 </NavLink>
               </li>
@@ -158,7 +156,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                   }'
                     }`}
                 >
-                  <DashboardIcon />
+                  <RefferalIcon />
                   My Referrals
                 </NavLink>
               </li>
@@ -173,26 +171,10 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                   }'
                     }`}
                 >
-                  <PiPackage className="text-xl dark:bg-meta-4" />
+                  <RewardIcon />
                   Level Reward
                 </NavLink>
               </li>
-
-              {/* <li>
-                <NavLink
-                  to="/buy-token-history"
-                  className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${(pathname === '/buy-token-history' ||
-                      pathname.includes('buy-token-history')) &&
-                    'bg-graydark dark:bg-meta-4'
-                    }'
-                    }`}
-                >
-                  <DashboardIcon />
-                  Buy Token History
-                </NavLink>
-              </li> */}
-
-              {/* Menu item Dashbord */}
 
               {/* Users start */}
 
@@ -218,22 +200,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                             : setSidebarExpanded(true);
                         }}
                       >
-                        <svg
-                          className="w-6 h-6 text-gray-800 dark:text-white"
-                          aria-hidden="true"
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="24"
-                          height="24"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            stroke="currentColor"
-                            strokeLinecap="round"
-                            strokeWidth="1.5"
-                            d="M16 19h4a1 1 0 0 0 1-1v-1a3 3 0 0 0-3-3h-2m-2.236-4a3 3 0 1 0 0-4M3 18v-1a3 3 0 0 1 3-3h4a3 3 0 0 1 3 3v1a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1Zm8-10a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
-                          />
-                        </svg>
+                        <HistoryIcon />
                         History
                         <svg
                           className={`absolute right-4 top-1/2 -translate-y-1/2 fill-current ${
@@ -326,8 +293,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                 >
                   <svg
                     className="fill-current"
-                    width="18"
-                    height="18"
+                    width="20"
+                    height="20"
                     viewBox="0 0 18 18"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"

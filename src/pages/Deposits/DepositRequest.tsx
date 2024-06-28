@@ -5,6 +5,7 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { getTizaraUserToken } from '../../hooks/getTokenFromstorage';
 import { baseUrl } from '../../utils/api';
+import SelectGroupOne from '../../components/Forms/SelectGroup/SelectGroupOne';
 
 type Inputs = {
   paymentMethod: string;
@@ -141,11 +142,15 @@ const DepositRequest: React.FC<ComponentProps> = ({
                 <select
                   id="paymentMethod"
                   onClick={(e: any) => setSelectedMethod(e?.target?.value)}
-                  className="py-3 w-full rounded-md  dark:border-strokedark border-[1.5px] dark:text-white dark:focus:border-primary outline-none"
+                  className=" py-3 w-full  rounded-md  dark:border-strokedark bg-inherit border-[1.5px] dark:text-white dark:focus:border-primary outline-none"
                 >
                   {/* Map through paymentMethods and render options */}
                   {depositMethod?.data?.map((method: any) => (
-                    <option className=" " key={method.id} value={method.id}>
+                    <option
+                      className=" text-body p-1 dark:text-black"
+                      key={method.id}
+                      value={method.id}
+                    >
                       {method.paymentMethod}
                     </option>
                   ))}
