@@ -1,6 +1,3 @@
-import { SubmitHandler, useForm } from 'react-hook-form';
-import Swal from 'sweetalert2';
-import axiosInstance from '../../utils/axiosConfig';
 import { useState } from 'react';
 
 interface UserProfile {
@@ -20,8 +17,7 @@ const BasicDetails = ({
   onSubmit,
   handleSubmit,
   register,
-  profile,
-  fetchData,
+  profile, // fetchData,
 }: any) => {
   // console.log(profile);
 
