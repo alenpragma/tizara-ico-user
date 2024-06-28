@@ -4,9 +4,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import SelectOptions from '../../Ui/SelectOptions';
 
-
 const DepositSettings = () => {
-
   const {
     register,
     handleSubmit,
@@ -16,32 +14,31 @@ const DepositSettings = () => {
 
   const onSubmit: SubmitHandler<any> = async (data: any) => {
     console.log(data);
-
   };
 
-
   const options = [
-    { value: "0", label: 'Active' },
-    { value: "1", label: 'Inactive' },
+    { value: '0', label: 'Active' },
+    { value: '1', label: 'Inactive' },
   ];
-
 
   return (
     <DefaultLayout>
       <Breadcrumb pageName="Deposit Settings" />
 
       <div>
-        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-5.5 p-6.5">
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="flex flex-col gap-5.5 p-6.5"
+        >
           <div>
-
             <div>
               <SelectOptions
                 control={control}
                 options={options}
-                label='Select coin'
+                label="Select coin"
                 name="status"
                 defaultValue={1}
-                value={'1'}
+                // value={'1'}
                 placeholder={'Select...'}
               />
             </div>
@@ -53,12 +50,11 @@ const DepositSettings = () => {
             </label>
             <select
               className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-              {...register("coin")}
+              {...register('coin')}
             >
               <option value="1">coin 1</option>
               <option value="1">coin 2</option>
               <option value="1">coin 3</option>
-
             </select>
           </div>
 
@@ -68,7 +64,7 @@ const DepositSettings = () => {
             </label>
             <select
               className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-              {...register("coin")}
+              {...register('coin')}
             >
               <option value="1">Nework 1</option>
               <option value="1">Nework 2</option>
@@ -81,7 +77,7 @@ const DepositSettings = () => {
             </label>
             <input
               type="text"
-              {...register("Withdrow fee", { required: true })}
+              {...register('Withdrow fee', { required: true })}
               placeholder="Withdrow fee"
               className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
             />
@@ -92,7 +88,7 @@ const DepositSettings = () => {
             </label>
             <input
               type="text"
-              {...register("Minimum", { required: true })}
+              {...register('Minimum', { required: true })}
               placeholder="Minimum"
               className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
             />
@@ -104,15 +100,13 @@ const DepositSettings = () => {
             </label>
             <input
               type="text"
-              {...register("Maximum", { required: true })}
+              {...register('Maximum', { required: true })}
               placeholder="Maximum"
               className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
             />
           </div>
 
-          <button
-            className="w-fit mx-auto items-center justify-center  bg-meta-3 py-3 px-10  mb-2 rounded-md text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
-          >
+          <button className="w-fit mx-auto items-center justify-center  bg-meta-3 py-3 px-10  mb-2 rounded-md text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10">
             Submit
           </button>
         </form>
