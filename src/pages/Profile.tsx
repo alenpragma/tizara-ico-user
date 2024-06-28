@@ -56,7 +56,7 @@ const Profile = () => {
 
   const { register, handleSubmit } = useForm<UserProfile>();
 
-  const [file, setFile] = useState(null);
+  const [file, setFile] = useState<any>(null);
   const [formData, setFormData] = useState({
     name: '',
     // Add other form fields here
