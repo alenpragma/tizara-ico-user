@@ -24,6 +24,7 @@ const Wallets = ({ getWallet }: { getWallet: boolean }) => {
 
   useEffect(() => {
     fetchData();
+    console.log(wallet?.icoWallet);
   }, [getWallet]);
 
   return (
@@ -40,7 +41,9 @@ const Wallets = ({ getWallet }: { getWallet: boolean }) => {
       <div>
         <CardDataStats
           title="Native Wallet"
-          total={`${wallet?.nativeWallet ? wallet?.nativeWallet : '00'} TIZARA`}
+          total={`${
+            wallet?.nativeWallet ? wallet?.nativeWallet.toFixed(2) : '00'
+          } TIZARA`}
         >
           <PiPackage className="lg:text-2xl dark:text-white text-primary" />
         </CardDataStats>
@@ -49,7 +52,9 @@ const Wallets = ({ getWallet }: { getWallet: boolean }) => {
       <div>
         <CardDataStats
           title="ICO Wallet"
-          total={`${wallet?.icoWallet ? wallet?.icoWallet : '00'} TIZARA`}
+          total={`${
+            wallet?.icoWallet ? wallet?.icoWallet.toFixed(2) : '00'
+          } TIZARA`}
         >
           <UserIcon />
         </CardDataStats>
@@ -58,7 +63,9 @@ const Wallets = ({ getWallet }: { getWallet: boolean }) => {
       <div>
         <CardDataStats
           title="Stake Wallet"
-          total={`${wallet?.stakeWallet ? wallet?.stakeWallet : '00'} TIZARA`}
+          total={`${
+            wallet?.stakeWallet ? wallet?.stakeWallet.toFixed(2) : '00'
+          } TIZARA`}
         >
           <PiPackage className="lg:text-2xl dark:text-white text-primary" />
         </CardDataStats>

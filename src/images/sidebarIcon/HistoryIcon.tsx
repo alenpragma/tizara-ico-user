@@ -14,7 +14,7 @@ const HistoryIcon = () => {
           stroke="none"
           strokeWidth="1"
           fill="none"
-          fill-rule="evenodd"
+          fillRule="evenodd"
         >
           <g id="icon" fill="#fff" transform="translate(33.830111, 42.666667)">
             <path

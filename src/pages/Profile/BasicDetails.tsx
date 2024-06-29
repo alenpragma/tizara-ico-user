@@ -79,13 +79,6 @@ const BasicDetails = ({
           />
         </div>
 
-        <InputField
-          label="Sponsor"
-          name="Phone"
-          register={register}
-          placeholder="sponsor"
-        />
-
         {loading ? (
           <PuffLoader className="mx-auto" color="#36d7b7" size={40} />
         ) : (

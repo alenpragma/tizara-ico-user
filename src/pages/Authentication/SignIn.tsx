@@ -5,9 +5,9 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import { PuffLoader } from 'react-spinners';
 import SvgImage from './SvgImage';
 import { getTizaraUserToken } from '../../hooks/getTokenFromstorage';
-
 import { IoLockOpenOutline } from 'react-icons/io5';
 import { baseUrl } from '../../utils/api';
+import InputField from '../../components/Forms/InputField';
 
 type Inputs = {
   email: string;
@@ -117,11 +117,18 @@ const SignIn: React.FC = () => {
                       Email
                     </label>
                     <div className="relative">
-                      <input
+                      {/* <input
                         {...register('email', { required: true })}
                         type="email"
                         placeholder="Enter your email"
                         className="w-full rounded-lg border border-stroke bg-transparent py-3 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                      /> */}
+
+                      <InputField
+                        label="Email"
+                        name="email"
+                        register={register}
+                        placeholder="Enter your email"
                       />
 
                       <span className="absolute right-4 top-4">
