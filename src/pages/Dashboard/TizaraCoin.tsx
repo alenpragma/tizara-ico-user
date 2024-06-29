@@ -13,7 +13,6 @@ interface ComponentProps {
 const TizaraCoin = ({ setGetWallet }: ComponentProps) => {
   // edit
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-  const [updateItem, setUpdateItem] = useState();
   // edit
 
   const [coinPrice, setCoinPrice] = useState<ICoinPrice[] | any>();
