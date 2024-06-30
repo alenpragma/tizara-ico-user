@@ -69,7 +69,7 @@ const Profile = () => {
     formData.append('phone', e?.phone || profile?.phone);
 
     if (selectedFile) {
-      formData.append('file', selectedFile, selectedFile?.name);
+      // formData.append('file', selectedFile, selectedFile?.name);
     }
 
     try {
@@ -116,12 +116,10 @@ const Profile = () => {
       <div className="overflow-hidden rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
         {/* <div className="relative z-20 h-35 md:h-65"></div> */}
         <div className="px-4 mt-4 pb-6 text-center  ">
-          <div className=" z-30 mx-auto  h-20 w-20 md:w-40 md:h-40 rounded-full bg-white/20 p-1 backdrop-blur   sm:p-3">
-            <div className="relative drop-shadow-2"></div>
-
-            <div className="relative  flex  ">
+          <div className=" z-30 mx-auto  h-20 w-20 md:w-40 md:h-40 rounded-full   p-1 backdrop-blur   sm:p-3">
+            <div className="relative h-20 w-20 md:w-40 md:h-40 flex mx-auto ">
               <img
-                className=" h-20 w-20 md:w-40 md:h-40 rounded-full"
+                className="h-20 w-20 md:w-40 md:h-40 rounded-full"
                 src={profile?.profileImage ?? userImage}
                 alt="profile"
               />
