@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { PuffLoader } from 'react-spinners';
+import InputField from '../../components/Forms/InputField';
 
 interface UserProfile {
   name: string;
@@ -17,13 +18,9 @@ const BasicDetails = ({
   onSubmit,
   handleSubmit,
   register,
-  profile, // fetchData,
+  loading,
+  profile,
 }: any) => {
-  // console.log(profile);
-
-  const [loading, setLoading] = useState(false);
-  const [data, setData] = useState({ ...profile });
-
   return (
     <>
       <form
@@ -77,13 +74,13 @@ const BasicDetails = ({
           <input
             type="sponsor"
             defaultValue={profile?.referralCode as string}
-            placeholder="Phone"
             disabled
             className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
           />
         </div>
+
         {loading ? (
-          'loaidng'
+          <PuffLoader className="mx-auto" color="#36d7b7" size={40} />
         ) : (
           <button className="flex px-7 mx-auto justify-center rounded bg-primary p-3 font-medium text-gray hover:bg-opacity-90">
             Submit

@@ -5,6 +5,7 @@ import { formatToLocalDate } from '../../hooks/formatDate';
 import Skeleton from 'react-loading-skeleton';
 import NotFound from '../../components/NotFound/NotFound';
 import axiosInstance from '../../utils/axiosConfig';
+import TableRow from '../../components/Tables/TableRow';
 
 interface IHistory {
   id: string;
@@ -69,15 +70,15 @@ const Transaction = () => {
                     <th className="min-w-[90px] py-4 px-4 font-medium text-black dark:text-white xl:pl-11">
                       SL NO
                     </th>
-                    <th className="min-w-[120px] py-4 px-4 font-medium text-black dark:text-white xl:pl-11">
+                    <th className="min-w-[100px] py-4 px-4 font-medium text-black dark:text-white xl:pl-11">
                       Amount
                     </th>
 
-                    <th className="min-w-[150px] py-4 px-4 font-medium text-black dark:text-white">
+                    <th className="min-w-[290px] py-4 px-4 font-medium text-black dark:text-white">
                       Details
                     </th>
 
-                    <th className="min-w-[120px] py-4 px-4 font-medium text-black dark:text-white">
+                    <th className="min-w-[220px] py-4 px-4 font-medium text-black dark:text-white">
                       Time
                     </th>
                   </tr>
@@ -87,29 +88,13 @@ const Transaction = () => {
                     (user: IHistory, key: Key | null | undefined) => {
                       return (
                         <tr key={key}>
-                          <td className="border-b border-[#eee] py-5 px-4 pl-9 dark:border-strokedark xl:pl-11">
-                            <h5 className="font-medium text-black dark:text-white">
-                              {Number(key) + 1}
-                            </h5>
-                          </td>
-                          <td className="border-b border-[#eee] py-5 px-4 pl-4 dark:border-strokedark xl:pl-11">
-                            <h5 className="font-medium text-black dark:text-white">
-                              {user.name}
-                            </h5>
-                            <p className="text-sm">{user.amount}</p>
-                          </td>
+                          <TableRow data={Number(key) + 1}></TableRow>
 
-                          <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-                            <p className="text-black dark:text-white">
-                              Reward from {user.bonusFrom}
-                            </p>
-                          </td>
+                          <TableRow data={user.amount}></TableRow>
 
-                          <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-                            <p className="text-black dark:text-white">
-                              {formatToLocalDate(user?.createdAt)}
-                            </p>
-                          </td>
+                          <TableRow data={'Reward from ' + user.bonusFrom} />
+
+                          <TableRow data={formatToLocalDate(user?.createdAt)} />
                         </tr>
                       );
                     },

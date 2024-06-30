@@ -70,6 +70,8 @@ const BizTokenDashboard: React.FC = () => {
   const fetchProfileData = async () => {
     try {
       const response = await axiosInstance.get('/profile');
+      console.log(response);
+
       if (response?.data?.success) {
         return response.data.data;
       }

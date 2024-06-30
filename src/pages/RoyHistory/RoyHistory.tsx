@@ -1,14 +1,12 @@
 import DefaultLayout from '../../layout/DefaultLayout';
 import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
 import { useEffect, useState } from 'react';
-import { getTizaraUserToken } from '../../hooks/getTokenFromstorage';
-import axios from 'axios';
-import SearchInput from '../../components/SearchInput';
 import Skeleton from 'react-loading-skeleton';
 import PaginationButtons from '../../components/Pagination/PaginationButtons';
 import { formatToLocalDate } from '../../hooks/formatDate';
 import NotFound from '../../components/NotFound/NotFound';
 import axiosInstance from '../../utils/axiosConfig';
+import TableRow from '../../components/Tables/TableRow';
 
 export type IROYHistory = {
   id: string;
@@ -78,9 +76,6 @@ const RoyHistory = () => {
                   <th className="min-w-[220px] py-4 px-4 font-medium text-black dark:text-white xl:pl-11">
                     Date
                   </th>
-                  {/* <th className="min-w-[220px] py-4 px-4 font-medium text-black dark:text-white xl:pl-11">
-                    Email
-                  </th> */}
                   <th className="min-w-[220px] py-4 px-4 font-medium text-black dark:text-white xl:pl-11">
                     Plan Name
                   </th>
@@ -98,39 +93,19 @@ const RoyHistory = () => {
               <tbody>
                 {royHistorys?.map((purchaseHistory: any, key: any) => (
                   <tr key={key}>
-                    <td className="border-b border-[#eee] py-5 px-4 pl-9 dark:border-strokedark xl:pl-11">
-                      <h5 className="font-medium text-black dark:text-white">
-                        {key + 1}
-                      </h5>
-                    </td>
-                    <td className="border-b border-[#eee] py-5 px-4 pl-4 dark:border-strokedark xl:pl-11">
-                      <h5 className="font-medium text-black dark:text-white">
-                        {formatToLocalDate(purchaseHistory?.createdAt)}
-                      </h5>
-                    </td>
-                    <td className="border-b border-[#eee] py-5 px-4 pl-4 dark:border-strokedark xl:pl-11">
-                      <h5 className="font-medium text-black dark:text-white">
-                        {purchaseHistory?.userStake?.planName}
-                      </h5>
-                    </td>
+                    <TableRow data={key + 1} />
 
-                    <td className="border-b border-[#eee] py-5 px-4 pl-4 dark:border-strokedark xl:pl-11">
-                      <h5 className="font-medium text-black dark:text-white">
-                        {purchaseHistory?.userStake?.stakeAmount}
-                      </h5>
-                    </td>
+                    <TableRow
+                      data={formatToLocalDate(purchaseHistory?.createdAt)}
+                    />
 
-                    <td className="border-b border-[#eee] py-5 px-4 pl-4 dark:border-strokedark xl:pl-11">
-                      <h5 className="font-medium text-black dark:text-white">
-                        {purchaseHistory?.userStake?.apy}
-                      </h5>
-                    </td>
+                    <TableRow data={purchaseHistory?.userStake?.planName} />
 
-                    <td className="border-b border-[#eee] py-5 px-4 pl-4 dark:border-strokedark xl:pl-11">
-                      <h5 className="font-medium text-black dark:text-white">
-                        {purchaseHistory?.userStake?.dailyRoy}
-                      </h5>
-                    </td>
+                    <TableRow data={purchaseHistory?.userStake?.stakeAmount} />
+
+                    <TableRow data={purchaseHistory?.userStake?.apy} />
+
+                    <TableRow data={purchaseHistory?.userStake?.dailyRoy} />
                   </tr>
                 ))}
               </tbody>

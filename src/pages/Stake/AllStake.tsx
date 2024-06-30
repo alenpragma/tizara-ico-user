@@ -169,13 +169,6 @@ const AllStake = () => {
           )}
         </div>
         <div>{!loading && stakes.length == 0 && <NotFound />}</div>
-        {/* <div className="my-4">
-          <PaginationButtons
-            totalPages={Math.ceil(seredsetStakes.length / perPage)}
-            currentPage={currentPage}
-            setCurrentPage={setCurrentPage}
-          />
-        </div> */}
       </div>
     </DefaultLayout>
   );

@@ -38,7 +38,7 @@ const WelcomeSection = ({ profile }: any) => {
         <div className="flex  lg:place-items-center flex-col lg:flex-row gap-3 ">
           <div className="flex gap-3">
             <img
-              src={userImage}
+              src={profile?.profileImage ?? userImage}
               alt=""
               className="w-30 border-4 h-30 rounded-full"
             />

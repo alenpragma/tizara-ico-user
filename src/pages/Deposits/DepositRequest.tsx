@@ -5,7 +5,6 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { getTizaraUserToken } from '../../hooks/getTokenFromstorage';
 import { baseUrl } from '../../utils/api';
-import SelectGroupOne from '../../components/Forms/SelectGroup/SelectGroupOne';
 
 type Inputs = {
   paymentMethod: string;

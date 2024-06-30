@@ -3,7 +3,6 @@ import { Route, Routes, useLocation } from 'react-router-dom';
 import PageTitle from './components/PageTitle';
 import SignIn from './pages/Authentication/SignIn';
 import SignUp from './pages/Authentication/SignUp';
-import PurchaseHistory from './pages/Purchase/PurchaseHistory';
 import ProtectedRoute from './hooks/ProtectedRoute';
 import 'react-loading-skeleton/dist/skeleton.css';
 
@@ -27,6 +26,7 @@ import StakeBonusHistory from './pages/StakeBonusHistory/StakeBonusHistory';
 import RoyHistory from './pages/RoyHistory/RoyHistory';
 import ForgotPass from './pages/Authentication/ForgotPass';
 import ResetPassword from './pages/Authentication/ResetPassword';
+import NotFound from './components/NotFound/NotFound';
 
 function App() {
   const { pathname } = useLocation();
@@ -34,10 +34,6 @@ function App() {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [pathname]);
-
-  // useEffect(() => {
-  //   setTimeout(() => setLoading(false), 100);
-  // }, []);
 
   const [colorMode] = useColorMode();
 
@@ -223,7 +219,7 @@ function App() {
               }
             /> */}
 
-            <Route
+            {/* <Route
               path="/purchase/purchase-history"
               element={
                 <>
@@ -233,7 +229,7 @@ function App() {
                   </ProtectedRoute>
                 </>
               }
-            />
+            /> */}
 
             <Route
               path="/profile"
@@ -286,152 +282,15 @@ function App() {
               }
             />
 
-            {/* Packages */}
-
-            {/* Deposits start */}
-
-            {/* <Route
-              path="/deposits/all-deposit"
-              element={
-                <>
-                  <PageTitle title="All Deposit" />
-                  <Suspense fallback={<Lazyloding />}>
-                    <ProtectedRoute>
-                      <AllDeposits />
-                    </ProtectedRoute>
-                  </Suspense>
-                </>
-              }
-            /> */}
-
-            {/* <Route
-              path="/deposits/pending-deposit"
-              element={
-                <>
-                  <PageTitle title="Pending Deposit" />
-                  <ProtectedRoute>
-                    <PendingDeposits />
-                  </ProtectedRoute>
-                </>
-              }
-            /> */}
-            {/* 
             <Route
-              path="/deposits/success-deposit"
+              path="*"
               element={
                 <>
-                  <PageTitle title="Success Deposit" />
-                  <ProtectedRoute>
-                    <SuccessDeposits />
-                  </ProtectedRoute>
+                  <PageTitle title="Not Found" />
+                  <NotFound />
                 </>
               }
-            /> */}
-            {/* <Route
-              path="/deposits/deposit-settings"
-              element={
-                <>
-                  <PageTitle title="Deposit Settings" />
-                  <ProtectedRoute>
-                    <DepositSettings />
-                  </ProtectedRoute>
-                </>
-              }
-            /> */}
-
-            {/* Deposits  end*/}
-
-            {/* <Route
-              path="/withdraw/all-withdraws"
-              element={
-                <>
-                  <PageTitle title="All withdraws" />
-                  <ProtectedRoute>
-                    <AllWithdraws />
-                  </ProtectedRoute>
-                </>
-              }
-            /> */}
-            {/* <Route
-              path="/withdraw/pending-withdraws"
-              element={
-                <>
-                  <PageTitle title="Pending Withdraws" />
-                  <ProtectedRoute>
-                    <PendingWithdraws />
-                  </ProtectedRoute>
-                </>
-              }
-            /> */}
-            {/* <Route
-              path="/withdraw/success-withdraws"
-              element={
-                <>
-                  <PageTitle title="Success Withdraws" />
-                  <ProtectedRoute>
-                    <SuccessWithdraws />
-                  </ProtectedRoute>
-                </>
-              }
-            /> */}
-            {/* <Route
-              path="/payment-settings/deposit-methods"
-              element={
-                <>
-                  <PageTitle title="deposit Methods" />
-                  <Suspense fallback={<Lazyloding />}>
-                    <ProtectedRoute>
-                      <DepositMethods />
-                    </ProtectedRoute>
-                  </Suspense>
-                </>
-              }
-            /> */}
-            {/* <Route
-              path="/payment-settings/withdraw-methods"
-              element={
-                <>
-                  <PageTitle title="deposit Methods" />
-                  <ProtectedRoute>
-                    <WihtdrawMethods />
-                  </ProtectedRoute>
-                </>
-              }
-            /> */}
-
-            {/* <Route
-              path="/general-settings"
-              element={
-                <>
-                  <PageTitle title="General Settings" />
-                  <Suspense fallback={<Lazyloding />}>
-                    <ProtectedRoute>
-                      <GeneralSettings />
-                    </ProtectedRoute>
-                  </Suspense>
-                </>
-              }
-            /> */}
-            {/* <Route
-              path="/bonus-settings"
-              element={
-                <>
-                  <PageTitle title="Bonus Settings" />
-                  <ProtectedRoute>
-                    <BonusSettings />
-                  </ProtectedRoute>
-                </>
-              }
-            /> */}
-            {/* <Route
-              path="/settings"
-              element={
-                <>
-                  <PageTitle title="Settings" />
-                  <Settings />
-                </>
-              }
-            /> */}
+            />
           </Routes>
         </SkeletonTheme>
       </MyContext.Provider>
