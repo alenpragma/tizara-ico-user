@@ -5,6 +5,7 @@ import axios from 'axios';
 import { ApiResponse } from '../../types/global';
 import { ICoinPrice } from '../../types/dashboard';
 import { baseUrl } from '../../utils/api';
+import axiosInstance from '../../utils/axiosConfig';
 
 interface ComponentProps {
   setGetWallet: (value: boolean) => void;
@@ -17,18 +18,11 @@ const TizaraCoin = ({ setGetWallet }: ComponentProps) => {
 
   const [coinPrice, setCoinPrice] = useState<ICoinPrice[] | any>();
 
-  const token = getTizaraUserToken();
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get<ApiResponse<ICoinPrice>>(
-          `${baseUrl}/general-settings`,
-          {
-            headers: {
-              Authorization: `${token}`,
-              'Content-Type': 'application/json',
-            },
-          },
+        const response = await axiosInstance.get<ApiResponse<ICoinPrice | any>>(
+          `/general-settings`,
         );
         if (response?.data?.success) {
           setCoinPrice(response?.data.data);
@@ -72,7 +66,7 @@ const TizaraCoin = ({ setGetWallet }: ComponentProps) => {
 
             <div className="flex justify-between font-medium text-black dark:text-white">
               <h4 className=" ">Current Price:</h4>
-              <h4 className=" "> $ {coinPrice && coinPrice.coinPrice}</h4>
+              <h4 className=" "> $ {coinPrice && coinPrice?.coinPrice}</h4>
             </div>
           </div>
           <button

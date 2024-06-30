@@ -106,28 +106,33 @@ const BuyToken: React.FC<ComponentProps> = ({
                     Coin Price:
                   </label>
                   <input
-                    className="w-35 rounded text-end border border-stroke bg-gray py-2 pl-3 pr-4.5 text-black-2 focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
+                    className="w-36 rounded text-end border border-stroke bg-gray py-2 pl-3 pr-4.5 text-black-2 focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
                     {...register('coinPrice')}
                     type="number"
                     value={coinPrice && coinPrice.coinPrice} // Null check added
                   />
                 </div>
-                <div className="flex justify-between place-items-center gap-3">
-                  <label
-                    className="mb-2 block text-sm font-medium text-black-2 dark:text-white"
-                    htmlFor="type"
-                  >
-                    Coin Amount:
-                    {/* <span> Min 500</span> */}
-                  </label>
-                  <input
-                    type="number"
-                    min={1}
-                    placeholder="Minimum 500"
-                    className="text-end w-35 rounded border border-stroke bg-gray py-2 pl-3 pr-4.5 text-black-2 focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
-                    {...register('coinAmount', { required: true })}
-                    onChange={(e) => setAmount(parseFloat(e.target.value))}
-                  />
+                <div>
+                  <div className="flex justify-between place-items-center gap-3">
+                    <label
+                      className="mb-2 block text-sm font-medium text-black-2 dark:text-white"
+                      htmlFor="type"
+                    >
+                      Coin Amount:
+                    </label>
+                    <input
+                      type="number"
+                      min={1}
+                      placeholder="Coin"
+                      className="text-end w-36 rounded border border-stroke bg-gray py-2 pl-3 pr-4.5 text-black-2 focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
+                      {...register('coinAmount', { required: true })}
+                      onChange={(e) => setAmount(parseFloat(e.target.value))}
+                    />
+                  </div>
+                  <p className="text-end text-sm">
+                    Min:{coinPrice?.minCoin} - Max:{coinPrice?.maxCoin}
+                  </p>
+                  {/* <p className="text-end text-sm">Max: {coinPrice?.maxCoin}</p> */}
                 </div>
                 <hr />
 
@@ -138,10 +143,6 @@ const BuyToken: React.FC<ComponentProps> = ({
                   </span>
                 </h3>
                 <Button btnName="Buy" />
-                {/* <button className="btn flex justify-center rounded bg-primary py-2 px-6 font-medium text-gray hover:shadow-1"
-              type="submit">
-              Update
-            </button> */}
               </form>
             </div>
           </div>

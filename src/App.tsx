@@ -3,7 +3,6 @@ import { Route, Routes, useLocation } from 'react-router-dom';
 import PageTitle from './components/PageTitle';
 import SignIn from './pages/Authentication/SignIn';
 import SignUp from './pages/Authentication/SignUp';
-import PurchaseHistory from './pages/Purchase/PurchaseHistory';
 import ProtectedRoute from './hooks/ProtectedRoute';
 import 'react-loading-skeleton/dist/skeleton.css';
 
@@ -35,10 +34,6 @@ function App() {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [pathname]);
-
-  // useEffect(() => {
-  //   setTimeout(() => setLoading(false), 100);
-  // }, []);
 
   const [colorMode] = useColorMode();
 

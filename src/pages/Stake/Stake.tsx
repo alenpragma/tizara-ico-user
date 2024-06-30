@@ -5,10 +5,9 @@ import { StakeNowModal } from './StakeNowModal';
 import { ApiResponse } from '../../types/global';
 import { IWallet } from '../../types/wallet';
 import axiosInstance from '../../utils/axiosConfig';
+import Skeleton from 'react-loading-skeleton';
+import { PuffLoader } from 'react-spinners';
 
-type Inputs = {
-  paymentMethod: string;
-};
 const Stake = () => {
   const [depositMethod, setDepositMethod] = useState<any>();
   const [selected, setSelected] = useState<any>();
@@ -54,17 +53,10 @@ const Stake = () => {
     }
   };
 
-  // useEffect(() => {
-  //   getWllet();
-  // }, []);
-
   useEffect(() => {
     const initializeData = async () => {
-      console.log(new Date());
-
       await getWllet();
       await getPaymentMethod();
-      console.log(new Date());
     };
 
     initializeData();
@@ -85,24 +77,33 @@ const Stake = () => {
     <DefaultLayout>
       <Breadcrumb pageName="Stake Now" />
       <div className="lg:max-w-[70%] mx-auto">
-        <div className="border p-3 rounded-md">
-          <h3 className="dark:text-white font-semibold text-md">
-            Available Tizara: {wallet?.nativeWallet}
-          </h3>
-        </div>
+        {wallet ? (
+          <div className="flex justify-between border p-3 rounded-md  text-sm md:text-md">
+            <h3 className="dark:text-white font-semibold">
+              Available Tizara: {wallet?.nativeWallet}
+            </h3>
+            <div className="lg:hidden w-[2px] h-[20px] border  "></div>
+            <h3 className="dark:text-white font-semibold ">
+              Available ICO: {wallet?.icoWallet}
+            </h3>
+          </div>
+        ) : (
+          <Skeleton height={40} count={1} />
+        )}
 
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 my-4 mt-5">
           {depositMethod?.map((item: any) => {
             return (
               <div
                 key={item.id}
-                className="w-[300px]   md:w-59 mx-auto flex flex-col justify-between border border-secondary py-5 rounded-xl hover:bg-slate-200  dark:bg-black"
+                className="w-full   md:w-59 mx-auto flex flex-col justify-between border border-secondary py-5 rounded-xl hover:bg-slate-200  dark:bg-black"
               >
                 <div>
                   <div className="flex justify-between font-bold  px-3 py-1">
                     <span>Name: </span>
                     <span>{item.planName}</span>
                   </div>
+
                   <hr className="py-1 mt-1" />
 
                   <div className="flex justify-between ">
@@ -134,7 +135,7 @@ const Stake = () => {
                 </button>
               </div>
             );
-          })}
+          }) ?? <PuffLoader className="mx-auto" color="#36d7b7" size={40} />}
         </div>
       </div>
       {isEditModalOpen && (

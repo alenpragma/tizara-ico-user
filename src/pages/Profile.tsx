@@ -119,22 +119,13 @@ const Profile = () => {
           <div className=" z-30 mx-auto  h-20 w-20 md:w-40 md:h-40 rounded-full bg-white/20 p-1 backdrop-blur   sm:p-3">
             <div className="relative drop-shadow-2"></div>
 
-            <div className="relative flex drop-shadow-2">
-              {profile?.profileImage && (
-                <img
-                  className=" h-20 w-20 md:w-40 md:h-[135px] rounded-full"
-                  src={profile?.profileImage}
-                  alt="profile"
-                />
-              )}
+            <div className="relative  flex  ">
+              <img
+                className=" h-20 w-20 md:w-40 md:h-40 rounded-full"
+                src={profile?.profileImage ?? userImage}
+                alt="profile"
+              />
 
-              {!profile?.profileImage && (
-                <img
-                  className="w-full rounded-full"
-                  src={userImage}
-                  alt="profile"
-                />
-              )}
               <label
                 htmlFor="profile"
                 className="absolute bottom-0 right-0 flex h-8.5 w-8.5 cursor-pointer items-center justify-center rounded-full bg-primary text-white hover:bg-opacity-90 sm:bottom-2 sm:right-2"

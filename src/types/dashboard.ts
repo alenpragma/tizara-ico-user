@@ -3,4 +3,6 @@ export interface ICoinPrice {
   coinPrice: number;
   createdAt: string;
   updatedAt: string;
+  minCoin: number;
+  maxCoin: number;
 }
