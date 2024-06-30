@@ -5,6 +5,7 @@ import { formatToLocalDate } from '../../hooks/formatDate';
 import Skeleton from 'react-loading-skeleton';
 import NotFound from '../../components/NotFound/NotFound';
 import axiosInstance from '../../utils/axiosConfig';
+import TableRow from '../../components/Tables/TableRow';
 
 interface IHistory {
   id: string;
@@ -24,7 +25,7 @@ interface ApiResponse {
 }
 
 const BuyTokenHistory = () => {
-  const [history, sethistory] = useState<any>([]);
+  const [historys, sethistorys] = useState<any>([]);
   const [loading, setLoading] = useState<boolean>(false);
   useEffect(() => {
     const fetchData = async () => {
@@ -33,7 +34,7 @@ const BuyTokenHistory = () => {
         const response = await axiosInstance.get<ApiResponse>('/buy-token');
         setLoading(false);
         if (response?.data?.success) {
-          sethistory(response.data.data);
+          sethistorys(response.data.data);
         }
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -47,11 +48,6 @@ const BuyTokenHistory = () => {
       <Breadcrumb pageName="Buy token history" />
 
       <div className="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
-        <div className="flex justify-between">
-          <div className="max-w-full w-100 mb-4">
-            {/* <SearchInput placeholder="Search..." setSearch={setSearch} /> */}
-          </div>
-        </div>
         <div className="max-w-full overflow-x-auto">
           {loading == true ? (
             <div>
@@ -61,10 +57,10 @@ const BuyTokenHistory = () => {
             <table className="w-full table-auto">
               <thead>
                 <tr className="bg-gray-2 text-left dark:bg-meta-4">
-                  <th className="min-w-[90px] py-4 px-4 font-medium text-black dark:text-white xl:pl-11">
+                  <th className="min-w-[90px] py-4 px-4 font-medium text-black dark:text-white">
                     SL NO
                   </th>
-                  <th className="min-w-[220px] py-4 px-4 font-medium text-black dark:text-white xl:pl-11">
+                  <th className="min-w-[160px] py-4 px-4 font-medium text-black dark:text-white  ">
                     Coin Amount
                   </th>
                   <th className="min-w-[120px] py-4 px-4 font-medium text-black dark:text-white">
@@ -79,38 +75,19 @@ const BuyTokenHistory = () => {
                 </tr>
               </thead>
               <tbody>
-                {history?.map(
-                  (user: IHistory, key: string | null | undefined) => {
+                {historys?.map(
+                  (history: IHistory, key: string | null | undefined) => {
                     return (
                       <tr key={key}>
-                        <td className="border-b border-[#eee] py-5 px-4 pl-9 dark:border-strokedark xl:pl-11">
-                          <h5 className="font-medium text-black dark:text-white">
-                            {Number(key) + 1}
-                          </h5>
-                        </td>
-                        <td className="border-b border-[#eee] py-5 px-4 pl-4 dark:border-strokedark xl:pl-11">
-                          <h5 className="font-medium text-black dark:text-white">
-                            {user.coinAmount}
-                          </h5>
-                        </td>
+                        <TableRow data={Number(key) + 1}></TableRow>
 
-                        <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-                          <p className="text-black dark:text-white">
-                            {user.coinPrice}
-                          </p>
-                        </td>
+                        <TableRow data={history.coinAmount}></TableRow>
+                        <TableRow data={history.coinPrice}></TableRow>
 
-                        <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-                          <p className="text-black dark:text-white">
-                            {user.totalPrice}
-                          </p>
-                        </td>
-
-                        <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-                          <p className="text-black dark:text-white">
-                            {formatToLocalDate(user?.createdAt)}
-                          </p>
-                        </td>
+                        <TableRow data={history.totalPrice}></TableRow>
+                        <TableRow
+                          data={formatToLocalDate(history?.createdAt)}
+                        ></TableRow>
                       </tr>
                     );
                   },

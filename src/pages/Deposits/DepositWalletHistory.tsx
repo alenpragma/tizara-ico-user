@@ -7,9 +7,10 @@ import { getTizaraUserToken } from '../../hooks/getTokenFromstorage';
 import Skeleton from 'react-loading-skeleton';
 import NotFound from '../../components/NotFound/NotFound';
 import axiosInstance from '../../utils/axiosConfig';
+import TableRow from '../../components/Tables/TableRow';
 
 const DepositWalletHistory = () => {
-  const [depositHistory, setDepositHistory] = useState<any>();
+  const [depositHistorys, setDepositHistorys] = useState<any>();
   const [isDepositModalOpen, setIsDepositModalOpen] = useState(false);
   const token = getTizaraUserToken();
   const [loading, setLoading] = useState(false);
@@ -28,7 +29,7 @@ const DepositWalletHistory = () => {
       const response = await axiosInstance.get('/deposit-request');
 
       if (response?.data?.success) {
-        setDepositHistory(response?.data?.data);
+        setDepositHistorys(response?.data?.data);
       }
     } catch (error) {
       console.error('Error fetching data:', error);
@@ -65,7 +66,7 @@ const DepositWalletHistory = () => {
                   <th className="min-w-[90px] py-4 px-4 font-medium text-black dark:text-white ">
                     SL NO
                   </th>
-                  <th className="min-w-[120px] py-4 px-4 font-medium text-black dark:text-white  ">
+                  <th className="min-w-[220px] py-4 px-4 font-medium text-black dark:text-white  ">
                     Date
                   </th>
                   <th className="min-w-[120px] py-4 px-4 font-medium text-black dark:text-white">
@@ -89,60 +90,40 @@ const DepositWalletHistory = () => {
                 </tr>
               </thead>
               <tbody>
-                {depositHistory?.map((user: any, key: string) => {
+                {depositHistorys?.map((depositHistory: any, key: string) => {
                   return (
                     <tr key={key}>
-                      <td className="border-b border-[#eee] py-5 px-4 pl-9 dark:border-strokedark xl:pl-11">
-                        <h5 className="font-medium text-black dark:text-white">
-                          {Number(key) + 1}
-                        </h5>
-                      </td>
-                      <td className="border-b border-[#eee] py-5 px-4 pl-4 dark:border-strokedark xl:pl-11">
-                        <h5 className="font-medium text-black dark:text-white">
-                          {formatToLocalDate(user?.createdAt)}
-                        </h5>
-                      </td>
+                      <TableRow data={Number(key) + 1}></TableRow>
 
-                      <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-                        <p className="text-black dark:text-white">
-                          {user?.depositMethod?.paymentMethod}
-                        </p>
-                      </td>
+                      <TableRow
+                        data={formatToLocalDate(depositHistory?.createdAt)}
+                      ></TableRow>
 
-                      <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-                        <p className="text-black dark:text-white">
-                          {user?.depositMethod?.network}
-                        </p>
-                      </td>
+                      <TableRow
+                        data={depositHistory?.depositMethod?.paymentMethod}
+                      ></TableRow>
 
-                      <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-                        <p className="text-black dark:text-white">
-                          {user?.depositMethod?.walletNo}
-                        </p>
-                      </td>
+                      <TableRow
+                        data={depositHistory?.depositMethod?.network}
+                      ></TableRow>
+                      <TableRow
+                        data={depositHistory?.depositMethod?.walletNo}
+                      ></TableRow>
+                      <TableRow data={depositHistory?.trxId}></TableRow>
 
-                      <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-                        <p className="text-black dark:text-white">
-                          {user?.trxId}
-                        </p>
-                      </td>
-                      <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-                        <p className="text-black dark:text-white">
-                          {user?.amount}
-                        </p>
-                      </td>
+                      <TableRow data={depositHistory?.amount}></TableRow>
 
                       <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                         <p
                           className={`inline-flex rounded-full bg-opacity-10 py-1 px-3 text-sm font-medium ${
-                            user?.status === 'APPROVED'
+                            depositHistory?.status === 'APPROVED'
                               ? 'bg-success text-success'
-                              : user?.status === 'REJECT'
+                              : depositHistory?.status === 'REJECT'
                               ? 'bg-danger text-danger'
                               : 'bg-warning text-warning'
                           }`}
                         >
-                          {user?.status}
+                          {depositHistory?.status}
                         </p>
                       </td>
                     </tr>
@@ -152,7 +133,7 @@ const DepositWalletHistory = () => {
             </table>
           )}
         </div>
-        <div>{!loading && depositHistory?.length == 0 && <NotFound />}</div>
+        <div>{!loading && depositHistorys?.length == 0 && <NotFound />}</div>
       </div>
 
       <div>

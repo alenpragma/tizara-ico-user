@@ -4,6 +4,7 @@ import DefaultLayout from '../../layout/DefaultLayout';
 import { formatToLocalDate } from '../../hooks/formatDate';
 import Skeleton from 'react-loading-skeleton';
 import axiosInstance from '../../utils/axiosConfig';
+import TableRow from '../../components/Tables/TableRow';
 
 interface IStackBonusHistory {
   id: string;
@@ -20,12 +21,12 @@ interface ApiResponse {
   statusCode: number;
   success: boolean;
   message: string;
-  data: IStackBonusHistory;
+  data: IStackBonusHistory[];
 }
 
 const StakeBonusHistory = () => {
-  const [history, sethistory] = useState<any>([]);
-  const [loading, setLoading] = useState<any>(false);
+  const [historys, sethistorys] = useState<IStackBonusHistory[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -37,7 +38,7 @@ const StakeBonusHistory = () => {
         setLoading(false);
 
         if (response?.data?.success) {
-          sethistory(response.data.data);
+          sethistorys(response.data.data);
         }
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -61,10 +62,10 @@ const StakeBonusHistory = () => {
               <table className="w-full table-auto">
                 <thead>
                   <tr className="bg-gray-2 text-left dark:bg-meta-4">
-                    <th className="min-w-[90px] py-4 px-4 font-medium text-black dark:text-white xl:pl-11">
+                    <th className="min-w-[90px] py-4 px-4 font-medium text-black dark:text-white">
                       SL NO
                     </th>
-                    <th className="min-w-[220px] py-4 px-4 font-medium text-black dark:text-white xl:pl-11">
+                    <th className="min-w-[120px] py-4 px-4 font-medium text-black dark:text-white">
                       Amount
                     </th>
 
@@ -81,38 +82,24 @@ const StakeBonusHistory = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {history?.map(
-                    (user: IStackBonusHistory, key: Key | null | undefined) => {
+                  {historys?.map(
+                    (
+                      history: IStackBonusHistory,
+                      key: Key | null | undefined,
+                    ) => {
                       return (
                         <tr key={key}>
-                          <td className="border-b border-[#eee] py-5 px-4 pl-9 dark:border-strokedark xl:pl-11">
-                            <h5 className="font-medium text-black dark:text-white">
-                              {Number(key) + 1}
-                            </h5>
-                          </td>
-                          <td className="border-b border-[#eee] py-5 px-4 pl-4 dark:border-strokedark xl:pl-11">
-                            <h5 className="font-medium text-black dark:text-white">
-                              {user.bonusAmount}
-                            </h5>
-                          </td>
-
-                          <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-                            <p className="text-black dark:text-white">
-                              Reward from {user.email}
-                            </p>
-                          </td>
-
-                          <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-                            <p className="text-black dark:text-white">
-                              My level {user.level}
-                            </p>
-                          </td>
-
-                          <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-                            <p className="text-black dark:text-white">
-                              {formatToLocalDate(user?.createdAt)}
-                            </p>
-                          </td>
+                          <TableRow data={Number(key) + 1}></TableRow>
+                          <TableRow data={history?.bonusAmount}></TableRow>
+                          <TableRow
+                            data={'Reward from ' + history?.email}
+                          ></TableRow>
+                          <TableRow
+                            data={'My level ' + history?.level}
+                          ></TableRow>
+                          <TableRow
+                            data={formatToLocalDate(history?.createdAt)}
+                          ></TableRow>
                         </tr>
                       );
                     },
