@@ -7,6 +7,7 @@ import { ApiResponse } from '../../types/global';
 import { getTizaraUserToken } from '../../hooks/getTokenFromstorage';
 import { UserProfile } from '../../pages/Profile';
 import { baseUrl } from '../../utils/api';
+import axiosInstance from '../../utils/axiosConfig';
 
 const Header = (props: {
   sidebarOpen: string | boolean | undefined;
@@ -19,14 +20,8 @@ const Header = (props: {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get<ApiResponse<UserProfile>>(
-          `${baseUrl}/profile`,
-          {
-            headers: {
-              Authorization: `${token}`,
-              'Content-Type': 'application/json',
-            },
-          },
+        const response = await axiosInstance.get<ApiResponse<UserProfile>>(
+          `/profile`,
         );
 
         if (response?.data?.success) {

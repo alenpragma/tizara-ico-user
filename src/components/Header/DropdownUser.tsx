@@ -10,6 +10,7 @@ const DropdownUser = ({ profile }: any) => {
 
   const trigger = useRef<any>(null);
   const dropdown = useRef<any>(null);
+  console.log(profile?.isActive);
 
   // close on click outside
   useEffect(() => {

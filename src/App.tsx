@@ -15,7 +15,7 @@ import Lazyloding from './components/Lazyloding';
 import DepositWallet from './pages/WalletHistory/DepositWallet';
 import NativeWallet from './pages/WalletHistory/NativeWallet';
 import IcoWallet from './pages/WalletHistory/IcoWallet';
-import BizTokenDashboard from './pages/Dashboard/TizaraTokenDashboard';
+import TizaraTokenDashboard from './pages/Dashboard/TizaraTokenDashboard';
 import Transaction from './pages/Transaction/Transaction';
 import MyTeam from './pages/MyTeam/MyTeam';
 import DepositWalletHistory from './pages/Deposits/DepositWalletHistory';
@@ -67,7 +67,7 @@ function App() {
                 <>
                   <PageTitle title="Tizara  Dashboard" />
                   <ProtectedRoute>
-                    <BizTokenDashboard />
+                    <TizaraTokenDashboard />
                   </ProtectedRoute>
                 </>
               }
