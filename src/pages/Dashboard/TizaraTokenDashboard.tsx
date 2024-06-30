@@ -60,7 +60,7 @@ interface DepositHistory {
 
 // type SetState<T> = React.Dispatch<React.SetStateAction<T>>;
 
-const BizTokenDashboard: React.FC = () => {
+const TizaraTokenDashboard: React.FC = () => {
   const [getWallet, setGetWallet] = useState<boolean>(false);
   const [profile, setProfile] = useState<UserProfile | null>(null);
   const [royHistorys, setRoyHistorys] = useState<IROYHistory[]>([]);
@@ -243,4 +243,4 @@ const BizTokenDashboard: React.FC = () => {
   );
 };
 
-export default BizTokenDashboard;
+export default TizaraTokenDashboard;
