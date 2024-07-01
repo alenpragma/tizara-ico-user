@@ -28,7 +28,6 @@ const SignUp: React.FC = () => {
   const query = useQuery();
 
   const referralCode = query.get('referralCode');
-  console.log(referralCode);
 
   const navigate = useNavigate();
   useEffect(() => {
@@ -47,10 +46,18 @@ const SignUp: React.FC = () => {
     if (data.referralCode === '') {
       delete data.referralCode;
     }
+    Swal.fire({
+      title: 'Thank you',
+      html: '<p style="font-size: 14px;">Please Check Your Mail & confirm your registration</p>',
+
+      // text: 'Please Check Your Mail & confirm your registration',
+      icon: 'success',
+    });
+    return;
 
     setLoading(true);
     try {
-      const response = await fetch(`${baseUrl}/auth`, {
+      const response = await fetch(`${baseUrl}/auth/send-mail`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -61,14 +68,15 @@ const SignUp: React.FC = () => {
       console.log(responseData);
 
       if (responseData.success) {
-        setTizaraUserToken(responseData?.data?.token);
+        // setTizaraUserToken(responseData?.data?.token);
         Swal.fire({
-          title: 'success',
-          text: 'Register successfull',
+          title: 'Thank you for signup with us',
+          text: 'Please Check Your Mail and Verify',
           icon: 'success',
-        }).then(() => {
-          navigate('/dashboard');
         });
+        // .then(() => {
+        //   navigate('/dashboard');
+        // });
       } else if (!responseData.success) {
         Swal.fire({
           title: 'Error',
