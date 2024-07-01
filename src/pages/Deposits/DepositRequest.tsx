@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import { getTizaraUserToken } from '../../hooks/getTokenFromstorage';
 import { baseUrl } from '../../utils/api';
 import axiosInstance from '../../utils/axiosConfig';
+import { PuffLoader } from 'react-spinners';
 
 type Inputs = {
   paymentMethod: string;
@@ -48,7 +49,6 @@ const DepositRequest: React.FC<ComponentProps> = ({
 
   const onSubmit: SubmitHandler<Inputs> = async (data: Inputs) => {
     const { trxId, amount, ...rest } = data;
-    setLoading(true);
     if (data.amount < wallet?.minimum) {
       Swal.fire({
         title: 'Warning',
@@ -65,6 +65,7 @@ const DepositRequest: React.FC<ComponentProps> = ({
       trxId,
       amount,
     };
+    setLoading(true);
 
     try {
       const response = await fetch(`${baseUrl}/deposit-request`, {
@@ -214,7 +215,7 @@ const DepositRequest: React.FC<ComponentProps> = ({
                   className="w-full rounded border border-stroke bg-gray py-2 pl-3 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
                   {...register('amount', { required: true })}
                 />
-                <p className="text-end text-sm dark:text-white opacity-90">
+                <p className="text-end text-sm dark:text-white opacity-80">
                   {wallet && 'Minimum ' + wallet?.minimum}
                 </p>
               </div>
@@ -231,7 +232,11 @@ const DepositRequest: React.FC<ComponentProps> = ({
                 />
               </div>
 
-              <Button btnName="Submit" />
+              {loading ? (
+                <PuffLoader className="mx-auto" color="#36d7b7" size={40} />
+              ) : (
+                <Button btnName="Submit" />
+              )}
 
               {/* <button className="btn flex justify-center rounded bg-primary py-2 px-6 font-medium text-gray hover:shadow-1"
               type="submit">
