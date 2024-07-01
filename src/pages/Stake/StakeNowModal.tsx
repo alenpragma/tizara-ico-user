@@ -43,7 +43,7 @@ export const StakeNowModal = ({
   const [amount, setAmount] = useState<number>(0);
   const token = getTizaraUserToken();
 
-  // dayly ROI
+  // dayly Reward
   const yearlyRoy = selectedPlan ? (amount / 100) * selectedPlan.apy : 0;
   const dailyRoy = selectedPlan ? yearlyRoy / selectedPlan.duration : 0;
 
@@ -218,7 +218,7 @@ export const StakeNowModal = ({
               </div>
 
               <InputField
-                label="Daily ROI"
+                label="Daily Reward"
                 name="dailyRoy"
                 defaultValue={dailyRoy ? dailyRoy.toFixed(2) : ''}
                 register={register}
@@ -230,7 +230,7 @@ export const StakeNowModal = ({
                   className="mb-1  block text-sm font-medium text-black dark:text-white"
                   htmlFor="type"
                 >
-                  Daily ROI
+                  Daily Reward
                 </label>
                 <input
                   className="w-full rounded border border-stroke bg-gray py-2 pl-3 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"

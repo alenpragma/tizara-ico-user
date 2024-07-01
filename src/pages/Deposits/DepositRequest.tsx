@@ -5,6 +5,7 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { getTizaraUserToken } from '../../hooks/getTokenFromstorage';
 import { baseUrl } from '../../utils/api';
+import axiosInstance from '../../utils/axiosConfig';
 
 type Inputs = {
   paymentMethod: string;
@@ -32,12 +33,7 @@ const DepositRequest: React.FC<ComponentProps> = ({
 
   const getPaymentMethod = async () => {
     try {
-      const response = await axios.get(`${baseUrl}/deposit-method`, {
-        headers: {
-          Authorization: `${token}`,
-          'Content-Type': 'application/json',
-        },
-      });
+      const response = await axiosInstance.get(`/deposit-method`);
       setDepositMethod(response?.data?.data);
     } catch (error) {
       console.error('Error fetching data:', error);
@@ -51,13 +47,32 @@ const DepositRequest: React.FC<ComponentProps> = ({
   const onSubmit: SubmitHandler<Inputs> = async (data: Inputs) => {
     const { trxId, amount, ...rest } = data;
 
+    if (data.amount < depositMethod?.data[0]?.minimum) {
+      Swal.fire({
+        title: 'Warning',
+        text: `Min amount ${depositMethod?.data[0]?.minimum}`,
+        icon: 'warning',
+      });
+      return;
+
+      // alert(`min amount ${depositMethod?.data[0]?.minimum}`);
+    }
+
+    if (data.amount > depositMethod?.data[0]?.maximum) {
+      Swal.fire({
+        title: 'Warning',
+        text: `Max amount ${depositMethod?.data[0]?.maximum}`,
+        icon: 'warning',
+      });
+
+      // alert(`Max amount ${depositMethod?.data[0]?.maximum}`);
+    }
+
     const reqData = {
       depositMethodId: wallet.id,
       trxId,
       amount,
     };
-
-    console.log(reqData, token, 'req data');
 
     try {
       const response = await fetch(`${baseUrl}/deposit-request`, {
@@ -195,6 +210,10 @@ const DepositRequest: React.FC<ComponentProps> = ({
                   className="w-full rounded border border-stroke bg-gray py-2 pl-3 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
                   {...register('amount', { required: true })}
                 />
+                <p className="text-end text-sm text-danger">
+                  Min {depositMethod && depositMethod?.data[0]?.minimum} - Max{' '}
+                  {depositMethod && depositMethod?.data[0]?.maximum}
+                </p>
               </div>
               <div>
                 <label

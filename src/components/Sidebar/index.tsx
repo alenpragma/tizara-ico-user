@@ -272,7 +272,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                                 (isActive && '!text-white')
                               }
                             >
-                              ROI History
+                              Reward History
                             </NavLink>
                           </li>
                         </ul>

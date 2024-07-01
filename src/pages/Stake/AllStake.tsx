@@ -78,7 +78,7 @@ const AllStake = () => {
                     APY
                   </th>
                   <th className="min-w-[150px] py-4 px-4 font-medium text-black dark:text-white">
-                    Daily ROI
+                    Daily Reward
                   </th>
                   <th className="min-w-[150px] py-4 px-4 font-medium text-black dark:text-white">
                     Start date

@@ -209,7 +209,7 @@ const TizaraTokenDashboard: React.FC = () => {
 
         <Link to={'/roy-history'}>
           <CardDataStats
-            title="Total ROI"
+            title="Total Reward"
             total={`${totalRoy ? totalRoy.toFixed(2) : '00'}`}
           >
             <PiPackage className="text-2xl dark:text-white text-primary" />
