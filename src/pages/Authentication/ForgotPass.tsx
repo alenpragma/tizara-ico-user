@@ -100,7 +100,7 @@ const ForgotPass = () => {
                         placeholder="Enter your email"
                       />
 
-                      <span className="absolute right-4 top-4">
+                      <span className="absolute right-4 top-10">
                         <svg
                           className="fill-current"
                           width="22"
