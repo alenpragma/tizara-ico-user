@@ -47,28 +47,6 @@ const DepositRequest: React.FC<ComponentProps> = ({
   const onSubmit: SubmitHandler<Inputs> = async (data: Inputs) => {
     const { trxId, amount, ...rest } = data;
 
-    if (data.amount < depositMethod?.data[0]?.minimum) {
-      Swal.fire({
-        title: 'Warning',
-        text: `Min amount ${depositMethod?.data[0]?.minimum}`,
-        icon: 'warning',
-      });
-      return;
-
-      // alert(`min amount ${depositMethod?.data[0]?.minimum}`);
-    }
-
-    if (data.amount > depositMethod?.data[0]?.maximum) {
-      Swal.fire({
-        title: 'Warning',
-        text: `Max amount ${depositMethod?.data[0]?.maximum}`,
-        icon: 'warning',
-      });
-      return;
-
-      // alert(`Max amount ${depositMethod?.data[0]?.maximum}`);
-    }
-
     const reqData = {
       depositMethodId: wallet.id,
       trxId,
