@@ -47,6 +47,28 @@ const DepositRequest: React.FC<ComponentProps> = ({
   const onSubmit: SubmitHandler<Inputs> = async (data: Inputs) => {
     const { trxId, amount, ...rest } = data;
 
+    // if (data.amount < wallet?.minimum) {
+    //   Swal.fire({
+    //     title: 'Warning',
+    //     text: `Min amount ${wallet.minimum}`,
+    //     icon: 'warning',
+    //   });
+    //   return;
+
+    //   // alert(`min amount ${depositMethod?.data[0]?.minimum}`);
+    // }
+
+    // if (data?.amount > wallet?.maximum) {
+    //   Swal.fire({
+    //     title: 'Warning',
+    //     text: `Max amount ${wallet?.maximum} for this wallet`,
+    //     icon: 'warning',
+    //   });
+
+    //   return;
+    //   // alert(`Max amount ${depositMethod?.data[0]?.maximum}`);
+    // }
+
     const reqData = {
       depositMethodId: wallet.id,
       trxId,
@@ -64,6 +86,8 @@ const DepositRequest: React.FC<ComponentProps> = ({
       });
 
       const responseData = await response.json();
+      console.log(responseData);
+
       if (responseData.success) {
         if (fetchData) {
           fetchData();
@@ -74,6 +98,13 @@ const DepositRequest: React.FC<ComponentProps> = ({
           icon: 'success',
         }).then(() => {
           closeModal();
+        });
+      }
+      if (!responseData?.success) {
+        Swal.fire({
+          title: 'error',
+          text: `${responseData?.message}`,
+          icon: 'error',
         });
       }
     } catch (error) {
@@ -96,6 +127,7 @@ const DepositRequest: React.FC<ComponentProps> = ({
       setWallet(undefined);
     }
   }, [selectedMethod, depositMethod]);
+  console.log(wallet);
 
   return (
     <div className="fixed left-0 top-0 z-999 flex h-full min-h-screen w-full items-center justify-center bg-black/90 py-5">
@@ -190,8 +222,7 @@ const DepositRequest: React.FC<ComponentProps> = ({
                   {...register('amount', { required: true })}
                 />
                 <p className="text-end text-sm text-danger">
-                  Min {depositMethod && depositMethod?.data[0]?.minimum} - Max{' '}
-                  {depositMethod && depositMethod?.data[0]?.maximum}
+                  Min {wallet?.minimum} - Max {wallet?.maximum}
                 </p>
               </div>
               <div>
