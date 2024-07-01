@@ -3,7 +3,6 @@ import CardDataStats from '../../components/CardDataStats';
 import DefaultLayout from '../../layout/DefaultLayout';
 import { Link } from 'react-router-dom';
 import { PiPackage } from 'react-icons/pi';
-import { getTizaraUserToken } from '../../hooks/getTokenFromstorage';
 import WelcomeSection from './WelcomeSection';
 import Wallets from './Wallets';
 import TizaraCoin from './TizaraCoin';
@@ -44,20 +43,6 @@ interface UserProfile {
   // Add other user profile fields as needed
 }
 
-interface RoyHistory {
-  // Define fields as per the API response
-}
-
-interface StakeLevelBonus {
-  // Define fields as per the API response
-}
-
-interface DepositHistory {
-  status: string;
-  amount: number;
-  // Add other fields as needed
-}
-
 // type SetState<T> = React.Dispatch<React.SetStateAction<T>>;
 
 const TizaraTokenDashboard: React.FC = () => {
@@ -70,7 +55,6 @@ const TizaraTokenDashboard: React.FC = () => {
   const fetchProfileData = async () => {
     try {
       const response = await axiosInstance.get('/profile');
-      console.log(response);
 
       if (response?.data?.success) {
         return response.data.data;

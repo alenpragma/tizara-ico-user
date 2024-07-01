@@ -1,7 +1,6 @@
 import { SubmitHandler, useForm } from 'react-hook-form';
 import Swal from 'sweetalert2';
 import Button from '../../Ui/Button';
-import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { getTizaraUserToken } from '../../hooks/getTokenFromstorage';
 import { baseUrl } from '../../utils/api';
@@ -195,7 +194,7 @@ const DepositRequest: React.FC<ComponentProps> = ({
                   className="mb-2 block text-sm font-medium text-black dark:text-white"
                   htmlFor="type"
                 >
-                  Wallet no
+                  Wallet Address
                 </label>
                 <input
                   className="w-full rounded border border-stroke bg-gray py-2 pl-3 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
@@ -215,8 +214,8 @@ const DepositRequest: React.FC<ComponentProps> = ({
                   className="w-full rounded border border-stroke bg-gray py-2 pl-3 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
                   {...register('amount', { required: true })}
                 />
-                <p className="text-end text-sm dark:text-white opacity-80">
-                  {wallet && 'Minimum ' + wallet?.minimum}
+                <p className="text-end text-sm  text-bodydark opacity-80">
+                  {wallet && 'Minimum ' + '$' + wallet?.minimum}
                 </p>
               </div>
               <div>
