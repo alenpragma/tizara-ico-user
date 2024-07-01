@@ -27,6 +27,7 @@ import RoyHistory from './pages/RoyHistory/RoyHistory';
 import ForgotPass from './pages/Authentication/ForgotPass';
 import ResetPassword from './pages/Authentication/ResetPassword';
 import NotFound from './components/NotFound/NotFound';
+import Verify from './pages/Verify';
 
 function App() {
   const { pathname } = useLocation();
@@ -278,6 +279,16 @@ function App() {
                 <>
                   <PageTitle title="Reset-Password" />
                   <ResetPassword />
+                </>
+              }
+            />
+
+            <Route
+              path="/auth/verify"
+              element={
+                <>
+                  <PageTitle title="Reset-Password" />
+                  <Verify />
                 </>
               }
             />
