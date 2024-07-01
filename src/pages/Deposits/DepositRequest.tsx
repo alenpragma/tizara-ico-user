@@ -26,6 +26,8 @@ const DepositRequest: React.FC<ComponentProps> = ({
 }) => {
   const { register, handleSubmit } = useForm<Inputs>();
 
+  const [loading, setLoading] = useState<boolean>(false);
+
   const [depositMethod, setDepositMethod] = useState<any>();
   const [selectedMethod, setSelectedMethod] = useState<any>();
   const [wallet, setWallet] = useState<any>();
@@ -46,28 +48,17 @@ const DepositRequest: React.FC<ComponentProps> = ({
 
   const onSubmit: SubmitHandler<Inputs> = async (data: Inputs) => {
     const { trxId, amount, ...rest } = data;
+    setLoading(true);
+    if (data.amount < wallet?.minimum) {
+      Swal.fire({
+        title: 'Warning',
+        text: `Minimum Amount ${wallet.minimum}`,
+        icon: 'warning',
+      });
+      return;
 
-    // if (data.amount < wallet?.minimum) {
-    //   Swal.fire({
-    //     title: 'Warning',
-    //     text: `Min amount ${wallet.minimum}`,
-    //     icon: 'warning',
-    //   });
-    //   return;
-
-    //   // alert(`min amount ${depositMethod?.data[0]?.minimum}`);
-    // }
-
-    // if (data?.amount > wallet?.maximum) {
-    //   Swal.fire({
-    //     title: 'Warning',
-    //     text: `Max amount ${wallet?.maximum} for this wallet`,
-    //     icon: 'warning',
-    //   });
-
-    //   return;
-    //   // alert(`Max amount ${depositMethod?.data[0]?.maximum}`);
-    // }
+      // alert(`min amount ${depositMethod?.data[0]?.minimum}`);
+    }
 
     const reqData = {
       depositMethodId: wallet.id,
@@ -84,9 +75,9 @@ const DepositRequest: React.FC<ComponentProps> = ({
         },
         body: JSON.stringify(reqData),
       });
+      setLoading(false);
 
       const responseData = await response.json();
-      console.log(responseData);
 
       if (responseData.success) {
         if (fetchData) {
@@ -108,6 +99,7 @@ const DepositRequest: React.FC<ComponentProps> = ({
         });
       }
     } catch (error) {
+      setLoading(false);
       Swal.fire({
         title: 'error',
         text: 'Something wrong',
@@ -208,6 +200,7 @@ const DepositRequest: React.FC<ComponentProps> = ({
                   className="w-full rounded border border-stroke bg-gray py-2 pl-3 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
                   {...register('walletNo')}
                   value={wallet?.walletNo}
+                  readOnly
                 />
               </div>
               <div>
@@ -215,14 +208,14 @@ const DepositRequest: React.FC<ComponentProps> = ({
                   className="mb-2 block text-sm font-medium text-black dark:text-white"
                   htmlFor="type"
                 >
-                  Amount
+                  Amount $
                 </label>
                 <input
                   className="w-full rounded border border-stroke bg-gray py-2 pl-3 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
                   {...register('amount', { required: true })}
                 />
-                <p className="text-end text-sm text-danger">
-                  Min {wallet?.minimum} - Max {wallet?.maximum}
+                <p className="text-end text-sm dark:text-white opacity-90">
+                  {wallet && 'Minimum ' + wallet?.minimum}
                 </p>
               </div>
               <div>
