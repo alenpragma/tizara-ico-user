@@ -64,6 +64,7 @@ const DepositRequest: React.FC<ComponentProps> = ({
         text: `Max amount ${depositMethod?.data[0]?.maximum}`,
         icon: 'warning',
       });
+      return;
 
       // alert(`Max amount ${depositMethod?.data[0]?.maximum}`);
     }
