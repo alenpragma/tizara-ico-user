@@ -46,14 +46,6 @@ const SignUp: React.FC = () => {
     if (data.referralCode === '') {
       delete data.referralCode;
     }
-    Swal.fire({
-      title: 'Thank you',
-      html: '<p style="font-size: 14px;">Please Check Your Mail & confirm your registration</p>',
-
-      // text: 'Please Check Your Mail & confirm your registration',
-      icon: 'success',
-    });
-    return;
 
     setLoading(true);
     try {
@@ -70,10 +62,13 @@ const SignUp: React.FC = () => {
       if (responseData.success) {
         // setTizaraUserToken(responseData?.data?.token);
         Swal.fire({
-          title: 'Thank you for signup with us',
-          text: 'Please Check Your Mail and Verify',
+          title: 'Thank you',
+          html: '<p style="font-size: 14px;">Please Check Your Mail & confirm your registration</p>',
+
+          // text: 'Please Check Your Mail & confirm your registration',
           icon: 'success',
         });
+
         // .then(() => {
         //   navigate('/dashboard');
         // });

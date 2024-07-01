@@ -56,7 +56,7 @@ const SignIn: React.FC = () => {
       } else if (responseData.success == false) {
         Swal.fire({
           title: 'Error',
-          text: `${responseData?.message}`,
+          text: 'Something wrong',
           icon: 'error',
         });
       }
