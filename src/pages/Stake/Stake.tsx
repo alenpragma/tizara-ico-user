@@ -95,13 +95,13 @@ const Stake = () => {
           {depositMethod?.map((item: any) => {
             return (
               <div
-                key={item.id}
+                key={item?.id}
                 className="w-full   md:w-59 mx-auto flex flex-col justify-between border border-secondary py-5 rounded-xl hover:bg-slate-200  dark:bg-black"
               >
                 <div>
                   <div className="flex justify-between font-bold  px-3 py-1">
                     <span>Name: </span>
-                    <span>{item.planName}</span>
+                    <span>{item?.planName}</span>
                   </div>
 
                   <hr className="py-1 mt-1" />
@@ -109,20 +109,20 @@ const Stake = () => {
                   <div className="flex justify-between ">
                     <p className=" font-medium px-3 py-1">Duration:</p>
                     <p className=" font-medium px-3 py-1">
-                      {item.duration} Day
+                      {item?.duration} Day
                     </p>
                   </div>
                   <hr className="py-1 mt-1" />
                   <div className="flex justify-between ">
                     <p className=" font-medium px-3 py-1">Minimum:</p>
                     <p className=" font-medium px-3 py-1">
-                      {item.minimum} Tizara
+                      {item?.minimum} Tizara
                     </p>
                   </div>
                   <hr className="py-1 mt-1" />
                   <div className="flex justify-between ">
                     <p className=" font-medium px-3 py-1">APY:</p>
-                    <p className=" font-medium px-3 py-1">{item.apy} %</p>
+                    <p className=" font-medium px-3 py-1">{item?.apy} %</p>
                   </div>
                   <hr className="py-1 mt-1" />
                 </div>
@@ -135,8 +135,15 @@ const Stake = () => {
                 </button>
               </div>
             );
-          }) ?? <PuffLoader className="mx-auto" color="#36d7b7" size={40} />}
+          })}
         </div>
+        {!depositMethod && (
+          <PuffLoader
+            className="mx-auto justify-center"
+            color="#36d7b7"
+            size={40}
+          />
+        )}
       </div>
       {isEditModalOpen && (
         <StakeNowModal

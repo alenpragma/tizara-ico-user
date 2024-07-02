@@ -44,6 +44,8 @@ const SignIn: React.FC = () => {
       });
 
       const responseData = await response.json();
+      console.log(responseData);
+
       if (responseData.success) {
         localStorage.setItem('tizaraUserToken', responseData?.data?.token);
         Swal.fire({
@@ -56,7 +58,7 @@ const SignIn: React.FC = () => {
       } else if (responseData.success == false) {
         Swal.fire({
           title: 'Error',
-          text: 'Something wrong',
+          text: responseData?.message,
           icon: 'error',
         });
       }
