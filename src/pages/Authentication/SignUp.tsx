@@ -63,9 +63,7 @@ const SignUp: React.FC = () => {
         // setTizaraUserToken(responseData?.data?.token);
         Swal.fire({
           title: 'Thank you',
-          html: '<p style="font-size: 14px;">Please Check Your Mail & confirm your registration</p>',
-
-          // text: 'Please Check Your Mail & confirm your registration',
+          html: '<p style="font-size: 14px;">Please Check Your Mail & Confirm Your Registration</p>',
           icon: 'success',
         });
 
