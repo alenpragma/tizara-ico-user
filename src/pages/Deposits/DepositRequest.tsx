@@ -211,6 +211,7 @@ const DepositRequest: React.FC<ComponentProps> = ({
                   Amount $
                 </label>
                 <input
+                  type="number"
                   className="w-full rounded border border-stroke bg-gray py-2 pl-3 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
                   {...register('amount', { required: true })}
                 />
