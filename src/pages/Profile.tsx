@@ -35,6 +35,12 @@ export interface UserProfile {
   updatedAt: string;
 }
 
+export interface UpdateUserProfile {
+  id: string;
+  name: string;
+  phone: string;
+}
+
 const Profile = () => {
   const [profile, setProfile] = useState<UserProfile | null>(null);
   const { register, handleSubmit } = useForm<UserProfile>();
@@ -62,27 +68,59 @@ const Profile = () => {
     setSelectedFile(event.target.files[0]);
   };
 
-  const onSubmit: SubmitHandler<any> = async (e: any) => {
-    setLoading(true);
-    const formData = new FormData();
-    formData.append('name', e?.name || profile?.name);
-    formData.append('phone', e?.phone || profile?.phone);
+  const onSubmit: SubmitHandler<any> = async (data: any) => {
+    // setLoading(true);
+    // const formData = new FormData();
+    // formData.append('name', e?.name || profile?.name);
+    // formData.append('phone', e?.phone || profile?.phone);
 
-    if (selectedFile) {
-      // formData.append('file', selectedFile, selectedFile?.name);
+    // if (selectedFile) {
+    //   // formData.append('file', selectedFile, selectedFile?.name);
+    // }
+    data.email = '';
+
+    if (data.phone.length < 9) {
+      Swal.fire({
+        title: 'Error',
+        text: 'Phone is too short',
+        icon: 'error',
+      });
+      return;
+    }
+    Object.keys(data).forEach((key) => {
+      const value = data[key as keyof UpdateUserProfile]; // Access the value using the key and type assertion
+
+      // If the value is not an empty string, convert it to a number
+      if (value === '') {
+        delete data[key as keyof UpdateUserProfile];
+      }
+    });
+
+    if (Object.keys(data).length === 0) {
+      console.log('empty');
+      return;
     }
 
     try {
-      const response = await axios.patch(
-        `${baseUrl}/profile/${profile?.id}`,
-        formData,
-        {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-            Authorization: `${token}`,
-          },
+      const response = await fetch(`${baseUrl}/profile/${profile?.id}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `${token}`,
         },
-      );
+        body: JSON.stringify(data),
+      });
+
+      // const response = await axios.patch(
+      //   `${baseUrl}/profile/${profile?.id}`,
+      //   formData,
+      //   {
+      //     headers: {
+      //       'Content-Type': 'multipart/form-data',
+      //       Authorization: `${token}`,
+      //     },
+      //   },
+      // );
       if (response) {
         Swal.fire({
           title: 'Success',

@@ -91,23 +91,27 @@ const RoyHistory = () => {
                 </tr>
               </thead>
               <tbody>
-                {royHistorys?.map((purchaseHistory: any, key: any) => (
-                  <tr key={key}>
-                    <TableRow data={key + 1} />
+                {royHistorys
+                  .slice(from, to)
+                  ?.map((purchaseHistory: any, key: any) => (
+                    <tr key={key}>
+                      <TableRow data={key + 1} />
 
-                    <TableRow
-                      data={formatToLocalDate(purchaseHistory?.createdAt)}
-                    />
+                      <TableRow
+                        data={formatToLocalDate(purchaseHistory?.createdAt)}
+                      />
 
-                    <TableRow data={purchaseHistory?.userStake?.planName} />
+                      <TableRow data={purchaseHistory?.userStake?.planName} />
 
-                    <TableRow data={purchaseHistory?.userStake?.stakeAmount} />
+                      <TableRow
+                        data={purchaseHistory?.userStake?.stakeAmount}
+                      />
 
-                    <TableRow data={purchaseHistory?.userStake?.apy} />
+                      <TableRow data={purchaseHistory?.userStake?.apy} />
 
-                    <TableRow data={purchaseHistory?.userStake?.dailyRoy} />
-                  </tr>
-                ))}
+                      <TableRow data={purchaseHistory?.userStake?.dailyRoy} />
+                    </tr>
+                  ))}
               </tbody>
             </table>
           )}
