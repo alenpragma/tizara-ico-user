@@ -191,7 +191,7 @@ const TizaraTokenDashboard: React.FC = () => {
           </CardDataStats>
         </Link>
 
-        <Link to={'/roy-history'}>
+        <Link to={'/roi-history'}>
           <CardDataStats
             title="Total Reward"
             total={`${totalRoy ? totalRoy.toFixed(2) : '00'}`}

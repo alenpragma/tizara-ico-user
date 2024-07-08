@@ -99,7 +99,7 @@ function App() {
             />
 
             <Route
-              path="/roy-history"
+              path="/roi-history"
               element={
                 <>
                   <PageTitle title="stake coin" />
