@@ -83,7 +83,7 @@ const WelcomeSection = ({ profile }: any) => {
             </button>
 
             <button className="items-center justify-center rounded-md bg-success py-2 px-7 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10">
-              Swap
+              Bridge
             </button>
           </div>
         </div>

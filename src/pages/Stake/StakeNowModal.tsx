@@ -34,7 +34,7 @@ export const StakeNowModal = ({
     {
       balance: `${wallet?.icoWallet}`,
       value: 'Ico',
-      label: `ICO wallet ${wallet?.icoWallet}`,
+      label: `MY wallet ${wallet?.icoWallet}`,
     },
   ]);
 

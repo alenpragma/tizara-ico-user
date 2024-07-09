@@ -80,11 +80,11 @@ const Stake = () => {
         {wallet ? (
           <div className="flex justify-between border p-3 rounded-md  text-sm md:text-md">
             <h3 className="dark:text-white font-semibold">
-              Available Tizara: {wallet?.nativeWallet}
+              Tizara Wallet: {wallet?.nativeWallet}
             </h3>
             <div className="lg:hidden w-[2px] h-[20px] border  "></div>
             <h3 className="dark:text-white font-semibold ">
-              Available ICO: {wallet?.icoWallet}
+              MY Wallet: {wallet?.icoWallet}
             </h3>
           </div>
         ) : (
