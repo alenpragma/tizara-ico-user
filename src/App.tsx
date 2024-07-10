@@ -61,15 +61,15 @@ function App() {
     setLoading(false);
   };
 
-  useEffect(() => {
-    fetchData();
-  }, []);
+  // useEffect(() => {
+  //   fetchData();
+  // }, []);
 
-  useEffect(() => {
-    if (profile?.isVerified === false) {
-      navigate('/');
-    }
-  }, [profile?.isVerified]);
+  // useEffect(() => {
+  //   if (profile?.isVerified === false) {
+  //     navigate('/');
+  //   }
+  // }, [profile?.isVerified]);
 
   const [colorMode] = useColorMode();
 
