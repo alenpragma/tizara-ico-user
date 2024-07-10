@@ -24,7 +24,6 @@ const Wallets = ({ getWallet }: { getWallet: boolean }) => {
 
   useEffect(() => {
     fetchData();
-    console.log(wallet?.icoWallet);
   }, [getWallet]);
 
   return (

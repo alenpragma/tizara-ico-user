@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import CardDataStats from '../../components/CardDataStats';
 import DefaultLayout from '../../layout/DefaultLayout';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { PiPackage } from 'react-icons/pi';
 import WelcomeSection from './WelcomeSection';
 import Wallets from './Wallets';
@@ -25,6 +25,7 @@ interface UserProfile {
   referralCode: string;
   myReferralCode: string;
   role: string;
+  isVerified: boolean;
   profileImage: string | null;
   referralCount: number;
   nativeWallet: number;
@@ -51,6 +52,7 @@ const TizaraTokenDashboard: React.FC = () => {
   const [royHistorys, setRoyHistorys] = useState<IROYHistory[]>([]);
   const [history, setHistory] = useState<any>([]);
   const [depositHistory, setDepositHistory] = useState<any>();
+  const navigate = useNavigate();
 
   const fetchProfileData = async () => {
     try {
@@ -63,6 +65,12 @@ const TizaraTokenDashboard: React.FC = () => {
       console.error('Error fetching profile data:', error);
     }
   };
+
+  useEffect(() => {
+    if (profile?.isVerified === false) {
+      navigate('/');
+    }
+  }, [profile?.isVerified]);
 
   const [teams, setTeams] = useState([]);
   const [loading, setLoading] = useState<boolean>(false);

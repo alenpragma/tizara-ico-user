@@ -1,7 +1,5 @@
 import { useEffect, useState } from 'react';
 import BuyToken from './BuyToken';
-import { getTizaraUserToken } from '../../hooks/getTokenFromstorage';
-import axios from 'axios';
 import { ApiResponse } from '../../types/global';
 import { ICoinPrice } from '../../types/dashboard';
 import axiosInstance from '../../utils/axiosConfig';

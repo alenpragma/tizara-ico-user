@@ -71,7 +71,6 @@ const Tokenverify = () => {
     const expiryTime = Date.now() + COOLDOWN_PERIOD * 1000;
     localStorage.setItem('otpCooldownExpiry', expiryTime.toString());
 
-    return;
     try {
       setLoading(true);
 
@@ -82,11 +81,17 @@ const Tokenverify = () => {
           Authorization: `${token}`,
         },
       });
+      setLoading(false);
 
       const responseData = await response.json();
-      console.log(responseData);
-
-      setLoading(false);
+      if (responseData.success) {
+        Swal.fire({
+          title: 'Success',
+          text: 'Otp Send',
+          icon: 'success',
+        });
+        return;
+      }
     } catch (error) {
       setLoading(false);
       console.log(error);

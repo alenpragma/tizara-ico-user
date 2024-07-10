@@ -10,6 +10,7 @@ import Swal from 'sweetalert2';
 import axios from 'axios';
 import { baseUrl } from '../utils/api';
 import { getTizaraUserToken } from '../hooks/getTokenFromstorage';
+import { useNavigate } from 'react-router-dom';
 
 interface ApiResponse {
   statusCode: number;
@@ -26,6 +27,7 @@ export interface UserProfile {
   password: string;
   referralCode: string;
   myReferralCode: string;
+  isVerified: boolean;
   role: string;
   profileImage: string | null;
   isRcm: boolean;
@@ -47,6 +49,14 @@ const Profile = () => {
   const [selectedFile, setSelectedFile] = useState<any>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const token = getTizaraUserToken();
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (profile?.isVerified === false) {
+      navigate('/');
+    }
+  }, [profile?.isVerified]);
 
   const fetchData = async () => {
     try {
