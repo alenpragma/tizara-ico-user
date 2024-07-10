@@ -6,11 +6,9 @@ import { removeTizaraUserToken } from '../../hooks/getTokenFromstorage';
 
 const DropdownUser = ({ profile }: any) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  // console.log(profile);
 
   const trigger = useRef<any>(null);
   const dropdown = useRef<any>(null);
-  console.log(profile?.isActive);
 
   // close on click outside
   useEffect(() => {

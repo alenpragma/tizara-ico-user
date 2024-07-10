@@ -30,11 +30,11 @@ const SignUp: React.FC = () => {
   const referralCode = query.get('referralCode');
 
   const navigate = useNavigate();
-  useEffect(() => {
-    if (token) {
-      navigate('/dashboard');
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (token) {
+  //     navigate('/dashboard');
+  //   }
+  // }, []);
 
   const {
     register,
@@ -49,7 +49,7 @@ const SignUp: React.FC = () => {
 
     setLoading(true);
     try {
-      const response = await fetch(`${baseUrl}/auth/send-mail`, {
+      const response = await fetch(`${baseUrl}/auth/register`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -60,16 +60,14 @@ const SignUp: React.FC = () => {
       console.log(responseData);
 
       if (responseData.success) {
-        // setTizaraUserToken(responseData?.data?.token);
+        setTizaraUserToken(responseData?.data?.token);
         Swal.fire({
           title: 'Thank you',
           html: '<p style="font-size: 14px;">Please Check Your Mail & Confirm Your Registration</p>',
           icon: 'success',
+        }).then(() => {
+          navigate('/verify-token');
         });
-
-        // .then(() => {
-        //   navigate('/dashboard');
-        // });
       } else if (!responseData.success) {
         Swal.fire({
           title: 'Error',
@@ -328,7 +326,7 @@ const SignUp: React.FC = () => {
 
                     <div className="mt-6 text-center">
                       <p>
-                        Already have an account?{' '}
+                        Already have an account?
                         <Link to="/auth/signin" className="text-primary">
                           Sign in
                         </Link>

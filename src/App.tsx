@@ -1,5 +1,5 @@
 import { Suspense, lazy, useEffect, useState } from 'react';
-import { Route, Routes, useLocation } from 'react-router-dom';
+import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import PageTitle from './components/PageTitle';
 import SignIn from './pages/Authentication/SignIn';
 import SignUp from './pages/Authentication/SignUp';
@@ -28,13 +28,48 @@ import ForgotPass from './pages/Authentication/ForgotPass';
 import ResetPassword from './pages/Authentication/ResetPassword';
 import NotFound from './components/NotFound/NotFound';
 import Verify from './pages/Verify';
+import Tokenverify from './pages/Authentication/Tokenverify';
+import Loader from './common/Loader';
+import axiosInstance from './utils/axiosConfig';
 
 function App() {
   const { pathname } = useLocation();
+  const [loading, setLoading] = useState<boolean>(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [pathname]);
+
+  // useEffect(() => {
+  //   setTimeout(() => setLoading(false), 1000);
+  // }, []);
+
+  const [profile, setProfile] = useState<any | null>(null);
+
+  const fetchData = async () => {
+    setLoading(true);
+    try {
+      const response = await axiosInstance.get<any>('/profile');
+
+      if (response?.data?.success) {
+        setProfile(response.data.data);
+      }
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    if (profile?.isVerified === false) {
+      navigate('/');
+    }
+  }, [profile?.isVerified]);
 
   const [colorMode] = useColorMode();
 
@@ -45,7 +80,9 @@ function App() {
     setTheme,
   };
 
-  return (
+  return loading ? (
+    <Loader />
+  ) : (
     <>
       <MyContext.Provider value={contextValues}>
         <SkeletonTheme
@@ -59,6 +96,16 @@ function App() {
                 <>
                   <PageTitle title="SignIn" />
                   <SignIn />
+                </>
+              }
+            />
+
+            <Route
+              path="/verify-token"
+              element={
+                <>
+                  <PageTitle title="verify-token" />
+                  <Tokenverify />
                 </>
               }
             />

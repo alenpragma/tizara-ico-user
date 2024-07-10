@@ -24,7 +24,6 @@ const Wallets = ({ getWallet }: { getWallet: boolean }) => {
 
   useEffect(() => {
     fetchData();
-    console.log(wallet?.icoWallet);
   }, [getWallet]);
 
   return (
@@ -51,7 +50,7 @@ const Wallets = ({ getWallet }: { getWallet: boolean }) => {
 
       <div>
         <CardDataStats
-          title="ICO Wallet"
+          title="MY Wallet"
           total={`${
             wallet?.icoWallet ? wallet?.icoWallet.toFixed(2) : '00'
           } TIZARA`}

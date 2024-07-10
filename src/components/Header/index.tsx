@@ -2,11 +2,9 @@ import { Link } from 'react-router-dom';
 import DropdownUser from './DropdownUser';
 import DarkModeSwitcher from './DarkModeSwitcher';
 import { useEffect, useState } from 'react';
-import axios from 'axios';
 import { ApiResponse } from '../../types/global';
 import { getTizaraUserToken } from '../../hooks/getTokenFromstorage';
 import { UserProfile } from '../../pages/Profile';
-import { baseUrl } from '../../utils/api';
 import axiosInstance from '../../utils/axiosConfig';
 
 const Header = (props: {
@@ -14,8 +12,6 @@ const Header = (props: {
   setSidebarOpen: (arg0: boolean) => void;
 }) => {
   const [profile, setProfile] = useState<UserProfile | null>(null);
-
-  const token = getTizaraUserToken();
 
   useEffect(() => {
     const fetchData = async () => {
