@@ -28,6 +28,7 @@ import ForgotPass from './pages/Authentication/ForgotPass';
 import ResetPassword from './pages/Authentication/ResetPassword';
 import NotFound from './components/NotFound/NotFound';
 import Verify from './pages/Verify';
+import Tokenverify from './pages/Authentication/Tokenverify';
 
 function App() {
   const { pathname } = useLocation();
@@ -59,6 +60,16 @@ function App() {
                 <>
                   <PageTitle title="SignIn" />
                   <SignIn />
+                </>
+              }
+            />
+
+            <Route
+              path="/verify-token"
+              element={
+                <>
+                  <PageTitle title="verify-token" />
+                  <Tokenverify />
                 </>
               }
             />

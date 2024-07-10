@@ -20,11 +20,11 @@ const SignIn: React.FC = () => {
 
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (token) {
-      navigate('/dashboard');
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (token) {
+  //     navigate('/dashboard');
+  //   }
+  // }, []);
 
   const {
     register,
@@ -45,16 +45,40 @@ const SignIn: React.FC = () => {
 
       const responseData = await response.json();
       console.log(responseData);
+      console.log(responseData?.data?.user?.isVerified);
 
       if (responseData.success) {
         localStorage.setItem('tizaraUserToken', responseData?.data?.token);
-        Swal.fire({
-          title: 'success',
-          text: 'Login successfull',
-          icon: 'success',
-        }).then(() => {
-          navigate('/dashboard');
-        });
+
+        if (responseData?.data?.user?.isVerified == false) {
+          Swal.fire({
+            title: 'success',
+            text: 'You are not verified Please varfied email',
+            icon: 'success',
+          }).then(() => {
+            navigate('/verify-token');
+          });
+          setLoading(false);
+
+          return;
+        }
+
+        if (responseData?.data?.user?.isVerified == true) {
+          Swal.fire({
+            title: 'success',
+            text: 'Login successfull',
+            icon: 'success',
+          }).then(() => {
+            navigate('/dashboard');
+          });
+          setLoading(false);
+
+          return;
+        }
+
+        // .then(() => {
+        //   navigate('/verify-token');
+        // });
       } else if (responseData.success == false) {
         Swal.fire({
           title: 'Error',
