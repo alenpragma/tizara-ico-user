@@ -31,11 +31,13 @@ import Verify from './pages/Verify';
 import Tokenverify from './pages/Authentication/Tokenverify';
 import Loader from './common/Loader';
 import axiosInstance from './utils/axiosConfig';
+import { getTizaraUserToken } from './hooks/getTokenFromstorage';
 
 function App() {
   const { pathname } = useLocation();
-  const [loading, setLoading] = useState<boolean>(true);
+  const [loading, setLoading] = useState<boolean>(false);
   const navigate = useNavigate();
+  const token = getTizaraUserToken();
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -62,8 +64,11 @@ function App() {
   };
 
   useEffect(() => {
-    fetchData();
-  }, []);
+    if (token) {
+      fetchData();
+      console.log('1');
+    }
+  }, [token]);
 
   useEffect(() => {
     if (profile?.isVerified === false) {
