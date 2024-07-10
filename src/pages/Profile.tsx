@@ -46,17 +46,9 @@ export interface UpdateUserProfile {
 const Profile = () => {
   const [profile, setProfile] = useState<UserProfile | null>(null);
   const { register, handleSubmit } = useForm<UserProfile>();
-  const [selectedFile, setSelectedFile] = useState<any>(null);
+  // const [selectedFile, setSelectedFile] = useState<any>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const token = getTizaraUserToken();
-
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (profile?.isVerified === false) {
-      navigate('/');
-    }
-  }, [profile?.isVerified]);
 
   const fetchData = async () => {
     try {
@@ -74,9 +66,9 @@ const Profile = () => {
     fetchData();
   }, []);
 
-  const fileSelectedHandler = (event: any) => {
-    setSelectedFile(event.target.files[0]);
-  };
+  // const fileSelectedHandler = (event: any) => {
+  //   setSelectedFile(event.target.files[0]);
+  // };
 
   const onSubmit: SubmitHandler<any> = async (data: any) => {
     // setLoading(true);
