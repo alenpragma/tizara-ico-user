@@ -24,7 +24,6 @@ function useQuery() {
 }
 const SignUp: React.FC = () => {
   const [loding, setLoading] = useState(false);
-  const token = getTizaraUserToken();
   const query = useQuery();
 
   const referralCode = query.get('referralCode');
@@ -47,6 +46,13 @@ const SignUp: React.FC = () => {
       delete data.referralCode;
     }
 
+    Swal.fire({
+      title: 'Error',
+      text: 'This page is under maintenance',
+      icon: 'error',
+    });
+    return;
+
     setLoading(true);
     try {
       const response = await fetch(`${baseUrl}/auth/register`, {
@@ -57,7 +63,6 @@ const SignUp: React.FC = () => {
         body: JSON.stringify(data),
       });
       const responseData = await response.json();
-      console.log(responseData);
 
       if (responseData.success) {
         setTizaraUserToken(responseData?.data?.token);
