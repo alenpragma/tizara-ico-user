@@ -46,12 +46,12 @@ const SignUp: React.FC = () => {
       delete data.referralCode;
     }
 
-    Swal.fire({
-      title: 'Error',
-      text: 'This page is under maintenance',
-      icon: 'error',
-    });
-    return;
+    // Swal.fire({
+    //   title: 'Error',
+    //   text: 'This page is under maintenance',
+    //   icon: 'error',
+    // });
+    // return;
 
     setLoading(true);
     try {
