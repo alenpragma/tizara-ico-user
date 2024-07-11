@@ -66,8 +66,7 @@ const Tokenverify = () => {
   const resendOpt = async () => {
     const token = getTizaraUserToken();
     // Disable the button and start the cooldown
-    setIsCooldown(true);
-    setCountdown(COOLDOWN_PERIOD);
+
     const expiryTime = Date.now() + COOLDOWN_PERIOD * 1000;
     localStorage.setItem('otpCooldownExpiry', expiryTime.toString());
 
@@ -90,6 +89,8 @@ const Tokenverify = () => {
           text: 'Otp Send',
           icon: 'success',
         });
+        setIsCooldown(true);
+        setCountdown(COOLDOWN_PERIOD);
         return;
       }
     } catch (error) {
