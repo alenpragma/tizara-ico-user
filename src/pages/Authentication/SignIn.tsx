@@ -32,6 +32,13 @@ const SignIn: React.FC = () => {
   } = useForm<Inputs>();
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
+    Swal.fire({
+      title: 'Error',
+      text: 'This page is under maintenance',
+      icon: 'error',
+    });
+    return;
+
     setLoading(true);
     try {
       const response = await fetch(`${baseUrl}/auth/login`, {
@@ -43,8 +50,8 @@ const SignIn: React.FC = () => {
       });
 
       const responseData = await response.json();
-      console.log(responseData);
-      console.log(responseData?.data?.user?.isVerified);
+      // console.log(responseData);
+      // console.log(responseData?.data?.user?.isVerified);
 
       if (responseData.success) {
         localStorage.setItem('tizaraUserToken', responseData?.data?.token);
