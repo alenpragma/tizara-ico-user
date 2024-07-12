@@ -16,20 +16,8 @@ const Tokenverify = () => {
   const [countdown, setCountdown] = useState(40);
   const COOLDOWN_PERIOD = 90; // Cooldown period in seconds
 
-  // useEffect(() => {
-  //   setIsCooldown(true);
-  //   setCountdown(COOLDOWN_PERIOD);
-  // }, []);
-
   const onSubmit: SubmitHandler<any> = async (data) => {
     const token = getTizaraUserToken();
-
-    // Swal.fire({
-    //   title: 'Error',
-    //   text: 'This page is under maintenance',
-    //   icon: 'error',
-    // });
-    // return;
 
     try {
       setLoading(true);
