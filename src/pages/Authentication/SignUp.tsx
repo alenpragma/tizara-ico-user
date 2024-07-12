@@ -203,7 +203,7 @@ const SignUp: React.FC = () => {
                       </label>
                       <div className="relative">
                         <input
-                          type="text"
+                          type="number"
                           {...register('phone', { required: true })}
                           placeholder="Enter your phone"
                           className="w-full rounded-lg border border-stroke bg-transparent py-3 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"

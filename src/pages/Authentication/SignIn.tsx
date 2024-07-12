@@ -4,11 +4,11 @@ import Swal from 'sweetalert2';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { PuffLoader } from 'react-spinners';
 import SvgImage from './SvgImage';
-import { getTizaraUserToken } from '../../hooks/getTokenFromstorage';
 import { IoLockOpenOutline } from 'react-icons/io5';
 import { baseUrl } from '../../utils/api';
-
 import { Captcha } from './Captcha';
+
+// import { Captcha } from './Captcha';
 
 type Inputs = {
   email: string;
@@ -31,19 +31,20 @@ const SignIn: React.FC = () => {
     setError(message);
   };
 
-  // useEffect(() => {
-  //   if (token) {
-  //     navigate('/dashboard');
-  //   }
-  // }, []);
-
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<Inputs>();
 
+  const validateCapthca = (data: any) => {
+    console.log('hello');
+  };
+
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
+    console.log(data);
+
+    return;
     setLoading(true);
     try {
       const response = await fetch(`${baseUrl}/auth/login`, {
@@ -139,7 +140,7 @@ const SignIn: React.FC = () => {
             <div className="w-full border-stroke dark:border-strokedark xl:w-1/2 xl:border-l-2">
               <div className="w-full p-4 sm:p-12.5 xl:p-17.5">
                 <h2 className="mb-9 text-lg font-bold text-black dark:text-white sm:text-title-md">
-                  User Sign To Tizara Token
+                  User Sign In To Tizara Token
                 </h2>
 
                 <form onSubmit={handleSubmit(onSubmit)}>
@@ -217,10 +218,11 @@ const SignIn: React.FC = () => {
                       </span>
                     </div>
                     <div>
-                      {/* <div>
+                      <div>
                         <Captcha
                           validate={handleValidate}
                           setError={handleError}
+                          validateCapthca={validateCapthca}
                         />
                         {isValid ? (
                           <div style={{ color: 'green' }}>
@@ -229,7 +231,7 @@ const SignIn: React.FC = () => {
                         ) : (
                           <div style={{ color: 'red' }}>{error}</div>
                         )}
-                      </div> */}
+                      </div>
                     </div>
 
                     <Link to="/auth/forgot-password" className="text-primary ">

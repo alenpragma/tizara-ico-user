@@ -3,9 +3,14 @@ import React, { useState, useRef, useEffect } from 'react';
 interface AppProps {
   validate: (isValid: boolean) => void;
   setError: (message: string) => void;
+  validateCapthca: (message: string) => void;
 }
 
-export const Captcha: React.FC<AppProps> = ({ validate, setError }) => {
+export const Captcha: React.FC<AppProps> = ({
+  validate,
+  setError,
+  validateCapthca,
+}) => {
   const [enteredVal, setEnteredVal] = useState('');
   const ref = useRef<HTMLCanvasElement>(null);
   const [captcha, setCaptcha] = useState('');
@@ -54,8 +59,6 @@ export const Captcha: React.FC<AppProps> = ({ validate, setError }) => {
 
       let fontSize = 0;
       do {
-        console.log(fontSize);
-
         fontSize = Math.random() * 30; // Increase the font size range
       } while (fontSize < 22); // Ensure font size is at least 24
       ctx.font = 'bolder ' + fontSize + 'px Arial bold';
@@ -162,12 +165,12 @@ export const Captcha: React.FC<AppProps> = ({ validate, setError }) => {
           &#x21bb;
         </button>
       </div>
-      <button
+      {/* <button
         className="text-black font-semibold border px-2 rounded-sm"
         onClick={onSubmitClicked}
       >
         Verify
-      </button>
+      </button> */}
     </div>
   );
 };
