@@ -44,7 +44,6 @@ const SignIn: React.FC = () => {
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     console.log(data);
 
-    return;
     setLoading(true);
     try {
       const response = await fetch(`${baseUrl}/auth/login`, {
