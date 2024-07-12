@@ -8,6 +8,8 @@ import { getTizaraUserToken } from '../../hooks/getTokenFromstorage';
 import { IoLockOpenOutline } from 'react-icons/io5';
 import { baseUrl } from '../../utils/api';
 
+import { Captcha } from './Captcha';
+
 type Inputs = {
   email: string;
   password: string;
@@ -15,9 +17,19 @@ type Inputs = {
 
 const SignIn: React.FC = () => {
   const [loding, setLoading] = useState(false);
-  const token = getTizaraUserToken();
 
   const navigate = useNavigate();
+
+  const [isValid, setIsValid] = useState(false);
+  const [error, setError] = useState('');
+
+  const handleValidate = (valid: boolean) => {
+    setIsValid(valid);
+  };
+
+  const handleError = (message: string) => {
+    setError(message);
+  };
 
   // useEffect(() => {
   //   if (token) {
@@ -32,13 +44,6 @@ const SignIn: React.FC = () => {
   } = useForm<Inputs>();
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    // Swal.fire({
-    //   title: 'Error',
-    //   text: 'This page is under maintenance',
-    //   icon: 'error',
-    // });
-    // return;
-
     setLoading(true);
     try {
       const response = await fetch(`${baseUrl}/auth/login`, {
@@ -50,8 +55,6 @@ const SignIn: React.FC = () => {
       });
 
       const responseData = await response.json();
-      console.log(responseData);
-      console.log(responseData?.data?.user?.isVerified);
 
       if (responseData.success) {
         localStorage.setItem('tizaraUserToken', responseData?.data?.token);
@@ -81,10 +84,6 @@ const SignIn: React.FC = () => {
 
           return;
         }
-
-        // .then(() => {
-        //   navigate('/verify-token');
-        // });
       } else if (responseData.success == false) {
         Swal.fire({
           title: 'Error',
@@ -217,6 +216,22 @@ const SignIn: React.FC = () => {
                         )}
                       </span>
                     </div>
+                    <div>
+                      {/* <div>
+                        <Captcha
+                          validate={handleValidate}
+                          setError={handleError}
+                        />
+                        {isValid ? (
+                          <div style={{ color: 'green' }}>
+                            Captcha verified successfully!
+                          </div>
+                        ) : (
+                          <div style={{ color: 'red' }}>{error}</div>
+                        )}
+                      </div> */}
+                    </div>
+
                     <Link to="/auth/forgot-password" className="text-primary ">
                       Forget password
                     </Link>
