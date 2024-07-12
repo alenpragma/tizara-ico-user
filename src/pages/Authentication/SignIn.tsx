@@ -44,7 +44,6 @@ const SignIn: React.FC = () => {
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     console.log(data);
 
-    return;
     setLoading(true);
     try {
       const response = await fetch(`${baseUrl}/auth/login`, {
@@ -96,11 +95,6 @@ const SignIn: React.FC = () => {
       console.log(error);
     }
     setLoading(false);
-  };
-  const override: CSSProperties = {
-    display: 'block',
-    margin: '10px auto',
-    borderColor: 'red',
   };
 
   const [passwordVisible, setPasswordVisible] = useState(false);
@@ -218,7 +212,7 @@ const SignIn: React.FC = () => {
                       </span>
                     </div>
                     <div>
-                      <div>
+                      {/* <div>
                         <Captcha
                           validate={handleValidate}
                           setError={handleError}
@@ -231,7 +225,7 @@ const SignIn: React.FC = () => {
                         ) : (
                           <div style={{ color: 'red' }}>{error}</div>
                         )}
-                      </div>
+                      </div> */}
                     </div>
 
                     <Link to="/auth/forgot-password" className="text-primary ">
