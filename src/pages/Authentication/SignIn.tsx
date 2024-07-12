@@ -17,11 +17,12 @@ type Inputs = {
 
 const SignIn: React.FC = () => {
   const [loding, setLoading] = useState(false);
-
   const navigate = useNavigate();
 
   const [isValid, setIsValid] = useState(false);
   const [error, setError] = useState('');
+  const [enteredVal, setEnteredVal] = useState('');
+  const [captcha, setCaptcha] = useState('');
 
   const handleValidate = (valid: boolean) => {
     setIsValid(valid);
@@ -34,15 +35,21 @@ const SignIn: React.FC = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    // formState
   } = useForm<Inputs>();
 
-  const validateCapthca = (data: any) => {
-    console.log('hello');
-  };
-
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    console.log(data);
+    const isValid = enteredVal.toUpperCase() === captcha.toUpperCase();
+    if (!isValid) {
+      setError('Captcha verification failed. Please try again.');
+    } else {
+      setError('');
+    }
+    setEnteredVal('');
+
+    if (!isValid) {
+      return;
+    }
 
     setLoading(true);
     try {
@@ -211,21 +218,22 @@ const SignIn: React.FC = () => {
                         )}
                       </span>
                     </div>
-                    <div>
-                      {/* <div>
-                        <Captcha
-                          validate={handleValidate}
-                          setError={handleError}
-                          validateCapthca={validateCapthca}
-                        />
-                        {isValid ? (
-                          <div style={{ color: 'green' }}>
-                            Captcha verified successfully!
-                          </div>
-                        ) : (
-                          <div style={{ color: 'red' }}>{error}</div>
-                        )}
-                      </div> */}
+                    <div className="mt-3">
+                      <Captcha
+                        validate={handleValidate}
+                        setError={handleError}
+                        setCaptcha={setCaptcha}
+                        enteredVal={enteredVal}
+                        captcha={captcha}
+                        setEnteredVal={setEnteredVal}
+                      />
+                      {isValid ? (
+                        <div style={{ color: 'green' }}>
+                          Captcha verified successfully!
+                        </div>
+                      ) : (
+                        <div style={{ color: 'red' }}>{error}</div>
+                      )}
                     </div>
 
                     <Link to="/auth/forgot-password" className="text-primary ">
