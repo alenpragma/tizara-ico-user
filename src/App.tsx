@@ -32,6 +32,7 @@ import Tokenverify from './pages/Authentication/Tokenverify';
 import Loader from './common/Loader';
 import axiosInstance from './utils/axiosConfig';
 import { getTizaraUserToken } from './hooks/getTokenFromstorage';
+import { logout } from './utils/auth';
 
 function App() {
   const { pathname } = useLocation();
@@ -76,6 +77,13 @@ function App() {
     }
   }, [profile?.isVerified, pathname]);
   // console.log(profile?.isVerified);
+
+  useEffect(() => {
+    if (profile?.status === false) {
+      logout();
+      navigate('/');
+    }
+  }, [profile?.status]);
 
   const [colorMode] = useColorMode();
 
