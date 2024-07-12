@@ -10,6 +10,7 @@ import {
 } from '../../hooks/getTokenFromstorage';
 import { baseUrl } from '../../utils/api';
 import { IoLockOpenOutline } from 'react-icons/io5';
+import { Captcha } from './Captcha';
 
 type Inputs = {
   email: string;
@@ -25,33 +26,40 @@ function useQuery() {
 const SignUp: React.FC = () => {
   const [loding, setLoading] = useState(false);
   const query = useQuery();
-
   const referralCode = query.get('referralCode');
-
   const navigate = useNavigate();
-  // useEffect(() => {
-  //   if (token) {
-  //     navigate('/dashboard');
-  //   }
-  // }, []);
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<Inputs>();
+  const { register, handleSubmit } = useForm<Inputs>();
+
+  const [isValid, setIsValid] = useState(false);
+  const [error, setError] = useState('');
+  const [enteredVal, setEnteredVal] = useState('');
+  const [captcha, setCaptcha] = useState('');
+
+  const handleValidate = (valid: boolean) => {
+    setIsValid(valid);
+  };
+
+  const handleError = (message: string) => {
+    setError(message);
+  };
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     if (data.referralCode === '') {
       delete data.referralCode;
     }
 
-    // Swal.fire({
-    //   title: 'Error',
-    //   text: 'This page is under maintenance',
-    //   icon: 'error',
-    // });
-    // return;
+    const isValid = enteredVal.toUpperCase() === captcha.toUpperCase();
+    if (!isValid) {
+      setError('Captcha verification failed. Please try again.');
+    } else {
+      setError('');
+    }
+    console.log(isValid);
+
+    if (!isValid) {
+      return;
+    }
 
     setLoading(true);
     try {
@@ -206,6 +214,7 @@ const SignUp: React.FC = () => {
                           type="number"
                           {...register('phone', { required: true })}
                           placeholder="Enter your phone"
+                          minLength={10}
                           className="w-full rounded-lg border border-stroke bg-transparent py-3 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                         />
 
@@ -313,6 +322,25 @@ const SignUp: React.FC = () => {
                         </span>
                       </div>
                     </div>
+
+                    <div className="my-3">
+                      <Captcha
+                        validate={handleValidate}
+                        setError={handleError}
+                        setCaptcha={setCaptcha}
+                        enteredVal={enteredVal}
+                        captcha={captcha}
+                        setEnteredVal={setEnteredVal}
+                      />
+                      {isValid ? (
+                        <div style={{ color: 'green' }}>
+                          Captcha verified successfully!
+                        </div>
+                      ) : (
+                        <div style={{ color: 'red' }}>{error}</div>
+                      )}
+                    </div>
+
                     <div className="mb-5">
                       {!loding ? (
                         <input

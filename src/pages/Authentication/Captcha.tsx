@@ -6,41 +6,36 @@ interface AppProps {
   validateCapthca: (message: string) => void;
 }
 
-export const Captcha: React.FC<AppProps> = ({
-  validate,
-  setError,
-  validateCapthca,
+export const Captcha: React.FC<any> = ({
+  setCaptcha,
+  enteredVal,
+  setEnteredVal,
 }) => {
-  const [enteredVal, setEnteredVal] = useState('');
   const ref = useRef<HTMLCanvasElement>(null);
-  const [captcha, setCaptcha] = useState('');
 
   useEffect(() => {
     redraw();
   }, []);
 
+  // small word
   const drawCaptchaBackground = (ctx: CanvasRenderingContext2D) => {
     for (let x = 0; x < 15; x++) {
       let p1 = Math.random() * 125;
       let p2 = Math.random() * 30;
-
       ctx.beginPath();
       let hue = Math.random() * 360;
       ctx.strokeStyle = `hsl(${hue},100%,50%)`;
-
       ctx.moveTo(p1, p2);
       let s = 5 - Math.random() * 5;
       ctx.lineTo(p1 + s, p2 + s);
       ctx.stroke();
       ctx.closePath();
-
       ctx.beginPath();
       hue = Math.random() * 360;
       ctx.strokeStyle = `hsl(${hue},100%,50%)`;
       ctx.moveTo(p1 - 3, p2 + 3);
       s = 5 - Math.random() * 5;
       ctx.arc(p1, p2, 2, 0, 2 * Math.PI);
-
       ctx.stroke();
       ctx.closePath();
     }
@@ -48,9 +43,10 @@ export const Captcha: React.FC<AppProps> = ({
 
   const drawCaptchaFace = (ctx: CanvasRenderingContext2D) => {
     let x = 0;
-    let y = 20;
+    let y = 25;
     let str = '';
-    for (let i = 0; i < 6; i++) {
+    // 5 character
+    for (let i = 0; i < 5; i++) {
       ctx.save();
       x = 8 + i * 18;
 
@@ -64,7 +60,7 @@ export const Captcha: React.FC<AppProps> = ({
       ctx.font = 'bolder ' + fontSize + 'px Arial bold';
 
       ctx.translate(x, y);
-      let rot = Math.random() * 50; // Reduce rotation for better alignment
+      let rot = Math.random() * 80; // Reduce rotation for better alignment
       ctx.rotate((60 - rot) * (Math.PI / 180));
       ctx.translate(-x, -y);
 
@@ -73,9 +69,9 @@ export const Captcha: React.FC<AppProps> = ({
         char = Math.random() * 122;
       } while (
         // Uppercase
-        !(char >= 65 && char <= 90) &&
+        !(char >= 65 && char <= 170) &&
         // Lowercase
-        !(char >= 97 && char <= 122) &&
+        !(char >= 97 && char <= 180) &&
         // Numeric
         !(char >= 48 && char <= 57)
       );
@@ -102,17 +98,17 @@ export const Captcha: React.FC<AppProps> = ({
     }
   };
 
-  const onSubmitClicked = (event: any) => {
-    event.preventDefault(); // Prevent default form submission
+  // const onSubmitClicked = (event: any) => {
+  //   event.preventDefault(); // Prevent default form submission
 
-    const isValid = enteredVal.toUpperCase() === captcha.toUpperCase();
-    if (!isValid) {
-      setError('Captcha verification failed. Please try again.');
-    } else {
-      setError('');
-    }
-    validate(isValid);
-  };
+  //   const isValid = enteredVal.toUpperCase() === captcha.toUpperCase();
+  //   if (!isValid) {
+  //     setError('Captcha verification failed. Please try again.');
+  //   } else {
+  //     setError('');
+  //   }
+  //   validate(isValid);
+  // };
 
   const onResetClicked = (event: any) => {
     event.preventDefault(); // Prevent default form submission
@@ -160,7 +156,7 @@ export const Captcha: React.FC<AppProps> = ({
             width: '25px',
           }}
           onClick={onResetClicked}
-          className="text-black font-semibold"
+          className="text-[#000] font-semibold"
         >
           &#x21bb;
         </button>
