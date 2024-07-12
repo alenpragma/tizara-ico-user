@@ -43,10 +43,6 @@ function App() {
     window.scrollTo(0, 0);
   }, [pathname]);
 
-  // useEffect(() => {
-  //   setTimeout(() => setLoading(false), 1000);
-  // }, []);
-
   const [profile, setProfile] = useState<any | null>(null);
 
   const fetchData = async () => {
@@ -66,15 +62,20 @@ function App() {
   useEffect(() => {
     if (token) {
       fetchData();
-      console.log('1');
     }
   }, [token]);
+  // console.log(token);
 
   useEffect(() => {
-    if (profile?.isVerified === false) {
+    if (
+      profile?.isVerified === false &&
+      pathname !== '/verify-token' &&
+      pathname !== '/auth/signup'
+    ) {
       navigate('/');
     }
-  }, [profile?.isVerified]);
+  }, [profile?.isVerified, pathname]);
+  // console.log(profile?.isVerified);
 
   const [colorMode] = useColorMode();
 

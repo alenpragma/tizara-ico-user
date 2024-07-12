@@ -8,6 +8,7 @@ import Wallets from './Wallets';
 import TizaraCoin from './TizaraCoin';
 import { IROYHistory } from '../RoyHistory/RoyHistory';
 import axiosInstance from '../../utils/axiosConfig';
+import { logout } from '../../utils/auth';
 
 interface ApiResponse<T> {
   statusCode: number;
@@ -26,6 +27,8 @@ interface UserProfile {
   myReferralCode: string;
   role: string;
   isVerified: boolean;
+  status: boolean;
+  isRcm: boolean;
   profileImage: string | null;
   referralCount: number;
   nativeWallet: number;

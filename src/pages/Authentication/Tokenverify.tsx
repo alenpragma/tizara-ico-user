@@ -24,12 +24,12 @@ const Tokenverify = () => {
   const onSubmit: SubmitHandler<any> = async (data) => {
     const token = getTizaraUserToken();
 
-    Swal.fire({
-      title: 'Error',
-      text: 'This page is under maintenance',
-      icon: 'error',
-    });
-    return;
+    // Swal.fire({
+    //   title: 'Error',
+    //   text: 'This page is under maintenance',
+    //   icon: 'error',
+    // });
+    // return;
 
     try {
       setLoading(true);
@@ -49,6 +49,7 @@ const Tokenverify = () => {
       setLoading(false);
 
       if (responseData?.success) {
+        localStorage.setItem('tizaraUserToken', responseData?.data?.token);
         Swal.fire({
           title: 'Success',
           text: 'User Verified',
