@@ -70,6 +70,14 @@ const TizaraTokenDashboard: React.FC = () => {
   };
 
   useEffect(() => {
+    if (profile?.status === false) {
+      console.log(profile?.status);
+
+      logout();
+    }
+  }, [profile?.status]);
+
+  useEffect(() => {
     if (profile?.isVerified === false) {
       navigate('/');
     }
