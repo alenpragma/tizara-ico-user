@@ -80,8 +80,9 @@ function App() {
 
   useEffect(() => {
     if (profile?.status === false) {
+      console.log(profile?.status);
+
       logout();
-      navigate('/');
     }
   }, [profile?.status]);
 

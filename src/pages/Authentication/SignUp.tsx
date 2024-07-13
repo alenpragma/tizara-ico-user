@@ -29,7 +29,12 @@ const SignUp: React.FC = () => {
   const referralCode = query.get('referralCode');
   const navigate = useNavigate();
 
-  const { register, handleSubmit } = useForm<Inputs>();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm<Inputs>();
 
   const [isValid, setIsValid] = useState(false);
   const [error, setError] = useState('');
@@ -39,26 +44,48 @@ const SignUp: React.FC = () => {
   const handleValidate = (valid: boolean) => {
     setIsValid(valid);
   };
-
   const handleError = (message: string) => {
     setError(message);
   };
 
-  const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    if (data.referralCode === '') {
-      delete data.referralCode;
-    }
+  const allowedDomains = [
+    'gmail.com',
+    'yahoo.com',
+    'hotmail.com',
+    'aol.com',
+    'hotmail.co.uk',
+    'hotmail.fr',
+    'outlook.com',
+  ];
 
+  const isAllowedDomain = (email: string): boolean => {
+    const domain = email.split('@')[1];
+    return allowedDomains.includes(domain);
+  };
+
+  const onSubmit: SubmitHandler<Inputs> = async (data) => {
     const isValid = enteredVal.toUpperCase() === captcha.toUpperCase();
     if (!isValid) {
       setError('Captcha verification failed. Please try again.');
     } else {
       setError('');
     }
-    console.log(isValid);
 
     if (!isValid) {
       return;
+    }
+
+    if (!isAllowedDomain(data.email)) {
+      Swal.fire({
+        title: 'Error',
+        text: 'Domain Not Allowed',
+        icon: 'error',
+      });
+      return;
+    }
+
+    if (data.referralCode === '') {
+      delete data.referralCode;
     }
 
     setLoading(true);
@@ -179,11 +206,24 @@ const SignUp: React.FC = () => {
                       </label>
                       <div className="relative">
                         <input
-                          {...register('email', { required: true })}
+                          {...register('email', {
+                            required: true,
+                            pattern: {
+                              value:
+                                /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                              message:
+                                'Entered value does not match email format',
+                            },
+                          })}
                           type="email"
                           placeholder="Enter your email"
                           className="w-full rounded-lg border border-stroke bg-transparent py-3 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                         />
+                        {errors.email && (
+                          <span className="text-red-500" role="alert">
+                            {errors.email.message}
+                          </span>
+                        )}
 
                         <span className="absolute right-4 top-4">
                           <svg
@@ -337,7 +377,7 @@ const SignUp: React.FC = () => {
                           Captcha verified successfully!
                         </div>
                       ) : (
-                        <div style={{ color: 'red' }}>{error}</div>
+                        <div className="text-red-500">{error}</div>
                       )}
                     </div>
 
