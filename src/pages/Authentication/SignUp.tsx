@@ -52,7 +52,6 @@ const SignUp: React.FC = () => {
     'gmail.com',
     'yahoo.com',
     'hotmail.com',
-    'aol.com',
     'hotmail.co.uk',
     'hotmail.fr',
     'outlook.com',
