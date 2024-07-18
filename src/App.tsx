@@ -33,6 +33,8 @@ import Loader from './common/Loader';
 import axiosInstance from './utils/axiosConfig';
 import { getTizaraUserToken } from './hooks/getTokenFromstorage';
 import { logout } from './utils/auth';
+import BuyNft from './pages/StoreNft/BuyNft';
+import NftHistory from './pages/StoreNft/NftHistory';
 
 function App() {
   const { pathname } = useLocation();
@@ -131,6 +133,40 @@ function App() {
                   <PageTitle title="Tizara  Dashboard" />
                   <ProtectedRoute>
                     <TizaraTokenDashboard />
+                  </ProtectedRoute>
+                </>
+              }
+            />
+
+            <Route
+              path="/store-nft/buy-nft"
+              element={
+                <>
+                  <PageTitle title="Buy-NFT" />
+                  <ProtectedRoute>
+                    <BuyNft />
+                  </ProtectedRoute>
+                </>
+              }
+            />
+            <Route
+              path="/store-nft/nft-histor_y"
+              element={
+                <>
+                  <PageTitle title="NFT-History" />
+                  <ProtectedRoute>
+                    <NftHistory />
+                  </ProtectedRoute>
+                </>
+              }
+            />
+            <Route
+              path="/store-nft/buy-nft"
+              element={
+                <>
+                  <PageTitle title="Buy-NFT" />
+                  <ProtectedRoute>
+                    <BuyNft />
                   </ProtectedRoute>
                 </>
               }
