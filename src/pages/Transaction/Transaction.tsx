@@ -7,6 +7,7 @@ import NotFound from '../../components/NotFound/NotFound';
 import axiosInstance from '../../utils/axiosConfig';
 import TableRow from '../../components/Tables/TableRow';
 import PaginationButtons from '../../components/Pagination/PaginationButtons';
+import { IMeta } from '../../types/common';
 
 interface IHistory {
   id: string;
@@ -18,11 +19,6 @@ interface IHistory {
   createdAt: string;
   updatedAt: string;
 }
-export type IMeta = {
-  total: number;
-  page: number;
-  limit: number;
-};
 
 interface ApiResponse {
   statusCode: number;
