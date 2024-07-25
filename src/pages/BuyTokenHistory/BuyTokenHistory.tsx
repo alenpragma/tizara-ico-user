@@ -6,6 +6,8 @@ import Skeleton from 'react-loading-skeleton';
 import NotFound from '../../components/NotFound/NotFound';
 import axiosInstance from '../../utils/axiosConfig';
 import TableRow from '../../components/Tables/TableRow';
+import { IMeta } from '../../types/common';
+import PaginationButtons from '../../components/Pagination/PaginationButtons';
 
 interface IHistory {
   id: string;
@@ -21,27 +23,44 @@ interface ApiResponse {
   statusCode: number;
   success: boolean;
   message: string;
-  data: IHistory;
+  data: {
+    data: IHistory;
+    meta: IMeta;
+  };
 }
 
 const BuyTokenHistory = () => {
   const [historys, sethistorys] = useState<any>([]);
   const [loading, setLoading] = useState<boolean>(false);
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setLoading(true);
-        const response = await axiosInstance.get<ApiResponse>('/buy-token');
-        setLoading(false);
-        if (response?.data?.success) {
-          sethistorys(response.data.data);
-        }
-      } catch (error) {
-        console.error('Error fetching data:', error);
+
+  // pagination calculate
+  const [currentPage, setCurrentPage] = useState(0);
+  const [perPage, setparePage] = useState(25);
+
+  const [meta, setMeta] = useState<IMeta>({
+    total: 1,
+    page: 1,
+    limit: 1,
+  });
+
+  const fetchData = async () => {
+    try {
+      setLoading(true);
+      const response = await axiosInstance.get<ApiResponse>(
+        `/buy-token?page=${currentPage + 1}&limit=${perPage}`,
+      );
+      setLoading(false);
+      if (response?.data?.success) {
+        sethistorys(response?.data?.data?.data);
+        setMeta(response?.data?.data?.meta);
       }
-    };
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
+  useEffect(() => {
     fetchData();
-  }, []);
+  }, [currentPage]);
 
   return (
     <DefaultLayout>
@@ -97,6 +116,13 @@ const BuyTokenHistory = () => {
           )}
         </div>
         <div>{!loading && history?.length == 0 && <NotFound />}</div>
+      </div>
+      <div className="my-4">
+        <PaginationButtons
+          totalPages={Math?.ceil(meta?.total / perPage)}
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+        />
       </div>
     </DefaultLayout>
   );

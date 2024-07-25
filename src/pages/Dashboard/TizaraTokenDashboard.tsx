@@ -204,7 +204,7 @@ const TizaraTokenDashboard: React.FC = () => {
         <Link to="/my-team">
           <CardDataStats
             title="Direct Refer"
-            total={`${teams ? teams.length : '00'}`}
+            total={`${teams?.length ? teams?.length : '00'}`}
           >
             <PiPackage className="text-2xl dark:text-white text-primary" />
           </CardDataStats>

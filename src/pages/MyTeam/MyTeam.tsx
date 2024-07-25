@@ -6,27 +6,43 @@ import NotFound from '../../components/NotFound/NotFound';
 import Skeleton from 'react-loading-skeleton';
 import axiosInstance from '../../utils/axiosConfig';
 import TableRow from '../../components/Tables/TableRow';
+import PaginationButtons from '../../components/Pagination/PaginationButtons';
+import { IMeta } from '../../types/common';
 
 const MyTeam = () => {
   const [teams, setTeams] = useState([]);
   const [loading, setLoading] = useState<boolean>(false);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true);
-      try {
-        const response = await axiosInstance.get('/profile/my-team');
-        setLoading(false);
+  // pagination calculate
+  const [currentPage, setCurrentPage] = useState(0);
+  const [perPage, setparePage] = useState(25);
 
-        if (response?.data?.success) {
-          setTeams(response?.data?.data);
-        }
-      } catch (error) {
-        console.error('Error fetching data:', error);
+  const [meta, setMeta] = useState<IMeta>({
+    total: 1,
+    page: 1,
+    limit: 1,
+  });
+
+  const fetchData = async () => {
+    setLoading(true);
+    try {
+      const response = await axiosInstance.get(
+        `/profile/my-team?page=${currentPage + 1}&limit=${perPage}`,
+      );
+      setLoading(false);
+
+      if (response?.data?.success) {
+        setTeams(response?.data?.data?.data);
+        setMeta(response?.data?.data?.meta);
       }
-    };
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
+
+  useEffect(() => {
     fetchData();
-  }, []);
+  }, [currentPage]);
 
   return (
     <DefaultLayout>
@@ -36,7 +52,7 @@ const MyTeam = () => {
         <div className="max-w-full overflow-x-auto">
           {loading ? (
             <div>
-              <Skeleton height={30} count={6} />
+              <Skeleton height={30} count={10} />
             </div>
           ) : (
             <table className="w-full table-auto">
@@ -78,6 +94,13 @@ const MyTeam = () => {
 
           <div>{!loading && teams?.length == 0 && <NotFound />}</div>
         </div>
+      </div>
+      <div className="my-4">
+        <PaginationButtons
+          totalPages={Math?.ceil(meta?.total / perPage)}
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+        />
       </div>
     </DefaultLayout>
   );

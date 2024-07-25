@@ -6,6 +6,8 @@ import Skeleton from 'react-loading-skeleton';
 import NotFound from '../../components/NotFound/NotFound';
 import axiosInstance from '../../utils/axiosConfig';
 import TableRow from '../../components/Tables/TableRow';
+import PaginationButtons from '../../components/Pagination/PaginationButtons';
+import { IMeta } from '../../types/common';
 
 interface IHistory {
   id: string;
@@ -22,30 +24,45 @@ interface ApiResponse {
   statusCode: number;
   success: boolean;
   message: string;
-  data: IHistory;
+  data: {
+    data: IHistory[];
+    meta: IMeta;
+  };
 }
 
 const Transaction = () => {
   const [history, sethistory] = useState<any>([]);
   const [loading, setLoading] = useState<boolean>(false);
+  const [meta, setMeta] = useState<IMeta>({
+    total: 1,
+    page: 1,
+    limit: 1,
+  });
+
+  // pagination calculate
+  const [currentPage, setCurrentPage] = useState(0);
+  const [perPage, setparePage] = useState(25);
+
+  const fetchData = async () => {
+    setLoading(true);
+    try {
+      const response = await axiosInstance.get<ApiResponse>(
+        `/transaction-history?page=${currentPage + 1}&limit=${perPage}`,
+      );
+      setLoading(false);
+
+      if (response?.data?.success) {
+        sethistory(response?.data?.data?.data);
+        setMeta(response?.data?.data?.meta);
+      }
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
 
   useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true);
-      try {
-        const response = await axiosInstance.get<ApiResponse>(
-          '/transaction-history',
-        );
-        setLoading(false);
-        if (response?.data?.success) {
-          sethistory(response.data.data);
-        }
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    };
     fetchData();
-  }, []);
+  }, [currentPage]);
 
   return (
     <>
@@ -104,6 +121,13 @@ const Transaction = () => {
             )}
           </div>
           <div>{!loading && history?.length == 0 && <NotFound />}</div>
+        </div>
+        <div className="my-4">
+          <PaginationButtons
+            totalPages={Math?.ceil(meta?.total / perPage)}
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+          />
         </div>
       </DefaultLayout>
     </>

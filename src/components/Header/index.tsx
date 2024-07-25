@@ -1,34 +1,35 @@
 import { Link } from 'react-router-dom';
 import DropdownUser from './DropdownUser';
 import DarkModeSwitcher from './DarkModeSwitcher';
-import { useEffect, useState } from 'react';
-import { ApiResponse } from '../../types/global';
-import { getTizaraUserToken } from '../../hooks/getTokenFromstorage';
-import { UserProfile } from '../../pages/Profile';
-import axiosInstance from '../../utils/axiosConfig';
+import { useContext } from 'react';
+
+import MyContext from '../../hooks/MyContext';
 
 const Header = (props: {
   sidebarOpen: string | boolean | undefined;
   setSidebarOpen: (arg0: boolean) => void;
 }) => {
-  const [profile, setProfile] = useState<UserProfile | null>(null);
+  // const [profile, setProfile] = useState<UserProfile>();
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axiosInstance.get<ApiResponse<UserProfile>>(
-          `/profile`,
-        );
+  // const fetchData = async () => {
+  //   console.log('sdfsdf');
 
-        if (response?.data?.success) {
-          setProfile(response.data.data);
-        }
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    };
-    fetchData();
-  }, []);
+  //   try {
+  //     const response = await axiosInstance.get<ApiResponse<UserProfile>>(
+  //       `/profile`,
+  //     );
+
+  //     if (response?.data?.success) {
+  //       // setProfile(response.data.data);
+  //     }
+  //   } catch (error) {
+  //     console.error('Error fetching data:', error);
+  //   }
+  // };
+  // useEffect(() => {
+  //   fetchData();
+  // }, [!profile]);
+  const { profile } = useContext(MyContext);
 
   return (
     <header className="sticky top-0 z-999 flex w-full bg-white drop-shadow-1 dark:bg-boxdark dark:drop-shadow-none">

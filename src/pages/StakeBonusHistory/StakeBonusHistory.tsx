@@ -5,6 +5,8 @@ import { formatToLocalDate } from '../../hooks/formatDate';
 import Skeleton from 'react-loading-skeleton';
 import axiosInstance from '../../utils/axiosConfig';
 import TableRow from '../../components/Tables/TableRow';
+import { IMeta } from '../../types/common';
+import PaginationButtons from '../../components/Pagination/PaginationButtons';
 
 interface IStackBonusHistory {
   id: string;
@@ -21,36 +23,50 @@ interface ApiResponse {
   statusCode: number;
   success: boolean;
   message: string;
-  data: IStackBonusHistory[];
+  data: {
+    data: IStackBonusHistory[];
+    meta: IMeta;
+  };
 }
 
 const StakeBonusHistory = () => {
   const [historys, sethistorys] = useState<IStackBonusHistory[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
+  const [meta, setMeta] = useState<IMeta>({
+    total: 1,
+    page: 1,
+    limit: 1,
+  });
 
-  useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true);
-      try {
-        const response = await axiosInstance.get<ApiResponse>(
-          '/stack-bonus-history',
-        );
-        setLoading(false);
+  // pagination calculate
+  const [currentPage, setCurrentPage] = useState(0);
+  const [perPage, setparePage] = useState(25);
+  // pagination calculate
 
-        if (response?.data?.success) {
-          sethistorys(response.data.data);
-        }
-      } catch (error) {
-        console.error('Error fetching data:', error);
+  const fetchData = async () => {
+    setLoading(true);
+    try {
+      const response = await axiosInstance.get<ApiResponse>(
+        `/stack-bonus-history?page=${currentPage + 1}&limit=${perPage}`,
+      );
+
+      if (response?.data?.success) {
+        sethistorys(response.data.data.data);
+        setMeta(response?.data?.data?.meta);
       }
-    };
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+      console.error('Error fetching data:', error);
+    }
+  };
+  useEffect(() => {
     fetchData();
-  }, []);
-
+  }, [currentPage]);
   return (
     <>
       <DefaultLayout>
-        <Breadcrumb pageName="Level Reward History" />
+        <Breadcrumb pageName="Stake Level Reward" />
 
         <div className="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
           <div className="max-w-full overflow-x-auto">
@@ -108,6 +124,13 @@ const StakeBonusHistory = () => {
               </table>
             )}
           </div>
+        </div>
+        <div className="my-4">
+          <PaginationButtons
+            totalPages={Math?.ceil(meta?.total / perPage)}
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+          />
         </div>
       </DefaultLayout>
     </>

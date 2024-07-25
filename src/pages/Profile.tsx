@@ -1,16 +1,15 @@
 import Breadcrumb from '../components/Breadcrumbs/Breadcrumb';
 import DefaultLayout from '../layout/DefaultLayout';
 import BasicDetails from './Profile/BasicDetails';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import userImage from '../images/user.jpg';
 
 import axiosInstance from '../utils/axiosConfig';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import Swal from 'sweetalert2';
-import axios from 'axios';
 import { baseUrl } from '../utils/api';
 import { getTizaraUserToken } from '../hooks/getTokenFromstorage';
-import { useNavigate } from 'react-router-dom';
+import MyContext from '../hooks/MyContext';
 
 interface ApiResponse {
   statusCode: number;
@@ -36,7 +35,6 @@ export interface UserProfile {
   createdAt: string;
   updatedAt: string;
 }
-
 export interface UpdateUserProfile {
   id: string;
   name: string;
