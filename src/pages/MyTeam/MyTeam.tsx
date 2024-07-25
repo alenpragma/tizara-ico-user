@@ -52,7 +52,7 @@ const MyTeam = () => {
         <div className="max-w-full overflow-x-auto">
           {loading ? (
             <div>
-              <Skeleton height={30} count={6} />
+              <Skeleton height={30} count={10} />
             </div>
           ) : (
             <table className="w-full table-auto">

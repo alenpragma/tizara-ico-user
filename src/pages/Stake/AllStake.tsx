@@ -2,34 +2,38 @@ import DefaultLayout from '../../layout/DefaultLayout';
 import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
 import { useEffect, useState } from 'react';
 import Skeleton from 'react-loading-skeleton';
-import { getTizaraUserToken } from '../../hooks/getTokenFromstorage';
 import { formatToLocalDate } from '../../hooks/formatDate';
 import { IStake } from '../../types/stake';
 import NotFound from '../../components/NotFound/NotFound';
 import axiosInstance from '../../utils/axiosConfig';
 import TableRow from '../../components/Tables/TableRow';
+import PaginationButtons from '../../components/Pagination/PaginationButtons';
+import { IMeta } from '../../types/common';
 
 const AllStake = () => {
   const [search, setSearch] = useState('');
   const [loading, setLoading] = useState(false);
   const [stakes, setStakes] = useState<IStake[]>([]);
-  const token = getTizaraUserToken();
 
   // pagination calculate
   const [currentPage, setCurrentPage] = useState(0);
   const [perPage, setparePage] = useState(25);
 
-  const from = currentPage * perPage;
-  const to = from + perPage;
-  //  pagination end
+  const [meta, setMeta] = useState<IMeta>({
+    total: 1,
+    page: 1,
+    limit: 1,
+  });
 
   const fetchData = async () => {
     setLoading(true);
     try {
-      const response = await axiosInstance.get('/stack-now');
+      const response = await axiosInstance.get(
+        `/stack-now?page=${currentPage + 1}&limit=${perPage}`,
+      );
       setLoading(false);
-
-      setStakes(response?.data?.data);
+      setStakes(response?.data?.data?.data);
+      setMeta(response?.data?.data?.meta);
     } catch (error) {
       console.error('Error fetching data:', error);
     }
@@ -37,7 +41,7 @@ const AllStake = () => {
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [currentPage]);
 
   return (
     <DefaultLayout>
@@ -169,6 +173,13 @@ const AllStake = () => {
           )}
         </div>
         <div>{!loading && stakes.length == 0 && <NotFound />}</div>
+      </div>
+      <div className="my-4">
+        <PaginationButtons
+          totalPages={Math?.ceil(meta?.total / perPage)}
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+        />
       </div>
     </DefaultLayout>
   );

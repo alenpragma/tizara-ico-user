@@ -7,6 +7,7 @@ import { formatToLocalDate } from '../../hooks/formatDate';
 import NotFound from '../../components/NotFound/NotFound';
 import axiosInstance from '../../utils/axiosConfig';
 import TableRow from '../../components/Tables/TableRow';
+import { IMeta } from '../../types/common';
 
 export type IROYHistory = {
   id: string;
@@ -28,16 +29,22 @@ const RoyHistory = () => {
 
   const [currentPage, setCurrentPage] = useState(0);
   const [perPage, setparePage] = useState(25);
-  const from = currentPage * perPage;
-  const to = from + perPage;
   //  pagination end
+  const [meta, setMeta] = useState<IMeta>({
+    total: 1,
+    page: 1,
+    limit: 1,
+  });
 
   const fetchData = async () => {
     try {
       setLoading(true);
-      const response = await axiosInstance.get('/roy-bonus-historys');
+      const response = await axiosInstance.get(
+        `/roy-bonus-historys?page=${currentPage + 1}&limit=${perPage}`,
+      );
       setLoading(false);
-      setRoyHistorys(response?.data?.data);
+      setRoyHistorys(response?.data?.data?.data);
+      setMeta(response?.data?.data?.meta);
     } catch (error) {
       console.error('Error fetching data:', error);
     }
@@ -45,13 +52,7 @@ const RoyHistory = () => {
 
   useEffect(() => {
     fetchData();
-  }, []);
-
-  // const filteredRoyHistorys = royHistorys?.filter(
-  //   (royHistorys) => royHistorys?.dailyRoy == search,
-  // );
-
-  // console.log(royHistorys);
+  }, [currentPage]);
 
   return (
     <DefaultLayout>
@@ -91,27 +92,23 @@ const RoyHistory = () => {
                 </tr>
               </thead>
               <tbody>
-                {royHistorys
-                  .slice(from, to)
-                  ?.map((purchaseHistory: any, key: any) => (
-                    <tr key={key}>
-                      <TableRow data={key + 1} />
+                {royHistorys?.map((purchaseHistory: any, key: any) => (
+                  <tr key={key}>
+                    <TableRow data={key + 1} />
 
-                      <TableRow
-                        data={formatToLocalDate(purchaseHistory?.createdAt)}
-                      />
+                    <TableRow
+                      data={formatToLocalDate(purchaseHistory?.createdAt)}
+                    />
 
-                      <TableRow data={purchaseHistory?.userStake?.planName} />
+                    <TableRow data={purchaseHistory?.userStake?.planName} />
 
-                      <TableRow
-                        data={purchaseHistory?.userStake?.stakeAmount}
-                      />
+                    <TableRow data={purchaseHistory?.userStake?.stakeAmount} />
 
-                      <TableRow data={purchaseHistory?.userStake?.apy} />
+                    <TableRow data={purchaseHistory?.userStake?.apy} />
 
-                      <TableRow data={purchaseHistory?.userStake?.dailyRoy} />
-                    </tr>
-                  ))}
+                    <TableRow data={purchaseHistory?.userStake?.dailyRoy} />
+                  </tr>
+                ))}
               </tbody>
             </table>
           )}
@@ -120,7 +117,7 @@ const RoyHistory = () => {
 
         <div className="my-4">
           <PaginationButtons
-            totalPages={Math.ceil(royHistorys.length / perPage)}
+            totalPages={Math?.ceil(meta?.total / perPage)}
             currentPage={currentPage}
             setCurrentPage={setCurrentPage}
           />

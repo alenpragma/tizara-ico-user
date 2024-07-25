@@ -40,7 +40,7 @@ const StakeBonusHistory = () => {
 
   // pagination calculate
   const [currentPage, setCurrentPage] = useState(0);
-  const [perPage, setparePage] = useState(3);
+  const [perPage, setparePage] = useState(25);
   // pagination calculate
 
   const fetchData = async () => {
@@ -66,7 +66,7 @@ const StakeBonusHistory = () => {
   return (
     <>
       <DefaultLayout>
-        <Breadcrumb pageName="Level Reward History" />
+        <Breadcrumb pageName="Stake Level Reward" />
 
         <div className="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
           <div className="max-w-full overflow-x-auto">
