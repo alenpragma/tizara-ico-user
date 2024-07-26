@@ -79,7 +79,6 @@ function App() {
       navigate('/');
     }
   }, [profile?.isVerified, pathname]);
-  // console.log(profile?.isVerified);
 
   useEffect(() => {
     if (profile?.status === false) {
