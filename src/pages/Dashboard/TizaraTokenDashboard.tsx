@@ -238,6 +238,21 @@ const TizaraTokenDashboard: React.FC = () => {
         </Link>
       </div>
 
+      <hr className="my-5 border-success border-[1px]" />
+
+      <div className="  mt-10 grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6  lg:grid-cols-3  xl:grid-cols-4 2xl:gap-7.5">
+        <div>
+          <CardDataStats title="NFT" total={`00`}>
+            <PiPackage className="text-2xl dark:text-white text-primary" />
+          </CardDataStats>
+        </div>
+        <div>
+          <CardDataStats title="NFT" total={`00`}>
+            <PiPackage className="text-2xl dark:text-white text-primary" />
+          </CardDataStats>
+        </div>
+      </div>
+
       <div className="mt-5">
         {/* <LastestDeposits /> */}
         <div className="mt-5">{/* <LatestPurchaseHistory /> */}</div>
