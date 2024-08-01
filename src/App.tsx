@@ -36,6 +36,7 @@ import { getTizaraUserToken } from './hooks/getTokenFromstorage';
 import { logout } from './utils/auth';
 import BuyNft from './pages/StoreNft/BuyNft';
 import NftHistory from './pages/StoreNft/NftHistory';
+import DailyNftRoiHistory from './pages/StoreNft/DailyNftRoiHistory';
 
 function App() {
   const { pathname } = useLocation();
@@ -157,6 +158,18 @@ function App() {
                   <PageTitle title="NFT-History" />
                   <ProtectedRoute>
                     <NftHistory />
+                  </ProtectedRoute>
+                </>
+              }
+            />
+
+            <Route
+              path="/store-nft/nft-roi"
+              element={
+                <>
+                  <PageTitle title="NFT-Roi" />
+                  <ProtectedRoute>
+                    <DailyNftRoiHistory />
                   </ProtectedRoute>
                 </>
               }

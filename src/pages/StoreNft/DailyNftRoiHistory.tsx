@@ -5,27 +5,27 @@ import axiosInstance from '../../utils/axiosConfig';
 import { formatToLocalDate } from '../../hooks/formatDate';
 import NotFound from '../../components/NotFound/NotFound';
 import Skeleton from 'react-loading-skeleton';
-import TableRow from '../../components/Tables/TableRow';
 
-const NftHistory = () => {
+const DailyNftRoiHistory = () => {
   const [search, setSearch] = useState('');
   const [loading, setLoading] = useState(false);
-  const [historys, setHistorys] = useState([]);
+  const [stakes, setStakes] = useState([]);
 
   // pagination calculate
   const [currentPage, setCurrentPage] = useState(0);
   const [perPage, setparePage] = useState(25);
 
+  const from = currentPage * perPage;
+  const to = from + perPage;
   //  pagination end
 
   const fetchData = async () => {
     // setLoading(true);
     try {
-      const response = await axiosInstance.get('nft-purchese/history');
+      const response = await axiosInstance.get('');
       setLoading(false);
-      console.log(response);
 
-      setHistorys(response?.data?.data?.data);
+      setStakes(response?.data?.data);
     } catch (error) {
       console.error('Error fetching data:', error);
     }
@@ -37,7 +37,7 @@ const NftHistory = () => {
 
   return (
     <DefaultLayout>
-      <Breadcrumb pageName="NFT History" />
+      <Breadcrumb pageName="NFT ROI" />
       <div className="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
         {/* <div className="max-w-full w-100 mb-4">
           <SearchInput placeholder="Search..." setSearch={setSearch} />
@@ -85,16 +85,48 @@ const NftHistory = () => {
                 </tr>
               </thead>
               <tbody>
-                {historys?.map((stake: any, key: any) => (
+                {stakes?.map((stake: any, key: any) => (
                   <tr key={key}>
-                    <TableRow data={key + 1} />
-                    <TableRow data={formatToLocalDate(stake?.createdAt)} />
-                    <TableRow data={stake?.name} />
-                    <TableRow data={stake?.title} />
-                    <TableRow data={stake?.price} />
-                    <TableRow data={`${stake?.duration} D`} />
-                    <TableRow data={stake?.dailyRoi} />
-                    <TableRow data={stake?.quantity} />
+                    <td className="border-b border-[#eee] py-5 px-4 pl-9 dark:border-strokedark xl:pl-11">
+                      <h5 className="font-medium text-black dark:text-white">
+                        {key + 1}
+                      </h5>
+                    </td>
+                    {/* <TableRow/> */}
+                    <td className="border-b border-[#eee] py-5 px-4 pl-4 dark:border-strokedark xl:pl-11">
+                      <h5 className="font-medium text-black dark:text-white">
+                        {formatToLocalDate(stake?.createdAt)}
+                      </h5>
+                    </td>
+                    <td className="border-b border-[#eee] py-5 px-4 pl-4 dark:border-strokedark xl:pl-11">
+                      <h5 className="font-medium text-black dark:text-white">
+                        {stake?.planName}
+                      </h5>
+                    </td>
+
+                    <td className="border-b border-[#eee] py-5 px-4 pl-4 dark:border-strokedark xl:pl-11">
+                      <h5 className="font-medium text-black dark:text-white">
+                        {stake?.wallet}
+                      </h5>
+                    </td>
+
+                    <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+                      <p className="text-black dark:text-white">
+                        {stake.dailyRoy}
+                      </p>
+                    </td>
+
+                    <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+                      <p className="text-black dark:text-white">
+                        {formatToLocalDate(stake.createdAt)}
+                      </p>
+                    </td>
+
+                    {/* <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+                      <p className="text-black dark:text-white">
+                        {stake.status}
+                      </p>
+                    </td> */}
 
                     <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                       <p
@@ -113,10 +145,10 @@ const NftHistory = () => {
             </table>
           )}
         </div>
-        <div>{!loading && historys?.length == 0 && <NotFound />}</div>
+        <div>{!loading && stakes.length == 0 && <NotFound />}</div>
       </div>
     </DefaultLayout>
   );
 };
 
-export default NftHistory;
+export default DailyNftRoiHistory;

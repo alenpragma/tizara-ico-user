@@ -1,9 +1,9 @@
 import DefaultLayout from '../../layout/DefaultLayout';
 import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
 
-import image from '../../assets/Rectangle 130.png';
 import { useEffect, useState } from 'react';
 import axiosInstance from '../../utils/axiosConfig';
+import { BuyModal } from './BuyModal';
 
 export type INft = {
   id: string;
@@ -19,6 +19,9 @@ export type INft = {
 
 const BuyNft = () => {
   const [loading, setLoading] = useState(false);
+
+  const [isBuy, setIsBuy] = useState(false);
+  const [data, setData] = useState<INft>();
   const [nfts, setNfts] = useState<INft[]>();
 
   const fetchData = async () => {
@@ -38,6 +41,14 @@ const BuyNft = () => {
   useEffect(() => {
     fetchData();
   }, []);
+
+  const openModal = (nft: INft) => {
+    setData(nft);
+    setIsBuy(true);
+  };
+  const closeModal = () => {
+    setIsBuy(false);
+  };
 
   return (
     <DefaultLayout>
@@ -79,7 +90,10 @@ const BuyNft = () => {
                     </div>
                   </div>
                 </div>
-                <div className="mb-2 flex justify-center">
+                <div
+                  onClick={() => openModal(nft)}
+                  className="mb-2 flex justify-center"
+                >
                   <p className="cursor-pointer px-7 py-2 relative rounded group overflow-hidden font-medium bg-success text-white inline-block">
                     <span className="absolute top-0 left-0 flex w-full h-0 mb-0 transition-all duration-600 ease-in-out transform translate-y-0 bg-white group-hover:h-full opacity-90"></span>
                     <span className="relative group-hover:text-success">
@@ -92,6 +106,13 @@ const BuyNft = () => {
           })}
         </div>
       </>
+      {isBuy && (
+        <BuyModal
+          fetchData={fetchData}
+          closeModal={closeModal}
+          data={data}
+        ></BuyModal>
+      )}
     </DefaultLayout>
   );
 };
