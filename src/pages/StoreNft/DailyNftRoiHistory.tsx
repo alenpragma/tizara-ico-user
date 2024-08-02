@@ -9,23 +9,22 @@ import Skeleton from 'react-loading-skeleton';
 const DailyNftRoiHistory = () => {
   const [search, setSearch] = useState('');
   const [loading, setLoading] = useState(false);
-  const [stakes, setStakes] = useState([]);
+  const [nftRoi, setNftRoi] = useState([]);
 
   // pagination calculate
   const [currentPage, setCurrentPage] = useState(0);
   const [perPage, setparePage] = useState(25);
 
-  const from = currentPage * perPage;
-  const to = from + perPage;
   //  pagination end
 
   const fetchData = async () => {
     // setLoading(true);
     try {
-      const response = await axiosInstance.get('');
+      const response = await axiosInstance.get('/nft-daily-roi-history');
       setLoading(false);
+      console.log(response);
 
-      setStakes(response?.data?.data);
+      setNftRoi(response?.data?.data?.data);
     } catch (error) {
       console.error('Error fetching data:', error);
     }
@@ -85,7 +84,7 @@ const DailyNftRoiHistory = () => {
                 </tr>
               </thead>
               <tbody>
-                {stakes?.map((stake: any, key: any) => (
+                {nftRoi?.map((stake: any, key: any) => (
                   <tr key={key}>
                     <td className="border-b border-[#eee] py-5 px-4 pl-9 dark:border-strokedark xl:pl-11">
                       <h5 className="font-medium text-black dark:text-white">
@@ -145,7 +144,7 @@ const DailyNftRoiHistory = () => {
             </table>
           )}
         </div>
-        <div>{!loading && stakes.length == 0 && <NotFound />}</div>
+        <div>{!loading && nftRoi.length == 0 && <NotFound />}</div>
       </div>
     </DefaultLayout>
   );

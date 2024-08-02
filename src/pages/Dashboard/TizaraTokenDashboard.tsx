@@ -261,7 +261,8 @@ const TizaraTokenDashboard: React.FC = () => {
           <CardDataStats
             title="DOME"
             total={
-              `Quantity: ${nFTWallet?.dome} ` + `Price: ${nFTWallet?.domePrice}`
+              `Quantity: ${nFTWallet?.dome ?? '0'} ` +
+              `Price: ${nFTWallet?.domePrice ?? '0'}`
             }
           >
             <PiPackage className="text-2xl dark:text-white text-primary" />
@@ -271,8 +272,8 @@ const TizaraTokenDashboard: React.FC = () => {
           <CardDataStats
             title="Hotel And Resort"
             total={
-              `Quantity: ${nFTWallet?.hotelAndResort} ` +
-              `Price: ${nFTWallet?.hotelAndResortPrice}`
+              `Quantity: ${nFTWallet?.hotelAndResort ?? '0'} ` +
+              `Price: ${nFTWallet?.hotelAndResortPrice ?? '0'}`
             }
           >
             <PiPackage className="text-2xl dark:text-white text-primary" />
@@ -283,7 +284,8 @@ const TizaraTokenDashboard: React.FC = () => {
           <CardDataStats
             title="Land"
             total={
-              `Quantity: ${nFTWallet?.land} ` + `Price: ${nFTWallet?.landPrice}`
+              `Quantity: ${nFTWallet?.land ?? '0'} ` +
+              `Price: ${nFTWallet?.landPrice ?? '0'}`
             }
           >
             <PiPackage className="text-2xl dark:text-white text-primary" />
@@ -294,8 +296,8 @@ const TizaraTokenDashboard: React.FC = () => {
           <CardDataStats
             title="WAGON"
             total={
-              `Quantity: ${nFTWallet?.wagon} ` +
-              `Price: ${nFTWallet?.wagonPrice}`
+              `Quantity: ${nFTWallet?.wagon ?? '0'} ` +
+              `Price: ${nFTWallet?.wagonPrice ?? '0'}`
             }
           >
             <PiPackage className="text-2xl dark:text-white text-primary" />

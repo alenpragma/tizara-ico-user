@@ -22,6 +22,7 @@ export const BuyModal = ({ fetchData, closeModal, data }: any) => {
 
     try {
       const responseData = await axiosInstance.post('/nft-purchese', nftdata);
+      console.log(responseData, 'responseData?.data?.message');
 
       if (responseData?.data?.success) {
         fetchData();
@@ -42,12 +43,11 @@ export const BuyModal = ({ fetchData, closeModal, data }: any) => {
         });
       }
       setLoading(false);
-    } catch (error) {
+    } catch (error: any) {
       setLoading(false);
-      console.error('Error:', error);
       Swal.fire({
         title: 'Error',
-        text: 'Something went wrong',
+        text: `${error?.message}`,
         icon: 'error',
       });
     }

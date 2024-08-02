@@ -37,6 +37,7 @@ import { logout } from './utils/auth';
 import BuyNft from './pages/StoreNft/BuyNft';
 import NftHistory from './pages/StoreNft/NftHistory';
 import DailyNftRoiHistory from './pages/StoreNft/DailyNftRoiHistory';
+import NftlevelBonus from './pages/StoreNft/NftlevelBonus';
 
 function App() {
   const { pathname } = useLocation();
@@ -147,6 +148,18 @@ function App() {
                   <PageTitle title="Buy-NFT" />
                   <ProtectedRoute>
                     <BuyNft />
+                  </ProtectedRoute>
+                </>
+              }
+            />
+
+            <Route
+              path="/store-nft/nft-level-bonus"
+              element={
+                <>
+                  <PageTitle title="NFT-level-bonus" />
+                  <ProtectedRoute>
+                    <NftlevelBonus />
                   </ProtectedRoute>
                 </>
               }
