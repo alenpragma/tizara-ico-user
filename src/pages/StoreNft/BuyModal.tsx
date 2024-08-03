@@ -17,7 +17,7 @@ export const BuyModal = ({ fetchData, closeModal, data }: any) => {
       price: data.price,
       dailyRoi: data.dailyRoi,
       duration: data.duration,
-      id: data.id,
+      nftId: data.id,
     };
 
     try {
@@ -90,10 +90,10 @@ export const BuyModal = ({ fetchData, closeModal, data }: any) => {
                   Title: {data.quantity}
                 </p>
                 <p className="mb-0.5 block text-xl font-medium text-black dark:text-white">
-                  Duration: {data.duration}
+                  Duration: {data.duration} Month
                 </p>
                 <p className="mb-0.5 block text-xl font-medium text-black dark:text-white">
-                  DailyROI: {data.dailyRoi}
+                  TotalROI: {data.dailyRoi} %
                 </p>
                 <p className="mb-0.5 block text-xl font-medium text-black dark:text-white">
                   Price: {data.price}

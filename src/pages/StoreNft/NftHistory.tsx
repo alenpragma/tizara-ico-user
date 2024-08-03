@@ -51,32 +51,36 @@ const NftHistory = () => {
             <table className="w-full table-auto">
               <thead>
                 <tr className="bg-gray-2 text-left dark:bg-meta-4">
-                  <th className="min-w-[90px] py-4 px-4 font-medium text-black dark:text-white xl:pl-11">
+                  <th className="min-w-[90px] py-4 px-4 font-medium text-black dark:text-white  ">
                     SL NO
                   </th>
-                  <th className="min-w-[220px] py-4 px-4 font-medium text-black dark:text-white xl:pl-11">
+                  <th className="min-w-[120px] py-4 px-4 font-medium text-black dark:text-white  ">
                     Date
                   </th>
-                  <th className="min-w-[220px] py-4 px-4 font-medium text-black dark:text-white xl:pl-11">
+                  <th className="min-w-[120px] py-4 px-4 font-medium text-black dark:text-white  ">
                     Name
                   </th>
 
-                  <th className="min-w-[220px] py-4 px-4 font-medium text-black dark:text-white xl:pl-11">
+                  <th className="min-w-[120px] py-4 px-4 font-medium text-black dark:text-white  ">
                     NFT Title
                   </th>
 
-                  <th className="min-w-[220px] py-4 px-4 font-medium text-black dark:text-white xl:pl-11">
+                  <th className="min-w-[120px] py-4 px-4 font-medium text-black dark:text-white  ">
                     NFT Price
                   </th>
 
-                  <th className="min-w-[220px] py-4 px-4 font-medium text-black dark:text-white xl:pl-11">
+                  <th className="min-w-[120px] py-4 px-4 font-medium text-black dark:text-white  ">
                     Diration
                   </th>
 
-                  <th className="min-w-[220px] py-4 px-4 font-medium text-black dark:text-white xl:pl-11">
-                    Daily Roi
+                  <th className="min-w-[120px] py-4 px-4 font-medium text-black dark:text-white  ">
+                    Total Roi
                   </th>
-                  <th className="min-w-[220px] py-4 px-4 font-medium text-black dark:text-white xl:pl-11">
+
+                  <th className="min-w-[120px] py-4 px-4 font-medium text-black dark:text-white  ">
+                    Monthly Roi
+                  </th>
+                  <th className="min-w-[120px] py-4 px-4 font-medium text-black dark:text-white  ">
                     NFT Quantity
                   </th>
                   <th className="min-w-[120px] py-4 px-4 font-medium text-black dark:text-white">
@@ -92,8 +96,9 @@ const NftHistory = () => {
                     <TableRow data={stake?.name} />
                     <TableRow data={stake?.title} />
                     <TableRow data={stake?.price} />
-                    <TableRow data={`${stake?.duration} D`} />
-                    <TableRow data={stake?.dailyRoi} />
+                    <TableRow data={`${stake?.duration} Month`} />
+                    <TableRow data={stake?.dailyRoi + ' %'} />
+                    <TableRow data={stake?.monthlyRoi} />
                     <TableRow data={stake?.quantity} />
 
                     <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
