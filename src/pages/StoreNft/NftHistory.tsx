@@ -57,6 +57,10 @@ const NftHistory = () => {
                   <th className="min-w-[120px] py-4 px-4 font-medium text-black dark:text-white  ">
                     Date
                   </th>
+
+                  <th className="min-w-[120px] py-4 px-4 font-medium text-black dark:text-white  ">
+                    last Bonus
+                  </th>
                   <th className="min-w-[120px] py-4 px-4 font-medium text-black dark:text-white  ">
                     Name
                   </th>
@@ -93,6 +97,9 @@ const NftHistory = () => {
                   <tr key={key}>
                     <TableRow data={key + 1} />
                     <TableRow data={formatToLocalDate(stake?.createdAt)} />
+                    <TableRow
+                      data={formatToLocalDate(stake?.lastDistributionDate)}
+                    />
                     <TableRow data={stake?.name} />
                     <TableRow data={stake?.title} />
                     <TableRow data={stake?.price} />

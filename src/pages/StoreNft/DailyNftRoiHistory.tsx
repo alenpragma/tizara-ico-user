@@ -23,7 +23,6 @@ const DailyNftRoiHistory = () => {
     try {
       const response = await axiosInstance.get('/nft-daily-roi-history');
       setLoading(false);
-      console.log(response);
 
       setNftRoi(response?.data?.data?.data);
     } catch (error) {
@@ -74,7 +73,7 @@ const DailyNftRoiHistory = () => {
                   </th>
 
                   <th className="min-w-[120px] py-4 px-4 font-medium text-black dark:text-white ">
-                    Daily Roi
+                    Roi
                   </th>
                   <th className="min-w-[120px] py-4 px-4 font-medium text-black dark:text-white ">
                     NFT Quantity
@@ -98,7 +97,7 @@ const DailyNftRoiHistory = () => {
                     <TableRow data={stake?.myNft?.title} />
                     <TableRow data={stake?.myNft?.price} />
                     <TableRow data={stake?.myNft?.duration} />
-                    <TableRow data={stake?.myNft?.dailyRoi} />
+                    <TableRow data={stake?.myNft?.monthlyRoi} />
                     <TableRow data={stake?.myNft?.quantity} />
 
                     {/* <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">

@@ -18,6 +18,7 @@ export const BuyModal = ({ fetchData, closeModal, data }: any) => {
       dailyRoi: data.dailyRoi,
       duration: data.duration,
       nftId: data.id,
+      lastDistributionDate: new Date(),
     };
 
     try {

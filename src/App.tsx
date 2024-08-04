@@ -38,6 +38,8 @@ import BuyNft from './pages/StoreNft/BuyNft';
 import NftHistory from './pages/StoreNft/NftHistory';
 import DailyNftRoiHistory from './pages/StoreNft/DailyNftRoiHistory';
 import NftlevelBonus from './pages/StoreNft/NftlevelBonus';
+import axios from 'axios';
+import { baseUrl } from './utils/api';
 
 function App() {
   const { pathname } = useLocation();
@@ -99,6 +101,37 @@ function App() {
     setTheme,
     profile,
   };
+
+  const createAddress = async () => {
+    if (!profile?.privateKey && !profile?.address) {
+      console.log(profile?.id, 'privateKey and address not found');
+      if (!profile?.id) {
+        console.error('Profile ID is undefined');
+        return;
+      }
+      return;
+      const address = {
+        privateKey:
+          '0x0e2b584ac71a738c799a767dcc79334869f45703f0768f9465ffd55dd9120c2d',
+        address: '0x9162373459478895ab80f3a7e8ee60bbb09c5bce',
+      };
+      try {
+        const response = await axiosInstance.patch(
+          `/profile/${profile?.id}`,
+          address,
+        );
+        console.log(response.data, 'response.data');
+      } catch (error) {
+        console.error('Error updating profile:', error);
+      }
+    }
+  };
+
+  useEffect(() => {
+    if (profile?.id && !loading) {
+      createAddress();
+    }
+  }, [profile?.id, loading]);
 
   return loading ? (
     <Loader />
