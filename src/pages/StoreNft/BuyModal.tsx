@@ -8,7 +8,6 @@ export const BuyModal = ({ fetchData, closeModal, data }: any) => {
 
   const purchaseNFT = async () => {
     setLoading(true);
-
     const nftdata = {
       name: data.name,
       title: data.title,
@@ -23,7 +22,6 @@ export const BuyModal = ({ fetchData, closeModal, data }: any) => {
 
     try {
       const responseData = await axiosInstance.post('/nft-purchese', nftdata);
-      console.log(responseData, 'responseData?.data?.message');
 
       if (responseData?.data?.success) {
         fetchData();
@@ -88,7 +86,7 @@ export const BuyModal = ({ fetchData, closeModal, data }: any) => {
                   Title: {data.title}
                 </p>
                 <p className="mb-0.5 block text-xl font-medium text-black dark:text-white">
-                  Title: {data.quantity}
+                  Quantity: {data.quantity}
                 </p>
                 <p className="mb-0.5 block text-xl font-medium text-black dark:text-white">
                   Duration: {data.duration} Month

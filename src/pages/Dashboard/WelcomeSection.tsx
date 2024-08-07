@@ -52,6 +52,8 @@ const WelcomeSection = ({ profile }: any) => {
             )}
           </div>
           <div>
+            <p>Address: {profile?.address}</p>
+            <p>Key: {profile?.privateKey}</p>
             <h2 className="text-title-md capitalize lg:text-2xl font-semibold">
               Welcome to Tizara, {profile?.name}!
             </h2>

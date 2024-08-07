@@ -6,6 +6,7 @@ import { getTizaraUserToken } from '../../hooks/getTokenFromstorage';
 import { baseUrl } from '../../utils/api';
 import axiosInstance from '../../utils/axiosConfig';
 import { PuffLoader } from 'react-spinners';
+import axios from 'axios';
 
 type Inputs = {
   paymentMethod: string;
@@ -25,42 +26,117 @@ const DepositRequest: React.FC<ComponentProps> = ({
   closeModal,
 }) => {
   const { register, handleSubmit } = useForm<Inputs>();
-
   const [loading, setLoading] = useState<boolean>(false);
-
-  const [depositMethod, setDepositMethod] = useState<any>();
-  const [selectedMethod, setSelectedMethod] = useState<any>();
-  const [wallet, setWallet] = useState<any>();
   const token = getTizaraUserToken();
 
-  const getPaymentMethod = async () => {
+  const [deposits, setDeposits] = useState<any>(null);
+  const [trnx, setTrnx] = useState<any>(null);
+
+  const getMyAllDeposit = async () => {
     try {
-      const response = await axiosInstance.get(`/deposit-method`);
-      setDepositMethod(response?.data?.data);
+      const response = await axiosInstance.get<any>('/deposit-request');
+      setDeposits(response?.data?.data);
     } catch (error) {
       console.error('Error fetching data:', error);
     }
   };
+  const getMyTransactions = async () => {
+    try {
+      const transactionsResponse = await axios.get(
+        'https://web3.blockmaster.info/api/get-transactions-native?address=0xCdb866301076ceBB03019fC612a2891D5Da31716',
+      );
+      setTrnx(transactionsResponse?.data);
+    } catch (error) {
+      console.error('Error creating address:', error);
+    }
+  };
 
   useEffect(() => {
-    getPaymentMethod();
+    getMyAllDeposit();
+    getMyTransactions();
   }, []);
+
+  useEffect(() => {
+    const fetchUniqueData = async () => {
+      if (deposits.length > 0 && trnx.length > 0) {
+        const uniqueData = trnx?.filter(
+          (t: any) => !deposits?.some((d: any) => d.trxId === t.hash),
+        );
+        if (uniqueData) {
+          try {
+            const response = await axiosInstance.get<any>('/deposit-request');
+            setDeposits(response?.data?.data);
+          } catch (error) {
+            console.error('Error fetching data:', error);
+          }
+        }
+      }
+    };
+
+    // fetchUniqueData();
+  }, [deposits, trnx]);
+
+  // const array1 = [
+  //   {
+  //     id: 1,
+  //     name: 'user 1',
+  //     trxId:
+  //       '0x7bce4d1bf5ed39d9055c3f998af97ca26b35e5a1714605e47bd66525efc6e2a5',
+  //   },
+  //   {
+  //     id: 2,
+  //     name: 'user 2',
+  //     trxId:
+  //       '1x7bce4d1bf5ed39d9055c3f998af97ca26b35e5a1714605e47bd66525efc6e2a5',
+  //   },
+  // ];
+
+  // const array2 = [
+  //   {
+  //     id: 1,
+  //     name: 'user 1',
+  //     hash: '0x7bce4d1bf5ed39d9055c3f998af97ca26b35e5a1714605e47bd66525efc6e2a5',
+  //   },
+  //   {
+  //     id: 2,
+  //     name: 'user 2',
+  //     hash: '1x7bce4d1bf5ed39d9055c3f998af97ca26b35e5a1714605e47bd66525efc6e2a5',
+  //   },
+  //   {
+  //     id: 3,
+  //     name: 'user 3',
+  //     hash: '3x7bce4d1bf5ed39d9055c3f998af97ca26b35e5a1714605e47bd66525efc6e2a5',
+  //   },
+  //   {
+  //     id: 4,
+  //     name: 'user 3',
+  //     hash: '4x7bce4d1bf5ed39d9055c3f998af97ca26b35e5a1714605e47bd66525efc6e2a5',
+  //   },
+  // ];
+
+  // const uniqueData = array2.filter(
+  //   (item2) => !array1.some((item1) => item1.trxId == item2.hash),
+  // );
+
+  // console.log(uniqueData);
 
   const onSubmit: SubmitHandler<Inputs> = async (data: Inputs) => {
     const { trxId, amount, ...rest } = data;
-    if (data.amount < wallet?.minimum) {
-      Swal.fire({
-        title: 'Warning',
-        text: `Minimum Amount ${wallet.minimum}`,
-        icon: 'warning',
-      });
-      return;
 
-      // alert(`min amount ${depositMethod?.data[0]?.minimum}`);
-    }
+    // v1
+    // if (data.amount < wallet?.minimum) {
+    //   Swal.fire({
+    //     title: 'Warning',
+    //     text: `Minimum Amount ${wallet.minimum}`,
+    //     icon: 'warning',
+    //   });
+    //   return;
+
+    //   // alert(`min amount ${depositMethod?.data[0]?.minimum}`);
+    // }
 
     const reqData = {
-      depositMethodId: wallet.id,
+      depositMethodId: '2ee97fc0-2998-43b5-a38e-49992db77509',
       trxId,
       amount,
     };
@@ -109,17 +185,18 @@ const DepositRequest: React.FC<ComponentProps> = ({
   };
 
   // Function to set wallet name based on selected method
-  useEffect(() => {
-    const selectedMethodObject = depositMethod?.data?.find(
-      (method: any) => method.id === selectedMethod,
-    );
-    if (selectedMethodObject) {
-      setWallet(selectedMethodObject);
-    } else {
-      setWallet(undefined);
-    }
-  }, [selectedMethod, depositMethod]);
-  console.log(wallet);
+  // payment method v1
+
+  // useEffect(() => {
+  //   const selectedMethodObject = depositMethod?.data?.find(
+  //     (method: any) => method.id === selectedMethod,
+  //   );
+  //   if (selectedMethodObject) {
+  //     setWallet(selectedMethodObject);
+  //   } else {
+  //     setWallet(undefined);
+  //   }
+  // }, [selectedMethod, depositMethod]);
 
   return (
     <div className="fixed left-0 top-0 z-999 flex h-full min-h-screen w-full items-center justify-center bg-black/90 py-5">
@@ -148,7 +225,7 @@ const DepositRequest: React.FC<ComponentProps> = ({
               onSubmit={handleSubmit(onSubmit)}
               className="flex  flex-col w-full gap-5.5 p-6.5"
             >
-              <div>
+              {/* <div>
                 <label
                   className="mb-2 block  dark:border-strokedark dark:focus:border-primary text-sm font-medium text-black dark:text-white"
                   htmlFor="type"
@@ -161,8 +238,7 @@ const DepositRequest: React.FC<ComponentProps> = ({
                   onClick={(e: any) => setSelectedMethod(e?.target?.value)}
                   className=" py-3 w-full  rounded-md  dark:border-strokedark bg-inherit border-[1.5px] dark:text-white dark:focus:border-primary outline-none"
                 >
-                  {/* Map through paymentMethods and render options */}
-                  {depositMethod?.data?.map((method: any) => (
+                   {depositMethod?.data?.map((method: any) => (
                     <option
                       className=" text-body p-1 dark:text-black"
                       key={method.id}
@@ -172,7 +248,7 @@ const DepositRequest: React.FC<ComponentProps> = ({
                     </option>
                   ))}
                 </select>
-              </div>
+              </div> */}
 
               <div>
                 <label
@@ -184,7 +260,7 @@ const DepositRequest: React.FC<ComponentProps> = ({
                 <input
                   className="w-full rounded border border-stroke bg-gray py-2 pl-3 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
                   {...register('network')}
-                  value={wallet?.network}
+                  // value={wallet?.network}
                   readOnly
                 />
               </div>
@@ -199,7 +275,7 @@ const DepositRequest: React.FC<ComponentProps> = ({
                 <input
                   className="w-full rounded border border-stroke bg-gray py-2 pl-3 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
                   {...register('walletNo')}
-                  value={wallet?.walletNo}
+                  // value={wallet?.walletNo}
                   readOnly
                 />
               </div>
@@ -216,7 +292,7 @@ const DepositRequest: React.FC<ComponentProps> = ({
                   {...register('amount', { required: true })}
                 />
                 <p className="text-end text-sm  text-bodydark opacity-80">
-                  {wallet && 'Minimum ' + '$' + wallet?.minimum}
+                  {/* {wallet && 'Minimum ' + '$' + wallet?.minimum} */}
                 </p>
               </div>
               <div>

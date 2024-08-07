@@ -39,7 +39,6 @@ import NftHistory from './pages/StoreNft/NftHistory';
 import DailyNftRoiHistory from './pages/StoreNft/DailyNftRoiHistory';
 import NftlevelBonus from './pages/StoreNft/NftlevelBonus';
 import axios from 'axios';
-import { baseUrl } from './utils/api';
 
 function App() {
   const { pathname } = useLocation();
@@ -102,34 +101,42 @@ function App() {
     profile,
   };
 
-  const createAddress = async () => {
+  const createAddress = async (profile: any) => {
+    console.log(profile, 'profile');
+
     if (!profile?.privateKey && !profile?.address) {
-      console.log(profile?.id, 'privateKey and address not found');
-      if (!profile?.id) {
-        console.error('Profile ID is undefined');
-        return;
-      }
-      return;
-      const address = {
-        privateKey:
-          '0x0e2b584ac71a738c799a767dcc79334869f45703f0768f9465ffd55dd9120c2d',
-        address: '0x9162373459478895ab80f3a7e8ee60bbb09c5bce',
-      };
       try {
-        const response = await axiosInstance.patch(
-          `/profile/${profile?.id}`,
-          address,
+        const data = { uid: profile.id };
+
+        const addressResponse = await axios.post(
+          'https://web3.blockmaster.info/api/create-address',
+          data,
         );
-        console.log(response.data, 'response.data');
+
+        const address = addressResponse.data;
+        console.log('New address created:', address);
+
+        try {
+          const response = await axiosInstance.patch(
+            `/profile/create-address/${profile.id}`,
+            address,
+          );
+          console.log('Profile updated with new address:', response.data);
+          if (response.data.statusCode == 200) {
+            fetchData();
+          }
+        } catch (error) {
+          console.error('Error updating profile:', error);
+        }
       } catch (error) {
-        console.error('Error updating profile:', error);
+        console.error('Error creating address:', error);
       }
     }
   };
 
   useEffect(() => {
     if (profile?.id && !loading) {
-      createAddress();
+      createAddress(profile);
     }
   }, [profile?.id, loading]);
 
