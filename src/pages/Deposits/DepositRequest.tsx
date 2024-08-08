@@ -8,6 +8,7 @@ import axiosInstance from '../../utils/axiosConfig';
 import { PuffLoader } from 'react-spinners';
 import axios from 'axios';
 import MyContext from '../../hooks/MyContext';
+import QRCode from 'react-qr-code';
 
 type Inputs = {
   paymentMethod: string;
@@ -149,9 +150,12 @@ const DepositRequest: React.FC<ComponentProps> = ({
               </strong>
             </div>
             <hr />
+            <p className="text-sm text-wrap max-w-10">
+              Address: {profile?.address}
+            </p>
             <form
               onSubmit={handleSubmit(onSubmit)}
-              className="flex  flex-col w-full gap-5.5 p-6.5"
+              className="flex  flex-col w-full"
             >
               {/* <div>
                 <label
@@ -177,7 +181,24 @@ const DepositRequest: React.FC<ComponentProps> = ({
                   ))}
                 </select>
               </div> */}
-
+              <div className="mx-auto">
+                <QRCode
+                  style={{ height: '256', maxWidth: '200', width: '200' }}
+                  value={profile?.address ?? ''}
+                  viewBox={`0 0 256 256`}
+                />
+              </div>
+              <div className=" text-white p-1">
+                <p className="text-md mt-2">
+                  <span className="text-red-500 font-semibold">
+                    Risk Warning:
+                  </span>{' '}
+                  Deposits are subject to investment risk, including potential
+                  loss of principal. The minimum deposit amount is 10 USDT;
+                  ensure all transaction details are accurate to avoid loss of
+                  funds.
+                </p>
+              </div>
               {loading ? (
                 <PuffLoader className="mx-auto" color="#36d7b7" size={40} />
               ) : (
