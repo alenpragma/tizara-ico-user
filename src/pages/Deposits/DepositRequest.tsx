@@ -1,12 +1,13 @@
 import { SubmitHandler, useForm } from 'react-hook-form';
 import Swal from 'sweetalert2';
 import Button from '../../Ui/Button';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { getTizaraUserToken } from '../../hooks/getTokenFromstorage';
 import { baseUrl } from '../../utils/api';
 import axiosInstance from '../../utils/axiosConfig';
 import { PuffLoader } from 'react-spinners';
 import axios from 'axios';
+import MyContext from '../../hooks/MyContext';
 
 type Inputs = {
   paymentMethod: string;
@@ -17,7 +18,7 @@ type Inputs = {
   depositMethodId: string;
 };
 interface ComponentProps {
-  fetchData?: () => void;
+  fetchData: () => void;
   closeModal: () => void;
 }
 
@@ -25,155 +26,82 @@ const DepositRequest: React.FC<ComponentProps> = ({
   fetchData,
   closeModal,
 }) => {
+  const { profile } = useContext(MyContext);
+
   const { register, handleSubmit } = useForm<Inputs>();
   const [loading, setLoading] = useState<boolean>(false);
-  const token = getTizaraUserToken();
 
   const [deposits, setDeposits] = useState<any>(null);
   const [trnx, setTrnx] = useState<any>(null);
 
   const getMyAllDeposit = async () => {
     try {
-      const response = await axiosInstance.get<any>('/deposit-request');
+      const response = await axiosInstance.get('/deposit-request');
       setDeposits(response?.data?.data);
+      console.log(response?.data?.data, 'my deposit');
     } catch (error) {
       console.error('Error fetching data:', error);
     }
   };
   const getMyTransactions = async () => {
+    setLoading(true);
     try {
       const transactionsResponse = await axios.get(
-        'https://web3.blockmaster.info/api/get-transactions-native?address=0xCdb866301076ceBB03019fC612a2891D5Da31716',
+        `https://web3.blockmaster.info/api/get-transactions?address=${profile?.address}`,
       );
+
       setTrnx(transactionsResponse?.data);
+      setLoading(false);
     } catch (error) {
+      setLoading(false);
       console.error('Error creating address:', error);
     }
   };
 
   useEffect(() => {
     getMyAllDeposit();
-    getMyTransactions();
   }, []);
 
   useEffect(() => {
-    const fetchUniqueData = async () => {
-      if (deposits.length > 0 && trnx.length > 0) {
-        const uniqueData = trnx?.filter(
-          (t: any) => !deposits?.some((d: any) => d.trxId === t.hash),
-        );
-        if (uniqueData) {
-          try {
-            const response = await axiosInstance.get<any>('/deposit-request');
-            setDeposits(response?.data?.data);
-          } catch (error) {
-            console.error('Error fetching data:', error);
-          }
-        }
-      }
-    };
+    getMyTransactions();
+  }, []);
 
-    // fetchUniqueData();
-  }, [deposits, trnx]);
+  const onSubmit: SubmitHandler<Inputs> = async () => {
+    if (!deposits || !trnx) {
+      Swal.fire({
+        // title: '',
+        text: 'Please await',
+        icon: 'warning',
+      });
+      return;
+    }
 
-  // const array1 = [
-  //   {
-  //     id: 1,
-  //     name: 'user 1',
-  //     trxId:
-  //       '0x7bce4d1bf5ed39d9055c3f998af97ca26b35e5a1714605e47bd66525efc6e2a5',
-  //   },
-  //   {
-  //     id: 2,
-  //     name: 'user 2',
-  //     trxId:
-  //       '1x7bce4d1bf5ed39d9055c3f998af97ca26b35e5a1714605e47bd66525efc6e2a5',
-  //   },
-  // ];
+    const uniquData = trnx?.filter(
+      (t: any) => !deposits?.some((d: any) => d.trxId === t.hash),
+    );
 
-  // const array2 = [
-  //   {
-  //     id: 1,
-  //     name: 'user 1',
-  //     hash: '0x7bce4d1bf5ed39d9055c3f998af97ca26b35e5a1714605e47bd66525efc6e2a5',
-  //   },
-  //   {
-  //     id: 2,
-  //     name: 'user 2',
-  //     hash: '1x7bce4d1bf5ed39d9055c3f998af97ca26b35e5a1714605e47bd66525efc6e2a5',
-  //   },
-  //   {
-  //     id: 3,
-  //     name: 'user 3',
-  //     hash: '3x7bce4d1bf5ed39d9055c3f998af97ca26b35e5a1714605e47bd66525efc6e2a5',
-  //   },
-  //   {
-  //     id: 4,
-  //     name: 'user 3',
-  //     hash: '4x7bce4d1bf5ed39d9055c3f998af97ca26b35e5a1714605e47bd66525efc6e2a5',
-  //   },
-  // ];
-
-  // const uniqueData = array2.filter(
-  //   (item2) => !array1.some((item1) => item1.trxId == item2.hash),
-  // );
-
-  // console.log(uniqueData);
-
-  const onSubmit: SubmitHandler<Inputs> = async (data: Inputs) => {
-    const { trxId, amount, ...rest } = data;
-
-    // v1
-    // if (data.amount < wallet?.minimum) {
-    //   Swal.fire({
-    //     title: 'Warning',
-    //     text: `Minimum Amount ${wallet.minimum}`,
-    //     icon: 'warning',
-    //   });
-    //   return;
-
-    //   // alert(`min amount ${depositMethod?.data[0]?.minimum}`);
-    // }
-
+    if (uniquData.length == 0) {
+      Swal.fire({
+        title: 'success',
+        text: 'New Transaction Not Found',
+        icon: 'success',
+      });
+      closeModal();
+      return;
+    }
     const reqData = {
       depositMethodId: '2ee97fc0-2998-43b5-a38e-49992db77509',
-      trxId,
-      amount,
+      trxId: uniquData[0]?.hash,
+      amount: uniquData[0]?.value,
+      address: uniquData[0]?.to,
     };
-    setLoading(true);
 
     try {
-      const response = await fetch(`${baseUrl}/deposit-request`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `${token}`,
-        },
-        body: JSON.stringify(reqData),
-      });
-      setLoading(false);
-
-      const responseData = await response.json();
-
-      if (responseData.success) {
-        if (fetchData) {
-          fetchData();
-        }
-        Swal.fire({
-          title: 'success',
-          text: 'Deposit request success',
-          icon: 'success',
-        }).then(() => {
-          closeModal();
-        });
-      }
-      if (!responseData?.success) {
-        Swal.fire({
-          title: 'error',
-          text: `${responseData?.message}`,
-          icon: 'error',
-        });
-      }
+      const response = await axiosInstance.post('/deposit-request', reqData);
+      setDeposits(response?.data?.data);
+      console.log(response, 'success deposit');
+      fetchData();
+      closeModal();
     } catch (error) {
       setLoading(false);
       Swal.fire({
@@ -250,68 +178,10 @@ const DepositRequest: React.FC<ComponentProps> = ({
                 </select>
               </div> */}
 
-              <div>
-                <label
-                  className="mb-2 block text-sm font-medium text-black dark:text-white"
-                  htmlFor="type"
-                >
-                  Network
-                </label>
-                <input
-                  className="w-full rounded border border-stroke bg-gray py-2 pl-3 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
-                  {...register('network')}
-                  // value={wallet?.network}
-                  readOnly
-                />
-              </div>
-
-              <div>
-                <label
-                  className="mb-2 block text-sm font-medium text-black dark:text-white"
-                  htmlFor="type"
-                >
-                  Wallet Address
-                </label>
-                <input
-                  className="w-full rounded border border-stroke bg-gray py-2 pl-3 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
-                  {...register('walletNo')}
-                  // value={wallet?.walletNo}
-                  readOnly
-                />
-              </div>
-              <div>
-                <label
-                  className="mb-2 block text-sm font-medium text-black dark:text-white"
-                  htmlFor="type"
-                >
-                  Amount $
-                </label>
-                <input
-                  type="number"
-                  className="w-full rounded border border-stroke bg-gray py-2 pl-3 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
-                  {...register('amount', { required: true })}
-                />
-                <p className="text-end text-sm  text-bodydark opacity-80">
-                  {/* {wallet && 'Minimum ' + '$' + wallet?.minimum} */}
-                </p>
-              </div>
-              <div>
-                <label
-                  className="mb-2 block text-sm font-medium text-black dark:text-white"
-                  htmlFor="type"
-                >
-                  Transaction Id
-                </label>
-                <input
-                  className="w-full rounded border border-stroke bg-gray py-2 pl-3 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
-                  {...register('trxId', { required: true })}
-                />
-              </div>
-
               {loading ? (
                 <PuffLoader className="mx-auto" color="#36d7b7" size={40} />
               ) : (
-                <Button btnName="Submit" />
+                <Button btnName="CONFIRM" />
               )}
 
               {/* <button className="btn flex justify-center rounded bg-primary py-2 px-6 font-medium text-gray hover:shadow-1"

@@ -91,7 +91,9 @@ const WelcomeSection = ({ profile }: any) => {
         </div>
       </div>
       <div>
-        {isDepositModalOpen && <DepositRequest closeModal={closeEditModal} />}
+        {isDepositModalOpen && (
+          <DepositRequest profile={profile} closeModal={closeEditModal} />
+        )}
       </div>
     </>
   );
