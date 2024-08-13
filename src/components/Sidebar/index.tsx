@@ -162,7 +162,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                                 (isActive && '!text-white')
                               }
                             >
-                              Buy NFT
+                              Purchase NFT
                             </NavLink>
                           </li>
 
@@ -174,7 +174,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                                 (isActive && '!text-white')
                               }
                             >
-                              Buy History
+                              NFT Purchase History
                             </NavLink>
                           </li>
 
@@ -186,7 +186,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                                 (isActive && '!text-white')
                               }
                             >
-                              Nft Level Bonus
+                              NFT Level Bonus
                             </NavLink>
                           </li>
 
@@ -198,7 +198,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                                 (isActive && '!text-white')
                               }
                             >
-                              Daily Nft Roi
+                              Daily NFT ROI
                             </NavLink>
                           </li>
                         </ul>

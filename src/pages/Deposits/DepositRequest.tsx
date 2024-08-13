@@ -9,6 +9,7 @@ import { PuffLoader } from 'react-spinners';
 import axios from 'axios';
 import MyContext from '../../hooks/MyContext';
 import QRCode from 'react-qr-code';
+import { FaRegCopy } from 'react-icons/fa6';
 
 type Inputs = {
   paymentMethod: string;
@@ -19,21 +20,19 @@ type Inputs = {
   depositMethodId: string;
 };
 interface ComponentProps {
-  fetchData: () => void;
   closeModal: () => void;
+  address: string;
 }
 
-const DepositRequest: React.FC<ComponentProps> = ({
-  fetchData,
-  closeModal,
-}) => {
+const DepositRequest: React.FC<ComponentProps> = ({ address, closeModal }) => {
   const { profile } = useContext(MyContext);
+  console.log(profile.address);
 
   const { register, handleSubmit } = useForm<Inputs>();
   const [loading, setLoading] = useState<boolean>(false);
 
   const [deposits, setDeposits] = useState<any>(null);
-  const [trnx, setTrnx] = useState<any>(null);
+  const [trnx, setTrnx] = useState<any>([]);
 
   const getMyAllDeposit = async () => {
     try {
@@ -51,7 +50,9 @@ const DepositRequest: React.FC<ComponentProps> = ({
         `https://web3.blockmaster.info/api/get-transactions?address=${profile?.address}`,
       );
 
-      setTrnx(transactionsResponse?.data);
+      if (transactionsResponse.status == 200) {
+        setTrnx(transactionsResponse?.data);
+      }
       setLoading(false);
     } catch (error) {
       setLoading(false);
@@ -68,46 +69,62 @@ const DepositRequest: React.FC<ComponentProps> = ({
   }, []);
 
   const onSubmit: SubmitHandler<Inputs> = async () => {
-    if (!deposits || !trnx) {
+    // Check if there are any transactions to process
+    if (trnx.length === 0) {
       Swal.fire({
-        // title: '',
-        text: 'Please await',
-        icon: 'warning',
+        title: 'Error',
+        text: 'Transaction Not Found',
+        icon: 'error',
       });
       return;
     }
 
-    const uniquData = trnx?.filter(
-      (t: any) => !deposits?.some((d: any) => d.trxId === t.hash),
-    );
+    // Filter unique transactions that match the profile's address and are not already in deposits
+    const uniquData = trnx?.filter((trx: any) => {
+      return (
+        trx.to === profile.address &&
+        !deposits?.some((d: any) => d.trxId === trx.hash)
+      );
+    });
 
-    if (uniquData.length == 0) {
+    console.log(uniquData);
+
+    // Check if there are any unique transactions to process
+    if (uniquData.length === 0) {
       Swal.fire({
-        title: 'success',
+        title: 'Error',
         text: 'New Transaction Not Found',
-        icon: 'success',
+        icon: 'error',
       });
       closeModal();
       return;
     }
+
     const reqData = {
-      depositMethodId: '2ee97fc0-2998-43b5-a38e-49992db77509',
       trxId: uniquData[0]?.hash,
       amount: uniquData[0]?.value,
       address: uniquData[0]?.to,
     };
 
     try {
+      // Post the entire array of transactions
       const response = await axiosInstance.post('/deposit-request', reqData);
-      setDeposits(response?.data?.data);
-      console.log(response, 'success deposit');
-      fetchData();
+      console.log(response);
+
+      if (response.data.success) {
+        Swal.fire({
+          title: 'Success',
+          text: 'Deposit processed successfully.',
+          icon: 'success',
+        });
+      }
       closeModal();
     } catch (error) {
       setLoading(false);
+      closeModal();
       Swal.fire({
-        title: 'error',
-        text: 'Something wrong',
+        title: 'Error',
+        text: 'Something went wrong while processing your deposit.',
         icon: 'error',
       });
     }
@@ -126,6 +143,28 @@ const DepositRequest: React.FC<ComponentProps> = ({
   //     setWallet(undefined);
   //   }
   // }, [selectedMethod, depositMethod]);
+  const copyToClipboard = async (textToCopy: any) => {
+    try {
+      await navigator.clipboard.writeText(textToCopy);
+      Swal.fire({
+        title: 'Copyed',
+        text: 'Copied success',
+        icon: 'success',
+        timer: 1200,
+      });
+    } catch (err) {
+      console.error('Failed to copy: ', err);
+      // setCopySuccess('Copy failed');
+    }
+  };
+
+  const splitAddress = (address: string) => {
+    if (!address) return ['', ''];
+    const midpoint = Math.ceil(address.length / 1.2);
+    return [address.slice(0, midpoint), address.slice(midpoint)];
+  };
+
+  const addressParts = splitAddress(profile?.address);
 
   return (
     <div className="fixed left-0 top-0 z-999 flex h-full min-h-screen w-full items-center justify-center bg-black/90 py-5">
@@ -137,11 +176,13 @@ const DepositRequest: React.FC<ComponentProps> = ({
         }}
       >
         <div className="modal rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark overflow-auto">
-          <div className="min-w-full w-[350px] md-w-[420px] lg:w-[600px] border-b border-stroke   pb-4 px-1 dark:border-strokedark">
+          <div className="min-w-full w-[350px] md-w-[420px] lg:w-[600px] border-b border-stroke   pb-4 px-4 dark:border-strokedark">
             <div className="w-full flex justify-between px-3 place-items-center py-3">
-              <h2 className="text-xl font-bold dark:text-white text-black ">
-                Deposit Request
-              </h2>
+              <div className=" flex justify-end">
+                <h2 className="text-xl font-bold dark:text-white text-black ">
+                  My Own Wallet Details
+                </h2>
+              </div>
               <strong
                 className="text-3xl align-center dark:text-white  cursor-pointer hover:text-black dark:hover:text-white"
                 onClick={closeModal}
@@ -150,46 +191,34 @@ const DepositRequest: React.FC<ComponentProps> = ({
               </strong>
             </div>
             <hr />
-            <p className="text-sm text-wrap max-w-10">
-              Address: {profile?.address}
-            </p>
+
             <form
               onSubmit={handleSubmit(onSubmit)}
-              className="flex  flex-col w-full"
+              className=" mx-auto  w-full lg:px-5 mt-4"
             >
-              {/* <div>
-                <label
-                  className="mb-2 block  dark:border-strokedark dark:focus:border-primary text-sm font-medium text-black dark:text-white"
-                  htmlFor="type"
-                >
-                  Payment Method
-                </label>
+              <QRCode
+                className="w-30 h-30 lg:w-35 lg:h-35 mx-auto"
+                // style={{ height: '256', maxWidth: '200', width: '200' }}
+                value={profile?.address ?? ''}
+                viewBox={`0 0 100 100`}
+              />
+              <div className="flex gap-2  mt-3">
+                <p className="text-sm flex flex-col lg:flex-row lg:text-lg">
+                  <span>{addressParts[0]}</span>
+                  {addressParts[1]}
+                </p>
 
-                <select
-                  id="paymentMethod"
-                  onClick={(e: any) => setSelectedMethod(e?.target?.value)}
-                  className=" py-3 w-full  rounded-md  dark:border-strokedark bg-inherit border-[1.5px] dark:text-white dark:focus:border-primary outline-none"
-                >
-                   {depositMethod?.data?.map((method: any) => (
-                    <option
-                      className=" text-body p-1 dark:text-black"
-                      key={method.id}
-                      value={method.id}
-                    >
-                      {method.paymentMethod}
-                    </option>
-                  ))}
-                </select>
-              </div> */}
-              <div className="mx-auto">
-                <QRCode
-                  style={{ height: '256', maxWidth: '200', width: '200' }}
-                  value={profile?.address ?? ''}
-                  viewBox={`0 0 256 256`}
+                <FaRegCopy
+                  onClick={() => copyToClipboard(`${profile?.address}`)}
+                  className="text-2xl cursor-pointer"
                 />
               </div>
-              <div className=" text-white p-1">
-                <p className="text-md mt-2">
+              <div className="text-black dark:text-white mt-1">
+                <div className="mb-2 flex justify-between text-black dark:text-white ">
+                  <p>Deposit Network: </p>
+                  <p>BNB Smart Chain(BEP20)</p>
+                </div>
+                <p className="text-sm ">
                   <span className="text-red-500 font-semibold">
                     Risk Warning:
                   </span>{' '}
@@ -202,13 +231,15 @@ const DepositRequest: React.FC<ComponentProps> = ({
               {loading ? (
                 <PuffLoader className="mx-auto" color="#36d7b7" size={40} />
               ) : (
-                <Button btnName="CONFIRM" />
+                <div className="lg:flex w-full justify-center mx-auto my-2">
+                  <button
+                    className={` px-6 w-full lg:w-fit bg-primary  btn flex justify-center rounded  py-2   font-medium text-gray hover:shadow-1`}
+                    type="submit"
+                  >
+                    Confirm
+                  </button>
+                </div>
               )}
-
-              {/* <button className="btn flex justify-center rounded bg-primary py-2 px-6 font-medium text-gray hover:shadow-1"
-              type="submit">
-              Update
-            </button> */}
             </form>
           </div>
         </div>

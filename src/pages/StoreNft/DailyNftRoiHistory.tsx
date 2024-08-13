@@ -36,7 +36,7 @@ const DailyNftRoiHistory = () => {
 
   return (
     <DefaultLayout>
-      <Breadcrumb pageName="NFT ROI" />
+      <Breadcrumb pageName="NFT ROI HISTORY" />
       <div className="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
         {/* <div className="max-w-full w-100 mb-4">
           <SearchInput placeholder="Search..." setSearch={setSearch} />
@@ -59,28 +59,21 @@ const DailyNftRoiHistory = () => {
                   <th className="min-w-[120px] py-4 px-4 font-medium text-black dark:text-white ">
                     Name
                   </th>
-
                   <th className="min-w-[120px] py-4 px-4 font-medium text-black dark:text-white ">
                     NFT Title
                   </th>
-
                   <th className="min-w-[120px] py-4 px-4 font-medium text-black dark:text-white ">
                     NFT Price
                   </th>
-
                   <th className="min-w-[120px] py-4 px-4 font-medium text-black dark:text-white ">
-                    Diration
+                    Duration
                   </th>
-
                   <th className="min-w-[120px] py-4 px-4 font-medium text-black dark:text-white ">
-                    Roi
+                    ROI
                   </th>
                   <th className="min-w-[120px] py-4 px-4 font-medium text-black dark:text-white ">
                     NFT Quantity
                   </th>
-                  {/* <th className="min-w-[120px] py-4 px-4 font-medium text-black dark:text-white">
-                    Status
-                  </th> */}
                 </tr>
               </thead>
               <tbody>
@@ -92,7 +85,6 @@ const DailyNftRoiHistory = () => {
                       </h5>
                     </td>
                     <TableRow data={formatToLocalDate(stake?.createdAt)} />
-
                     <TableRow data={stake?.myNft?.name} />
                     <TableRow data={stake?.myNft?.title} />
                     <TableRow data={stake?.myNft?.price} />

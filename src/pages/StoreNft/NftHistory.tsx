@@ -59,7 +59,7 @@ const NftHistory = () => {
                   </th>
 
                   <th className="min-w-[120px] py-4 px-4 font-medium text-black dark:text-white  ">
-                    last Bonus
+                    Last Bonus
                   </th>
                   <th className="min-w-[120px] py-4 px-4 font-medium text-black dark:text-white  ">
                     Name
@@ -74,15 +74,15 @@ const NftHistory = () => {
                   </th>
 
                   <th className="min-w-[120px] py-4 px-4 font-medium text-black dark:text-white  ">
-                    Diration
+                    DUration
                   </th>
 
                   <th className="min-w-[120px] py-4 px-4 font-medium text-black dark:text-white  ">
-                    Total Roi
+                    APY
                   </th>
 
                   <th className="min-w-[120px] py-4 px-4 font-medium text-black dark:text-white  ">
-                    Monthly Roi
+                    Monthly ROI
                   </th>
                   <th className="min-w-[120px] py-4 px-4 font-medium text-black dark:text-white  ">
                     NFT Quantity
@@ -116,7 +116,7 @@ const NftHistory = () => {
                             : 'bg-danger text-danger'
                         }`}
                       >
-                        {stake.status}
+                        {stake.status == 'ACTIVE' ? 'Runing' : 'Closed'}
                       </p>
                     </td>
                   </tr>

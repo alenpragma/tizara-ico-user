@@ -25,6 +25,7 @@ const WelcomeSection = ({ profile }: any) => {
         title: 'Copyed',
         text: 'Copied success',
         icon: 'success',
+        timer: 1200,
       });
     } catch (err) {
       console.error('Failed to copy: ', err);
@@ -53,7 +54,7 @@ const WelcomeSection = ({ profile }: any) => {
           </div>
           <div>
             <p>Address: {profile?.address}</p>
-            <p>Key: {profile?.privateKey}</p>
+            {/* <p>Key: {profile?.privateKey}</p> */}
             <h2 className="text-title-md capitalize lg:text-2xl font-semibold">
               Welcome to Tizara, {profile?.name}!
             </h2>
@@ -92,7 +93,10 @@ const WelcomeSection = ({ profile }: any) => {
       </div>
       <div>
         {isDepositModalOpen && (
-          <DepositRequest profile={profile} closeModal={closeEditModal} />
+          <DepositRequest
+            address={profile?.address}
+            closeModal={closeEditModal}
+          />
         )}
       </div>
     </>
