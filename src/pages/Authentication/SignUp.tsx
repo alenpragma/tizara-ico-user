@@ -63,32 +63,32 @@ const SignUp: React.FC = () => {
   };
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    Swal.fire({
-      title: 'Website Maintenance Notice',
-      text: 'Sign Up are temporarily suspended until August 10th for feature upgrades. Thank you for your patience!',
-      icon: 'warning',
-    });
-    return;
+    // Swal.fire({
+    //   title: 'Website Maintenance Notice',
+    //   text: 'Sign Up are temporarily suspended until August 10th for feature upgrades. Thank you for your patience!',
+    //   icon: 'warning',
+    // });
+    // return;
 
-    const isValid = enteredVal.toUpperCase() === captcha.toUpperCase();
-    if (!isValid) {
-      setError('Captcha verification failed. Please try again.');
-    } else {
-      setError('');
-    }
+    // const isValid = enteredVal.toUpperCase() === captcha.toUpperCase();
+    // if (!isValid) {
+    //   setError('Captcha verification failed. Please try again.');
+    // } else {
+    //   setError('');
+    // }
 
-    if (!isValid) {
-      return;
-    }
+    // if (!isValid) {
+    //   return;
+    // }
 
-    if (!isAllowedDomain(data.email)) {
-      Swal.fire({
-        title: 'Error',
-        text: 'Domain Not Allowed',
-        icon: 'error',
-      });
-      return;
-    }
+    // if (!isAllowedDomain(data.email)) {
+    //   Swal.fire({
+    //     title: 'Error',
+    //     text: 'Domain Not Allowed',
+    //     icon: 'error',
+    //   });
+    //   return;
+    // }
 
     if (data.referralCode === '') {
       delete data.referralCode;

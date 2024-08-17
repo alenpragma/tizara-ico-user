@@ -5,6 +5,7 @@ import { PuffLoader } from 'react-spinners';
 
 export const BuyModal = ({ fetchData, closeModal, data }: any) => {
   const [lodaing, setLoading] = useState(false);
+  console.log(data);
 
   const purchaseNFT = async () => {
     setLoading(true);
@@ -92,8 +93,13 @@ export const BuyModal = ({ fetchData, closeModal, data }: any) => {
                   Duration: {data.duration} Month
                 </p>
                 <p className="mb-0.5 block text-xl font-medium text-black dark:text-white">
-                  TotalROI: {data.dailyRoi} %
+                  Total ROI: {data.dailyRoi} %
                 </p>
+
+                <p className="mb-0.5 block text-xl font-medium text-black dark:text-white">
+                  Monthly ROI: 00
+                </p>
+
                 <p className="mb-0.5 block text-xl font-medium text-black dark:text-white">
                   Price: {data.price}
                 </p>

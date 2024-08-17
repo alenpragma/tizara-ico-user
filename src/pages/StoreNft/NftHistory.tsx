@@ -74,9 +74,8 @@ const NftHistory = () => {
                   </th>
 
                   <th className="min-w-[120px] py-4 px-4 font-medium text-black dark:text-white  ">
-                    DUration
+                    Duration
                   </th>
-
                   <th className="min-w-[120px] py-4 px-4 font-medium text-black dark:text-white  ">
                     APY
                   </th>
