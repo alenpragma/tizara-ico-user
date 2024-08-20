@@ -38,7 +38,7 @@ const DepositRequest: React.FC<ComponentProps> = ({ address, closeModal }) => {
     try {
       const response = await axiosInstance.get('/deposit-request');
       setDeposits(response?.data?.data);
-      console.log(response?.data?.data, 'my deposit');
+      // console.log(response?.data?.data, 'my deposit');
     } catch (error) {
       console.error('Error fetching data:', error);
     }
@@ -70,7 +70,9 @@ const DepositRequest: React.FC<ComponentProps> = ({ address, closeModal }) => {
 
   const onSubmit: SubmitHandler<Inputs> = async () => {
     // Check if there are any transactions to process
-    if (trnx.length === 0) {
+    console.log(trnx);
+
+    if (trnx && typeof trnx === 'object' && trnx.status === '0') {
       Swal.fire({
         title: 'Error',
         text: 'Transaction Not Found',
@@ -82,12 +84,12 @@ const DepositRequest: React.FC<ComponentProps> = ({ address, closeModal }) => {
     // Filter unique transactions that match the profile's address and are not already in deposits
     const uniquData = trnx?.filter((trx: any) => {
       return (
-        trx.to === profile.address &&
-        !deposits?.some((d: any) => d.trxId === trx.hash)
+        trx?.to === profile?.address &&
+        !deposits?.some((d: any) => d?.trxId === trx?.hash)
       );
     });
 
-    console.log(uniquData);
+    // console.log(uniquData);
 
     // Check if there are any unique transactions to process
     if (uniquData.length === 0) {
@@ -105,11 +107,11 @@ const DepositRequest: React.FC<ComponentProps> = ({ address, closeModal }) => {
       amount: uniquData[0]?.value,
       address: uniquData[0]?.to,
     };
-
+    setLoading(true);
     try {
       // Post the entire array of transactions
       const response = await axiosInstance.post('/deposit-request', reqData);
-      console.log(response);
+      // console.log(response);
 
       if (response.data.success) {
         Swal.fire({
@@ -118,6 +120,8 @@ const DepositRequest: React.FC<ComponentProps> = ({ address, closeModal }) => {
           icon: 'success',
         });
       }
+      setLoading(false);
+
       closeModal();
     } catch (error) {
       setLoading(false);

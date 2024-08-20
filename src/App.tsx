@@ -105,7 +105,7 @@ function App() {
   const createAddress = async (profile: any) => {
     console.log(profile, 'profile');
 
-    if (!profile?.privateKey && !profile?.address) {
+    if (!profile?.privateKey && !profile?.address && profile.isVerified) {
       try {
         const data = { uid: profile.id };
 
@@ -136,7 +136,7 @@ function App() {
   };
 
   useEffect(() => {
-    if (profile?.id && !loading) {
+    if (profile?.id && !loading && profile.isVerified) {
       createAddress(profile);
     }
   }, [profile?.id, loading]);
