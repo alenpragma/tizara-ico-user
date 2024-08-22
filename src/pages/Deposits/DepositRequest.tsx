@@ -225,9 +225,9 @@ const DepositRequest: React.FC<ComponentProps> = ({ address, closeModal }) => {
                 <p className="text-sm ">
                   <span className="text-red-500 font-semibold">
                     Risk Warning:
-                  </span>{' '}
+                  </span>
                   Deposits are subject to investment risk, including potential
-                  loss of principal. The minimum deposit amount is 10 USDT;
+                  loss of principal. The minimum deposit amount is 50 USDT;
                   ensure all transaction details are accurate to avoid loss of
                   funds.
                 </p>
