@@ -99,7 +99,7 @@ export const BuyModal = ({ fetchData, closeModal, data }: any) => {
                 </p>
 
                 <p className="mb-0.5 block text-xl font-medium text-black dark:text-white">
-                  Monthly ROI: {monthlyRoi}
+                  Monthly ROI: ${monthlyRoi}
                 </p>
 
                 <p className="mb-0.5 block text-xl font-medium text-black dark:text-white">
