@@ -68,27 +68,26 @@ const SignUp: React.FC = () => {
     //   text: 'Sign Up are temporarily suspended until August 10th for feature upgrades. Thank you for your patience!',
     //   icon: 'warning',
     // });
-    // return;
 
-    // const isValid = enteredVal.toUpperCase() === captcha.toUpperCase();
-    // if (!isValid) {
-    //   setError('Captcha verification failed. Please try again.');
-    // } else {
-    //   setError('');
-    // }
+    const isValid = enteredVal.toUpperCase() === captcha.toUpperCase();
+    if (!isValid) {
+      setError('Captcha verification failed. Please try again.');
+    } else {
+      setError('');
+    }
 
-    // if (!isValid) {
-    //   return;
-    // }
+    if (!isValid) {
+      return;
+    }
 
-    // if (!isAllowedDomain(data.email)) {
-    //   Swal.fire({
-    //     title: 'Error',
-    //     text: 'Domain Not Allowed',
-    //     icon: 'error',
-    //   });
-    //   return;
-    // }
+    if (!isAllowedDomain(data.email)) {
+      Swal.fire({
+        title: 'Error',
+        text: 'Invalid Email',
+        icon: 'error',
+      });
+      return;
+    }
 
     if (data.referralCode === '') {
       delete data.referralCode;

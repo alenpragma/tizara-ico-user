@@ -39,17 +39,17 @@ const SignIn: React.FC = () => {
   } = useForm<Inputs>();
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    // const isValid = enteredVal.toUpperCase() === captcha.toUpperCase();
-    // if (!isValid) {
-    //   setError('Captcha verification failed. Please try again.');
-    // } else {
-    //   setError('');
-    // }
-    // setEnteredVal('');
+    const isValid = enteredVal.toUpperCase() === captcha.toUpperCase();
+    if (!isValid) {
+      setError('Captcha verification failed. Please try again.');
+    } else {
+      setError('');
+    }
+    setEnteredVal('');
 
-    // if (!isValid) {
-    //   return;
-    // }
+    if (!isValid) {
+      return;
+    }
 
     setLoading(true);
     try {
