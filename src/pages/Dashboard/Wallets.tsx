@@ -31,7 +31,9 @@ const Wallets = ({ getWallet }: { getWallet: boolean }) => {
       <div>
         <CardDataStats
           title="Deposit Wallet"
-          total={`${wallet?.depositWallet ? wallet?.depositWallet : '00'} USD`}
+          total={`${
+            wallet?.depositWallet ? wallet?.depositWallet.toFixed(2) : '00'
+          } USD`}
         >
           <PiPackage className="lg:text-2xl dark:text-white text-primary" />
         </CardDataStats>

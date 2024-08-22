@@ -69,15 +69,10 @@ const DepositWalletHistory = () => {
                   <th className="min-w-[220px] py-4 px-4 font-medium text-black dark:text-white  ">
                     Date
                   </th>
-                  <th className="min-w-[120px] py-4 px-4 font-medium text-black dark:text-white">
-                    GateWay
-                  </th>
-                  <th className="min-w-[120px] py-4 px-4 font-medium text-black dark:text-white">
-                    Network
-                  </th>
-                  <th className="min-w-[120px] py-4 px-4 font-medium text-black dark:text-white">
+
+                  {/* <th className="min-w-[120px] py-4 px-4 font-medium text-black dark:text-white">
                     Wallet
-                  </th>
+                  </th> */}
                   <th className="min-w-[120px] py-4 px-4 font-medium text-black dark:text-white">
                     Trx ID
                   </th>
@@ -99,7 +94,7 @@ const DepositWalletHistory = () => {
                         data={formatToLocalDate(depositHistory?.createdAt)}
                       ></TableRow>
 
-                      <TableRow
+                      {/* <TableRow
                         data={depositHistory?.depositMethod?.paymentMethod}
                       ></TableRow>
 
@@ -108,7 +103,7 @@ const DepositWalletHistory = () => {
                       ></TableRow>
                       <TableRow
                         data={depositHistory?.depositMethod?.walletNo}
-                      ></TableRow>
+                      ></TableRow> */}
                       <TableRow data={depositHistory?.trxId}></TableRow>
 
                       <TableRow data={depositHistory?.amount}></TableRow>

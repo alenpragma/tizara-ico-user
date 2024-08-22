@@ -36,6 +36,10 @@ import { getTizaraUserToken } from './hooks/getTokenFromstorage';
 import { logout } from './utils/auth';
 import BuyNft from './pages/StoreNft/BuyNft';
 import NftHistory from './pages/StoreNft/NftHistory';
+import DailyNftRoiHistory from './pages/StoreNft/DailyNftRoiHistory';
+import NftlevelBonus from './pages/StoreNft/NftlevelBonus';
+import axios from 'axios';
+import ProfitBounty from './pages/Historys/ProfitBounty';
 
 function App() {
   const { pathname } = useLocation();
@@ -79,7 +83,6 @@ function App() {
       navigate('/');
     }
   }, [profile?.isVerified, pathname]);
-  // console.log(profile?.isVerified);
 
   useEffect(() => {
     if (profile?.status === false) {
@@ -98,6 +101,45 @@ function App() {
     setTheme,
     profile,
   };
+
+  const createAddress = async (profile: any) => {
+    console.log(profile, 'profile');
+
+    if (!profile?.privateKey && !profile?.address && profile.isVerified) {
+      try {
+        const data = { uid: profile.id };
+
+        const addressResponse = await axios.post(
+          'https://web3.blockmaster.info/api/create-address',
+          data,
+        );
+
+        const address = addressResponse.data;
+        console.log('New address created:', address);
+
+        try {
+          const response = await axiosInstance.patch(
+            `/profile/create-address/${profile.id}`,
+            address,
+          );
+          console.log('Profile updated with new address:', response.data);
+          if (response.data.statusCode == 200) {
+            fetchData();
+          }
+        } catch (error) {
+          console.error('Error updating profile:', error);
+        }
+      } catch (error) {
+        console.error('Error creating address:', error);
+      }
+    }
+  };
+
+  useEffect(() => {
+    if (profile?.id && !loading && profile.isVerified) {
+      createAddress(profile);
+    }
+  }, [profile?.id, loading]);
 
   return loading ? (
     <Loader />
@@ -151,6 +193,18 @@ function App() {
                 </>
               }
             />
+
+            <Route
+              path="/store-nft/nft-level-bonus"
+              element={
+                <>
+                  <PageTitle title="NFT-level-bonus" />
+                  <ProtectedRoute>
+                    <NftlevelBonus />
+                  </ProtectedRoute>
+                </>
+              }
+            />
             <Route
               path="/store-nft/nft-histor_y"
               element={
@@ -158,6 +212,18 @@ function App() {
                   <PageTitle title="NFT-History" />
                   <ProtectedRoute>
                     <NftHistory />
+                  </ProtectedRoute>
+                </>
+              }
+            />
+
+            <Route
+              path="/store-nft/nft-roi"
+              element={
+                <>
+                  <PageTitle title="NFT-Roi" />
+                  <ProtectedRoute>
+                    <DailyNftRoiHistory />
                   </ProtectedRoute>
                 </>
               }
@@ -205,6 +271,18 @@ function App() {
                   <PageTitle title="stake coin" />
                   <ProtectedRoute>
                     <RoyHistory />
+                  </ProtectedRoute>
+                </>
+              }
+            />
+
+            <Route
+              path="/profit-bounty"
+              element={
+                <>
+                  <PageTitle title="Profit Bounty" />
+                  <ProtectedRoute>
+                    <ProfitBounty />
                   </ProtectedRoute>
                 </>
               }

@@ -130,7 +130,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                     <React.Fragment>
                       <NavLink
                         to="#"
-                        className={`group hidden  relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+                        className={`group  relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
                           (pathname === '/store-nft' ||
                             pathname.includes('store-nft')) &&
                           'bg-graydark dark:bg-meta-4'
@@ -162,7 +162,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                                 (isActive && '!text-white')
                               }
                             >
-                              Buy NFT
+                              Purchase NFT
                             </NavLink>
                           </li>
 
@@ -174,7 +174,31 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                                 (isActive && '!text-white')
                               }
                             >
-                              Buy History
+                              NFT Purchase History
+                            </NavLink>
+                          </li>
+
+                          <li>
+                            <NavLink
+                              to="/store-nft/nft-level-bonus"
+                              className={({ isActive }) =>
+                                'group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ' +
+                                (isActive && '!text-white')
+                              }
+                            >
+                              NFT Level Bonus
+                            </NavLink>
+                          </li>
+
+                          <li>
+                            <NavLink
+                              to="/store-nft/nft-roi"
+                              className={({ isActive }) =>
+                                'group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ' +
+                                (isActive && '!text-white')
+                              }
+                            >
+                              Daily NFT ROI
                             </NavLink>
                           </li>
                         </ul>
@@ -323,6 +347,18 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                               }
                             >
                               Reward History
+                            </NavLink>
+                          </li>
+
+                          <li>
+                            <NavLink
+                              to="/profit-bounty"
+                              className={({ isActive }) =>
+                                'group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ' +
+                                (isActive && '!text-white')
+                              }
+                            >
+                              Profit Bounty
                             </NavLink>
                           </li>
                         </ul>

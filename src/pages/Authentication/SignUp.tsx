@@ -63,12 +63,11 @@ const SignUp: React.FC = () => {
   };
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    Swal.fire({
-      title: 'Website Maintenance Notice',
-      text: 'Sign-ups are temporarily suspended until July 26th for feature upgrades. Thank you for your patience!',
-      icon: 'warning',
-    });
-    return;
+    // Swal.fire({
+    //   title: 'Website Maintenance Notice',
+    //   text: 'Sign Up are temporarily suspended until August 10th for feature upgrades. Thank you for your patience!',
+    //   icon: 'warning',
+    // });
 
     const isValid = enteredVal.toUpperCase() === captcha.toUpperCase();
     if (!isValid) {
@@ -84,7 +83,7 @@ const SignUp: React.FC = () => {
     if (!isAllowedDomain(data.email)) {
       Swal.fire({
         title: 'Error',
-        text: 'Domain Not Allowed',
+        text: 'Invalid Email',
         icon: 'error',
       });
       return;

@@ -43,9 +43,10 @@ export const StakeNowModal = ({
   const [amount, setAmount] = useState<number>(0);
   const token = getTizaraUserToken();
 
+  // // dayly Reward
+  const yearlyRoy = (amount / 100) * selectedPlan.apy;
+  const dailyRoy = yearlyRoy / 365;
   // dayly Reward
-  const yearlyRoy = selectedPlan ? (amount / 100) * selectedPlan.apy : 0;
-  const dailyRoy = selectedPlan ? yearlyRoy / selectedPlan.duration : 0;
 
   const onSubmit: SubmitHandler<Inputs> = async (data: Inputs) => {
     console.log(data);

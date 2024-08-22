@@ -55,6 +55,7 @@ const TizaraTokenDashboard: React.FC = () => {
   const [royHistorys, setRoyHistorys] = useState<IROYHistory[]>([]);
   const [history, setHistory] = useState<any>([]);
   const [depositHistory, setDepositHistory] = useState<any>();
+  const [nFTWallet, setNFTWallet] = useState<any>();
   const navigate = useNavigate();
 
   const fetchProfileData = async () => {
@@ -69,6 +70,21 @@ const TizaraTokenDashboard: React.FC = () => {
     }
   };
 
+  const getWalletData = async () => {
+    try {
+      const response = await axiosInstance.get('/nft-wallets/my-nft-wallet');
+
+      if (response?.data?.success) {
+        setNFTWallet(response.data.data);
+      }
+    } catch (error) {
+      console.error('Error fetching profile data:', error);
+    }
+  };
+
+  useEffect(() => {
+    getWalletData();
+  }, []);
   useEffect(() => {
     if (profile?.status === false) {
       console.log(profile?.status);
@@ -236,6 +252,57 @@ const TizaraTokenDashboard: React.FC = () => {
             <PiPackage className="text-2xl dark:text-white text-primary" />
           </CardDataStats>
         </Link>
+      </div>
+
+      <hr className="my-5 border-success border-[1px]" />
+
+      <div className="  mt-10 grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6  lg:grid-cols-3  xl:grid-cols-4 2xl:gap-7.5">
+        <div>
+          <CardDataStats
+            title="DOME"
+            total={
+              `Quantity: ${nFTWallet?.dome ?? '0'} ` +
+              `Price: ${nFTWallet?.domePrice ?? '0'}`
+            }
+          >
+            <PiPackage className="text-2xl dark:text-white text-primary" />
+          </CardDataStats>
+        </div>
+        <div>
+          <CardDataStats
+            title="Hotel And Resort"
+            total={
+              `Quantity: ${nFTWallet?.hotelAndResort ?? '0'} ` +
+              `Price: ${nFTWallet?.hotelAndResortPrice ?? '0'}`
+            }
+          >
+            <PiPackage className="text-2xl dark:text-white text-primary" />
+          </CardDataStats>
+        </div>
+
+        <div>
+          <CardDataStats
+            title="Land"
+            total={
+              `Quantity: ${nFTWallet?.land ?? '0'} ` +
+              `Price: ${nFTWallet?.landPrice ?? '0'}`
+            }
+          >
+            <PiPackage className="text-2xl dark:text-white text-primary" />
+          </CardDataStats>
+        </div>
+
+        <div>
+          <CardDataStats
+            title="WAGON"
+            total={
+              `Quantity: ${nFTWallet?.wagon ?? '0'} ` +
+              `Price: ${nFTWallet?.wagonPrice ?? '0'}`
+            }
+          >
+            <PiPackage className="text-2xl dark:text-white text-primary" />
+          </CardDataStats>
+        </div>
       </div>
 
       <div className="mt-5">
