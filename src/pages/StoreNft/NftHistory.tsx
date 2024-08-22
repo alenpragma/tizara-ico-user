@@ -81,6 +81,9 @@ const NftHistory = () => {
                   </th>
 
                   <th className="min-w-[120px] py-4 px-4 font-medium text-black dark:text-white  ">
+                    Total ROI
+                  </th>
+                  <th className="min-w-[120px] py-4 px-4 font-medium text-black dark:text-white  ">
                     Monthly ROI
                   </th>
                   <th className="min-w-[120px] py-4 px-4 font-medium text-black dark:text-white  ">
@@ -104,6 +107,7 @@ const NftHistory = () => {
                     <TableRow data={stake?.price} />
                     <TableRow data={`${stake?.duration} Month`} />
                     <TableRow data={stake?.dailyRoi + ' %'} />
+                    <TableRow data={stake?.totalRoi} />
                     <TableRow data={stake?.monthlyRoi} />
                     <TableRow data={stake?.quantity} />
 
