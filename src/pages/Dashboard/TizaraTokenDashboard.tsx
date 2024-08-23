@@ -257,51 +257,75 @@ const TizaraTokenDashboard: React.FC = () => {
       <hr className="my-5 border-success border-[1px]" />
 
       <div className="  mt-10 grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6  lg:grid-cols-3  xl:grid-cols-4 2xl:gap-7.5">
-        <div>
-          <CardDataStats
-            title="DOME"
-            total={
-              `Quantity: ${nFTWallet?.dome ?? '0'} ` +
-              `Price: ${nFTWallet?.domePrice ?? '0'}`
-            }
-          >
-            <PiPackage className="text-2xl dark:text-white text-primary" />
-          </CardDataStats>
-        </div>
-        <div>
-          <CardDataStats
-            title="Hotel And Resort"
-            total={
-              `Quantity: ${nFTWallet?.hotelAndResort ?? '0'} ` +
-              `Price: ${nFTWallet?.hotelAndResortPrice ?? '0'}`
-            }
-          >
-            <PiPackage className="text-2xl dark:text-white text-primary" />
-          </CardDataStats>
+        <div className="rounded-md cursor-pointer border border-stroke bg-white py-2 px-3 lg:py-6 lg:px-4.5 shadow-default dark:border-strokedark dark:bg-boxdark">
+          <div className="mt-0 flex items-center justify-between">
+            <div className="flex h-10 w-10 lg:h-11.5 lg:w-11.5 items-center justify-center rounded-full bg-meta-2 dark:bg-meta-3">
+              <PiPackage className="text-2xl dark:text-white text-primary" />
+            </div>
+            <div className="text-end">
+              <h4 className="text-[14px] md:text-[20px] font-semibold  text-success">
+                {'DOME'}
+              </h4>
+              <span className="text-sm md:text-[18px] font-medium">
+                {`Qty: ${nFTWallet?.dome ?? '0'} ` +
+                  `Price: ${nFTWallet?.domePrice ?? '0'}`}
+              </span>
+            </div>
+          </div>
         </div>
 
-        <div>
-          <CardDataStats
-            title="Land"
-            total={
-              `Quantity: ${nFTWallet?.land ?? '0'} ` +
-              `Price: ${nFTWallet?.landPrice ?? '0'}`
-            }
-          >
-            <PiPackage className="text-2xl dark:text-white text-primary" />
-          </CardDataStats>
+        <div className="rounded-md cursor-pointer border border-stroke bg-white py-2 px-3 lg:py-6 lg:px-4.5 shadow-default dark:border-strokedark dark:bg-boxdark">
+          <div className="mt-0 flex items-center justify-between">
+            <div className="flex h-10 w-10 lg:h-11.5 lg:w-11.5 items-center justify-center rounded-full bg-meta-2 dark:bg-meta-3">
+              <PiPackage className="text-2xl dark:text-white text-primary" />
+            </div>
+
+            <div className="text-end">
+              <h4 className="text-[14px] md:text-[20px] font-semibold  text-success">
+                {'Hotel And Resort'}
+              </h4>
+              <span className="text-sm md:text-[18px] font-medium">
+                {`Qty: ${nFTWallet?.hotelAndResort ?? '0'} ` +
+                  `Price: ${nFTWallet?.hotelAndResortPrice ?? '0'}`}
+              </span>
+            </div>
+          </div>
         </div>
 
-        <div>
-          <CardDataStats
-            title="WAGON"
-            total={
-              `Quantity: ${nFTWallet?.wagon ?? '0'} ` +
-              `Price: ${nFTWallet?.wagonPrice ?? '0'}`
-            }
-          >
-            <PiPackage className="text-2xl dark:text-white text-primary" />
-          </CardDataStats>
+        <div className="rounded-md cursor-pointer border border-stroke bg-white py-2 px-3 lg:py-6 lg:px-4.5 shadow-default dark:border-strokedark dark:bg-boxdark">
+          <div className="mt-0 flex items-center justify-between">
+            <div className="flex h-10 w-10 lg:h-11.5 lg:w-11.5 items-center justify-center rounded-full bg-meta-2 dark:bg-meta-3">
+              <PiPackage className="text-2xl dark:text-white text-primary" />
+            </div>
+
+            <div className="text-end">
+              <h4 className="text-[14px] md:text-[20px] font-semibold  text-success">
+                {'Land'}
+              </h4>
+              <span className="text-sm md:text-[18px] font-medium">
+                {`Qty: ${nFTWallet?.land ?? '0'} ` +
+                  `Price: ${nFTWallet?.landPrice ?? '0'}`}
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div className="rounded-md cursor-pointer border border-stroke bg-white py-2 px-3 lg:py-6 lg:px-4.5 shadow-default dark:border-strokedark dark:bg-boxdark">
+          <div className="mt-0 flex items-center justify-between">
+            <div className="flex h-10 w-10 lg:h-11.5 lg:w-11.5 items-center justify-center rounded-full bg-meta-2 dark:bg-meta-3">
+              <PiPackage className="text-2xl dark:text-white text-primary" />
+            </div>
+
+            <div className="text-end">
+              <h4 className="text-[14px] md:text-[20px] font-semibold  text-success">
+                {'WAGON'}
+              </h4>
+              <span className="text-sm md:text-[18px] font-medium">
+                {`Qty: ${nFTWallet?.wagon ?? '0'} ` +
+                  `Price: ${nFTWallet?.wagonPrice ?? '0'}`}
+              </span>
+            </div>
+          </div>
         </div>
       </div>
 
