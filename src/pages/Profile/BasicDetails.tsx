@@ -1,5 +1,7 @@
 import { PuffLoader } from 'react-spinners';
-import InputField from '../../components/Forms/InputField';
+import { useState } from 'react';
+import PhoneVerify from './PhoneVerifyModal';
+import OtpModal from './OtpModal';
 
 interface UserProfile {
   name: string;
@@ -21,6 +23,21 @@ const BasicDetails = ({
   loading,
   profile,
 }: any) => {
+  const [openPhone, setOpenPhone] = useState(false);
+  const [openOTPModal, setOpenOTPModal] = useState(false);
+
+  const handleVerifyClick = (e: any) => {
+    e.preventDefault();
+    setOpenPhone(true);
+  };
+
+  const closePhoneModal = () => {
+    setOpenPhone(false);
+  };
+  const closeOtpModal = () => {
+    setOpenOTPModal(false);
+  };
+
   return (
     <>
       <form
@@ -58,13 +75,23 @@ const BasicDetails = ({
           <label className="mb-2.5 block text-black dark:text-white">
             Phone
           </label>
-          <input
-            type="phone"
-            {...register('phone')}
-            defaultValue={profile?.phone as string}
-            placeholder="Phone"
-            className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-          />
+          <div className="relative">
+            <input
+              type="phone"
+              {...register('phone')}
+              defaultValue={profile?.phone as string}
+              placeholder="Phone"
+              className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+            />
+
+            <button
+              className="absolute top-0 right-0 bg-red-500 dark:bg-red-500 px-4 ml-2 py-2 rounded-lg  text-white disabled:bg-gray-400"
+              onClick={handleVerifyClick}
+              // disabled={isVerified || !value}
+            >
+              Verify
+            </button>
+          </div>
         </div>
 
         <div className="mb-4.5">
@@ -87,6 +114,15 @@ const BasicDetails = ({
           </button>
         )}
       </form>
+
+      {openPhone && (
+        <PhoneVerify
+          closeModal={closePhoneModal}
+          data={profile?.phone}
+          setOpenOTPModal={setOpenOTPModal}
+        />
+      )}
+      {openOTPModal && <OtpModal closeModal={closeOtpModal} />}
     </>
   );
 };

@@ -252,12 +252,12 @@ input[type='number'] {
 input,
 optgroup,
 select {
-  padding: 8px;
-  background-color: #1c2434;
+  padding: 10px;
+  background-color: #1d2a39;
   border: none;
   outline: none;
 }
 
 .phoneInput textarea {
-  background-color: #1c2434;
+  background-color: #1d2a39;
 }
