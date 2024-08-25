@@ -6,6 +6,7 @@ import SignIn from './pages/Authentication/SignIn';
 import SignUp from './pages/Authentication/SignUp';
 import ProtectedRoute from './hooks/ProtectedRoute';
 import 'react-loading-skeleton/dist/skeleton.css';
+import 'react-phone-number-input/style.css';
 
 const Profile = lazy(() => import('./pages/Profile'));
 
@@ -72,7 +73,6 @@ function App() {
       fetchData();
     }
   }, [token]);
-  // console.log(token);
 
   useEffect(() => {
     if (
@@ -103,8 +103,6 @@ function App() {
   };
 
   const createAddress = async (profile: any) => {
-    console.log(profile, 'profile');
-
     if (!profile?.privateKey && !profile?.address && profile.isVerified) {
       try {
         const data = { uid: profile.id };

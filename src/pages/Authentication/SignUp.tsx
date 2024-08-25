@@ -4,6 +4,8 @@ import Swal from 'sweetalert2';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import SvgImage from './SvgImage';
 import { PuffLoader } from 'react-spinners';
+import PhoneInput from 'react-phone-number-input';
+
 import {
   getTizaraUserToken,
   setTizaraUserToken,
@@ -40,6 +42,8 @@ const SignUp: React.FC = () => {
   const [error, setError] = useState('');
   const [enteredVal, setEnteredVal] = useState('');
   const [captcha, setCaptcha] = useState('');
+  // const [value, setValue] = useState<any>('');
+  // console.log(value);
 
   const handleValidate = (valid: boolean) => {
     setIsValid(valid);
@@ -249,6 +253,17 @@ const SignUp: React.FC = () => {
                         </span>
                       </div>
                     </div>
+
+                    {/* <div className="phoneInput">
+                      <PhoneInput
+                        className="w-full rounded-lg border border-stroke dark:text-white  pl-2 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input  dark:focus:border-primary"
+                        international
+                        // countryCallingCodeEditable={false}
+                        defaultCountry="US"
+                        value={value}
+                        onChange={setValue}
+                      />
+                    </div> */}
 
                     <div className="mb-4">
                       <label className="mb-2.5 block font-medium text-black dark:text-white">

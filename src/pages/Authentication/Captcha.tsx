@@ -143,6 +143,8 @@ export const Captcha: React.FC<any> = ({
             width: '100px',
             boxSizing: 'border-box',
             borderRadius: '3px',
+            background: '#dddd',
+            border: '1px solid #999',
           }}
           className="border"
           onChange={(e) => {

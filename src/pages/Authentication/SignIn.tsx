@@ -7,6 +7,7 @@ import SvgImage from './SvgImage';
 import { IoLockOpenOutline } from 'react-icons/io5';
 import { baseUrl } from '../../utils/api';
 import { Captcha } from './Captcha';
+import axiosInstance from '../../utils/axiosConfig';
 
 // import { Captcha } from './Captcha';
 
@@ -53,20 +54,17 @@ const SignIn: React.FC = () => {
 
     setLoading(true);
     try {
-      const response = await fetch(`${baseUrl}/auth/login`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-      });
+      const responseData = await axiosInstance.post('/auth/login', data);
+      console.log(responseData);
 
-      const responseData = await response.json();
+      setLoading(false);
+      if (responseData?.data?.success) {
+        localStorage.setItem(
+          'tizaraUserToken',
+          responseData?.data?.data?.token,
+        );
 
-      if (responseData.success) {
-        localStorage.setItem('tizaraUserToken', responseData?.data?.token);
-
-        if (responseData?.data?.user?.isVerified == false) {
+        if (responseData?.data?.data?.user?.isVerified == false) {
           Swal.fire({
             title: 'success',
             text: 'You are not verified Please varfied email',
@@ -79,7 +77,7 @@ const SignIn: React.FC = () => {
           return;
         }
 
-        if (responseData?.data?.user?.isVerified == true) {
+        if (responseData?.data?.data?.user?.isVerified == true) {
           Swal.fire({
             title: 'success',
             text: 'Login successfull',
@@ -91,17 +89,18 @@ const SignIn: React.FC = () => {
 
           return;
         }
-      } else if (responseData.success == false) {
+      }
+    } catch (error: any) {
+      console.log(error);
+      if (error.statusCode == 400) {
         Swal.fire({
           title: 'Error',
-          text: responseData?.message,
+          text: error?.message,
           icon: 'error',
         });
+        setLoading(false);
       }
-    } catch (error) {
-      console.log(error);
     }
-    setLoading(false);
   };
 
   const [passwordVisible, setPasswordVisible] = useState(false);

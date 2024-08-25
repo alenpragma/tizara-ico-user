@@ -248,3 +248,16 @@ input[type='number'] {
     height: 20px;
   }
 }
+.phoneInput button,
+input,
+optgroup,
+select {
+  padding: 8px;
+  background-color: #1c2434;
+  border: none;
+  outline: none;
+}
+
+.phoneInput textarea {
+  background-color: #1c2434;
+}
