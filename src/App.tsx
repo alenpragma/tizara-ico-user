@@ -86,7 +86,7 @@ function App() {
 
   useEffect(() => {
     if (profile?.status === false) {
-      console.log(profile?.status);
+      // console.log(profile?.status);
 
       logout();
     }
@@ -113,14 +113,14 @@ function App() {
         );
 
         const address = addressResponse.data;
-        console.log('New address created:', address);
+        // console.log('New address created:', address);
 
         try {
           const response = await axiosInstance.patch(
             `/profile/create-address/${profile.id}`,
             address,
           );
-          console.log('Profile updated with new address:', response.data);
+          // console.log('Profile updated with new address:', response.data);
           if (response.data.statusCode == 200) {
             fetchData();
           }

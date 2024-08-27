@@ -91,7 +91,8 @@ const SignIn: React.FC = () => {
         }
       }
     } catch (error: any) {
-      console.log(error);
+      setLoading(false);
+
       if (error.statusCode == 400) {
         Swal.fire({
           title: 'Error',

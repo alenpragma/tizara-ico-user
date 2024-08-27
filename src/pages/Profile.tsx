@@ -10,6 +10,7 @@ import Swal from 'sweetalert2';
 import { baseUrl } from '../utils/api';
 import { getTizaraUserToken } from '../hooks/getTokenFromstorage';
 import MyContext from '../hooks/MyContext';
+import InputField from '../components/Forms/InputField';
 
 interface ApiResponse {
   statusCode: number;
@@ -35,16 +36,26 @@ export interface UserProfile {
   createdAt: string;
   updatedAt: string;
 }
-export interface UpdateUserProfile {
+export type UpdateUserProfile = {
   id: string;
   name: string;
   phone: string;
+  profile: any;
+  profileImage?: any;
+  nidPassFront?: any;
+  nidPassback?: any;
+};
+interface ProfileData {
+  name?: string;
+  phone?: string;
+  email?: string;
+  [key: string]: any; // Allows for additional properties
 }
-
 const Profile = () => {
   const [profile, setProfile] = useState<UserProfile | null>(null);
-  const { register, handleSubmit } = useForm<UserProfile>();
-  // const [selectedFile, setSelectedFile] = useState<any>(null);
+  const { register, handleSubmit, control } = useForm<UserProfile>();
+  const [selectedFile, setSelectedFile] = useState<any>(null);
+  const [selectedAddressFile, setSelectedAddressFile] = useState<any>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const token = getTizaraUserToken();
 
@@ -64,63 +75,96 @@ const Profile = () => {
     fetchData();
   }, []);
 
-  // const fileSelectedHandler = (event: any) => {
-  //   setSelectedFile(event.target.files[0]);
-  // };
+  const [selectedFiles, setSelectedFiles] = useState({
+    profile: null,
+    nidPassFront: null,
+    nidPassback: null,
+  });
 
-  const onSubmit: SubmitHandler<any> = async (data: any) => {
-    // setLoading(true);
-    // const formData = new FormData();
-    // formData.append('name', e?.name || profile?.name);
-    // formData.append('phone', e?.phone || profile?.phone);
-
-    // if (selectedFile) {
-    //   // formData.append('file', selectedFile, selectedFile?.name);
-    // }
-    data.email = '';
-
-    if (data.phone.length < 9) {
-      Swal.fire({
-        title: 'Error',
-        text: 'Phone is too short',
-        icon: 'error',
-      });
+  const fileSelectedHandler = (e: any) => {
+    const { name, files } = e.target;
+    if (files && files[0].size > 1024 * 1024) {
+      // 1 MB limit
+      alert('File size should be less than 1 MB');
+      e.target.value = ''; // Clear the file input
       return;
     }
-    Object.keys(data).forEach((key) => {
-      const value = data[key as keyof UpdateUserProfile]; // Access the value using the key and type assertion
 
-      // If the value is not an empty string, convert it to a number
-      if (value === '') {
-        delete data[key as keyof UpdateUserProfile];
+    setSelectedFiles((prevFiles) => ({
+      ...prevFiles,
+      [name]: files[0],
+    }));
+  };
+
+  const onSubmit: SubmitHandler<any> = async (data: UpdateUserProfile) => {
+    // console.log(data);
+
+    const obj: ProfileData = {
+      ...data,
+      name: data.name,
+      phone: data.phone,
+      email: profile!.email,
+    };
+
+    console.log(obj);
+    for (const key in obj) {
+      if (obj[key] === '') {
+        delete obj[key];
       }
-    });
-
-    if (Object.keys(data).length === 0) {
-      console.log('empty');
-      return;
     }
+    console.log(obj);
+
+    const profileimg = obj['profileImage'];
+    const nidPassFront = obj['nidPassFront'];
+    const nidPassback = obj['nidPassback'];
+
+    delete obj['profileImage'];
+    delete obj['nidPassFront'];
+    delete obj['nidPassback'];
+
+    const wrappedObj = { data: obj };
+
+    const jsondata = JSON.stringify(wrappedObj);
+
+    const formData = new FormData();
+    formData.append('profileImage', profileimg[0] as Blob);
+    formData.append('nidPassFront', nidPassFront[0] as Blob);
+    formData.append('nidPassback', nidPassback[0] as Blob);
+    formData.append('data', jsondata);
+
+    // data.email = '';
+
+    // if (obj.phone.length < 9) {
+    //   Swal.fire({
+    //     title: 'Error',
+    //     text: 'Phone is too short',
+    //     icon: 'error',
+    //   });
+    //   return;
+    // }
+    // Object.keys(data).forEach((key) => {
+    //   const value = data[key as keyof UpdateUserProfile]; // Access the value using the key and type assertion
+
+    //   // If the value is not an empty string, convert it to a number
+    //   if (value === '') {
+    //     delete data[key as keyof UpdateUserProfile];
+    //   }
+    // });
+
+    // if (Object.keys(data).length === 0) {
+    //   console.log('empty');
+    //   return;
+    // }
+    // console.log(data);
 
     try {
       const response = await fetch(`${baseUrl}/profile/${profile?.id}`, {
         method: 'PATCH',
         headers: {
-          'Content-Type': 'application/json',
           Authorization: `${token}`,
         },
-        body: JSON.stringify(data),
+        body: formData,
       });
-
-      // const response = await axios.patch(
-      //   `${baseUrl}/profile/${profile?.id}`,
-      //   formData,
-      //   {
-      //     headers: {
-      //       'Content-Type': 'multipart/form-data',
-      //       Authorization: `${token}`,
-      //     },
-      //   },
-      // );
       if (response) {
         Swal.fire({
           title: 'Success',
@@ -189,7 +233,7 @@ const Profile = () => {
                 </svg>
                 <input
                   type="file"
-                  name="profile"
+                  name="file"
                   id="profile"
                   className="sr-only"
                   onChange={fileSelectedHandler}
@@ -207,11 +251,13 @@ const Profile = () => {
               <div className="lg:flex w-full gap-5 text-start justify-center">
                 <BasicDetails
                   onSubmit={onSubmit}
+                  control={control}
                   handleSubmit={handleSubmit}
                   fetchData={fetchData}
                   profile={profile}
                   register={register}
                   loading={loading}
+                  fileSelectedHandler={fileSelectedHandler}
                 />
               </div>
             </div>

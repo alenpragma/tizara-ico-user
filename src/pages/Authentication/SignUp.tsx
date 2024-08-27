@@ -42,8 +42,8 @@ const SignUp: React.FC = () => {
   const [error, setError] = useState('');
   const [enteredVal, setEnteredVal] = useState('');
   const [captcha, setCaptcha] = useState('');
-  // const [value, setValue] = useState<any>('');
-  // console.log(value);
+  const [value, setValue] = useState<any>('');
+  console.log(value);
 
   const handleValidate = (valid: boolean) => {
     setIsValid(valid);
