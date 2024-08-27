@@ -54,8 +54,8 @@ const SignIn: React.FC = () => {
 
     setLoading(true);
     try {
-      const responseData = await axiosInstance.post('/auth/login', data);
-      console.log(responseData);
+      const responseData = await axiosInstance.post('/limit/auth/login', data);
+      console.log(responseData.data);
 
       setLoading(false);
       if (responseData?.data?.success) {
@@ -92,11 +92,20 @@ const SignIn: React.FC = () => {
       }
     } catch (error: any) {
       setLoading(false);
+      console.log(error);
 
       if (error.statusCode == 400) {
         Swal.fire({
           title: 'Error',
           text: error?.message,
+          icon: 'error',
+        });
+        setLoading(false);
+      }
+      if (error.statusCode == 429) {
+        Swal.fire({
+          title: 'Error',
+          text: 'Too many requests, please try again later',
           icon: 'error',
         });
         setLoading(false);
