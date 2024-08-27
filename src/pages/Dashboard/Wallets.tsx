@@ -71,6 +71,17 @@ const Wallets = ({ getWallet }: { getWallet: boolean }) => {
           <PiPackage className="lg:text-2xl dark:text-white text-primary" />
         </CardDataStats>
       </div>
+
+      <div>
+        <CardDataStats
+          title="ICO Wallet"
+          total={`${
+            wallet?.newIcoWallet ? wallet?.newIcoWallet.toFixed(2) : '00'
+          } TIZARA`}
+        >
+          <PiPackage className="lg:text-2xl dark:text-white text-primary" />
+        </CardDataStats>
+      </div>
     </div>
   );
 };
