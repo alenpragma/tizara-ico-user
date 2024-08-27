@@ -55,9 +55,12 @@ const BuyNft = () => {
       <Breadcrumb pageName="Buy NFT" />
       <>
         <div className="grid grid-cols-1 md:grid-cols-1 xl:grid-cols-3 gap-3 justify-items-center">
-          {nfts?.map((nft: INft) => {
+          {nfts?.map((nft: INft, i: any) => {
             return (
-              <div className="border cursor-pointer dark:hover:bg-opacity-50 dark:border-strokedark dark:bg-boxdark bg-[#ffff]  p-5 border-strokedark rounded-2xl max-w-full w-[320px] xl:w-[390px]">
+              <div
+                key={i}
+                className="border cursor-pointer dark:hover:bg-opacity-50 dark:border-strokedark dark:bg-boxdark bg-[#ffff]  p-5 border-strokedark rounded-2xl max-w-full w-[320px] xl:w-[390px]"
+              >
                 <img
                   className="transition-transform w-full h-55 duration-500 hover:scale-[1.1] rounded-md"
                   src={nft.img}

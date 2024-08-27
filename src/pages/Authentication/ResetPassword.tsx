@@ -60,9 +60,16 @@ const ResetPassword = () => {
           icon: 'error',
         });
       }
-    } catch (error) {
+    } catch (error: any) {
       setLoading(false);
-
+      if (error.statusCode == 429) {
+        Swal.fire({
+          title: 'Error',
+          text: 'Too many requests, please try again later',
+          icon: 'error',
+        });
+        setLoading(false);
+      }
       console.log(error);
     }
   };

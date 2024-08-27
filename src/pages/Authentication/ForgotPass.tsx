@@ -43,6 +43,14 @@ const ForgotPass = () => {
           icon: 'error',
         });
       } else {
+        if (error.statusCode == 429) {
+          Swal.fire({
+            title: 'Error',
+            text: 'Too many requests, please try again later',
+            icon: 'error',
+          });
+          setLoading(false);
+        }
         Swal.fire({
           title: 'Error',
           text: error.message || 'An error occurred',
