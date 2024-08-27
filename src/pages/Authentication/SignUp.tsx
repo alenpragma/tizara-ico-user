@@ -99,7 +99,7 @@ const SignUp: React.FC = () => {
 
     setLoading(true);
     try {
-      const response = await fetch(`${baseUrl}/auth/register`, {
+      const response = await fetch(`${baseUrl}/limit/auth/register`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

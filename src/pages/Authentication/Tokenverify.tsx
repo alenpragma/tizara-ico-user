@@ -22,7 +22,7 @@ const Tokenverify = () => {
     try {
       setLoading(true);
 
-      const response = await fetch(`${baseUrl}/auth/verify-token`, {
+      const response = await fetch(`${baseUrl}/limit/auth/verify-token`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
