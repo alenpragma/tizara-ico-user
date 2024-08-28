@@ -1,51 +1,54 @@
-import React from 'react';
-import { Controller, Control, FieldValues } from 'react-hook-form';
+import { FieldError, UseFormRegister } from 'react-hook-form';
 
 interface InputFieldProps {
-  type: string;
-  placeholder?: string;
   label: string;
   name: string;
-  control: Control<FieldValues>;
-  rules?: Record<string, any>;
+  register: UseFormRegister<any>;
+  placeholder?: string;
+  defaultValue?: string | number;
+  required?: boolean;
+  type?: string;
+  error?: FieldError;
+  [key: string]: any;
 }
 
-const FileUploder: React.FC<InputFieldProps> = ({
-  type,
-  placeholder,
+const FileUploder = ({
   label,
   name,
-  control,
-  rules,
-}) => {
+  register,
+  placeholder,
+  defaultValue,
+  required,
+  type = 'text',
+  error,
+  ...props
+}: InputFieldProps) => {
+  const validationRules = {
+    ...(required && { required: 'This field is required' }),
+    ...(type === 'file' && {
+      validate: {
+        fileSize: (files: FileList) => {
+          if (files.length === 0) return true;
+          return (
+            files[0].size <= 1048576 || 'File size should be less than 1 MB'
+          );
+        },
+      },
+    }),
+  };
+
   return (
-    <div>
-      {/* <label htmlFor={name}>{label}</label> */}
-      <Controller
-        name={name}
-        control={control}
-        rules={rules}
-        render={({ field, fieldState }) => (
-          <>
-            <input
-              type={type}
-              placeholder={placeholder}
-              {...field}
-              onChange={(e) => {
-                if (
-                  e.target.files?.[0] &&
-                  e.target.files[0].size > 1024 * 1024
-                ) {
-                  alert('File size should be less than 1 MB');
-                } else {
-                  field.onChange(e);
-                }
-              }}
-            />
-            {fieldState?.error && <span>{fieldState.error.message}</span>}
-          </>
-        )}
+    <div className="w-full">
+      <label className="mb-0.5 block text-black dark:text-white">{label}</label>
+      <input
+        type={type}
+        placeholder={placeholder}
+        {...register(name, validationRules)}
+        defaultValue={defaultValue}
+        className="w-full rounded-lg border border-stroke bg-transparent py-3 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+        {...props}
       />
+      {error && <span className="text-red-500">{error.message}</span>}
     </div>
   );
 };

@@ -39,6 +39,7 @@ const DropdownUser = ({ profile }: any) => {
 
   const logout = () => {
     removeTizaraUserToken();
+    localStorage.removeItem('userStatus');
     navigate('/');
   };
 

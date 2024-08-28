@@ -53,7 +53,12 @@ interface ProfileData {
 }
 const Profile = () => {
   const [profile, setProfile] = useState<UserProfile | null>(null);
-  const { register, handleSubmit, control } = useForm<UserProfile>();
+  const {
+    register,
+    handleSubmit,
+    control,
+    formState: { errors },
+  } = useForm<UserProfile>();
   const [selectedFile, setSelectedFile] = useState<any>(null);
   const [selectedAddressFile, setSelectedAddressFile] = useState<any>(null);
   const [loading, setLoading] = useState<boolean>(false);
@@ -97,30 +102,26 @@ const Profile = () => {
   };
 
   const onSubmit: SubmitHandler<any> = async (data: UpdateUserProfile) => {
-    // console.log(data);
-
     const obj: ProfileData = {
-      ...data,
-      name: data.name,
-      phone: data.phone,
-      email: profile!.email,
+      name: data.name || profile!.name,
+      phone: data.phone || profile!.phone,
     };
 
-    console.log(obj);
-    for (const key in obj) {
-      if (obj[key] === '') {
-        delete obj[key];
-      }
-    }
-    console.log(obj);
+    // console.log(obj);
+    // for (const key in obj) {
+    //   if (obj[key] === '') {
+    //     delete obj[key];
+    //   }
+    // }
+    // console.log(obj);
 
-    const profileimg = obj['profileImage'];
-    const nidPassFront = obj['nidPassFront'];
-    const nidPassback = obj['nidPassback'];
+    const profileimg = data['profileImage'];
+    const nidPassFront = data['nidPassFront'];
+    const nidPassback = data['nidPassback'];
 
-    delete obj['profileImage'];
-    delete obj['nidPassFront'];
-    delete obj['nidPassback'];
+    // delete obj['profileImage'];
+    // delete obj['nidPassFront'];
+    // delete obj['nidPassback'];
 
     const wrappedObj = { data: obj };
 
@@ -257,7 +258,8 @@ const Profile = () => {
                   profile={profile}
                   register={register}
                   loading={loading}
-                  fileSelectedHandler={fileSelectedHandler}
+                  errors={errors}
+                  // fileSelectedHandler={fileSelectedHandler}
                 />
               </div>
             </div>

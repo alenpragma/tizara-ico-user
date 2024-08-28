@@ -13,6 +13,7 @@ import {
 import { baseUrl } from '../../utils/api';
 import { IoLockOpenOutline } from 'react-icons/io5';
 import { Captcha } from './Captcha';
+import { PiPhone } from 'react-icons/pi';
 
 type Inputs = {
   email: string;
@@ -72,6 +73,10 @@ const SignUp: React.FC = () => {
     //   text: 'Sign Up are temporarily suspended until August 10th for feature upgrades. Thank you for your patience!',
     //   icon: 'warning',
     // });
+
+    console.log(data);
+
+    return;
 
     const isValid = enteredVal.toUpperCase() === captcha.toUpperCase();
     if (!isValid) {
@@ -263,16 +268,19 @@ const SignUp: React.FC = () => {
                       </div>
                     </div>
 
-                    {/* <div className="phoneInput">
+                    <div className="phoneInput relative">
                       <PhoneInput
                         className="w-full rounded-lg border border-stroke dark:text-white  pl-2 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input  dark:focus:border-primary"
                         international
-                        // countryCallingCodeEditable={false}
+                        countryCallingCodeEditable={false}
                         defaultCountry="US"
                         value={value}
                         onChange={setValue}
                       />
-                    </div> */}
+                      <span className="absolute right-3 top-3">
+                        <PiPhone className="text-2xl" />
+                      </span>
+                    </div>
 
                     <div className="mb-4">
                       <label className="mb-2.5 block font-medium text-black dark:text-white">

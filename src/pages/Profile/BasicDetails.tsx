@@ -23,8 +23,8 @@ const BasicDetails = ({
   handleSubmit,
   register,
   loading,
-  profile,
-  fileSelectedHandler,
+  profile, // fileSelectedHandler,
+  errors,
 }: any) => {
   const [openPhone, setOpenPhone] = useState(false);
   const [openOTPModal, setOpenOTPModal] = useState(false);
@@ -84,16 +84,21 @@ const BasicDetails = ({
               {...register('phone')}
               defaultValue={profile?.phone as string}
               placeholder="Phone"
+              disabled={profile?.PhoneVerify}
               className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
             />
 
-            {/* <button
-              className="absolute top-0 right-0 bg-red-500 dark:bg-red-500 px-4 ml-2 py-2 rounded-lg  text-white disabled:bg-gray-400"
+            <button
+              className={`${
+                profile?.PhoneVerify
+                  ? ' bg-green-500 dark:bg-green-500'
+                  : ' bg-red-500 dark:bg-red-500'
+              } absolute top-0 right-0 px-4 ml-2 py-2 rounded-lg  text-white disabled:bg-gray-400`}
               onClick={handleVerifyClick}
-              // disabled={isVerified || !value}
+              disabled={profile?.PhoneVerify}
             >
               Verify
-            </button> */}
+            </button>
           </div>
         </div>
 
@@ -109,83 +114,55 @@ const BasicDetails = ({
           />
         </div>
 
-        {/* <div className="mb-4.5">
-          <img className="w-30" src={profile?.profileImage} alt="" />
+        <div className="mb-4.5">
+          <img
+            className="w-22 h-18 rounded-md"
+            src={profile?.profileImage}
+            alt=""
+          />
 
-          <InputField
+          <FileUploder
             type="file"
             label="Image"
             name="profileImage"
             register={register}
+            error={errors.profileImage}
+            disabled={profile?.kyc}
           />
         </div>
 
         <div className="mb-4.5">
-          <img className="w-30" src={profile?.nidPassFront} alt="" />
-          <InputField
+          <img
+            className="w-22 h-18 rounded-md"
+            src={profile?.nidPassFront}
+            alt=""
+          />
+
+          <FileUploder
             type="file"
             label="nidPassFront"
             name="nidPassFront"
             register={register}
+            error={errors.nidPassFront}
+            disabled={profile?.kyc}
           />
         </div>
 
         <div className="mb-4.5">
-          <img className="w-30" src={profile?.nidPassback} alt="" />
-          <InputField
+          <img
+            className="w-22 h-18 rounded-md"
+            src={profile?.nidPassback}
+            alt=""
+          />
+          <FileUploder
             type="file"
             label="nidPassback"
             name="nidPassback"
             register={register}
+            error={errors?.nidPassback}
+            disabled={profile?.kyc}
           />
-        </div> */}
-        {/* 222 */}
-        {/* <div className="mb-4.5">
-          <label className="mb-2.5 block text-black dark:text-white">
-            nidPassback
-          </label>
-          <input
-            type="file"
-            name="nidPassback"
-            id="profile"
-            className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-            onChange={fileSelectedHandler}
-          />
-        </div> */}
-
-        {/* <div className="relative">
-          <InputField
-            type="file"
-            placeholder="Image"
-            label="Nid / Passport Front Page"
-            name="addressImage"
-            register={register}
-          />
-          <button
-            className="absolute top-8 right-0 bg-red-500 dark:bg-red-500 px-4 ml-2 py-2 rounded-lg  text-white disabled:bg-gray-400"
-            onClick={handleVerifyClick}
-            // disabled={isVerified || !value}
-          >
-            Verify
-          </button>
-        </div> */}
-
-        {/* <div className="relative">
-          <InputField
-            type="file"
-            placeholder="Image"
-            label="Nid / Passport Back Page"
-            name="addressImage"
-            register={register}
-          />
-          <button
-            className="absolute top-8 right-0 bg-red-500 dark:bg-red-500 px-4 ml-2 py-2 rounded-lg  text-white disabled:bg-gray-400"
-            onClick={handleVerifyClick}
-            // disabled={isVerified || !value}
-          >
-            Verify
-          </button>
-        </div> */}
+        </div>
 
         {loading ? (
           <PuffLoader className="mx-auto" color="#36d7b7" size={40} />

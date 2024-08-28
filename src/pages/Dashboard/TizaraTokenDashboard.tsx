@@ -85,6 +85,7 @@ const TizaraTokenDashboard: React.FC = () => {
   useEffect(() => {
     getWalletData();
   }, []);
+
   useEffect(() => {
     if (profile?.status === false) {
       console.log(profile?.status);
