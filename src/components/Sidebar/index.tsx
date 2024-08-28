@@ -202,7 +202,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                             </NavLink>
                           </li>
 
-                          <li>
+                          {/* <li>
                             <NavLink
                               to="/store-nft/nft-roi"
                               className={({ isActive }) =>
@@ -212,7 +212,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                             >
                               NFT Profit Bounty
                             </NavLink>
-                          </li>
+                          </li> */}
                         </ul>
                       </div>
                       {/* <!-- Dropdown Menu End --> */}
