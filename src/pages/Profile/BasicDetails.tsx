@@ -168,7 +168,7 @@ const BasicDetails = ({
           {!profile?.isKycVerifyed && (
             <FileUploder
               type="file"
-              label="nidPassFront"
+              label="Nid/Passport Front Page image"
               name="nidPassFront"
               placeholder="fsdf"
               register={register}
@@ -198,7 +198,7 @@ const BasicDetails = ({
           {!profile?.isKycVerifyed && (
             <FileUploder
               type="file"
-              label="Nid/Pass Back"
+              label="Nid/Passport back page image"
               name="nidPassback"
               register={register}
               error={errors?.nidPassback}
