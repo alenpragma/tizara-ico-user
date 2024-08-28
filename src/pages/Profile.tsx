@@ -63,7 +63,6 @@ const Profile = () => {
   const [selectedAddressFile, setSelectedAddressFile] = useState<any>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const token = getTizaraUserToken();
-
   const fetchData = async () => {
     try {
       const response = await axiosInstance.get<ApiResponse>('/profile');
@@ -259,7 +258,7 @@ const Profile = () => {
                   register={register}
                   loading={loading}
                   errors={errors}
-                  // fileSelectedHandler={fileSelectedHandler}
+                  fileSelectedHandler={fileSelectedHandler}
                 />
               </div>
             </div>
