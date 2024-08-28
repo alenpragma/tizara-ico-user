@@ -2,8 +2,8 @@ import { PuffLoader } from 'react-spinners';
 import { useState } from 'react';
 import PhoneVerify from './PhoneVerifyModal';
 import OtpModal from './OtpModal';
-import InputField from '../../components/Forms/InputField';
 import FileUploder from '../FileUploder';
+import PhoneInput from 'react-phone-number-input';
 
 interface UserProfile {
   name: string;
@@ -24,8 +24,11 @@ const BasicDetails = ({
   register,
   loading,
   profile,
+  errors,
   fileSelectedHandler,
 }: any) => {
+  const [value, setValue] = useState<any>('');
+
   const [openPhone, setOpenPhone] = useState(false);
   const [openOTPModal, setOpenOTPModal] = useState(false);
 
@@ -41,6 +44,9 @@ const BasicDetails = ({
     setOpenOTPModal(false);
   };
 
+  // const handleValidate = (valid: boolean) => {
+  //   setIsValid(valid);
+  // };
   return (
     <>
       <form
@@ -84,16 +90,39 @@ const BasicDetails = ({
               {...register('phone')}
               defaultValue={profile?.phone as string}
               placeholder="Phone"
+              disabled
               className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
             />
 
-            {/* <button
-              className="absolute top-0 right-0 bg-red-500 dark:bg-red-500 px-4 ml-2 py-2 rounded-lg  text-white disabled:bg-gray-400"
-              onClick={handleVerifyClick}
-              // disabled={isVerified || !value}
-            >
-              Verify
-            </button> */}
+            {/* <PhoneInput
+              className="w-full rounded-lg border border-stroke dark:text-white  pl-2 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input  dark:focus:border-primary"
+              international
+              // countryCallingCodeEditable={false}
+              defaultCountry="US"
+              value={value}
+              {...register('phone', { required: true })}
+              onChange={setValue}
+            /> */}
+
+            {!profile?.isPhoneVerifyed ? (
+              <button
+                className={`${
+                  profile?.PhoneVerify
+                    ? ' bg-green-500 dark:bg-green-500'
+                    : ' bg-red-500 dark:bg-red-500'
+                } hidden absolute top-1 right-0 px-4 ml-2 py-2 rounded-lg  text-white disabled:bg-gray-400`}
+                onClick={handleVerifyClick}
+                disabled={profile?.PhoneVerify}
+              >
+                Verify
+              </button>
+            ) : (
+              <p
+                className={` cursor-pointer bg-green-500 dark:bg-green-500' absolute top-1 right-0 px-3 ml-2 py-2 rounded-lg  text-white disabled:bg-gray-400`}
+              >
+                Verified
+              </p>
+            )}
           </div>
         </div>
 
@@ -109,83 +138,75 @@ const BasicDetails = ({
           />
         </div>
 
-        {/* <div className="mb-4.5">
-          <img className="w-30" src={profile?.profileImage} alt="" />
-
-          <InputField
+        <div className="mb-4.5">
+          <FileUploder
             type="file"
-            label="Image"
+            label="Profile Image"
             name="profileImage"
             register={register}
+            error={errors.profileImage}
+            disabled={profile?.kyc}
+            fileSelectedHandler={fileSelectedHandler}
           />
         </div>
 
         <div className="mb-4.5">
-          <img className="w-30" src={profile?.nidPassFront} alt="" />
-          <InputField
-            type="file"
-            label="nidPassFront"
-            name="nidPassFront"
-            register={register}
-          />
+          <div>
+            {profile?.isKycVerifyed && (
+              <label className="mb-2.5 block text-black dark:text-white">
+                Nid/Pass Back
+              </label>
+            )}
+            {profile?.nidPassFront && (
+              <img
+                className="w-22 h-18 rounded-md"
+                src={profile?.nidPassFront}
+                alt=""
+              />
+            )}
+          </div>
+          {!profile?.isKycVerifyed && (
+            <FileUploder
+              type="file"
+              label="nidPassFront"
+              name="nidPassFront"
+              placeholder="fsdf"
+              register={register}
+              error={errors.nidPassFront}
+              disabled={profile?.isKycVerifyed}
+              fileSelectedHandler={fileSelectedHandler}
+            />
+          )}
         </div>
 
         <div className="mb-4.5">
-          <img className="w-30" src={profile?.nidPassback} alt="" />
-          <InputField
-            type="file"
-            label="nidPassback"
-            name="nidPassback"
-            register={register}
-          />
-        </div> */}
-        {/* 222 */}
-        {/* <div className="mb-4.5">
-          <label className="mb-2.5 block text-black dark:text-white">
-            nidPassback
-          </label>
-          <input
-            type="file"
-            name="nidPassback"
-            id="profile"
-            className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-            onChange={fileSelectedHandler}
-          />
-        </div> */}
+          <div>
+            {profile?.isKycVerifyed && (
+              <label className="mb-2.5 block text-black dark:text-white">
+                Nid/Pass Back
+              </label>
+            )}
+            {profile?.nidPassback && (
+              <img
+                className="w-22 h-18 rounded-md"
+                src={profile?.nidPassback}
+                alt=""
+              />
+            )}
+          </div>
 
-        {/* <div className="relative">
-          <InputField
-            type="file"
-            placeholder="Image"
-            label="Nid / Passport Front Page"
-            name="addressImage"
-            register={register}
-          />
-          <button
-            className="absolute top-8 right-0 bg-red-500 dark:bg-red-500 px-4 ml-2 py-2 rounded-lg  text-white disabled:bg-gray-400"
-            onClick={handleVerifyClick}
-            // disabled={isVerified || !value}
-          >
-            Verify
-          </button>
-        </div> */}
-
-        {/* <div className="relative">
-          <InputField
-            type="file"
-            placeholder="Image"
-            label="Nid / Passport Back Page"
-            name="addressImage"
-            register={register}
-          />
-          <button
-            className="absolute top-8 right-0 bg-red-500 dark:bg-red-500 px-4 ml-2 py-2 rounded-lg  text-white disabled:bg-gray-400"
-            onClick={handleVerifyClick}
-            // disabled={isVerified || !value}
-          >
-            Verify
-          </button>
-        </div> */}
+          {!profile?.isKycVerifyed && (
+            <FileUploder
+              type="file"
+              label="Nid/Pass Back"
+              name="nidPassback"
+              register={register}
+              error={errors?.nidPassback}
+              disabled={profile?.isKycVerifyed}
+              fileSelectedHandler={fileSelectedHandler}
+            />
+          )}
+        </div>
 
         {loading ? (
           <PuffLoader className="mx-auto" color="#36d7b7" size={40} />

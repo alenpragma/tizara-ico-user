@@ -3,8 +3,9 @@ export interface IWallet {
   depositWallet: number;
   icoWallet: number;
   nativeWallet: number;
-  stakeWallet: number;
-  newIcoWallet?: number;
+  stakeWallet: any;
+  newIcoWallet?: any;
+  nftWallet?: any;
   createdAt: string;
   updatedAt: string;
   userId: string;

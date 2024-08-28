@@ -75,6 +75,7 @@ function App() {
   }, [token]);
 
   useEffect(() => {
+    localStorage.setItem('userStatus', profile?.isVerified);
     if (
       profile?.isVerified === false &&
       pathname !== '/verify-token' &&
@@ -86,8 +87,6 @@ function App() {
 
   useEffect(() => {
     if (profile?.status === false) {
-      // console.log(profile?.status);
-
       logout();
     }
   }, [profile?.status]);

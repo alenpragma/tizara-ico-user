@@ -1,4 +1,4 @@
-import React, { CSSProperties, useState } from 'react';
+import React, { CSSProperties, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { useForm, SubmitHandler } from 'react-hook-form';
@@ -8,6 +8,7 @@ import { IoLockOpenOutline } from 'react-icons/io5';
 import { baseUrl } from '../../utils/api';
 import { Captcha } from './Captcha';
 import axiosInstance from '../../utils/axiosConfig';
+import { getTizaraUserToken } from '../../hooks/getTokenFromstorage';
 
 // import { Captcha } from './Captcha';
 
@@ -24,6 +25,16 @@ const SignIn: React.FC = () => {
   const [error, setError] = useState('');
   const [enteredVal, setEnteredVal] = useState('');
   const [captcha, setCaptcha] = useState('');
+
+  const token = getTizaraUserToken();
+  const userStatus = localStorage.getItem('userStatus');
+  console.log(userStatus);
+
+  useEffect(() => {
+    if (token && userStatus == 'true') {
+      navigate('/dashboard');
+    }
+  }, [userStatus]);
 
   const handleValidate = (valid: boolean) => {
     setIsValid(valid);
@@ -54,8 +65,8 @@ const SignIn: React.FC = () => {
 
     setLoading(true);
     try {
-      const responseData = await axiosInstance.post('/limit/auth/login', data);
-      console.log(responseData.data);
+      const responseData = await axiosInstance.post('/auth/login', data);
+      // console.log(responseData.data);
 
       setLoading(false);
       if (responseData?.data?.success) {

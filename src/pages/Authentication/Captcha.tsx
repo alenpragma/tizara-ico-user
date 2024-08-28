@@ -19,7 +19,8 @@ export const Captcha: React.FC<any> = ({
 
   // small word
   const drawCaptchaBackground = (ctx: CanvasRenderingContext2D) => {
-    for (let x = 0; x < 15; x++) {
+    // background symbol
+    for (let x = 0; x < 8; x++) {
       let p1 = Math.random() * 125;
       let p2 = Math.random() * 30;
       ctx.beginPath();
@@ -60,7 +61,7 @@ export const Captcha: React.FC<any> = ({
       ctx.font = 'bolder ' + fontSize + 'px Arial bold';
 
       ctx.translate(x, y);
-      let rot = Math.random() * 80; // Reduce rotation for better alignment
+      let rot = Math.random() * 50; // Reduce rotation for better alignment
       ctx.rotate((60 - rot) * (Math.PI / 180));
       ctx.translate(-x, -y);
 

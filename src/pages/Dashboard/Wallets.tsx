@@ -82,6 +82,17 @@ const Wallets = ({ getWallet }: { getWallet: boolean }) => {
           <PiPackage className="lg:text-2xl dark:text-white text-primary" />
         </CardDataStats>
       </div>
+
+      <div>
+        <CardDataStats
+          title="Nft Wallet"
+          total={`${
+            wallet?.nftWallet ? wallet?.nftWallet.toFixed(2) : '00'
+          } USD`}
+        >
+          <PiPackage className="lg:text-2xl dark:text-white text-primary" />
+        </CardDataStats>
+      </div>
     </div>
   );
 };
