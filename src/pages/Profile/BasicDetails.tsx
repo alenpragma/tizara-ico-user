@@ -168,6 +168,7 @@ const BasicDetails = ({
               type="file"
               label="nidPassFront"
               name="nidPassFront"
+              placeholder="fsdf"
               register={register}
               error={errors.nidPassFront}
               disabled={profile?.isKycVerifyed}
