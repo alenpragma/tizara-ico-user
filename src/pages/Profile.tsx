@@ -9,8 +9,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import Swal from 'sweetalert2';
 import { baseUrl } from '../utils/api';
 import { getTizaraUserToken } from '../hooks/getTokenFromstorage';
-import MyContext from '../hooks/MyContext';
-import InputField from '../components/Forms/InputField';
+import { MdVerifiedUser } from 'react-icons/md';
 
 interface ApiResponse {
   statusCode: number;
@@ -31,6 +30,7 @@ export interface UserProfile {
   role: string;
   profileImage: string | null;
   isRcm: boolean;
+  isKycVerifyed: boolean;
   referralCount: number;
   nativeWallet: number;
   createdAt: string;
@@ -106,14 +106,6 @@ const Profile = () => {
       phone: data.phone || profile!.phone,
     };
 
-    // console.log(obj);
-    // for (const key in obj) {
-    //   if (obj[key] === '') {
-    //     delete obj[key];
-    //   }
-    // }
-    // console.log(obj);
-
     const profileimg = data['profileImage'];
     const nidPassFront = data['nidPassFront'];
     const nidPassback = data['nidPassback'];
@@ -132,32 +124,8 @@ const Profile = () => {
     formData.append('nidPassback', nidPassback[0] as Blob);
     formData.append('data', jsondata);
 
-    // data.email = '';
-
-    // if (obj.phone.length < 9) {
-    //   Swal.fire({
-    //     title: 'Error',
-    //     text: 'Phone is too short',
-    //     icon: 'error',
-    //   });
-    //   return;
-    // }
-    // Object.keys(data).forEach((key) => {
-    //   const value = data[key as keyof UpdateUserProfile]; // Access the value using the key and type assertion
-
-    //   // If the value is not an empty string, convert it to a number
-    //   if (value === '') {
-    //     delete data[key as keyof UpdateUserProfile];
-    //   }
-    // });
-
-    // if (Object.keys(data).length === 0) {
-    //   console.log('empty');
-    //   return;
-    // }
-    // console.log(data);
-
     try {
+      setLoading(true);
       const response = await fetch(`${baseUrl}/profile/${profile?.id}`, {
         method: 'PATCH',
         headers: {
@@ -166,6 +134,8 @@ const Profile = () => {
         body: formData,
       });
       if (response) {
+        setLoading(false);
+
         Swal.fire({
           title: 'Success',
           text: 'Successfully updated',
@@ -173,6 +143,7 @@ const Profile = () => {
         });
       }
     } catch (error: any) {
+      setLoading(false);
       if (error.response) {
         Swal.fire({
           title: 'Error',
@@ -201,7 +172,7 @@ const Profile = () => {
           <div className=" z-30 mx-auto  h-20 w-20 md:w-40 md:h-40 rounded-full   p-1 backdrop-blur   sm:p-3">
             <div className="relative h-20 w-20 md:w-40 md:h-40 flex mx-auto ">
               <img
-                className="h-20 w-20 md:w-40 md:h-40 rounded-full"
+                className="h-20 w-20 border-1 border-gray-500 md:w-40 md:h-40 rounded-full"
                 src={profile?.profileImage ?? userImage}
                 alt="profile"
               />
@@ -244,8 +215,19 @@ const Profile = () => {
 
           <div className="mt-4">
             <h3 className="mb-1.5 text-2xl font-semibold text-black dark:text-white">
-              <span className="text-meta-3"> My Reffer Code:</span>{' '}
+              <span className="text-meta-3"> My Reffer Code:</span>
               {profile?.myReferralCode}
+            </h3>
+
+            <h3 className="mb-1.5 text-2xl font-semibold text-black dark:text-white">
+              <p className="text-meta-3 flex justify-center gap-2">
+                {profile?.isKycVerifyed && (
+                  <div>
+                    <p>Verifyed</p>
+                    <MdVerifiedUser className="mt-1" />
+                  </div>
+                )}
+              </p>{' '}
             </h3>
             <div className="mt-2 mx-auto ">
               <div className="lg:flex w-full gap-5 text-start justify-center">

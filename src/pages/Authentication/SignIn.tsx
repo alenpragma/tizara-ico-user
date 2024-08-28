@@ -65,8 +65,8 @@ const SignIn: React.FC = () => {
 
     setLoading(true);
     try {
-      const responseData = await axiosInstance.post('/limit/auth/login', data);
-      console.log(responseData.data);
+      const responseData = await axiosInstance.post('/auth/login', data);
+      // console.log(responseData.data);
 
       setLoading(false);
       if (responseData?.data?.success) {

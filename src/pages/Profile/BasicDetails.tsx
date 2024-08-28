@@ -110,7 +110,7 @@ const BasicDetails = ({
                   profile?.PhoneVerify
                     ? ' bg-green-500 dark:bg-green-500'
                     : ' bg-red-500 dark:bg-red-500'
-                } absolute top-1 right-0 px-4 ml-2 py-2 rounded-lg  text-white disabled:bg-gray-400`}
+                } hidden absolute top-1 right-0 px-4 ml-2 py-2 rounded-lg  text-white disabled:bg-gray-400`}
                 onClick={handleVerifyClick}
                 disabled={profile?.PhoneVerify}
               >
@@ -157,11 +157,13 @@ const BasicDetails = ({
                 Nid/Pass Back
               </label>
             )}
-            <img
-              className="w-22 h-18 rounded-md"
-              src={profile?.nidPassFront}
-              alt=""
-            />
+            {profile?.nidPassFront && (
+              <img
+                className="w-22 h-18 rounded-md"
+                src={profile?.nidPassFront}
+                alt=""
+              />
+            )}
           </div>
           {!profile?.isKycVerifyed && (
             <FileUploder
@@ -184,11 +186,13 @@ const BasicDetails = ({
                 Nid/Pass Back
               </label>
             )}
-            <img
-              className="w-22 h-18 rounded-md"
-              src={profile?.nidPassback}
-              alt=""
-            />
+            {profile?.nidPassback && (
+              <img
+                className="w-22 h-18 rounded-md"
+                src={profile?.nidPassback}
+                alt=""
+              />
+            )}
           </div>
 
           {!profile?.isKycVerifyed && (
