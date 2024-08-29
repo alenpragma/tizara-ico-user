@@ -28,7 +28,6 @@ const SignIn: React.FC = () => {
 
   const token = getTizaraUserToken();
   const userStatus = localStorage.getItem('userStatus');
-  console.log(userStatus);
 
   useEffect(() => {
     if (token && userStatus == 'true') {
@@ -36,7 +35,8 @@ const SignIn: React.FC = () => {
     }
   }, [userStatus]);
 
-  const handleValidate = (valid: boolean) => {
+  const handleValidate = (valid: any) => {
+    valid.preventDefault();
     setIsValid(valid);
   };
 
@@ -51,17 +51,17 @@ const SignIn: React.FC = () => {
   } = useForm<Inputs>();
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    const isValid = enteredVal.toUpperCase() === captcha.toUpperCase();
-    if (!isValid) {
-      setError('Captcha verification failed. Please try again.');
-    } else {
-      setError('');
-    }
-    setEnteredVal('');
+    // const isValid = enteredVal.toUpperCase() === captcha.toUpperCase();
+    // if (!isValid) {
+    //   setError('Captcha verification failed. Please try again.');
+    // } else {
+    //   setError('');
+    // }
+    // setEnteredVal('');
 
-    if (!isValid) {
-      return;
-    }
+    // if (!isValid) {
+    //   return;
+    // }
 
     setLoading(true);
     try {
