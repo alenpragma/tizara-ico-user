@@ -112,7 +112,7 @@ export const Captcha: React.FC<any> = ({
   // };
 
   const onResetClicked = (event: any) => {
-    event.preventDefault(); // Prevent default form submission
+    event.preventDefault();
 
     setCaptcha('');
     setEnteredVal('');

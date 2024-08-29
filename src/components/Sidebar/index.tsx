@@ -198,13 +198,13 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                                 (isActive && '!text-white')
                               }
                             >
-                              Monthly NFT ROI
+                              NFT Reward
                             </NavLink>
                           </li>
 
-                          {/* <li>
+                          <li>
                             <NavLink
-                              to="/store-nft/nft-roi"
+                              to="/store-nft/nft-roi-profit-bounty"
                               className={({ isActive }) =>
                                 'group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ' +
                                 (isActive && '!text-white')
@@ -212,7 +212,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                             >
                               NFT Profit Bounty
                             </NavLink>
-                          </li> */}
+                          </li>
                         </ul>
                       </div>
                       {/* <!-- Dropdown Menu End --> */}

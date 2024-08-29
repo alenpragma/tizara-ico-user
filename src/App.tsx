@@ -41,6 +41,7 @@ import DailyNftRoiHistory from './pages/StoreNft/DailyNftRoiHistory';
 import NftlevelBonus from './pages/StoreNft/NftlevelBonus';
 import axios from 'axios';
 import ProfitBounty from './pages/Historys/ProfitBounty';
+import NftProfitBounty from './pages/StoreNft/NftProfitBounty';
 
 function App() {
   const { pathname } = useLocation();
@@ -221,6 +222,18 @@ function App() {
                   <PageTitle title="NFT-Roi" />
                   <ProtectedRoute>
                     <DailyNftRoiHistory />
+                  </ProtectedRoute>
+                </>
+              }
+            />
+
+            <Route
+              path="/store-nft/nft-roi-profit-bounty"
+              element={
+                <>
+                  <PageTitle title="NFT-Roi-profit-Bounty" />
+                  <ProtectedRoute>
+                    <NftProfitBounty />
                   </ProtectedRoute>
                 </>
               }

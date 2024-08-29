@@ -21,7 +21,7 @@ const DailyNftRoiHistory = () => {
   const fetchData = async () => {
     // setLoading(true);
     try {
-      const response = await axiosInstance.get('/nft-daily-roi-history');
+      const response = await axiosInstance.get('/nft-monthly-roi-history');
       setLoading(false);
 
       setNftRoi(response?.data?.data?.data);
