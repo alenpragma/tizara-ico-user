@@ -172,9 +172,9 @@ const Profile = () => {
           <div className=" z-30 mx-auto  h-20 w-20 md:w-40 md:h-40 rounded-full   p-1 backdrop-blur   sm:p-3">
             <div className="relative h-20 w-20 md:w-40 md:h-40 flex mx-auto ">
               <img
-                className="h-20 w-20 border-1 border-gray-500 md:w-40 md:h-40 rounded-full"
+                className="h-20 w-20 border border-green-300 md:w-40 md:h-40 rounded-full"
                 src={profile?.profileImage ?? userImage}
-                alt="profile"
+                alt="profile image"
               />
 
               {/* <label
@@ -222,8 +222,8 @@ const Profile = () => {
             <h3 className="mb-1.5 text-2xl font-semibold text-black dark:text-white">
               <p className="text-meta-3 flex justify-center gap-2">
                 {profile?.isKycVerifyed && (
-                  <div>
-                    <p>Verifyed</p>
+                  <div className="flex">
+                    <p>Verified</p>
                     <MdVerifiedUser className="mt-1" />
                   </div>
                 )}

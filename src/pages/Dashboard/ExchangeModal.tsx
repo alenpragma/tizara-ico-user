@@ -2,11 +2,10 @@ import React, { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import InputField from '../../components/Forms/InputField';
 import { PuffLoader } from 'react-spinners';
-import { ApiResponse } from '../../types/global';
 import axiosInstance from '../../utils/axiosConfig';
 import Swal from 'sweetalert2';
 
-const ExchangeModal = ({ openAndCloseEditModal, wallet }: any) => {
+const ExchangeModal = ({ openAndCloseExchangeModal, wallet }: any) => {
   // console.log(data);
   const [lodaing, setLodaing] = useState<boolean>(false);
   const [otpModalOpen, setOtpModalOpen] = useState<boolean>(false);
@@ -17,23 +16,31 @@ const ExchangeModal = ({ openAndCloseEditModal, wallet }: any) => {
     const exchagneData = {
       amount: data.amount,
     };
+    try {
+      const response = await axiosInstance.post(
+        '/tizara-exchagne-and-convart/exchange-to-my-wallet',
+        exchagneData,
+      );
 
-    const response = await axiosInstance.post(
-      '/tizara-exchagne-and-convart/exchange-to-my-wallet',
-      exchagneData,
-    );
-
-    if (response.data.statusCode == 200) {
+      if (response.data.statusCode == 200) {
+        Swal.fire({
+          title: 'success',
+          text: response.data.message,
+          icon: 'success',
+        });
+      }
+      openAndCloseExchangeModal(false);
+    } catch (error: any) {
       Swal.fire({
         title: 'success',
-        text: response.data.message,
+        text: error.message,
         icon: 'success',
       });
+      openAndCloseExchangeModal(false);
     }
-    console.log(response.data, 'hello');
   };
 
-  const eligibleAmount = (wallet.newIcoWallet / 100) * 10;
+  const eligibleAmount = (wallet.newIcoWallet / 100) * 20;
   const formattedAmount = eligibleAmount.toFixed(2);
   console.log(formattedAmount);
 
@@ -44,7 +51,7 @@ const ExchangeModal = ({ openAndCloseEditModal, wallet }: any) => {
         onClick={(e) => {
           const target = e.target as HTMLDivElement;
           if (target.className === 'modal-container')
-            openAndCloseEditModal(false);
+            openAndCloseExchangeModal(false);
         }}
       >
         <div className="modal rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark overflow-auto">
@@ -56,7 +63,7 @@ const ExchangeModal = ({ openAndCloseEditModal, wallet }: any) => {
 
               <strong
                 className="text-4xl align-center cursor-pointer  hover:text-black dark:hover:text-white"
-                onClick={() => openAndCloseEditModal(false)}
+                onClick={() => openAndCloseExchangeModal(false)}
               >
                 &times;
               </strong>
@@ -99,7 +106,7 @@ const ExchangeModal = ({ openAndCloseEditModal, wallet }: any) => {
                 </div>
                 <button
                   type="button"
-                  onClick={() => openAndCloseEditModal(false)}
+                  onClick={() => openAndCloseExchangeModal(false)}
                   className="btn flex justify-center rounded bg-danger py-2 px-6 font-medium text-gray hover:shadow-1"
                 >
                   Cancel

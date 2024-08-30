@@ -3,6 +3,7 @@ import { PiPackage } from 'react-icons/pi';
 import UserIcon from '../../assets/icon/UserIcon';
 import { useState } from 'react';
 import ExchangeModal from './ExchangeModal';
+import ConvartModal from './ConvartModal';
 
 const Wallets = ({
   getWallet,
@@ -12,9 +13,14 @@ const Wallets = ({
   wallet: any;
 }) => {
   const [isExchangeOpen, setIsExchangeOpen] = useState(false);
+  const [isConvartOpen, setIsConvartOpen] = useState(false);
 
-  const openAndCloseEditModal = (data: boolean) => {
+  const openAndCloseExchangeModal = (data: boolean) => {
     setIsExchangeOpen(data);
+  };
+
+  const openAndCloseConvartModal = (data: boolean) => {
+    setIsConvartOpen(data);
   };
 
   return (
@@ -75,7 +81,7 @@ const Wallets = ({
               </h4>
               <p className="text-sm md:text-[18px] font-medium">ICO Wallet</p>
               <button
-                onClick={() => openAndCloseEditModal(true)}
+                onClick={() => openAndCloseExchangeModal(true)}
                 className="items-center mt-2 justify-center rounded-md bg-success py-1.5 px-4 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
               >
                 Exchange
@@ -98,7 +104,10 @@ const Wallets = ({
               <p className="text-sm md:text-[18px] font-medium">
                 {'Nft Wallet'}
               </p>
-              <button className="items-center mt-2 justify-center rounded-md bg-success py-1.5 px-6 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10">
+              <button
+                onClick={() => setIsConvartOpen(true)}
+                className="items-center mt-2 justify-center rounded-md bg-success py-1.5 px-6 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
+              >
                 Convart
               </button>
             </div>
@@ -120,7 +129,14 @@ const Wallets = ({
       {isExchangeOpen && (
         <ExchangeModal
           wallet={wallet}
-          openAndCloseEditModal={openAndCloseEditModal}
+          openAndCloseExchangeModal={openAndCloseExchangeModal}
+        />
+      )}
+
+      {isConvartOpen && (
+        <ConvartModal
+          wallet={wallet}
+          openAndCloseConvartModal={openAndCloseConvartModal}
         />
       )}
     </div>

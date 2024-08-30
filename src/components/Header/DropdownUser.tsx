@@ -63,8 +63,8 @@ const DropdownUser = ({ profile }: any) => {
         <span className="h-12 w-12 rounded-full">
           <img
             src={profile?.profileImage ?? userImage}
-            alt="User"
-            className="rounded-full h-12 w-12"
+            alt="profile"
+            className="rounded-full border border-green-500 h-12 w-12"
           />
         </span>
 
