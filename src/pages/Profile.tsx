@@ -133,6 +133,8 @@ const Profile = () => {
         },
         body: formData,
       });
+      console.log(response);
+
       if (response) {
         setLoading(false);
 
