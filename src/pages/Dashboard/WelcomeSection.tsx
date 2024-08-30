@@ -4,9 +4,19 @@ import Swal from 'sweetalert2';
 import { FaRegCopy } from 'react-icons/fa6';
 import userImage from '../../images/user.jpg';
 import rcmImage from '../../assets/Rcm-01.png';
+import ConvartModal from './ConvartModal';
 
-const WelcomeSection = ({ profile }: any) => {
+const WelcomeSection = ({ wallet, profile }: any) => {
   const [isDepositModalOpen, setIsDepositModalOpen] = useState(false);
+  const [isConvatModalOpen, setIsConvatModalOpen] = useState(false);
+
+  const openConvartModalModal = () => {
+    setIsConvatModalOpen(true);
+  };
+
+  const closeConvartModalModal = () => {
+    setIsConvatModalOpen(false);
+  };
 
   // edit modal
   const openEditModal = () => {
@@ -88,6 +98,13 @@ const WelcomeSection = ({ profile }: any) => {
             <button className="items-center justify-center rounded-md bg-success py-2 px-7 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10">
               Bridge
             </button>
+
+            {/* <button
+              onClick={() => openConvartModalModal()}
+              className="items-center justify-center rounded-md bg-success py-2 px-7 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
+            >
+              Convart
+            </button> */}
           </div>
         </div>
       </div>
@@ -98,6 +115,10 @@ const WelcomeSection = ({ profile }: any) => {
             closeModal={closeEditModal}
           />
         )}
+
+        {/* {isConvatModalOpen && (
+          <ConvartModal wallet={wallet} closeModal={closeConvartModalModal} />
+        )} */}
       </div>
     </>
   );
