@@ -154,7 +154,7 @@ const BasicDetails = ({
           <div>
             {profile?.isKycVerifyed && (
               <label className="mb-2.5 block text-black dark:text-white">
-                Nid/Pass Back
+                Nid/Passport Front Page image
               </label>
             )}
             {profile?.nidPassFront && (
@@ -183,7 +183,7 @@ const BasicDetails = ({
           <div>
             {profile?.isKycVerifyed && (
               <label className="mb-2.5 block text-black dark:text-white">
-                Nid/Pass Back
+                Nid/Passport back page image
               </label>
             )}
             {profile?.nidPassback && (

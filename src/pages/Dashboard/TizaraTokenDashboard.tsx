@@ -9,6 +9,7 @@ import TizaraCoin from './TizaraCoin';
 import { IROYHistory } from '../RoyHistory/RoyHistory';
 import axiosInstance from '../../utils/axiosConfig';
 import { logout } from '../../utils/auth';
+import { IWallet } from '../../types/wallet';
 
 interface ApiResponse<T> {
   statusCode: number;
@@ -70,7 +71,7 @@ const TizaraTokenDashboard: React.FC = () => {
     }
   };
 
-  const getWalletData = async () => {
+  const getNftWalletsData = async () => {
     try {
       const response = await axiosInstance.get('/nft-wallets/my-nft-wallet');
 
@@ -83,7 +84,7 @@ const TizaraTokenDashboard: React.FC = () => {
   };
 
   useEffect(() => {
-    getWalletData();
+    getNftWalletsData();
   }, []);
 
   useEffect(() => {
@@ -191,14 +192,33 @@ const TizaraTokenDashboard: React.FC = () => {
     }
   }
 
+  const [wallet, setWallet] = useState<IWallet | null>(null);
+
+  const fetchData = async () => {
+    try {
+      const response = await axiosInstance.get<ApiResponse<IWallet>>(
+        '/user-wallet',
+      );
+      if (response?.data?.success) {
+        setWallet(response.data.data);
+      }
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, [getWallet]);
+
   return (
     <DefaultLayout>
-      <WelcomeSection profile={profile} />
+      <WelcomeSection wallet={wallet} profile={profile} />
 
       <div className="grid grid-cols-1 lg:grid-cols-6 gap-y-5 lg:gap-5">
         {/* users wallets  */}
         <div className="col-span-4">
-          <Wallets getWallet={getWallet} />
+          <Wallets wallet={wallet} getWallet={getWallet} />
         </div>
 
         <div className="col-span-2 rounded-sm border border-stroke bg-white py-5 px-6 shadow-default dark:border-strokedark dark:bg-boxdark">

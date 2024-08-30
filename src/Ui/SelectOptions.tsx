@@ -14,6 +14,7 @@ type selectType = {
   defaultValue: number | string;
   placeholder: string;
   options: IOptions | any;
+  onChange?: (value: any) => void; // Optional onChange prop
 };
 
 const SelectOptions = ({
@@ -23,6 +24,7 @@ const SelectOptions = ({
   options,
   defaultValue,
   placeholder = 'Select...',
+  onChange,
 }: selectType) => {
   const { theme } = useContext(MyContext);
 
@@ -73,6 +75,12 @@ const SelectOptions = ({
                 neutral80: `{${currentColor}}`,
               },
             })}
+            onChange={(selectedOption) => {
+              field.onChange(selectedOption);
+              if (onChange) {
+                onChange(selectedOption);
+              }
+            }}
           />
         )}
       />
