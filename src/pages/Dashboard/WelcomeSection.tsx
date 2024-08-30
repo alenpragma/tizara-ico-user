@@ -99,12 +99,12 @@ const WelcomeSection = ({ wallet, profile }: any) => {
               Bridge
             </button>
 
-            <button
+            {/* <button
               onClick={() => openConvartModalModal()}
               className="items-center justify-center rounded-md bg-success py-2 px-7 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
             >
               Convart
-            </button>
+            </button> */}
           </div>
         </div>
       </div>
@@ -116,9 +116,9 @@ const WelcomeSection = ({ wallet, profile }: any) => {
           />
         )}
 
-        {isConvatModalOpen && (
+        {/* {isConvatModalOpen && (
           <ConvartModal wallet={wallet} closeModal={closeConvartModalModal} />
-        )}
+        )} */}
       </div>
     </>
   );
