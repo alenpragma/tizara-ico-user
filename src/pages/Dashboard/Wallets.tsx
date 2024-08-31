@@ -1,9 +1,11 @@
 import CardDataStats from '../../components/CardDataStats';
 import { PiPackage } from 'react-icons/pi';
 import UserIcon from '../../assets/icon/UserIcon';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import ExchangeModal from './ExchangeModal';
 import ConvartModal from './ConvartModal';
+import axiosInstance from '../../utils/axiosConfig';
+import { ApiResponse } from '../../types/global';
 
 const Wallets = ({
   getWallet,
@@ -14,6 +16,7 @@ const Wallets = ({
 }) => {
   const [isExchangeOpen, setIsExchangeOpen] = useState(false);
   const [isConvartOpen, setIsConvartOpen] = useState(false);
+  const [exchangeSetting, setExchangeSetting] = useState();
 
   const openAndCloseExchangeModal = (data: boolean) => {
     setIsExchangeOpen(data);
@@ -22,6 +25,22 @@ const Wallets = ({
   const openAndCloseConvartModal = (data: boolean) => {
     setIsConvartOpen(data);
   };
+
+  const fetchData = async () => {
+    try {
+      const response = await axiosInstance.get('/exchange-settings');
+
+      if (response?.data?.success) {
+        setExchangeSetting(response?.data?.data[0]);
+      }
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   return (
     <div className="grid grid-cols-2 gap-2 lg:gap-4 md:grid-cols-2 md:gap-6 xl:grid-cols-2 2xl:gap-7.5">
@@ -84,7 +103,7 @@ const Wallets = ({
                 onClick={() => openAndCloseExchangeModal(true)}
                 className="items-center mt-2 justify-center rounded-md bg-success py-1.5 px-4 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
               >
-                Exchange
+                Transfer
               </button>
             </div>
           </div>
@@ -129,6 +148,7 @@ const Wallets = ({
       {isExchangeOpen && (
         <ExchangeModal
           wallet={wallet}
+          exchangeSetting={exchangeSetting}
           openAndCloseExchangeModal={openAndCloseExchangeModal}
         />
       )}
