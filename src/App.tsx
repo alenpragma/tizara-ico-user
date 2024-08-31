@@ -42,6 +42,7 @@ import NftlevelBonus from './pages/StoreNft/NftlevelBonus';
 import axios from 'axios';
 import ProfitBounty from './pages/Historys/ProfitBounty';
 import NftProfitBounty from './pages/StoreNft/NftProfitBounty';
+import TransferHistory from './pages/Historys/TransferHistory';
 
 function App() {
   const { pathname } = useLocation();
@@ -317,6 +318,18 @@ function App() {
                   <PageTitle title="Transaction" />
                   <ProtectedRoute>
                     <Transaction />
+                  </ProtectedRoute>
+                </>
+              }
+            />
+
+            <Route
+              path="/history/transfer-history"
+              element={
+                <>
+                  <PageTitle title="Transfer" />
+                  <ProtectedRoute>
+                    <TransferHistory />
                   </ProtectedRoute>
                 </>
               }

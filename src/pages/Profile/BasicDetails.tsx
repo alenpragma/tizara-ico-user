@@ -65,7 +65,6 @@ const BasicDetails = ({
             className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
           />
         </div>
-
         <div className="mb-4.5">
           <label className="mb-2.5 block text-black dark:text-white">
             Email
@@ -79,7 +78,6 @@ const BasicDetails = ({
             className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
           />
         </div>
-
         <div className="mb-4.5">
           <label className="mb-2.5 block text-black dark:text-white">
             Phone
@@ -125,7 +123,6 @@ const BasicDetails = ({
             )}
           </div>
         </div>
-
         <div className="mb-4.5">
           <label className="mb-2.5 block text-black dark:text-white">
             Sponsor
@@ -137,7 +134,6 @@ const BasicDetails = ({
             className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
           />
         </div>
-
         <div className="mb-4.5">
           <FileUploder
             type="file"
@@ -149,28 +145,28 @@ const BasicDetails = ({
             fileSelectedHandler={fileSelectedHandler}
           />
         </div>
-
+        {/* // nid front end */}
         <div className="mb-4.5">
           <div>
-            {profile?.nidPassFront && (
-              <label className="mb-2.5 block text-black dark:text-white">
-                Nid/Passport Front Page image
-              </label>
-            )}
-            {profile?.nidPassFront && (
-              <img
-                className="w-22 h-18 rounded-md"
-                src={profile?.nidPassFront}
-                alt=""
-              />
+            {profile?.isFronNidPassVerifyed && (
+              <div>
+                <label className="mb-2.5 block text-black dark:text-white">
+                  Nid/Passport Front Page image
+                </label>
+                <img
+                  className="w-22 h-18 rounded-md"
+                  src={profile?.nidPassFront}
+                  alt=""
+                />
+              </div>
             )}
           </div>
-          {!profile?.nidPassFront ?? (
+          {!profile?.isFronNidPassVerifyed && (
             <FileUploder
               type="file"
               label="Nid/Passport Front Page image (png, jpg, or jpeg)"
               name="nidPassFront"
-              placeholder="fsdf"
+              placeholder="image "
               register={register}
               error={errors.nidPassFront}
               disabled={profile?.isKycVerifyed}
@@ -178,7 +174,7 @@ const BasicDetails = ({
             />
           )}
         </div>
-
+        {/* nid back */}
         <div className="mb-4.5">
           <div>
             {profile?.nidPassback && (
@@ -195,7 +191,7 @@ const BasicDetails = ({
             )}
           </div>
 
-          {!profile?.nidPassback ?? (
+          {!profile?.isBackNidPassVerifyed && (
             <FileUploder
               type="file"
               label="Nid/Passport back page image (png, jpg, or jpeg)"
@@ -207,7 +203,6 @@ const BasicDetails = ({
             />
           )}
         </div>
-
         {loading ? (
           <PuffLoader className="mx-auto" color="#36d7b7" size={40} />
         ) : (
