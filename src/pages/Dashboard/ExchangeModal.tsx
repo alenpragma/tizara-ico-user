@@ -5,7 +5,11 @@ import { PuffLoader } from 'react-spinners';
 import axiosInstance from '../../utils/axiosConfig';
 import Swal from 'sweetalert2';
 
-const ExchangeModal = ({ openAndCloseExchangeModal, wallet }: any) => {
+const ExchangeModal = ({
+  openAndCloseExchangeModal,
+  exchangeSetting,
+  wallet,
+}: any) => {
   // console.log(data);
   const [lodaing, setLodaing] = useState<boolean>(false);
   const [otpModalOpen, setOtpModalOpen] = useState<boolean>(false);
@@ -40,9 +44,9 @@ const ExchangeModal = ({ openAndCloseExchangeModal, wallet }: any) => {
     }
   };
 
-  const eligibleAmount = (wallet.newIcoWallet / 100) * 20;
+  const eligibleAmount =
+    (wallet.newIcoWallet / 100) * exchangeSetting?.exchangeLimit ?? 0;
   const formattedAmount = eligibleAmount.toFixed(2);
-  console.log(formattedAmount);
 
   return (
     <div className="fixed modal-container left-0 top-0 z-999 flex h-full min-h-screen w-full items-center justify-center bg-black/90 py-5">
@@ -58,7 +62,7 @@ const ExchangeModal = ({ openAndCloseExchangeModal, wallet }: any) => {
           <div className="min-w-full w-[370px] lg:w-[600px] border-b border-stroke py-4 px-1 dark:border-strokedark">
             <div className="w-full flex justify-between px-3 place-items-center py-3">
               <h2 className="text-xl font-bold text-black dark:text-white">
-                Exchange to My Wallet
+                Transfer to My Wallet
               </h2>
 
               <strong
@@ -83,7 +87,9 @@ const ExchangeModal = ({ openAndCloseExchangeModal, wallet }: any) => {
               />
 
               <InputField
-                label="Eligible For Exchange (20%)"
+                label={`Eligible For Exchange (${
+                  exchangeSetting?.exchangeLimit || 0
+                })`}
                 name="amount"
                 register={register}
                 defaultValue={formattedAmount ?? '00'}
@@ -100,7 +106,7 @@ const ExchangeModal = ({ openAndCloseExchangeModal, wallet }: any) => {
                       className="btn flex justify-center rounded bg-primary py-2 px-6 font-medium text-gray hover:shadow-1"
                       type="submit"
                     >
-                      Exchange
+                      Transfer
                     </button>
                   )}
                 </div>
