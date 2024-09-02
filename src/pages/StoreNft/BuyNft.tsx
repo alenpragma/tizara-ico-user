@@ -78,16 +78,14 @@ const BuyNft = () => {
                   <div className="mt-5 mb-8  ">
                     <div className="font-medium lg:font-semibold lg:text-lg flex  justify-between">
                       <p className="px-3 lg:px-4 py-1.5  rounded-sm bg-[#F3F3F3] group:hover:bg-bodydark1 duration-500">
-                        <span className="text-[#b0adad] dark:text-black">
-                          Qty:
-                        </span>{' '}
+                        <span className="  dark:text-black">Qty:</span>{' '}
                         <span className="dark:text-black">
                           {nft.quantity} NFT
                         </span>
                       </p>
 
                       <p className="px-3 lg:px-4 py-1.5 ">
-                        <span className="text-[#D3D3D3]"> Price:</span>
+                        <span className=" "> Price:</span>
                         <span>{nft.price} $</span>
                       </p>
                     </div>
