@@ -253,7 +253,7 @@ input,
 optgroup,
 select {
   padding: 10px;
-  background-color: #1d2a39;
+  background-color: inherit;
   border: none;
   outline: none;
 }
