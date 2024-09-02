@@ -81,10 +81,10 @@ const NftHistory = () => {
                   </th>
 
                   <th className="min-w-[120px] py-4 px-4 font-medium text-black dark:text-white  ">
-                    Total ROI
+                    Total Reward
                   </th>
                   <th className="min-w-[120px] py-4 px-4 font-medium text-black dark:text-white  ">
-                    Monthly ROI
+                    Monthly Reward
                   </th>
                   <th className="min-w-[120px] py-4 px-4 font-medium text-black dark:text-white  ">
                     NFT Quantity

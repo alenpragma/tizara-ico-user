@@ -69,7 +69,7 @@ const DailyNftRoiHistory = () => {
                     Duration
                   </th>
                   <th className="min-w-[120px] py-4 px-4 font-medium text-black dark:text-white ">
-                    ROI
+                    Reward
                   </th>
                   <th className="min-w-[120px] py-4 px-4 font-medium text-black dark:text-white ">
                     NFT Quantity

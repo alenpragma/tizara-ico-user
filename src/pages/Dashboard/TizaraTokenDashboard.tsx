@@ -294,7 +294,23 @@ const TizaraTokenDashboard: React.FC = () => {
             </div>
           </div>
         </div>
+        <div className="rounded-md cursor-pointer border border-stroke bg-white py-2 px-3 lg:py-6 lg:px-4.5 shadow-default dark:border-strokedark dark:bg-boxdark">
+          <div className="mt-0 flex items-center justify-between">
+            <div className="flex h-10 w-10 lg:h-11.5 lg:w-11.5 items-center justify-center rounded-full bg-meta-2 dark:bg-meta-3">
+              <PiPackage className="text-2xl dark:text-white text-primary" />
+            </div>
 
+            <div className="text-end">
+              <h4 className="text-[14px] md:text-[20px] font-semibold  text-success">
+                {'WAGON'}
+              </h4>
+              <span className="text-sm md:text-[18px] font-medium">
+                {`Qty: ${nFTWallet?.wagon ?? '0'} ` +
+                  `Price: ${nFTWallet?.wagonPrice ?? '0'}`}
+              </span>
+            </div>
+          </div>
+        </div>
         <div className="rounded-md cursor-pointer border border-stroke bg-white py-2 px-3 lg:py-6 lg:px-4.5 shadow-default dark:border-strokedark dark:bg-boxdark">
           <div className="mt-0 flex items-center justify-between">
             <div className="flex h-10 w-10 lg:h-11.5 lg:w-11.5 items-center justify-center rounded-full bg-meta-2 dark:bg-meta-3">
@@ -326,24 +342,6 @@ const TizaraTokenDashboard: React.FC = () => {
               <span className="text-sm md:text-[18px] font-medium">
                 {`Qty: ${nFTWallet?.land ?? '0'} ` +
                   `Price: ${nFTWallet?.landPrice ?? '0'}`}
-              </span>
-            </div>
-          </div>
-        </div>
-
-        <div className="rounded-md cursor-pointer border border-stroke bg-white py-2 px-3 lg:py-6 lg:px-4.5 shadow-default dark:border-strokedark dark:bg-boxdark">
-          <div className="mt-0 flex items-center justify-between">
-            <div className="flex h-10 w-10 lg:h-11.5 lg:w-11.5 items-center justify-center rounded-full bg-meta-2 dark:bg-meta-3">
-              <PiPackage className="text-2xl dark:text-white text-primary" />
-            </div>
-
-            <div className="text-end">
-              <h4 className="text-[14px] md:text-[20px] font-semibold  text-success">
-                {'WAGON'}
-              </h4>
-              <span className="text-sm md:text-[18px] font-medium">
-                {`Qty: ${nFTWallet?.wagon ?? '0'} ` +
-                  `Price: ${nFTWallet?.wagonPrice ?? '0'}`}
               </span>
             </div>
           </div>
