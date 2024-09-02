@@ -58,8 +58,10 @@ const ConvartModal = ({ wallet, openAndCloseConvartModal }: any) => {
     }
   };
 
-  const eligibleAmount = (wallet.nftWallet / 100) * 20;
-  const formattedAmount = eligibleAmount.toFixed(2);
+  // const eligibleAmount = (wallet.nftWallet / 100) * 20;
+  // const formattedAmount = eligibleAmount.toFixed(2);
+  const totalCoin = wallet.nftWallet / 0.008;
+  console.log(totalCoin);
 
   return (
     <div className="fixed left-0 top-0 z-999 flex h-full min-h-screen w-full items-center justify-center bg-black/90 py-5">
@@ -100,10 +102,19 @@ const ConvartModal = ({ wallet, openAndCloseConvartModal }: any) => {
               />
 
               <InputField
-                label="Eligible For Exchange (20%)"
+                label="Eligible For Exchange"
                 name="usd"
                 register={register}
-                defaultValue={formattedAmount ?? '00'}
+                defaultValue={wallet?.nftWallet ?? '00'}
+                required
+                readonly
+              />
+
+              <InputField
+                label="Recived"
+                name="amount"
+                register={register}
+                defaultValue={totalCoin ?? '00'}
                 required
                 readonly
               />

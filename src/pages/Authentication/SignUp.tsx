@@ -279,7 +279,7 @@ const SignUp: React.FC = () => {
 
                     <div className="phoneInput relative">
                       <PhoneInput
-                        className="w-full rounded-lg border border-stroke dark:text-white  pl-2 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input  dark:focus:border-primary"
+                        className="w-full rounded-lg border bg-inherit border-stroke dark:text-white  pl-2 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input  dark:focus:border-primary"
                         international
                         // countryCallingCodeEditable={false}
                         defaultCountry="US"
