@@ -276,22 +276,25 @@ const SignUp: React.FC = () => {
                         </span>
                       </div>
                     </div>
+                    <div>
+                      <label className="mb-2.5 block font-medium text-black dark:text-white">
+                        Phone
+                      </label>
+                      <div className="phoneInput relative">
+                        <PhoneInput
+                          className="w-full rounded-lg border bg-inherit border-stroke dark:text-white  pl-2 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input  dark:focus:border-primary"
+                          international
+                          // countryCallingCodeEditable={false}
+                          defaultCountry="US"
+                          value={value}
+                          {...register('phone', { required: true })}
+                          onChange={setValue}
+                        />
 
-                    <div className="phoneInput relative">
-                      <PhoneInput
-                        className="w-full rounded-lg border bg-inherit border-stroke dark:text-white  pl-2 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input  dark:focus:border-primary"
-                        international
-                        // countryCallingCodeEditable={false}
-                        defaultCountry="US"
-                        value={value}
-                        {...register('phone', { required: true })}
-                        onChange={setValue}
-                      />
-                      {/* {errors && <span className="text-red-500">{  {errors.email.message}}</span>} */}
-
-                      <span className="absolute right-3 top-3">
-                        <PiPhone className="text-2xl" />
-                      </span>
+                        <span className="absolute right-3 top-3">
+                          <PiPhone className="text-2xl" />
+                        </span>
+                      </div>
                     </div>
 
                     {/* <div className="mb-4">
