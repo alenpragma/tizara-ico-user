@@ -76,7 +76,7 @@ const Tokenverify = () => {
     try {
       setLoading(true);
 
-      const response = await fetch(`${baseUrl}/auth/resend-otp`, {
+      const response = await fetch(`${baseUrl}/limit/auth/resend-otp`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

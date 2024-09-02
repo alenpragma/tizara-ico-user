@@ -70,7 +70,7 @@ export const BuyModal = ({ fetchData, closeModal, data }: any) => {
           <div className="min-w-full w-[370px] lg:w-[800px] border-b border-stroke py-4 px-1 dark:border-strokedark">
             <div className="w-full flex justify-between px-3 place-items-center py-3">
               <h2 className="text-xl font-bold text-black dark:text-white">
-                Purhese NFT
+                Purchase NFT
               </h2>
 
               <strong
