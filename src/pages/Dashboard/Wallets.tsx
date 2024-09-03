@@ -6,6 +6,7 @@ import ExchangeModal from './ExchangeModal';
 import ConvartModal from './ConvartModal';
 import axiosInstance from '../../utils/axiosConfig';
 import { ApiResponse } from '../../types/global';
+import IconWallet from '../../assets/icon/IconWallet';
 
 const Wallets = ({
   getWallet,
@@ -92,7 +93,7 @@ const Wallets = ({
         <div className="rounded-md cursor-pointer border border-stroke bg-white py-2 px-3 lg:py-6 lg:px-4.5 shadow-default dark:border-strokedark dark:bg-boxdark">
           <div className="mt-0 flex items-center justify-between">
             <div className="flex h-10 w-10 lg:h-11.5 lg:w-11.5 items-center justify-center rounded-full bg-meta-2 dark:bg-meta-3">
-              <PiPackage className="lg:text-2xl dark:text-white text-primary" />
+              <IconWallet />
             </div>
             <div className="text-end">
               <h4 className="text-[14px] md:text-[20px] font-semibold text-black dark:text-white">
@@ -114,14 +115,14 @@ const Wallets = ({
         <div className="rounded-md cursor-pointer border border-stroke bg-white py-2 px-3 lg:py-6 lg:px-4.5 shadow-default dark:border-strokedark dark:bg-boxdark">
           <div className="mt-0 flex items-center justify-between">
             <div className="flex h-10 w-10 lg:h-11.5 lg:w-11.5 items-center justify-center rounded-full bg-meta-2 dark:bg-meta-3">
-              <PiPackage className="lg:text-2xl dark:text-white text-primary" />
+              <IconWallet />
             </div>
             <div className="text-end">
               <h4 className="text-[14px] md:text-[20px] font-semibold text-black dark:text-white">
-                {wallet?.nftWallet ? wallet?.nftWallet.toFixed(2) : '00'}
+                {wallet?.nftWallet ? wallet?.nftWallet.toFixed(2) : '00'} USD
               </h4>
               <p className="text-sm md:text-[18px] font-medium">
-                {'Nft Wallet'}
+                {'NFT Wallet'}
               </p>
               <button
                 onClick={() => setIsConvartOpen(true)}
