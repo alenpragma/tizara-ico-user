@@ -13,6 +13,7 @@ export type INft = {
   quantity: number;
   price: number;
   status: any;
+  walletName: any;
   createdAt: Date;
   updatedAt: Date;
 };
@@ -79,15 +80,35 @@ const BuyNft = () => {
                       </p>
                     </div>
                     <div className="mt-5 mb-8  ">
-                      <div className="font-medium lg:font-semibold lg:text-lg flex  justify-between">
-                        <p className="px-3 lg:px-4 py-1.5  rounded-sm bg-[#F3F3F3] group:hover:bg-bodydark1 duration-500">
-                          <span className="  dark:text-black">Qty:</span>{' '}
-                          <span className="dark:text-black">
-                            {nft.quantity} NFT
-                          </span>
-                        </p>
+                      <div className="font-medium text-white lg:font-semibold text-lg ">
+                        <div className="flex justify-between lg:px-4 py-1.5  rounded-sm  group:hover:bg-bodydark1 duration-500">
+                          <span className="">Qty:</span>
+                          {nft.walletName == 'dome' && (
+                            <span className="">
+                              {10000 - nft.quantity}/10,000 NFT
+                            </span>
+                          )}
 
-                        <p className="px-3 lg:px-4 py-1.5 ">
+                          {nft.walletName == 'hotelAndResort' && (
+                            <span className="">
+                              {55000 - nft.quantity}/55,000 NFT
+                            </span>
+                          )}
+
+                          {nft.walletName == 'wagon' && (
+                            <span className="">
+                              {25000 - nft.quantity}/25,000 NFT
+                            </span>
+                          )}
+
+                          {nft.walletName == 'land' && (
+                            <span className="">
+                              {110000 - nft.quantity}/1,10,000 NFT
+                            </span>
+                          )}
+                        </div>
+
+                        <p className="flex justify-between lg:px-4 ">
                           <span className=" "> Price:</span>
                           <span>{nft.price} $</span>
                         </p>
