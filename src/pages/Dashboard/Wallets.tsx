@@ -99,12 +99,12 @@ const Wallets = ({
                 {wallet?.newIcoWallet ? wallet?.newIcoWallet.toFixed(2) : '00'}
               </h4>
               <p className="text-sm md:text-[18px] font-medium">ICO Wallet</p>
-              <button
+              {/* <button
                 onClick={() => openAndCloseExchangeModal(true)}
                 className="items-center mt-2 justify-center rounded-md bg-success py-1.5 px-4 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
               >
                 Transfer
-              </button>
+              </button> */}
             </div>
           </div>
         </div>
