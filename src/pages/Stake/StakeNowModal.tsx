@@ -28,13 +28,18 @@ export const StakeNowModal = ({
     // { value: '0', label: 'Select..' },
     {
       balance: `${wallet?.nativeWallet}`,
-      value: 'Native',
+      value: 'nativeWallet',
       label: `Native wallet ${wallet?.nativeWallet}`,
     },
     {
       balance: `${wallet?.icoWallet}`,
-      value: 'Ico',
+      value: 'myWallet',
       label: `MY wallet ${wallet?.icoWallet}`,
+    },
+    {
+      balance: `${wallet?.newIcoWallet}`,
+      value: 'IcoWallet',
+      label: `ICO wallet ${wallet?.newIcoWallet}`,
     },
   ]);
 
@@ -54,13 +59,13 @@ export const StakeNowModal = ({
       alert('Please Select wallet');
     }
 
-    if (Number(data?.stakeAmount) > Number(data?.wallet?.balance)) {
-      return Swal.fire({
-        title: 'Error',
-        text: 'insufficient Balance',
-        icon: 'error',
-      });
-    }
+    // if (Number(data?.stakeAmount) > Number(data?.wallet?.balance)) {
+    //   return Swal.fire({
+    //     title: 'Error',
+    //     text: 'insufficient Balance',
+    //     icon: 'error',
+    //   });
+    // }
     const planData = {
       dailyRoy: Number(dailyRoy.toFixed(2)),
       planName: data.planName,
