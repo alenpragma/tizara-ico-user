@@ -49,11 +49,13 @@ const ConvartModal = ({ wallet, openAndCloseConvartModal }: any) => {
         openAndCloseConvartModal(false);
       }
     } catch (error: any) {
+      console.log(error);
+
       openAndCloseConvartModal(false);
       Swal.fire({
-        title: 'success',
+        title: 'Failed',
         text: error.message,
-        icon: 'success',
+        icon: 'error',
       });
     }
   };
