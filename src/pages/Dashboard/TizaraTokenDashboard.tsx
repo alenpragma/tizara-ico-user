@@ -213,7 +213,11 @@ const TizaraTokenDashboard: React.FC = () => {
 
   return (
     <DefaultLayout>
-      <WelcomeSection wallet={wallet} profile={profile} />
+      <WelcomeSection
+        setGetWallet={setGetWallet}
+        wallet={wallet}
+        profile={profile}
+      />
 
       <div className="grid grid-cols-1 lg:grid-cols-6 gap-y-5 lg:gap-5">
         {/* users wallets  */}
