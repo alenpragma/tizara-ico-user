@@ -14,7 +14,11 @@ import Swal from 'sweetalert2';
 // newIcoWallet;
 // nftWallet;
 
-const ConvartModal = ({ wallet, openAndCloseConvartModal }: any) => {
+const ConvartModal = ({
+  setGetWallet,
+  wallet,
+  openAndCloseConvartModal,
+}: any) => {
   const [lodaing, setLodaing] = useState<boolean>(false);
   const [otpModalOpen, setOtpModalOpen] = useState<boolean>(false);
 
@@ -46,6 +50,7 @@ const ConvartModal = ({ wallet, openAndCloseConvartModal }: any) => {
           text: response.data.message,
           icon: 'success',
         });
+        setGetWallet(true);
         openAndCloseConvartModal(false);
       }
     } catch (error: any) {

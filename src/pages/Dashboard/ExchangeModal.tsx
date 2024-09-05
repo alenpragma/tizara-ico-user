@@ -9,6 +9,7 @@ const ExchangeModal = ({
   openAndCloseExchangeModal,
   exchangeSetting,
   wallet,
+  setGetWallet,
 }: any) => {
   // console.log(data);
   const [lodaing, setLodaing] = useState<boolean>(false);
@@ -33,6 +34,7 @@ const ExchangeModal = ({
           icon: 'success',
         });
       }
+      setGetWallet(true);
       openAndCloseExchangeModal(false);
     } catch (error: any) {
       Swal.fire({

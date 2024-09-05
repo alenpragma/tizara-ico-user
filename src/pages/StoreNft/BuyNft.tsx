@@ -63,7 +63,7 @@ const BuyNft = () => {
               return (
                 <div
                   key={i}
-                  className="border cursor-pointer dark:hover:bg-opacity-50 dark:border-strokedark dark:bg-boxdark bg-[#ffff]  p-5 border-strokedark rounded-2xl max-w-full w-[320px] xl:w-[390px]"
+                  className="border border-bodydark1 cursor-pointer dark:hover:bg-opacity-50 dark:border-strokedark dark:bg-boxdark bg-[#ffff]  p-5   rounded-2xl max-w-full w-[320px] xl:w-[390px]"
                 >
                   <img
                     className="transition-transform w-full h-55 duration-500 hover:scale-[1.1] rounded-md"
@@ -80,7 +80,7 @@ const BuyNft = () => {
                       </p>
                     </div>
                     <div className="mt-5 mb-8  ">
-                      <div className="font-medium text-white lg:font-semibold text-lg ">
+                      <div className="font-medium dark:text-white lg:font-semibold text-lg ">
                         <div className="flex justify-between lg:px-4 py-1.5  rounded-sm  group:hover:bg-bodydark1 duration-500">
                           <span className="">Qty:</span>
                           {nft.walletName == 'dome' && (
@@ -110,7 +110,7 @@ const BuyNft = () => {
 
                         <p className="flex justify-between lg:px-4 ">
                           <span className=" "> Price:</span>
-                          <span>{nft.price} $</span>
+                          <span>{nft.price}$</span>
                         </p>
                       </div>
                     </div>

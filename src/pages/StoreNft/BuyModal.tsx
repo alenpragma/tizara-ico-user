@@ -107,7 +107,7 @@ export const BuyModal = ({ fetchData, closeModal, data }: any) => {
 
                 <div className="flex justify-between  gap-1 mb-0.5 text-xl font-medium text-black dark:text-white">
                   <p className="">Total Reward:</p>
-                  <p>{data.dailyRoi}</p>
+                  <p>{data.dailyRoi}%</p>
                 </div>
                 <div className="flex justify-between  gap-2 mb-0.5 text-xl font-medium text-black dark:text-white">
                   <p className="">Monthly Reward:</p>
