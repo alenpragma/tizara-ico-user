@@ -9,10 +9,10 @@ import { ApiResponse } from '../../types/global';
 import IconWallet from '../../assets/icon/IconWallet';
 
 const Wallets = ({
-  getWallet,
+  setGetWallet,
   wallet,
 }: {
-  getWallet: boolean;
+  setGetWallet: any;
   wallet: any;
 }) => {
   const [isExchangeOpen, setIsExchangeOpen] = useState(false);
@@ -149,6 +149,7 @@ const Wallets = ({
       {isExchangeOpen && (
         <ExchangeModal
           wallet={wallet}
+          setGetWallet={setGetWallet}
           exchangeSetting={exchangeSetting}
           openAndCloseExchangeModal={openAndCloseExchangeModal}
         />
@@ -157,6 +158,7 @@ const Wallets = ({
       {isConvartOpen && (
         <ConvartModal
           wallet={wallet}
+          setGetWallet={setGetWallet}
           openAndCloseConvartModal={openAndCloseConvartModal}
         />
       )}

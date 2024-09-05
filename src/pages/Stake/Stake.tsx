@@ -82,7 +82,7 @@ const Stake = () => {
             <h3 className="dark:text-white font-semibold">
               Tizara Wallet: {wallet?.nativeWallet}
             </h3>
-            <div className="lg:hidden w-[2px] h-[20px] border  "></div>
+            <div className="lg:hidden w-[2px] h-[20px] border"></div>
             <h3 className="dark:text-white font-semibold ">
               MY Wallet: {wallet?.icoWallet.toFixed(2)}
             </h3>

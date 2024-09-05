@@ -161,12 +161,12 @@ const BasicDetails = ({
               </div>
             )}
           </div>
-          {!profile?.isFronNidPassVerifyed && (
+          {(profile?.kycStatus == 'REJECT' || profile?.kycStatus === null) && (
             <FileUploder
               type="file"
               label="Nid/Passport Front Page image (png, jpg, or jpeg)"
               name="nidPassFront"
-              placeholder="image "
+              placeholder="image"
               register={register}
               error={errors.nidPassFront}
               disabled={profile?.isKycVerifyed}
@@ -175,6 +175,7 @@ const BasicDetails = ({
           )}
         </div>
         {/* nid back */}
+
         <div className="mb-4.5">
           <div>
             {profile?.nidPassback && (
@@ -191,7 +192,7 @@ const BasicDetails = ({
             )}
           </div>
 
-          {!profile?.isBackNidPassVerifyed && (
+          {(profile?.kycStatus == 'REJECT' || profile?.nidPassback == null) && (
             <FileUploder
               type="file"
               label="Nid/Passport back page image (png, jpg, or jpeg)"
@@ -203,6 +204,13 @@ const BasicDetails = ({
             />
           )}
         </div>
+        {profile?.message && (
+          <div>
+            <span>Message: </span>
+            <span className="text-red-400">{profile?.message}</span>
+          </div>
+        )}
+
         {loading ? (
           <PuffLoader className="mx-auto" color="#36d7b7" size={40} />
         ) : (

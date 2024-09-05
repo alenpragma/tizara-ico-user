@@ -218,7 +218,7 @@ const TizaraTokenDashboard: React.FC = () => {
       <div className="grid grid-cols-1 lg:grid-cols-6 gap-y-5 lg:gap-5">
         {/* users wallets  */}
         <div className="col-span-4">
-          <Wallets wallet={wallet} getWallet={getWallet} />
+          <Wallets wallet={wallet} setGetWallet={setGetWallet} />
         </div>
 
         <div className="col-span-2 rounded-sm border border-stroke bg-white py-5 px-6 shadow-default dark:border-strokedark dark:bg-boxdark">
