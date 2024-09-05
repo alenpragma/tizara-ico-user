@@ -161,7 +161,7 @@ const BasicDetails = ({
               </div>
             )}
           </div>
-          {profile?.kycStatus == 'REJECT' && (
+          {(profile?.kycStatus == 'REJECT' || profile?.kycStatus === null) && (
             <FileUploder
               type="file"
               label="Nid/Passport Front Page image (png, jpg, or jpeg)"
@@ -192,7 +192,7 @@ const BasicDetails = ({
             )}
           </div>
 
-          {profile?.kycStatus == 'REJECT' && (
+          {(profile?.kycStatus == 'REJECT' || profile?.nidPassback == null) && (
             <FileUploder
               type="file"
               label="Nid/Passport back page image (png, jpg, or jpeg)"

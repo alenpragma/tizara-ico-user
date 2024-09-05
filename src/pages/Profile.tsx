@@ -121,9 +121,15 @@ const Profile = () => {
     const jsondata = JSON.stringify(wrappedObj);
 
     const formData = new FormData();
-    formData.append('profileImage', profileimg[0] as Blob);
-    formData.append('nidPassFront', nidPassFront[0] as Blob);
-    formData.append('nidPassback', nidPassback[0] as Blob);
+    if (profileimg) {
+      formData.append('profileImage', profileimg[0] as Blob);
+    }
+    if (nidPassFront) {
+      formData.append('nidPassFront', nidPassFront[0] as Blob);
+    }
+    if (nidPassback) {
+      formData.append('nidPassback', nidPassback[0] as Blob);
+    }
     formData.append('data', jsondata);
 
     try {
@@ -138,7 +144,7 @@ const Profile = () => {
 
       if (response) {
         setLoading(false);
-
+        fetchData();
         Swal.fire({
           title: 'Success',
           text: 'Successfully updated',
@@ -196,7 +202,11 @@ const Profile = () => {
                     <MdVerifiedUser className="mt-1" />
                   </div>
                 ) : (
-                  <p>{profile?.kycStatus}</p>
+                  <p className="text-meta-8">
+                    {profile?.kycStatus == 'REJECT'
+                      ? 'REJECTED'
+                      : profile?.kycStatus}
+                  </p>
                 )}
               </p>
             </h3>
