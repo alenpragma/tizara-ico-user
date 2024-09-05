@@ -5,10 +5,16 @@ import { FaRegCopy } from 'react-icons/fa6';
 import userImage from '../../images/user.jpg';
 import rcmImage from '../../assets/Rcm-01.png';
 import ConvartModal from './ConvartModal';
+import SwapModal from './SwapModal';
 
-const WelcomeSection = ({ wallet, profile }: any) => {
+const WelcomeSection = ({ setGetWallet, wallet, profile }: any) => {
   const [isDepositModalOpen, setIsDepositModalOpen] = useState(false);
   const [isConvatModalOpen, setIsConvatModalOpen] = useState(false);
+  const [isOpenSwapModal, setIsOpenSwapModal] = useState(false);
+
+  const toggleSwapModal = (status: boolean) => {
+    setIsOpenSwapModal(status);
+  };
 
   const openConvartModalModal = () => {
     setIsConvatModalOpen(true);
@@ -95,16 +101,12 @@ const WelcomeSection = ({ wallet, profile }: any) => {
               Deposit
             </button>
 
-            <button className="items-center justify-center rounded-md bg-success py-2 px-7 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10">
-              Bridge
-            </button>
-
-            {/* <button
-              onClick={() => openConvartModalModal()}
+            <button
+              onClick={() => toggleSwapModal(true)}
               className="items-center justify-center rounded-md bg-success py-2 px-7 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
             >
-              Convart
-            </button> */}
+              Swap
+            </button>
           </div>
         </div>
       </div>
@@ -119,6 +121,13 @@ const WelcomeSection = ({ wallet, profile }: any) => {
         {/* {isConvatModalOpen && (
           <ConvartModal wallet={wallet} closeModal={closeConvartModalModal} />
         )} */}
+        {isOpenSwapModal && (
+          <SwapModal
+            setGetWallet={setGetWallet}
+            wallet={wallet}
+            toggleSwapModal={toggleSwapModal}
+          />
+        )}
       </div>
     </>
   );
