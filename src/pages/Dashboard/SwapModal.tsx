@@ -23,24 +23,24 @@ const SwapModal = ({ setGetWallet, wallet, toggleSwapModal }: any) => {
       cancelButtonColor: '#d33',
       confirmButtonText: 'Confirm',
     }).then(async (result) => {
-      if (wallet?.icoWallet < data?.amount) {
-        Swal.fire({
-          title: 'Failed',
-          text: 'Your balance is low',
-          icon: 'error',
-        });
-        return;
-      }
-      if (1000 > data.amount) {
-        Swal.fire({
-          title: 'Failed',
-          text: 'Minimum withdraw amount 1000 Tizara',
-          icon: 'error',
-        });
-        return;
-      }
-
       if (result.isConfirmed) {
+        if (wallet?.icoWallet < data?.amount) {
+          Swal.fire({
+            title: 'Failed',
+            text: 'Your balance is low',
+            icon: 'error',
+          });
+          return;
+        }
+        if (1000 > data.amount) {
+          Swal.fire({
+            title: 'Failed',
+            text: 'Minimum bridge amount 1000 Tizara',
+            icon: 'error',
+          });
+          return;
+        }
+
         setLodaing(true);
         const withdrowData = {
           to: data.to,
@@ -56,7 +56,7 @@ const SwapModal = ({ setGetWallet, wallet, toggleSwapModal }: any) => {
             toggleSwapModal(false);
             Swal.fire({
               title: 'success',
-              text: response?.data?.message,
+              text: 'Bridge Request Successful',
               icon: 'success',
             });
             setLodaing(false);
@@ -93,7 +93,7 @@ const SwapModal = ({ setGetWallet, wallet, toggleSwapModal }: any) => {
           <div className="min-w-full w-[370px] lg:w-[600px] border-b border-stroke py-4 px-1 dark:border-strokedark">
             <div className="w-full flex justify-between px-3 place-items-center py-3">
               <h2 className="text-xl font-bold text-black dark:text-white">
-                SWAP
+                Bridge
               </h2>
 
               <strong
