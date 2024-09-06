@@ -12,12 +12,12 @@ const SwapModal = ({ setGetWallet, wallet, toggleSwapModal }: any) => {
   const { register, handleSubmit, control } = useForm<any>();
 
   const onSubmit: SubmitHandler<any> = async (data: any) => {
-    Swal.fire({
-      title: 'Please Wait',
-      text: 'Live soon!',
-      icon: 'info',
-    });
-    return;
+    // Swal.fire({
+    //   title: 'Please Wait',
+    //   text: 'Live soon!',
+    //   icon: 'info',
+    // });
+    // return;
 
     Swal.fire({
       title: 'Withdraw Confirmation',

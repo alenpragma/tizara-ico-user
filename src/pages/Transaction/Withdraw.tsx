@@ -11,11 +11,14 @@ import { IMeta } from '../../types/common';
 
 interface IHistory {
   id: string;
-  name: string;
+
   amount: number;
-  bonusFrom: string;
-  charge: number;
+  from: string;
+  fee: number;
   userId: string;
+  hash: string;
+  desc: string;
+  to: string;
   createdAt: string;
   updatedAt: string;
 }
@@ -25,12 +28,12 @@ interface ApiResponse {
   success: boolean;
   message: string;
   data: {
-    data: any;
+    data: IHistory[];
     meta: IMeta;
   };
 }
 
-const Transaction = () => {
+const Withdraw = () => {
   const [history, sethistory] = useState<any>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [meta, setMeta] = useState<IMeta>({
@@ -66,10 +69,17 @@ const Transaction = () => {
     fetchData();
   }, [currentPage]);
 
+  const sliceHash = (address: any) => {
+    const firstSix = address.slice(0, 6);
+    const lastSix = address.slice(-6);
+    const result = `${firstSix}...${lastSix}`;
+    return result;
+  };
+
   return (
     <>
       <DefaultLayout>
-        <Breadcrumb pageName="Transaction History" />
+        <Breadcrumb pageName="Swap History" />
 
         <div className="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
           <div className="flex justify-between">
@@ -86,34 +96,54 @@ const Transaction = () => {
               <table className="w-full table-auto">
                 <thead>
                   <tr className="bg-gray-2 text-left dark:bg-meta-4">
-                    <th className="min-w-[90px] py-4 px-4 font-medium text-black dark:text-white xl:pl-11">
+                    <th className="min-w-[90px] py-4 px-4 font-medium text-black dark:text-white">
                       SL NO
                     </th>
-                    <th className="min-w-[100px] py-4 px-4 font-medium text-black dark:text-white xl:pl-11">
-                      Amount
+                    <th className="min-w-[220px] py-4 px-4 font-medium text-black dark:text-white">
+                      Date
+                    </th>
+                    <th className="min-w-[100px] py-4 px-4 font-medium text-black dark:text-white">
+                      Transaction Hash
                     </th>
 
                     <th className="min-w-[290px] py-4 px-4 font-medium text-black dark:text-white">
-                      Details
+                      From
                     </th>
 
-                    <th className="min-w-[220px] py-4 px-4 font-medium text-black dark:text-white">
-                      Time
+                    <th className="min-w-[100px] py-4 px-4 font-medium text-black dark:text-white">
+                      To
+                    </th>
+                    <th className="min-w-[100px] py-4 px-4 font-medium text-black dark:text-white">
+                      Amount
+                    </th>
+
+                    <th className="min-w-[120px] py-4 px-4 font-medium text-black dark:text-white">
+                      Txn Fee
+                    </th>
+                    <th className="min-w-[120px] py-4 px-4 font-medium text-black dark:text-white">
+                      Status
                     </th>
                   </tr>
                 </thead>
                 <tbody>
                   {history?.map(
-                    (user: IHistory, key: Key | null | undefined) => {
+                    (data: IHistory, key: Key | null | undefined) => {
                       return (
                         <tr key={key}>
                           <TableRow data={Number(key) + 1}></TableRow>
+                          <TableRow data={formatToLocalDate(data?.createdAt)} />
 
-                          <TableRow data={user.amount}></TableRow>
+                          <TableRow data={sliceHash(data.hash)}></TableRow>
+                          <TableRow data={sliceHash(data.from)}></TableRow>
+                          <TableRow data={sliceHash(data.to)}></TableRow>
+                          <TableRow data={data.amount}></TableRow>
 
-                          <TableRow data={'Reward from ' + user.bonusFrom} />
-
-                          <TableRow data={formatToLocalDate(user?.createdAt)} />
+                          <TableRow data={data.desc} />
+                          <TableRow data={''}>
+                            <span className=" text-green-500 font-semibold">
+                              Success
+                            </span>
+                          </TableRow>
                         </tr>
                       );
                     },
@@ -136,4 +166,4 @@ const Transaction = () => {
   );
 };
 
-export default Transaction;
+export default Withdraw;

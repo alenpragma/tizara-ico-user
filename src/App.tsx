@@ -43,6 +43,7 @@ import axios from 'axios';
 import ProfitBounty from './pages/Historys/ProfitBounty';
 import NftProfitBounty from './pages/StoreNft/NftProfitBounty';
 import TransferHistory from './pages/Historys/TransferHistory';
+import Withdraw from './pages/Transaction/Withdraw';
 
 function App() {
   const { pathname } = useLocation();
@@ -288,7 +289,7 @@ function App() {
             />
 
             <Route
-              path="/profit-bounty"
+              path="/profit-bounty-history"
               element={
                 <>
                   <PageTitle title="Profit Bounty" />
@@ -318,6 +319,18 @@ function App() {
                   <PageTitle title="Transaction" />
                   <ProtectedRoute>
                     <Transaction />
+                  </ProtectedRoute>
+                </>
+              }
+            />
+
+            <Route
+              path="/history/withdraw-history"
+              element={
+                <>
+                  <PageTitle title="Swap" />
+                  <ProtectedRoute>
+                    <Withdraw />
                   </ProtectedRoute>
                 </>
               }
