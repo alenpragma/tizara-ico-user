@@ -13,7 +13,14 @@ const SwapModal = ({ setGetWallet, wallet, toggleSwapModal }: any) => {
 
   const onSubmit: SubmitHandler<any> = async (data: any) => {
     Swal.fire({
-      title: 'Withdrow Confirmation',
+      title: 'Please Wait',
+      text: 'Live soon!',
+      icon: 'info',
+    });
+    return;
+
+    Swal.fire({
+      title: 'Withdraw Confirmation',
       // text: 'Withdrow Confirmation',
       icon: 'warning',
       showCancelButton: true,
@@ -29,17 +36,17 @@ const SwapModal = ({ setGetWallet, wallet, toggleSwapModal }: any) => {
         });
         return;
       }
-      if (1000 > data.amount) {
-        Swal.fire({
-          title: 'Failed',
-          text: 'Minimum withdraw amount 1000 Tizara',
-          icon: 'error',
-        });
-        return;
-      }
+      // if (1000 > data.amount) {
+      //   Swal.fire({
+      //     title: 'Failed',
+      //     text: 'Minimum withdraw amount 1000 Tizara',
+      //     icon: 'error',
+      //   });
+      //   return;
+      // }
 
-      setLodaing(true);
       if (result.isConfirmed) {
+        setLodaing(true);
         const withdrowData = {
           to: data.to,
           amount: Number(data.amount),
@@ -124,7 +131,7 @@ const SwapModal = ({ setGetWallet, wallet, toggleSwapModal }: any) => {
               />
 
               <InputField
-                label="Address"
+                label="Wallet address"
                 name="to"
                 register={register}
                 required
