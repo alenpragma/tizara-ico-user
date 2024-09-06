@@ -13,22 +13,17 @@ const SwapModal = ({ setGetWallet, wallet, toggleSwapModal }: any) => {
 
   const onSubmit: SubmitHandler<any> = async (data: any) => {
     Swal.fire({
-      title: 'Please Wait',
-      text: 'Live soon!',
-      icon: 'info',
-    });
-    return;
+      title: 'Confirm',
+      text: data?.to,
+      html: `${data?.to} <br/> Please verify your wallet address. Transactions are final. Do you wish to proceed?`,
 
-    Swal.fire({
-      title: 'Withdraw Confirmation',
-      // text: 'Withdrow Confirmation',
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
       confirmButtonText: 'Confirm',
     }).then(async (result) => {
-      if (wallet.icoWallet < data.amount) {
+      if (wallet?.icoWallet < data?.amount) {
         Swal.fire({
           title: 'Failed',
           text: 'Your balance is low',
@@ -36,14 +31,14 @@ const SwapModal = ({ setGetWallet, wallet, toggleSwapModal }: any) => {
         });
         return;
       }
-      // if (1000 > data.amount) {
-      //   Swal.fire({
-      //     title: 'Failed',
-      //     text: 'Minimum withdraw amount 1000 Tizara',
-      //     icon: 'error',
-      //   });
-      //   return;
-      // }
+      if (1000 > data.amount) {
+        Swal.fire({
+          title: 'Failed',
+          text: 'Minimum withdraw amount 1000 Tizara',
+          icon: 'error',
+        });
+        return;
+      }
 
       if (result.isConfirmed) {
         setLodaing(true);

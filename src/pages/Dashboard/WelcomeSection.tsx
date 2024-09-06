@@ -69,8 +69,7 @@ const WelcomeSection = ({ setGetWallet, wallet, profile }: any) => {
             )}
           </div>
           <div>
-            <p>Address: {profile?.address}</p>
-            {/* <p>Key: {profile?.privateKey}</p> */}
+            {/* <p>Address: {profile?.address}</p> */}
             <h2 className="text-title-md capitalize lg:text-2xl font-semibold">
               Welcome to Tizara, {profile?.name}!
             </h2>
