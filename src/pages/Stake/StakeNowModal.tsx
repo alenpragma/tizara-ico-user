@@ -26,19 +26,21 @@ export const StakeNowModal = ({
 }: any) => {
   const [wallets, setWallets] = useState(() => [
     // { value: '0', label: 'Select..' },
+
+    // nativewallet', 'mywallet', 'icowallet
     {
       balance: `${wallet?.nativeWallet}`,
-      value: 'nativeWallet',
+      value: 'nativewallet',
       label: `Native wallet ${wallet?.nativeWallet}`,
     },
     {
       balance: `${wallet?.icoWallet}`,
-      value: 'myWallet',
+      value: 'mywallet',
       label: `MY wallet ${wallet?.icoWallet}`,
     },
     {
       balance: `${wallet?.newIcoWallet}`,
-      value: 'IcoWallet',
+      value: 'icowallet',
       label: `ICO wallet ${wallet?.newIcoWallet}`,
     },
   ]);
@@ -56,16 +58,30 @@ export const StakeNowModal = ({
   const onSubmit: SubmitHandler<Inputs> = async (data: Inputs) => {
     console.log(data);
     if (!data.wallet) {
-      alert('Please Select wallet');
+      Swal.fire({
+        title: 'Success',
+        text: 'Please Select wallet',
+        icon: 'success',
+      });
+      return;
     }
 
-    // if (Number(data?.stakeAmount) > Number(data?.wallet?.balance)) {
-    //   return Swal.fire({
-    //     title: 'Error',
-    //     text: 'insufficient Balance',
-    //     icon: 'error',
-    //   });
-    // }
+    if (Number(data.stakeAmount) <= 1) {
+      Swal.fire({
+        title: 'Success',
+        text: 'Please Select wallet',
+        icon: 'success',
+      });
+      return;
+    }
+
+    if (Number(data?.stakeAmount) > Number(data?.wallet?.balance)) {
+      return Swal.fire({
+        title: 'Error',
+        text: 'insufficient Balance',
+        icon: 'error',
+      });
+    }
     const planData = {
       dailyRoy: Number(dailyRoy.toFixed(2)),
       planName: data.planName,
@@ -251,7 +267,6 @@ export const StakeNowModal = ({
                   <PuffLoader className="mx-auto" color="#36d7b7" size={40} />
                 ) : (
                   <button
-                    disabled
                     className="btn flex justify-center rounded bg-primary py-2 px-6 font-medium text-gray hover:shadow-1"
                     type="submit"
                   >
