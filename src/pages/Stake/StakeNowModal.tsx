@@ -251,6 +251,7 @@ export const StakeNowModal = ({
                   <PuffLoader className="mx-auto" color="#36d7b7" size={40} />
                 ) : (
                   <button
+                    disabled
                     className="btn flex justify-center rounded bg-primary py-2 px-6 font-medium text-gray hover:shadow-1"
                     type="submit"
                   >
