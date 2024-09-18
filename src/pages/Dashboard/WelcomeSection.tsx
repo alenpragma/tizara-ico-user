@@ -13,14 +13,6 @@ const WelcomeSection = ({ setGetWallet, wallet, profile }: any) => {
   const [isOpenSwapModal, setIsOpenSwapModal] = useState(false);
 
   const toggleSwapModal = (status: boolean) => {
-    Swal.fire({
-      title: 'info',
-      text: 'Bridge is currently off. Will back soon!',
-      icon: 'info',
-      timer: 1200,
-    });
-    return;
-
     setIsOpenSwapModal(status);
   };
 
