@@ -32,14 +32,6 @@ const SwapModal = ({ setGetWallet, wallet, toggleSwapModal }: any) => {
           });
           return;
         }
-        if (1000 > data.amount) {
-          Swal.fire({
-            title: 'Failed',
-            text: 'Minimum bridge amount 1000 Tizara',
-            icon: 'error',
-          });
-          return;
-        }
 
         setLodaing(true);
         const withdrowData = {
@@ -56,7 +48,7 @@ const SwapModal = ({ setGetWallet, wallet, toggleSwapModal }: any) => {
             toggleSwapModal(false);
             Swal.fire({
               title: 'success',
-              text: 'Bridge Request Successful',
+              text: 'Successfully Bridged',
               icon: 'success',
             });
             setLodaing(false);
