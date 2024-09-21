@@ -47,9 +47,7 @@ const Transaction = () => {
     setLoading(true);
     try {
       const response = await axiosInstance.get<ApiResponse>(
-        `/withdrow-request/get-my-withdraw-history?page=${
-          currentPage + 1
-        }&limit=${perPage}`,
+        `/transaction-history?page=${currentPage + 1}&limit=${perPage}`,
       );
       setLoading(false);
 
