@@ -61,8 +61,7 @@ const Profile = () => {
     control,
     formState: { errors },
   } = useForm<UserProfile>();
-  const [selectedFile, setSelectedFile] = useState<any>(null);
-  const [selectedAddressFile, setSelectedAddressFile] = useState<any>(null);
+
   const [loading, setLoading] = useState<boolean>(false);
   const token = getTizaraUserToken();
   const fetchData = async () => {
@@ -176,7 +175,12 @@ const Profile = () => {
       <Breadcrumb pageName="Profile" />
 
       <div className="overflow-hidden rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-        {/* <div className="relative z-20 h-35 md:h-65"></div> */}
+        <div className="flex gap-3 p-1 pb-0 border-b-2 border-gray-2">
+          <p className=" cursor-pointer text-meta-3">Profile</p>
+          <p className=" cursor-pointer text-meta-3">KYC</p>
+          <p className=" cursor-pointer text-meta-3">Change Password</p>
+        </div>
+
         <div className="px-4 mt-4 pb-6 text-center  ">
           <div className=" z-30 mx-auto  h-20 w-20 md:w-40 md:h-40 rounded-full   p-1 backdrop-blur   sm:p-3">
             <div className="relative h-20 w-20 md:w-40 md:h-40 flex mx-auto ">

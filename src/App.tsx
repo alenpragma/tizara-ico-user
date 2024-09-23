@@ -8,7 +8,7 @@ import ProtectedRoute from './hooks/ProtectedRoute';
 import 'react-loading-skeleton/dist/skeleton.css';
 import 'react-phone-number-input/style.css';
 
-const Profile = lazy(() => import('./pages/Profile'));
+// const Profile = lazy(() => import('./pages/Profile'));
 
 import MyContext from './hooks/MyContext';
 import { SkeletonTheme } from 'react-loading-skeleton';
@@ -44,6 +44,7 @@ import ProfitBounty from './pages/Historys/ProfitBounty';
 import NftProfitBounty from './pages/StoreNft/NftProfitBounty';
 import TransferHistory from './pages/Historys/TransferHistory';
 import Withdraw from './pages/Transaction/Withdraw';
+import Profile from './pages/Profile/Profile';
 
 function App() {
   const { pathname } = useLocation();
