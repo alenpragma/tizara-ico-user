@@ -93,7 +93,7 @@ const PasswordChange = () => {
             }}
             className="absolute bottom-3 right-3 text-xl"
           >
-            {passwordVisibleA ? <IoEyeOffOutline /> : <FiEye />}
+            {!passwordVisibleA ? <IoEyeOffOutline /> : <FiEye />}
           </span>
         </div>
         <div className="relative">
@@ -112,7 +112,7 @@ const PasswordChange = () => {
             }}
             className="absolute bottom-3 right-3 text-xl"
           >
-            {passwordVisibleB ? <IoEyeOffOutline /> : <FiEye />}
+            {!passwordVisibleB ? <IoEyeOffOutline /> : <FiEye />}
           </span>
         </div>
 
@@ -132,7 +132,7 @@ const PasswordChange = () => {
             }}
             className="absolute bottom-3 right-3 text-xl"
           >
-            {passwordVisibleC ? <IoEyeOffOutline /> : <FiEye />}
+            {!passwordVisibleC ? <IoEyeOffOutline /> : <FiEye />}
           </span>
         </div>
 

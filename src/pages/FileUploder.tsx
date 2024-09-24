@@ -8,7 +8,7 @@ interface InputFieldProps {
   defaultValue?: string | number;
   required?: boolean;
   type?: string;
-  error?: FieldError;
+  error?: FieldError | any;
   [key: string]: any;
 }
 
@@ -28,7 +28,7 @@ const FileUploder = ({
     ...(type === 'file' && {
       validate: {
         fileSize: (files: FileList) => {
-          if (files.length === 0) return true;
+          if (files?.length === 0) return true;
           return (
             files[0].size <= 1048576 || 'File size should be less than 1 MB'
           );

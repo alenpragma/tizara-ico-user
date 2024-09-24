@@ -56,12 +56,6 @@ interface ProfileData {
 }
 const Profile = () => {
   const [profile, setProfile] = useState<UserProfile | null>(null);
-  const {
-    register,
-    handleSubmit,
-    control,
-    formState: { errors },
-  } = useForm<UserProfile>();
 
   const [loading, setLoading] = useState<boolean>(false);
   const fetchData = async () => {
@@ -94,7 +88,7 @@ const Profile = () => {
       case 'kyc':
         return (
           <>
-            <Kyc></Kyc>
+            <Kyc profile={profile}></Kyc>
           </>
         );
       case 'editProfile':
