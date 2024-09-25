@@ -116,16 +116,6 @@ const Profile = () => {
             </button>
             <button
               className={`px-4 py-2 w-1/3 text-center ${
-                activeTab === 'passwordUpdate'
-                  ? 'border-b-2 border-meta-3 text-meta-3'
-                  : 'text-gray-500'
-              }`}
-              onClick={() => setActiveTab('passwordUpdate')}
-            >
-              Password Update
-            </button>
-            <button
-              className={`px-4 py-2 w-1/3 text-center ${
                 activeTab === 'kyc'
                   ? 'border-b-2 border-meta-3 text-meta-3'
                   : 'text-gray-500'
@@ -133,6 +123,16 @@ const Profile = () => {
               onClick={() => setActiveTab('kyc')}
             >
               KYC
+            </button>
+            <button
+              className={`px-4 py-2 w-1/3 text-center ${
+                activeTab === 'passwordUpdate'
+                  ? 'border-b-2 border-meta-3 text-meta-3'
+                  : 'text-gray-500'
+              }`}
+              onClick={() => setActiveTab('passwordUpdate')}
+            >
+              Password Update
             </button>
           </div>
 

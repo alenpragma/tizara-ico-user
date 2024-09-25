@@ -27,9 +27,9 @@ const ConvartModal = ({
   const onSubmit: SubmitHandler<any> = async (data: any) => {
     if (data.usd == 0) {
       Swal.fire({
-        title: 'success',
+        title: 'failed',
         text: 'Balance is low',
-        icon: 'success',
+        icon: 'warning',
       });
       openAndCloseConvartModal(false);
       return;

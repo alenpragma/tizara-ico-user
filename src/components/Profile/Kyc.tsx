@@ -135,11 +135,12 @@ const Kyc = ({ profile, fetchData }: any) => {
           KYC <span className="text-meta-3"> {profile?.kycStatus}</span>
         </h3>
 
-        <div className="py-2  px-2">
-          <span>Message: </span>
-          <span className="text-red-400">{profile?.message}</span>
-        </div>
-
+        {profile?.message && (
+          <div className="py-2  px-2">
+            <span>Message: </span>
+            <span className="text-red-400">{profile?.message}</span>
+          </div>
+        )}
         <div>
           <form
             onSubmit={handleSubmit(onSubmit)}
