@@ -9,8 +9,8 @@ import DefaultLayout from '../../layout/DefaultLayout';
 import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
 import { baseUrl } from '../../utils/api';
 import ProfileDetails from '../../components/Profile/ProfileDetails';
-import Kyc from '../../components/Profile/kyc';
 import PasswordChange from '../../components/Profile/PasswordChange';
+import Kyc from '../../components/Profile/Kyc';
 
 interface ApiResponse {
   statusCode: number;
@@ -80,7 +80,7 @@ const Profile = () => {
       case 'profileDetails':
         return (
           <div>
-            <ProfileDetails profile={profile} />
+            <ProfileDetails fetchData={fetchData} profile={profile} />
           </div>
         );
       case 'passwordUpdate':
@@ -88,11 +88,9 @@ const Profile = () => {
       case 'kyc':
         return (
           <>
-            <Kyc profile={profile}></Kyc>
+            <Kyc fetchData={fetchData} profile={profile}></Kyc>
           </>
         );
-      case 'editProfile':
-        return <div>Edit Profile Form</div>;
       default:
         return <div>Profile Details Content</div>;
     }
@@ -107,7 +105,7 @@ const Profile = () => {
           {/* Tab Headers */}
           <div className="flex border-b border-gray-200">
             <button
-              className={`px-4 py-2 w-1/4 text-center ${
+              className={`px-4 py-2 w-1/3 text-center ${
                 activeTab === 'profileDetails'
                   ? 'border-b-2 border-meta-3 text-meta-3'
                   : 'text-gray-500'
@@ -117,7 +115,7 @@ const Profile = () => {
               Profile Details
             </button>
             <button
-              className={`px-4 py-2 w-1/4 text-center ${
+              className={`px-4 py-2 w-1/3 text-center ${
                 activeTab === 'passwordUpdate'
                   ? 'border-b-2 border-meta-3 text-meta-3'
                   : 'text-gray-500'
@@ -127,7 +125,7 @@ const Profile = () => {
               Password Update
             </button>
             <button
-              className={`px-4 py-2 w-1/4 text-center ${
+              className={`px-4 py-2 w-1/3 text-center ${
                 activeTab === 'kyc'
                   ? 'border-b-2 border-meta-3 text-meta-3'
                   : 'text-gray-500'
@@ -135,16 +133,6 @@ const Profile = () => {
               onClick={() => setActiveTab('kyc')}
             >
               KYC
-            </button>
-            <button
-              className={`px-4 py-2 w-1/4 text-center ${
-                activeTab === 'editProfile'
-                  ? 'border-b-2 border-meta-3 text-meta-3'
-                  : 'text-gray-500'
-              }`}
-              onClick={() => setActiveTab('editProfile')}
-            >
-              Edit Profile
             </button>
           </div>
 

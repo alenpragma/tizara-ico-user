@@ -4,9 +4,7 @@ import { useState } from 'react';
 import { PuffLoader } from 'react-spinners';
 import Swal from 'sweetalert2';
 import axiosInstance from '../../utils/axiosConfig';
-import { ApiResponse } from '../../types/global';
 import { logout } from '../../utils/auth';
-import { FaRegEyeSlash } from 'react-icons/fa6';
 import { IoEyeOffOutline } from 'react-icons/io5';
 import { FiEye } from 'react-icons/fi';
 
@@ -22,10 +20,6 @@ const PasswordChange = () => {
   const [passwordVisibleA, setPasswordVisibleA] = useState(false);
   const [passwordVisibleB, setPasswordVisibleB] = useState(false);
   const [passwordVisibleC, setPasswordVisibleC] = useState(false);
-
-  // const togglePasswordVisibility = () => {
-  //   setPasswordVisibleA(!passwordVisibleA);
-  // };
 
   const {
     register,

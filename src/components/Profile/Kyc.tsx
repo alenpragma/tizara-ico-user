@@ -16,7 +16,7 @@ type UpdateUserProfile = {
   nidPassback?: any;
 };
 
-const Kyc = ({ profile }: any) => {
+const Kyc = ({ profile, fetchData }: any) => {
   console.log(profile);
 
   const [loading, setLoading] = useState(false);
@@ -36,13 +36,10 @@ const Kyc = ({ profile }: any) => {
     const { name, files } = e.target;
 
     if (files && files[0]) {
-      // Check if the file size exceeds 1MB (1MB = 1024 * 1024 bytes)
       if (files[0].size > 1024 * 1024) {
-        // Display an alert or show a custom error message
         alert('File size should be less than 1 MB');
 
-        // Clear the file input
-        e.target.value = ''; // This will reset the file input so no file is selected
+        e.target.value = '';
         return;
       }
 
@@ -104,6 +101,7 @@ const Kyc = ({ profile }: any) => {
 
       if (response) {
         setLoading(false);
+        fetchData();
         Swal.fire({
           title: 'Success',
           text: 'Successfully updated',
@@ -142,27 +140,20 @@ const Kyc = ({ profile }: any) => {
             onSubmit={handleSubmit(onSubmit)}
             className="flex flex-col gap-3 px-4 lg:w-[500px]"
           >
-            <div className="mb-4.5">
-              <FileUploder
-                type="file"
-                label="Nid/Passport Front Page image (png, jpg, or jpeg)"
-                name="profileImage"
-                placeholder="image"
-                register={register}
-                error={errors.profileImage}
-                fileSelectedHandler={fileSelectedHandler}
-              />
-            </div>
-
             {/* // nid front end */}
             <div className="mb-4.5">
               <div>
                 <div>
-                  {/* <label className="mb-2.5 block text-black dark:text-white">
-                    Nid/Passport Front Page image
-                  </label> */}
+                  {profile?.kycStatus == 'PENDING' ||
+                  profile?.kycStatus == 'APPROVE' ? (
+                    <label className="mb-2.5 block text-black dark:text-white">
+                      Nid/Passport Front Page image
+                    </label>
+                  ) : (
+                    ' '
+                  )}
                   <img
-                    className="w-22 h-18 rounded-md"
+                    className="w-40 h-40 rounded-md"
                     src={profile?.nidPassFront}
                     alt=""
                   />
@@ -180,10 +171,7 @@ const Kyc = ({ profile }: any) => {
                   placeholder="image"
                   register={register}
                   error={errors.nidPassFront}
-                  // disabled={
-                  //   profile?.kycStatus == 'PENDING' ||
-                  //   profile?.kycStatus == 'APPROVE'
-                  // }
+                  required
                   fileSelectedHandler={fileSelectedHandler}
                 />
               )}
@@ -195,14 +183,18 @@ const Kyc = ({ profile }: any) => {
 
             <div className="mb-4.5">
               <div>
-                {/* {profile?.nidPassback && (
+                {profile?.kycStatus == 'PENDING' ||
+                profile?.kycStatus == 'APPROVE' ? (
                   <label className="mb-2.5 block text-black dark:text-white">
                     Nid/Passport back page image
                   </label>
-                )} */}
+                ) : (
+                  ' '
+                )}
+
                 {profile?.nidPassback && (
                   <img
-                    className="w-22 h-18 rounded-md"
+                    className="w-40 h-40 rounded-md"
                     src={profile?.nidPassback}
                     alt=""
                   />
@@ -219,20 +211,11 @@ const Kyc = ({ profile }: any) => {
                   name="nidPassback"
                   register={register}
                   error={errors?.nidPassback}
-                  // disabled={
-                  //   profile?.kycStatus == 'PENDING' ||
-                  //   profile?.kycStatus == 'APPROVE'
-                  // }
+                  required
                   fileSelectedHandler={fileSelectedHandler}
                 />
               )}
             </div>
-            {/* {profile?.message && (
-              <div>
-                <span>Message: </span>
-                <span className="text-red-400">{profile?.message}</span>
-              </div>
-            )} */}
 
             <div className="mb-4.5">
               <label className="mb-2.5 block text-black dark:text-white">
@@ -255,7 +238,10 @@ const Kyc = ({ profile }: any) => {
               <PuffLoader className="mx-auto" color="#36d7b7" size={40} />
             ) : (
               <button
-                disabled
+                disabled={
+                  profile?.kycStatus == 'PENDING' ||
+                  profile?.kycStatus == 'APPROVE'
+                }
                 className="flex px-7 mx-auto justify-center rounded bg-primary p-3 font-medium text-gray hover:bg-opacity-90"
               >
                 Submit
