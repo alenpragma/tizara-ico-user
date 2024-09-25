@@ -98,7 +98,7 @@ const Profile = () => {
 
   return (
     <DefaultLayout>
-      <Breadcrumb pageName="Profile 2" />
+      <Breadcrumb pageName="Profile" />
 
       <div className="overflow-hidden rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
         <div className="w-full max-w-3xl mx-auto mt-8">
