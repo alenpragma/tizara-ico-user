@@ -131,14 +131,19 @@ const Kyc = ({ profile, fetchData }: any) => {
   return (
     <>
       <div className="mt-4">
-        <h3 className="mb-1.5 text-2xl font-semibold">
-          KYC <span className="text-meta-6"> {profile?.kycStatus}</span>
+        <h3 className="my-3  px-2 text-2xl font-semibold">
+          KYC <span className="text-meta-3"> {profile?.kycStatus}</span>
         </h3>
+
+        <div className="py-2  px-2">
+          <span>Message: </span>
+          <span className="text-red-400">{profile?.message}</span>
+        </div>
 
         <div>
           <form
             onSubmit={handleSubmit(onSubmit)}
-            className="flex flex-col gap-3 px-4 lg:w-[500px]"
+            className="flex flex-col gap-3 px-2 lg:w-[500px]"
           >
             {/* // nid front end */}
             <div className="mb-4.5">
@@ -152,11 +157,13 @@ const Kyc = ({ profile, fetchData }: any) => {
                   ) : (
                     ' '
                   )}
-                  <img
-                    className="w-40 h-40 rounded-md"
-                    src={profile?.nidPassFront}
-                    alt=""
-                  />
+                  {profile?.nidPassFront && (
+                    <img
+                      className="w-40 h-40 rounded-md"
+                      src={profile?.nidPassFront}
+                      alt=""
+                    />
+                  )}
                 </div>
               </div>
 

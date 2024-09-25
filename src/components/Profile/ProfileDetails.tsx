@@ -102,11 +102,6 @@ const ProfileDetails = ({ profile, fetchData }: any) => {
 
   return (
     <div className="mt-4">
-      <h3 className="mb-1.5 text-2xl font-semibold text-black dark:text-white">
-        <span className="text-meta-3"> My Reffer Code: </span>
-        {profile?.myReferralCode}
-      </h3>
-
       {/* <h3 className="mb-1.5 mt-5 text-2xl font-semibold text-black dark:text-white">
         <p className="text-meta-3 flex justify-center gap-2">
           {profile?.isKycVerifyed ? (
@@ -171,6 +166,11 @@ const ProfileDetails = ({ profile, fetchData }: any) => {
             </div>
           </div>
 
+          <h3 className="mb-1.5 mt-5 text-2xl font-semibold text-black dark:text-white">
+            <span className="text-meta-3"> My Reffer Code: </span>
+            {profile?.myReferralCode}
+          </h3>
+
           <div className="w-full">
             <label className="mb-2.5 block text-black dark:text-white">
               Name
@@ -221,11 +221,6 @@ const ProfileDetails = ({ profile, fetchData }: any) => {
                 disabled
                 className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
               />
-            </div>
-
-            <div>
-              <span>Message: </span>
-              <span className="text-red-400">{profile?.message}</span>
             </div>
 
             {loading ? (
