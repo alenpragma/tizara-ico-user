@@ -24,115 +24,110 @@ interface ComponentProps {
   address: string;
 }
 
-const DepositRequest: React.FC<ComponentProps> = ({ address, closeModal }) => {
+const DepositRequest: React.FC<ComponentProps> = ({ closeModal }) => {
   const { profile } = useContext(MyContext);
-  console.log(profile.address);
 
-  const { register, handleSubmit } = useForm<Inputs>();
   const [loading, setLoading] = useState<boolean>(false);
 
-  const [deposits, setDeposits] = useState<any>(null);
-  const [trnx, setTrnx] = useState<any>([]);
+  // const getMyAllDeposit = async () => {
+  //   try {
+  //     const response = await axiosInstance.get('/deposit-request');
+  //     setDeposits(response?.data?.data);
+  //     // console.log(response?.data?.data, 'my deposit');
+  //   } catch (error) {
+  //     console.error('Error fetching data:', error);
+  //   }
+  // };
+  // const getMyTransactions = async () => {
+  //   setLoading(true);
+  //   try {
+  //     const transactionsResponse = await axios.get(
+  //       `https://web3.blockmaster.info/api/get-transactions?address=${profile?.address}`,
+  //     );
 
-  const getMyAllDeposit = async () => {
-    try {
-      const response = await axiosInstance.get('/deposit-request');
-      setDeposits(response?.data?.data);
-      // console.log(response?.data?.data, 'my deposit');
-    } catch (error) {
-      console.error('Error fetching data:', error);
-    }
-  };
-  const getMyTransactions = async () => {
-    setLoading(true);
-    try {
-      const transactionsResponse = await axios.get(
-        `https://web3.blockmaster.info/api/get-transactions?address=${profile?.address}`,
-      );
+  //     if (transactionsResponse.status == 200) {
+  //       setTrnx(transactionsResponse?.data);
+  //     }
+  //     setLoading(false);
+  //   } catch (error) {
+  //     setLoading(false);
+  //     console.error('Error creating address:', error);
+  //   }
+  // };
 
-      if (transactionsResponse.status == 200) {
-        setTrnx(transactionsResponse?.data);
-      }
-      setLoading(false);
-    } catch (error) {
-      setLoading(false);
-      console.error('Error creating address:', error);
-    }
-  };
+  // useEffect(() => {
+  //   getMyAllDeposit();
+  // }, []);
 
-  useEffect(() => {
-    getMyAllDeposit();
-  }, []);
+  // useEffect(() => {
+  //   getMyTransactions();
+  // }, []);
 
-  useEffect(() => {
-    getMyTransactions();
-  }, []);
+  // const onSubmit: SubmitHandler<Inputs> = async () => {
+  //   // Check if there are any transactions to process
+  //   console.log(trnx);
 
-  const onSubmit: SubmitHandler<Inputs> = async () => {
-    // Check if there are any transactions to process
-    console.log(trnx);
+  //   if (trnx && typeof trnx === 'object' && trnx.status === '0') {
+  //     Swal.fire({
+  //       title: 'Error',
+  //       text: 'Transaction Not Found',
+  //       icon: 'error',
+  //     });
+  //     return;
+  //   }
 
-    if (trnx && typeof trnx === 'object' && trnx.status === '0') {
-      Swal.fire({
-        title: 'Error',
-        text: 'Transaction Not Found',
-        icon: 'error',
-      });
-      return;
-    }
+  // // Filter unique transactions that match the profile's address and are not already in deposits
+  // const uniquData = trnx?.filter((trx: any) => {
+  //   return (
+  //     trx?.to === profile?.address &&
+  //     !deposits?.some((d: any) => d?.trxId === trx?.hash)
+  //   );
+  // });
 
-    // Filter unique transactions that match the profile's address and are not already in deposits
-    const uniquData = trnx?.filter((trx: any) => {
-      return (
-        trx?.to === profile?.address &&
-        !deposits?.some((d: any) => d?.trxId === trx?.hash)
-      );
-    });
+  //   // console.log(uniquData);
 
-    // console.log(uniquData);
+  //   // Check if there are any unique transactions to process
+  //   if (uniquData.length === 0) {
+  //     Swal.fire({
+  //       title: 'Error',
+  //       text: 'New Transaction Not Found',
+  //       icon: 'error',
+  //     });
+  //     closeModal();
+  //     return;
+  //   }
 
-    // Check if there are any unique transactions to process
-    if (uniquData.length === 0) {
-      Swal.fire({
-        title: 'Error',
-        text: 'New Transaction Not Found',
-        icon: 'error',
-      });
-      closeModal();
-      return;
-    }
+  //   const reqData = {
+  //     trxId: uniquData[0]?.hash,
+  //     amount: uniquData[0]?.value,
+  //     address: uniquData[0]?.to,
+  //   };
+  //   setLoading(true);
+  //   try {
+  //     // Post the entire array of transactions
+  //     const response = await axiosInstance.post('/deposit-request', reqData);
+  //     // console.log(response);
 
-    const reqData = {
-      trxId: uniquData[0]?.hash,
-      amount: uniquData[0]?.value,
-      address: uniquData[0]?.to,
-    };
-    setLoading(true);
-    try {
-      // Post the entire array of transactions
-      const response = await axiosInstance.post('/deposit-request', reqData);
-      // console.log(response);
+  //     if (response.data.success) {
+  //       Swal.fire({
+  //         title: 'Success',
+  //         text: 'Deposit processed successfully.',
+  //         icon: 'success',
+  //       });
+  //     }
+  //     setLoading(false);
 
-      if (response.data.success) {
-        Swal.fire({
-          title: 'Success',
-          text: 'Deposit processed successfully.',
-          icon: 'success',
-        });
-      }
-      setLoading(false);
-
-      closeModal();
-    } catch (error) {
-      setLoading(false);
-      closeModal();
-      Swal.fire({
-        title: 'Error',
-        text: 'Something went wrong while processing your deposit.',
-        icon: 'error',
-      });
-    }
-  };
+  //     closeModal();
+  //   } catch (error) {
+  //     setLoading(false);
+  //     closeModal();
+  //     Swal.fire({
+  //       title: 'Error',
+  //       text: 'Something went wrong while processing your deposit.',
+  //       icon: 'error',
+  //     });
+  //   }
+  // };
 
   // Function to set wallet name based on selected method
   // payment method v1
@@ -170,6 +165,43 @@ const DepositRequest: React.FC<ComponentProps> = ({ address, closeModal }) => {
 
   const addressParts = splitAddress(profile?.address);
 
+  const checkDeposit = async () => {
+    setLoading(true);
+    try {
+      const res = await axiosInstance.get(`/deposit-request/check-deposit`);
+      console.log(res);
+
+      if (res.data.statusCode == 200) {
+        return Swal.fire({
+          title: 'Sucess',
+          text: res.data.message,
+          icon: 'success',
+        });
+        setLoading(false);
+      }
+
+      setLoading(false);
+    } catch (error: any) {
+      setLoading(false);
+      closeModal();
+      if (error.statusCode == 400) {
+        closeModal();
+        return Swal.fire({
+          title: 'Failed',
+          text: error.message,
+          icon: 'warning',
+        });
+      } else {
+        closeModal();
+        return Swal.fire({
+          title: 'Failed',
+          text: 'Somthings Wrong',
+          icon: 'warning',
+        });
+      }
+    }
+  };
+
   return (
     <div className="fixed left-0 top-0 z-999 flex h-full min-h-screen w-full items-center justify-center bg-black/90 py-5">
       <div
@@ -196,10 +228,7 @@ const DepositRequest: React.FC<ComponentProps> = ({ address, closeModal }) => {
             </div>
             <hr />
 
-            <form
-              onSubmit={handleSubmit(onSubmit)}
-              className=" mx-auto  w-full lg:px-5 mt-4"
-            >
+            <div className=" mx-auto  w-full lg:px-5 mt-4">
               <QRCode
                 className="w-30 h-30 lg:w-35 lg:h-35 mx-auto"
                 // style={{ height: '256', maxWidth: '200', width: '200' }}
@@ -237,14 +266,17 @@ const DepositRequest: React.FC<ComponentProps> = ({ address, closeModal }) => {
               ) : (
                 <div className="lg:flex w-full justify-center mx-auto my-2">
                   <button
+                    onClick={() => {
+                      checkDeposit();
+                    }}
                     className={` px-6 w-full lg:w-fit bg-primary  btn flex justify-center rounded  py-2   font-medium text-gray hover:shadow-1`}
-                    type="submit"
+                    // type="submit"
                   >
                     Confirm
                   </button>
                 </div>
               )}
-            </form>
+            </div>
           </div>
         </div>
       </div>
