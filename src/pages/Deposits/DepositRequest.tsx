@@ -169,15 +169,15 @@ const DepositRequest: React.FC<ComponentProps> = ({ closeModal }) => {
     setLoading(true);
     try {
       const res = await axiosInstance.get(`/deposit-request/check-deposit`);
-      console.log(res);
 
       if (res.data.statusCode == 200) {
+        setLoading(false);
+        closeModal();
         return Swal.fire({
           title: 'Sucess',
           text: res.data.message,
           icon: 'success',
         });
-        setLoading(false);
       }
 
       setLoading(false);
