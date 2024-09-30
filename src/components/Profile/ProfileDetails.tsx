@@ -122,7 +122,7 @@ const ProfileDetails = ({ profile, fetchData }: any) => {
           onSubmit={handleSubmit(onSubmit)}
           className="flex flex-col gap-3 px-4  "
         >
-          <div className="relative z-30 mx-auto  h-20 w-20 md:w-40 md:h-40 rounded-full bg-white/20 p-1 backdrop-blur sm:p-3">
+          <div className="relative z-30 mx-auto  h-20 w-20 md:w-40 md:h-40 rounded-full bg-black/40 dark:bg-white/20  p-1 backdrop-blur sm:p-3">
             <div className="relative drop-shadow-2">
               <img
                 className="min-w-full min-h-full  h-18 w-19 md:w-36 md:h-34  rounded-full "
@@ -132,7 +132,7 @@ const ProfileDetails = ({ profile, fetchData }: any) => {
 
               <label
                 htmlFor="profile"
-                className="absolute bottom-0 right-0 flex h-6 w-6 lg:h-8.5 lg:w-8.5 cursor-pointer items-center justify-center rounded-full bg-primary text-white hover:bg-opacity-90 sm:bottom-2 sm:right-2"
+                className="absolute -bottom-1 -right-1 flex h-6 w-6 lg:h-8.5 lg:w-8.5 cursor-pointer items-center justify-center rounded-full bg-primary text-white hover:bg-opacity-90 sm:bottom-2 sm:right-2"
               >
                 <svg
                   className="fill-current"
@@ -166,7 +166,7 @@ const ProfileDetails = ({ profile, fetchData }: any) => {
             </div>
           </div>
 
-          <h3 className="mb-1.5 mt-5 text-2xl font-semibold text-black dark:text-white">
+          <h3 className="mb-1.5 mt-5 text-md lg:text-2xl font-semibold text-black dark:text-white">
             <span className="text-meta-3"> My Reffer Code: </span>
             {profile?.myReferralCode}
           </h3>

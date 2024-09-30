@@ -1,11 +1,10 @@
-import React, { CSSProperties, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { PuffLoader } from 'react-spinners';
 import SvgImage from './SvgImage';
 import { IoLockOpenOutline } from 'react-icons/io5';
-import { baseUrl } from '../../utils/api';
 import { Captcha } from './Captcha';
 import axiosInstance from '../../utils/axiosConfig';
 import { getTizaraUserToken } from '../../hooks/getTokenFromstorage';

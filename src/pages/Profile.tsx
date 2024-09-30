@@ -185,7 +185,7 @@ const Profile = () => {
           <div className=" z-30 mx-auto  h-20 w-20 md:w-40 md:h-40 rounded-full   p-1 backdrop-blur   sm:p-3">
             <div className="relative h-20 w-20 md:w-40 md:h-40 flex mx-auto ">
               <img
-                className="h-20 w-20 border border-green-300 md:w-40 md:h-40 rounded-full"
+                className="h-20 w-20 border border-green-500 md:w-40 md:h-40 rounded-full"
                 src={profile?.profileImage ?? userImage}
                 alt="profile image"
               />

@@ -8,6 +8,9 @@ import axiosInstance from '../../utils/axiosConfig';
 import TableRow from '../../components/Tables/TableRow';
 import PaginationButtons from '../../components/Pagination/PaginationButtons';
 import { IMeta } from '../../types/common';
+import { PiCopyDuotone } from 'react-icons/pi';
+import { copyToClipboard } from '../../utils/handelCopy';
+import TableRowCopy from '../../components/Tables/TableRowCopy';
 
 interface IHistory {
   id: string;
@@ -99,16 +102,16 @@ const Withdraw = () => {
                     <th className="min-w-[90px] py-4 px-4 font-medium text-black dark:text-white">
                       SL NO
                     </th>
-                    <th className="min-w-[220px] py-4 px-4 font-medium text-black dark:text-white">
+                    <th className="min-w-[150px] py-4 px-4 font-medium text-black dark:text-white">
                       Date
                     </th>
                     <th className="min-w-[100px] py-4 px-4 font-medium text-black dark:text-white">
                       Transaction Hash
                     </th>
 
-                    <th className="min-w-[290px] py-4 px-4 font-medium text-black dark:text-white">
+                    {/* <th className="min-w-[290px] py-4 px-4 font-medium text-black dark:text-white">
                       From
-                    </th>
+                    </th> */}
 
                     <th className="min-w-[100px] py-4 px-4 font-medium text-black dark:text-white">
                       To
@@ -133,8 +136,15 @@ const Withdraw = () => {
                           <TableRow data={Number(key) + 1}></TableRow>
                           <TableRow data={formatToLocalDate(data?.createdAt)} />
 
-                          <TableRow data={sliceHash(data.hash)}></TableRow>
-                          <TableRow data={sliceHash(data.from)}></TableRow>
+                          {/* <TableRow data={sliceHash(data.hash)}> */}
+                          <TableRowCopy data={sliceHash(data.hash)}>
+                            <PiCopyDuotone
+                              className="text-xl cursor-pointer"
+                              onClick={() => copyToClipboard(data.hash)}
+                            />
+                          </TableRowCopy>
+
+                          {/* <TableRow data={sliceHash(data.from)}></TableRow> */}
                           <TableRow data={sliceHash(data.to)}></TableRow>
                           <TableRow data={data.amount}></TableRow>
 

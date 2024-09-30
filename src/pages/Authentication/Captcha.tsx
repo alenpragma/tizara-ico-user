@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useRef, useEffect } from 'react';
 
 interface AppProps {
   validate: (isValid: boolean) => void;
@@ -147,7 +147,7 @@ export const Captcha: React.FC<any> = ({
             background: '#dddd',
             border: '1px solid #999',
           }}
-          className="border"
+          className="border focus:outline-none p-1 text-title-md"
           onChange={(e) => {
             setEnteredVal(e.target.value);
           }}

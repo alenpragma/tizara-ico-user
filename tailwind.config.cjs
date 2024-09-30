@@ -38,7 +38,7 @@ module.exports = {
         'boxdark-2': '#1A222C',
         strokedark: '#2E3A47',
         'form-strokedark': '#3d4d60',
-        'form-input': '#1d2a39',
+        'form-input': '#1d2a38',
         'meta-1': '#DC3545',
         'meta-2': '#EFF2F7',
         'meta-3': '#10B981',

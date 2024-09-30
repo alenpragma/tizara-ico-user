@@ -123,6 +123,9 @@ const StakeBonusHistory = () => {
                 </tbody>
               </table>
             )}
+            {historys.length == 0 && !loading && (
+              <p className="text-center p-2">Data Not Found</p>
+            )}
           </div>
         </div>
         <div className="my-4">
