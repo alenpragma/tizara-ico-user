@@ -12,15 +12,14 @@ export const BuyModal = ({ fetchData, closeModal, data }: any) => {
   const purchaseNFT = async () => {
     setLoading(true);
     const nftdata = {
-      name: data.name,
-      title: data.title,
+      // name: data.name,
+      // title: data.title,
+      // quantity: 1,
+      // price: data.price,
+      // dailyRoi: data.dailyRoi,
+      // duration: data.duration,
       walletName: data.walletName,
-      quantity: 1,
-      price: data.price,
-      dailyRoi: data.dailyRoi,
-      duration: data.duration,
       nftId: data.id,
-      lastDistributionDate: new Date(),
     };
 
     try {

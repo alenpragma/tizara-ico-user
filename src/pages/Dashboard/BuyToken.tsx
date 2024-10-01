@@ -30,6 +30,7 @@ const BuyToken: React.FC<ComponentProps> = ({
 }) => {
   const { register, handleSubmit } = useForm<Inputs>();
   const [amount, setAmount] = useState<number>(0);
+  const [loading, setLoading] = useState(false);
 
   let totalPrice: any = 0;
   if (coinPrice) {
@@ -46,13 +47,16 @@ const BuyToken: React.FC<ComponentProps> = ({
     };
 
     try {
+      setLoading(true);
       const res = await axiosInstance.post<ApiResponse<any>>(
         '/buy-token',
         buyDetails,
       );
 
       if (res?.data.success) {
+        setLoading(false);
         await setGetWallet(true);
+        closeModal();
         Swal.fire({
           title: 'Success!',
           text: `${res?.data?.message}`,
@@ -61,6 +65,8 @@ const BuyToken: React.FC<ComponentProps> = ({
         });
       }
     } catch (error: any) {
+      setLoading(false);
+      closeModal();
       Swal.fire({
         title: 'Error!',
         text: error.message,

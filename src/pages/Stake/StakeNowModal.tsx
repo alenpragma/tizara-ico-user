@@ -56,13 +56,11 @@ export const StakeNowModal = ({
   // dayly Reward
 
   const onSubmit: SubmitHandler<Inputs> = async (data: Inputs) => {
-    console.log(data);
-
     if (!data.wallet) {
       Swal.fire({
-        title: 'Success',
+        title: 'Warning',
         text: 'Please Select wallet',
-        icon: 'success',
+        icon: 'info',
       });
       return;
     }
@@ -79,7 +77,7 @@ export const StakeNowModal = ({
     if (Number(data?.stakeAmount) > Number(data?.wallet?.balance)) {
       return Swal.fire({
         title: 'Error',
-        text: 'insufficient Balance',
+        text: 'Insufficient Balance',
         icon: 'error',
       });
     }
