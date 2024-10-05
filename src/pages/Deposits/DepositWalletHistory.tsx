@@ -8,6 +8,9 @@ import Skeleton from 'react-loading-skeleton';
 import NotFound from '../../components/NotFound/NotFound';
 import axiosInstance from '../../utils/axiosConfig';
 import TableRow from '../../components/Tables/TableRow';
+import TableRowCopy from '../../components/Tables/TableRowCopy';
+import { copyToClipboard, sliceHash } from '../../utils';
+import { PiCopyDuotone } from 'react-icons/pi';
 
 const DepositWalletHistory = () => {
   const [depositHistorys, setDepositHistorys] = useState<any>();
@@ -66,7 +69,7 @@ const DepositWalletHistory = () => {
                   <th className="min-w-[90px] py-4 px-4 font-medium text-black dark:text-white ">
                     SL NO
                   </th>
-                  <th className="min-w-[220px] py-4 px-4 font-medium text-black dark:text-white  ">
+                  <th className="min-w-[150px] py-4 px-4 font-medium text-black dark:text-white  ">
                     Date
                   </th>
 
@@ -104,14 +107,21 @@ const DepositWalletHistory = () => {
                       <TableRow
                         data={depositHistory?.depositMethod?.walletNo}
                       ></TableRow> */}
-                      <TableRow data={depositHistory?.trxId}></TableRow>
+                      {/* <TableRow data={depositHistory?.trxId}></TableRow> */}
+
+                      <TableRowCopy data={sliceHash(depositHistory?.trxId)}>
+                        <PiCopyDuotone
+                          className="text-xl cursor-pointer"
+                          onClick={() => copyToClipboard(depositHistory?.trxId)}
+                        />
+                      </TableRowCopy>
 
                       <TableRow data={depositHistory?.amount}></TableRow>
 
                       <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                         <p
                           className={`inline-flex rounded-full bg-opacity-10 py-1 px-3 text-sm font-medium ${
-                            depositHistory?.status === 'APPROVED'
+                            depositHistory?.status === 'APPROVE'
                               ? 'bg-success text-success'
                               : depositHistory?.status === 'REJECT'
                               ? 'bg-danger text-danger'
@@ -132,9 +142,7 @@ const DepositWalletHistory = () => {
       </div>
 
       <div>
-        {isDepositModalOpen && (
-          <DepositRequest closeModal={closeEditModal} fetchData={fetchData} />
-        )}
+        {isDepositModalOpen && <DepositRequest closeModal={closeEditModal} />}
       </div>
     </DefaultLayout>
   );

@@ -6,12 +6,10 @@ import { formatToLocalDate } from '../../hooks/formatDate';
 import { IStake } from '../../types/stake';
 import NotFound from '../../components/NotFound/NotFound';
 import axiosInstance from '../../utils/axiosConfig';
-import TableRow from '../../components/Tables/TableRow';
 import PaginationButtons from '../../components/Pagination/PaginationButtons';
 import { IMeta } from '../../types/common';
 
 const AllStake = () => {
-  const [search, setSearch] = useState('');
   const [loading, setLoading] = useState(false);
   const [stakes, setStakes] = useState<IStake[]>([]);
 
@@ -45,7 +43,7 @@ const AllStake = () => {
 
   return (
     <DefaultLayout>
-      <Breadcrumb pageName="My Stake Coin" />
+      <Breadcrumb pageName="My Staked Tizara" />
       <div className="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
         <div className="max-w-full overflow-x-auto">
           {loading ? (
@@ -59,10 +57,10 @@ const AllStake = () => {
                   <th className="min-w-[90px] py-4 px-4 font-medium text-black dark:text-white ">
                     SL NO
                   </th>
-                  <th className="min-w-[220px] py-4 px-4 font-medium text-black dark:text-white ">
+                  <th className="min-w-[120px] py-4 px-4 font-medium text-black dark:text-white ">
                     Date
                   </th>
-                  <th className="min-w-[220px] py-4 px-4 font-medium text-black dark:text-white ">
+                  <th className="min-w-[120px] py-4 px-4 font-medium text-black dark:text-white ">
                     Plan Name
                   </th>
 

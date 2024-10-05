@@ -9,8 +9,8 @@ import TableRow from '../../components/Tables/TableRow';
 import PaginationButtons from '../../components/Pagination/PaginationButtons';
 import { IMeta } from '../../types/common';
 import { PiCopyDuotone } from 'react-icons/pi';
-import { copyToClipboard } from '../../utils/handelCopy';
 import TableRowCopy from '../../components/Tables/TableRowCopy';
+import { copyToClipboard, sliceHash } from '../../utils';
 
 interface IHistory {
   id: string;
@@ -71,13 +71,6 @@ const Withdraw = () => {
   useEffect(() => {
     fetchData();
   }, [currentPage]);
-
-  const sliceHash = (address: any) => {
-    const firstSix = address.slice(0, 6);
-    const lastSix = address.slice(-6);
-    const result = `${firstSix}...${lastSix}`;
-    return result;
-  };
 
   return (
     <>

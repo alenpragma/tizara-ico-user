@@ -21,7 +21,6 @@ type Inputs = {
 };
 interface ComponentProps {
   closeModal: () => void;
-  address: string;
 }
 
 const DepositRequest: React.FC<ComponentProps> = ({ closeModal }) => {
