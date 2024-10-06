@@ -215,7 +215,7 @@ const DepositRequest: React.FC<ComponentProps> = ({ closeModal }) => {
             <div className="w-full flex justify-between px-3 place-items-center py-3">
               <div className=" flex justify-end">
                 <h2 className="text-xl font-bold dark:text-white text-black ">
-                  My Own Wallet Details
+                  {/* My Own Wallet Details */}
                 </h2>
               </div>
               <strong
@@ -226,8 +226,13 @@ const DepositRequest: React.FC<ComponentProps> = ({ closeModal }) => {
               </strong>
             </div>
             <hr />
+            <div className=" mx-auto  w-full lg:px-5 mt-4 text-center">
+              <p className='font-bold my-10 text-orange-500'> Deposits are temporarily colsed. We will be back soon.</p>
+            </div>
 
-            <div className=" mx-auto  w-full lg:px-5 mt-4">
+            {/* this is main deposits Code. don't delete this */}
+
+            {/* <div className=" mx-auto  w-full lg:px-5 mt-4">
               <QRCode
                 className="w-30 h-30 lg:w-35 lg:h-35 mx-auto"
                 // style={{ height: '256', maxWidth: '200', width: '200' }}
@@ -275,7 +280,7 @@ const DepositRequest: React.FC<ComponentProps> = ({ closeModal }) => {
                   </button>
                 </div>
               )}
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
