@@ -87,7 +87,7 @@ const DepositRequest: React.FC<ComponentProps> = ({ closeModal }) => {
                   Deposits are temporarily colsed. We will be back soon.
                 </p>
 
-                {/* <InputField
+                <InputField
                   label="Amount"
                   name="amount"
                   register={register}
@@ -104,15 +104,15 @@ const DepositRequest: React.FC<ComponentProps> = ({ closeModal }) => {
                       e.preventDefault();
                     }
                   }}
-                /> */}
+                />
               </div>
               <div className="flex justify-center mt-4 ">
-                {/* <button
+                <button
                   type="submit"
                   className="mt-2 rounded-md bg-primary py-2 px-6 font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
                 >
                   Submit
-                </button> */}
+                </button>
               </div>
             </form>
           </div>
