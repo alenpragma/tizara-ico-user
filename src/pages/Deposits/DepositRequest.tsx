@@ -4,6 +4,8 @@ import { useContext, useEffect, useState } from 'react';
 import axiosInstance from '../../utils/axiosConfig';
 import InputField from '../../components/Forms/InputField';
 import { SubmitHandler, useForm } from 'react-hook-form';
+import Loader from '../../common/Loader';
+import { PuffLoader } from 'react-spinners';
 
 interface ComponentProps {
   closeModal: () => void;
@@ -27,11 +29,11 @@ const DepositRequest: React.FC<ComponentProps> = ({ closeModal }) => {
 
       // Check the API response for success and show success message
       if (response.data.success) {
-        Swal.fire({
-          icon: 'success',
-          title: 'Deposit Successful',
-          text: 'Your deposit has been submitted successfully!',
-        });
+        // Swal.fire({
+        //   icon: 'success',
+        //   title: 'Deposit Successful',
+        //   text: 'Your deposit has been submitted successfully!',
+        // });
 
         const invoiceUrl = response.data.data.invoice_url;
 
@@ -107,12 +109,17 @@ const DepositRequest: React.FC<ComponentProps> = ({ closeModal }) => {
                 />
               </div>
               <div className="flex justify-center mt-4 ">
-                <button
-                  type="submit"
-                  className="mt-2 rounded-md bg-primary py-2 px-6 font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
-                >
-                  Submit
-                </button>
+                {loading ? (
+                  <PuffLoader className="mx-auto" color="#36d7b7" size={40} />
+                ) : (
+                  <button
+                    disabled
+                    type="submit"
+                    className="mt-2 rounded-md bg-primary py-2 px-6 font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
+                  >
+                    Submit
+                  </button>
+                )}
               </div>
             </form>
           </div>
