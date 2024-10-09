@@ -45,6 +45,7 @@ import NftProfitBounty from './pages/StoreNft/NftProfitBounty';
 import TransferHistory from './pages/Historys/TransferHistory';
 import Withdraw from './pages/Transaction/Withdraw';
 import Profile from './pages/Profile/Profile';
+import PaymentSuccess from './pages/PaymentSuccess';
 
 function App() {
   const { pathname } = useLocation();
@@ -416,6 +417,30 @@ function App() {
                   <PageTitle title="Ico Wallet" />
                   <ProtectedRoute>
                     <IcoWallet />
+                  </ProtectedRoute>
+                </>
+              }
+            />
+
+            <Route
+              path="/pay/success"
+              element={
+                <>
+                  <PageTitle title="Ico Wallet" />
+                  <ProtectedRoute>
+                    <PaymentSuccess />
+                  </ProtectedRoute>
+                </>
+              }
+            />
+
+            <Route
+              path="/pay/cancel"
+              element={
+                <>
+                  <PageTitle title="Ico Wallet" />
+                  <ProtectedRoute>
+                    <PaymentSuccess />
                   </ProtectedRoute>
                 </>
               }

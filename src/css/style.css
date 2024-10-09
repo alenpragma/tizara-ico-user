@@ -85,3 +85,10 @@ select {
 .phoneInput textarea {
   background-color: #1d2a39;
 }
+
+.PhoneInputInput {
+  padding: 12px;
+  background-color: inherit;
+  border: none;
+  outline: none;
+}
