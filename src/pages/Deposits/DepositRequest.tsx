@@ -81,9 +81,9 @@ const DepositRequest: React.FC<ComponentProps> = ({ closeModal }) => {
               className="flex flex-col gap-3 px-4 lg:w-[500px]"
             >
               <div className=" mx-auto  w-full lg:px-5 mt-4">
-                <p className="font-bold my-10 text-orange-500">
+                {/* <p className="font-bold my-10 text-orange-500">
                   Deposits are temporarily colsed. We will be back soon.
-                </p>
+                </p> */}
 
                 <InputField
                   label="Amount"

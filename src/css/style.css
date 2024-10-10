@@ -1,10 +1,21 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
 @layer base {
   body {
     @apply font-satoshi font-normal text-base text-body bg-whiten relative z-1;
+  }
+
+  /* Light and dark mode background color for country select box */
+  .phoneInput .PhoneInputCountrySelect {
+    @apply bg-white text-black border-none outline-none; /* Light mode */
+    @apply dark:bg-graydark dark:text-white; /* Dark mode */
+  }
+
+  /* Selected country button (light and dark mode styles) */
+  .phoneInput .PhoneInputCountry {
+    @apply bg-inherit text-inherit border-none outline-none; /* Light mode */
+    @apply dark:bg-inherit dark:text-inherit; /* Dark mode */
   }
 }
 
@@ -73,6 +84,7 @@ input[type='number'] {
     height: 20px;
   }
 }
+
 .phoneInput button,
 optgroup,
 select {
