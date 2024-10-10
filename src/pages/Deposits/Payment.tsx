@@ -3,23 +3,30 @@ import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
 import DefaultLayout from '../../layout/DefaultLayout';
 import DepositRequest from './DepositRequest';
 import { formatToLocalDate } from '../../hooks/formatDate';
-import { getTizaraUserToken } from '../../hooks/getTokenFromstorage';
 import Skeleton from 'react-loading-skeleton';
 import NotFound from '../../components/NotFound/NotFound';
 import axiosInstance from '../../utils/axiosConfig';
 import TableRow from '../../components/Tables/TableRow';
-import TableRowCopy from '../../components/Tables/TableRowCopy';
-import { copyToClipboard, sliceHash } from '../../utils';
-import { PiCopyDuotone } from 'react-icons/pi';
 import MyContext from '../../hooks/MyContext';
+import PaginationButtons from '../../components/Pagination/PaginationButtons';
+import { IMeta } from '../../types/common';
 
-const DepositWalletHistory = () => {
+const Payment = () => {
   const { profile } = useContext(MyContext);
 
   const [depositHistorys, setDepositHistorys] = useState<any>();
   const [isDepositModalOpen, setIsDepositModalOpen] = useState(false);
-  const token = getTizaraUserToken();
   const [loading, setLoading] = useState(false);
+
+  // pagination calculate
+  const [currentPage, setCurrentPage] = useState(0);
+  const [perPage] = useState(25);
+
+  const [meta, setMeta] = useState<IMeta>({
+    total: 1,
+    page: 1,
+    limit: 1,
+  });
 
   // edit modal
   const openEditModal = () => {
@@ -32,12 +39,18 @@ const DepositWalletHistory = () => {
 
   const fetchData = async () => {
     try {
-      const response = await axiosInstance.get('/deposit-request');
+      setLoading(true);
+      const response = await axiosInstance.get(
+        `pay/get-my-depsit?page=1&limit=${perPage}&userId=${profile.id}`,
+      );
 
       if (response?.data?.success) {
         setDepositHistorys(response?.data?.data);
+        setMeta(response?.data?.data?.meta);
       }
+      setLoading(false);
     } catch (error) {
+      setLoading(false);
       console.error('Error fetching data:', error);
     }
   };
@@ -48,7 +61,7 @@ const DepositWalletHistory = () => {
 
   return (
     <DefaultLayout>
-      <Breadcrumb pageName="Deposit History" />
+      <Breadcrumb pageName="Payment History" />
 
       <div className="py-3">
         <button
@@ -75,13 +88,13 @@ const DepositWalletHistory = () => {
                   <th className="min-w-[150px] py-4 px-4 font-medium text-black dark:text-white  ">
                     Date
                   </th>
-
-                  {/* <th className="min-w-[120px] py-4 px-4 font-medium text-black dark:text-white">
-                    Wallet
-                  </th> */}
-                  <th className="min-w-[120px] py-4 px-4 font-medium text-black dark:text-white">
-                    Trx ID
+                  <th className="min-w-[150px] py-4 px-4 font-medium text-black dark:text-white  ">
+                    Name
                   </th>
+                  <th className="min-w-[120px] py-4 px-4 font-medium text-black dark:text-white">
+                    Order ID
+                  </th>
+
                   <th className="min-w-[120px] py-4 px-4 font-medium text-black dark:text-white">
                     Amount
                   </th>
@@ -91,64 +104,57 @@ const DepositWalletHistory = () => {
                 </tr>
               </thead>
               <tbody>
-                {depositHistorys?.map((depositHistory: any, key: string) => {
-                  return (
-                    <tr key={key}>
-                      <TableRow data={Number(key) + 1}></TableRow>
+                {depositHistorys?.data?.map(
+                  (depositHistory: any, key: string) => {
+                    return (
+                      <tr key={key}>
+                        <TableRow data={Number(key) + 1}></TableRow>
 
-                      <TableRow
-                        data={formatToLocalDate(depositHistory?.createdAt)}
-                      ></TableRow>
+                        <TableRow
+                          data={formatToLocalDate(depositHistory?.createdAt)}
+                        ></TableRow>
 
-                      {/* <TableRow
-                        data={depositHistory?.depositMethod?.paymentMethod}
-                      ></TableRow>
+                        <TableRow data={depositHistory?.user?.name}></TableRow>
+                        <TableRow data={depositHistory?.orderId}></TableRow>
 
-                      <TableRow
-                        data={depositHistory?.depositMethod?.network}
-                      ></TableRow>
-                      <TableRow
-                        data={depositHistory?.depositMethod?.walletNo}
-                      ></TableRow> */}
-                      {/* <TableRow data={depositHistory?.trxId}></TableRow> */}
+                        <TableRow data={depositHistory?.priceAmount}></TableRow>
 
-                      <TableRowCopy data={sliceHash(depositHistory?.trxId)}>
-                        <PiCopyDuotone
-                          className="text-xl cursor-pointer"
-                          onClick={() => copyToClipboard(depositHistory?.trxId)}
-                        />
-                      </TableRowCopy>
-
-                      <TableRow data={depositHistory?.amount}></TableRow>
-
-                      <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-                        <p
-                          className={`inline-flex rounded-full bg-opacity-10 py-1 px-3 text-sm font-medium ${
-                            depositHistory?.status === 'APPROVE'
-                              ? 'bg-success text-success'
-                              : depositHistory?.status === 'REJECT'
-                              ? 'bg-danger text-danger'
-                              : 'bg-warning text-warning'
-                          }`}
-                        >
-                          {depositHistory?.status}
-                        </p>
-                      </td>
-                    </tr>
-                  );
-                })}
+                        <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+                          <p
+                            className={`inline-flex rounded-full bg-opacity-10 py-1 px-3 text-sm font-medium ${
+                              depositHistory?.status === 'APPROVE'
+                                ? 'bg-success text-success'
+                                : depositHistory?.status === 'REJECT'
+                                ? 'bg-danger text-danger'
+                                : 'bg-warning text-warning'
+                            }`}
+                          >
+                            {depositHistory?.status}
+                          </p>
+                        </td>
+                      </tr>
+                    );
+                  },
+                )}
               </tbody>
             </table>
           )}
         </div>
-        <div>{!loading && depositHistorys?.length == 0 && <NotFound />}</div>
+        <div>
+          {!loading && depositHistorys?.data?.length == 0 && <NotFound />}
+        </div>
       </div>
 
       <div>
         {isDepositModalOpen && <DepositRequest closeModal={closeEditModal} />}
       </div>
+      <PaginationButtons
+        totalPages={Math?.ceil(meta?.total / perPage)}
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+      />
     </DefaultLayout>
   );
 };
 
-export default DepositWalletHistory;
+export default Payment;

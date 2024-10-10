@@ -46,6 +46,7 @@ import TransferHistory from './pages/Historys/TransferHistory';
 import Withdraw from './pages/Transaction/Withdraw';
 import Profile from './pages/Profile/Profile';
 import PaymentSuccess from './pages/PaymentSuccess';
+import Payment from './pages/Deposits/Payment';
 
 function App() {
   const { pathname } = useLocation();
@@ -362,13 +363,25 @@ function App() {
               }
             />
 
-            <Route
+            {/* <Route
               path="/deposit-wallet-history"
               element={
                 <>
                   <PageTitle title="Deposit History" />
                   <ProtectedRoute>
                     <DepositWalletHistory />
+                  </ProtectedRoute>
+                </>
+              }
+            /> */}
+
+            <Route
+              path="/deposit-wallet-history"
+              element={
+                <>
+                  <PageTitle title="Deposit History" />
+                  <ProtectedRoute>
+                    <Payment />
                   </ProtectedRoute>
                 </>
               }

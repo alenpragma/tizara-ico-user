@@ -29,28 +29,24 @@ const DepositRequest: React.FC<ComponentProps> = ({ closeModal }) => {
 
       // Check the API response for success and show success message
       if (response.data.success) {
-        // Swal.fire({
-        //   icon: 'success',
-        //   title: 'Deposit Successful',
-        //   text: 'Your deposit has been submitted successfully!',
-        // });
-
         const invoiceUrl = response.data.data.invoice_url;
 
         setTimeout(() => {
           window.location.href = invoiceUrl;
+          setLoading(false);
         }, 2000);
       } else {
         throw new Error('Deposit failed');
       }
     } catch (error: any) {
+      setLoading(false);
+
       Swal.fire({
         icon: 'error',
         title: 'Deposit Failed',
         text: error?.response?.data?.message || 'Something went wrong!',
       });
     } finally {
-      setLoading(false);
     }
   };
 
@@ -113,7 +109,6 @@ const DepositRequest: React.FC<ComponentProps> = ({ closeModal }) => {
                   <PuffLoader className="mx-auto" color="#36d7b7" size={40} />
                 ) : (
                   <button
-                    disabled
                     type="submit"
                     className="mt-2 rounded-md bg-primary py-2 px-6 font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
                   >
