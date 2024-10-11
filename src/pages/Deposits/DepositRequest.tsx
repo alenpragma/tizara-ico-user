@@ -25,7 +25,6 @@ const DepositRequest: React.FC<ComponentProps> = ({ closeModal }) => {
   const onSubmit: SubmitHandler<IDeposit> = async (data: IDeposit) => {
     console.log(data);
 
-    return;
     setLoading(true);
     try {
       const response = await axiosInstance.post('/pay/create-payment', data);
