@@ -110,12 +110,7 @@ const WelcomeSection = ({ setGetWallet, wallet, profile }: any) => {
         </div>
       </div>
       <div>
-        {isDepositModalOpen && (
-          <DepositRequest
-            address={profile?.address}
-            closeModal={closeEditModal}
-          />
-        )}
+        {isDepositModalOpen && <DepositRequest closeModal={closeEditModal} />}
 
         {/* {isConvatModalOpen && (
           <ConvartModal wallet={wallet} closeModal={closeConvartModalModal} />

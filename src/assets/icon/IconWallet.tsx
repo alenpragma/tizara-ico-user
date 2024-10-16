@@ -2,7 +2,7 @@ const IconWallet = () => {
   return (
     <div className="">
       <svg
-        className="lg:text-2xl font-bold dark:text-white text-primary"
+        className="lg:text-xl font-bold dark:text-white text-primary"
         xmlns="http://www.w3.org/2000/svg"
         height="20px"
         viewBox="0 -960 960 960"

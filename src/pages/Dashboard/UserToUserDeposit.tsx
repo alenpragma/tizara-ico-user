@@ -1,23 +1,14 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import InputField from '../../components/Forms/InputField';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { PuffLoader } from 'react-spinners';
-import SelectOptions from '../../Ui/SelectOptions';
 import axiosInstance from '../../utils/axiosConfig';
 import Swal from 'sweetalert2';
 
-// depositWallet;
-// icoWallet;
-// stakeWallet;
-
-// nativeWallet;
-// newIcoWallet;
-// nftWallet;
-
-const ConvartModal = ({
+const UserToUserDeposit = ({
   setGetWallet,
   wallet,
-  openAndCloseConvartModal,
+  openAndCloseUserToUserModal,
 }: any) => {
   const [lodaing, setLodaing] = useState<boolean>(false);
   const [otpModalOpen, setOtpModalOpen] = useState<boolean>(false);
@@ -25,24 +16,25 @@ const ConvartModal = ({
   const { register, handleSubmit, control } = useForm<any>();
 
   const onSubmit: SubmitHandler<any> = async (data: any) => {
+    console.log(data);
+
     if (data.usd == 0) {
       Swal.fire({
         title: 'failed',
         text: 'Balance is low',
         icon: 'warning',
       });
-      openAndCloseConvartModal(false);
+      openAndCloseUserToUserModal(false);
       return;
     }
-
-    const convartData = {
-      usd: Number(data.usd),
+    const payload = {
+      amount: Number(data.amount),
+      email: data.email,
     };
-
     try {
       const response = await axiosInstance.post(
-        '/tizara-exchagne-and-convart/convart-to-my-wallet',
-        convartData,
+        '/usd-transfer/user-to-user-deposit',
+        payload,
       );
       if (response.data.statusCode == 200) {
         Swal.fire({
@@ -51,12 +43,10 @@ const ConvartModal = ({
           icon: 'success',
         });
         setGetWallet(true);
-        openAndCloseConvartModal(false);
+        openAndCloseUserToUserModal(false);
       }
     } catch (error: any) {
-      console.log(error);
-
-      openAndCloseConvartModal(false);
+      openAndCloseUserToUserModal(false);
       Swal.fire({
         title: 'Failed',
         text: error.message,
@@ -65,65 +55,62 @@ const ConvartModal = ({
     }
   };
 
-  // const eligibleAmount = (wallet.nftWallet / 100) * 20;
-  // const formattedAmount = eligibleAmount.toFixed(2);
-  const totalCoin = wallet.nftWallet / 0.008;
-  console.log(totalCoin);
-
   return (
-    <div className="fixed left-0 top-0 z-999 flex h-full min-h-screen w-full items-center justify-center bg-black/90 py-5">
+    <div className="modal-container fixed left-0 top-0 z-999 flex h-full min-h-screen w-full items-center justify-center bg-black/90 py-5">
       <div
         className="overflow-auto  max-h-[80%] w-full max-w-fit rounded-lg bg-white   dark:bg-boxdark "
         onClick={(e) => {
           const target = e.target as HTMLDivElement;
           if (target.className === 'modal-container')
-            openAndCloseConvartModal(false);
+            openAndCloseUserToUserModal(false);
         }}
       >
         <div className="modal rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark overflow-auto">
           <div className="min-w-full w-[370px] lg:w-[600px] border-b border-stroke py-4 px-1 dark:border-strokedark">
             <div className="w-full flex justify-between px-3 place-items-center py-3">
               <h2 className="text-xl font-bold text-black dark:text-white">
-                Convert to My Wallet
+                User to user Transfer
               </h2>
 
               <strong
                 className="text-4xl align-center cursor-pointer  hover:text-black dark:hover:text-white"
-                onClick={() => openAndCloseConvartModal(false)}
+                onClick={() => openAndCloseUserToUserModal(false)}
               >
                 &times;
               </strong>
             </div>
             <hr />
+
             <form
               onSubmit={handleSubmit(onSubmit)}
               className="flex  flex-col w-full gap-5.5 p-6.5"
             >
-              <InputField
+              <p className="font-semibold">
+                Available balance {wallet.depositWallet} USD
+              </p>
+              {/* <InputField
                 label="NFT Wallet"
                 name="nftWallet"
                 register={register}
                 required
                 defaultValue={`${wallet.nftWallet}`}
                 readonly
-              />
+              /> */}
 
               <InputField
-                label="Eligible For Exchange"
-                name="usd"
-                register={register}
-                defaultValue={wallet?.nftWallet ?? '00'}
-                required
-                readonly
-              />
-
-              <InputField
-                label="Recived"
+                label="Transfer Amount"
                 name="amount"
                 register={register}
-                defaultValue={totalCoin ?? '00'}
                 required
-                readonly
+                type="number"
+                max={10000}
+              />
+
+              <InputField
+                label="Enter Recevier email"
+                name="email"
+                register={register}
+                required
               />
 
               <div className="flex justify-center gap-4">
@@ -141,7 +128,7 @@ const ConvartModal = ({
                 </div>
                 <button
                   type="button"
-                  onClick={() => openAndCloseConvartModal(false)}
+                  onClick={() => openAndCloseUserToUserModal(false)}
                   className="btn flex justify-center rounded bg-danger py-2 px-6 font-medium text-gray hover:shadow-1"
                 >
                   Cancel
@@ -155,4 +142,4 @@ const ConvartModal = ({
   );
 };
 
-export default ConvartModal;
+export default UserToUserDeposit;

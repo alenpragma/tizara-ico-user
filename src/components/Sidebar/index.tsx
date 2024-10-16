@@ -394,7 +394,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                                 (isActive && '!text-white')
                               }
                             >
-                              Swap History
+                              Bridge History
                             </NavLink>
                           </li>
                         </ul>

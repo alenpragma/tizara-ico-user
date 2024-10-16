@@ -25,9 +25,12 @@ const DepositRequest: React.FC<ComponentProps> = ({ closeModal }) => {
   const onSubmit: SubmitHandler<IDeposit> = async (data: IDeposit) => {
     console.log(data);
 
+    const paylode = {
+      amount: Number(data.amount),
+    };
     setLoading(true);
     try {
-      const response = await axiosInstance.post('/pay/create-payment', data);
+      const response = await axiosInstance.post('/pay/create-payment', paylode);
 
       // Check the API response for success and show success message
       if (response.data.success) {
@@ -66,7 +69,7 @@ const DepositRequest: React.FC<ComponentProps> = ({ closeModal }) => {
             <div className="w-full flex justify-between px-3 place-items-center py-3">
               <div className=" flex justify-end">
                 <h2 className="text-xl font-bold dark:text-white text-black ">
-                  {/* My Own Wallet Details */}
+                  Deposit
                 </h2>
               </div>
               <strong
