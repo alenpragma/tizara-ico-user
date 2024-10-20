@@ -138,11 +138,11 @@ function App() {
     }
   };
 
-  useEffect(() => {
-    if (profile?.id && !loading && profile.isVerified) {
-      createAddress(profile);
-    }
-  }, [profile?.id, loading]);
+  // useEffect(() => {
+  //   if (profile?.id && !loading && profile.isVerified) {
+  //     createAddress(profile);
+  //   }
+  // }, [profile?.id, loading]);
 
   return loading ? (
     <Loader />
