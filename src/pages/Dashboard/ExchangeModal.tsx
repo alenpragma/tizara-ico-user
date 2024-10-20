@@ -47,7 +47,7 @@ const ExchangeModal = ({
   };
 
   const eligibleAmount =
-    (wallet.newIcoWallet / 100) * exchangeSetting?.exchangeLimit ?? 0;
+    (wallet.newIcoWallet / 100) * exchangeSetting?.exchangeLimit;
   const formattedAmount = eligibleAmount.toFixed(2);
 
   return (

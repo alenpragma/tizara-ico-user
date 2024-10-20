@@ -22,7 +22,14 @@ const ConvartModal = ({
   const [lodaing, setLodaing] = useState<boolean>(false);
   const [otpModalOpen, setOtpModalOpen] = useState<boolean>(false);
 
+  const [usd, setUsd] = useState<number>(0);
+
   const { register, handleSubmit, control } = useForm<any>();
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setUsd(Number(value));
+  };
 
   const onSubmit: SubmitHandler<any> = async (data: any) => {
     if (data.usd == 0) {
@@ -65,9 +72,7 @@ const ConvartModal = ({
     }
   };
 
-  // const eligibleAmount = (wallet.nftWallet / 100) * 20;
-  // const formattedAmount = eligibleAmount.toFixed(2);
-  const totalCoin = wallet.nftWallet / 0.008;
+  const totalCoin = usd / 0.008;
   console.log(totalCoin);
 
   return (
@@ -100,7 +105,7 @@ const ConvartModal = ({
               className="flex  flex-col w-full gap-5.5 p-6.5"
             >
               <InputField
-                label="NFT Wallet"
+                label="NFT Wallet $"
                 name="nftWallet"
                 register={register}
                 required
@@ -109,19 +114,22 @@ const ConvartModal = ({
               />
 
               <InputField
-                label="Eligible For Exchange"
+                label="Convert Amount $"
                 name="usd"
                 register={register}
-                defaultValue={wallet?.nftWallet ?? '00'}
                 required
-                readonly
+                onChange={handleInputChange}
+                type="number"
+                step="0.5"
+                min={1}
+                max={wallet.nftWallet}
               />
 
               <InputField
                 label="Recived"
                 name="amount"
                 register={register}
-                defaultValue={totalCoin ?? '00'}
+                value={totalCoin || '00'}
                 required
                 readonly
               />
