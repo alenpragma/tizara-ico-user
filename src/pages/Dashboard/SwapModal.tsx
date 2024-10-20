@@ -48,9 +48,10 @@ const SwapModal = ({ setGetWallet, wallet, toggleSwapModal }: any) => {
             toggleSwapModal(false);
             Swal.fire({
               title: 'success',
-              text: 'Successfully Bridged',
+              text: response.data.message || 'Bridged Request success', // fallback message if response.data.message is undefined or falsy
               icon: 'success',
             });
+
             setLodaing(false);
           }
         } catch (error: any) {

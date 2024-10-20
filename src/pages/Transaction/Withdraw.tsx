@@ -22,6 +22,7 @@ interface IHistory {
   hash: string;
   desc: string;
   to: string;
+  status: null | boolean;
   createdAt: string;
   updatedAt: string;
 }
@@ -98,9 +99,9 @@ const Withdraw = () => {
                     <th className="min-w-[150px] py-4 px-4 font-medium text-black dark:text-white">
                       Date
                     </th>
-                    <th className="min-w-[100px] py-4 px-4 font-medium text-black dark:text-white">
+                    {/* <th className="min-w-[100px] py-4 px-4 font-medium text-black dark:text-white">
                       Transaction Hash
-                    </th>
+                    </th> */}
 
                     {/* <th className="min-w-[290px] py-4 px-4 font-medium text-black dark:text-white">
                       From
@@ -130,12 +131,12 @@ const Withdraw = () => {
                           <TableRow data={formatToLocalDate(data?.createdAt)} />
 
                           {/* <TableRow data={sliceHash(data.hash)}> */}
-                          <TableRowCopy data={sliceHash(data.hash)}>
+                          {/* <TableRowCopy data={sliceHash(data.hash)}>
                             <PiCopyDuotone
                               className="text-xl cursor-pointer"
                               onClick={() => copyToClipboard(data.hash)}
                             />
-                          </TableRowCopy>
+                          </TableRowCopy> */}
 
                           {/* <TableRow data={sliceHash(data.from)}></TableRow> */}
                           <TableRow data={sliceHash(data.to)}></TableRow>
@@ -143,9 +144,19 @@ const Withdraw = () => {
 
                           <TableRow data={data.desc} />
                           <TableRow data={''}>
-                            <span className=" text-green-500 font-semibold">
-                              Success
-                            </span>
+                            {data.status === null ? (
+                              <span className="text-yellow-500 font-semibold">
+                                Pending
+                              </span>
+                            ) : data.status === true ? (
+                              <span className="text-green-500 font-semibold">
+                                Success
+                              </span>
+                            ) : (
+                              <span className="text-red-500 font-semibold">
+                                Rejected
+                              </span>
+                            )}
                           </TableRow>
                         </tr>
                       );
