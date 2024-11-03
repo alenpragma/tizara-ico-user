@@ -47,6 +47,7 @@ import Withdraw from './pages/Transaction/Withdraw';
 import Profile from './pages/Profile/Profile';
 import PaymentSuccess from './pages/PaymentSuccess';
 import Payment from './pages/Deposits/Payment';
+import SpecialRcm from './pages/SpecialRcm/specialRcm';
 
 function App() {
   const { pathname } = useLocation();
@@ -493,6 +494,15 @@ function App() {
                   <Suspense fallback={<Lazyloding />}>
                     <Profile />
                   </Suspense>
+                </>
+              }
+            />
+            <Route
+              path="/special-rcm"
+              element={
+                <>
+                  <PageTitle title="Special rcm" />
+                  <SpecialRcm />
                 </>
               }
             />

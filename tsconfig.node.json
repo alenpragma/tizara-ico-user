@@ -6,5 +6,9 @@
     "moduleResolution": "bundler",
     "allowSyntheticDefaultImports": true
   },
-  "include": ["src/**/*.ts", "vite.config.ts"]
+  "include": [
+    "src/**/*.ts",
+    "vite.config.ts",
+    "src/pages/SpecialRcm/SpecialRcm.jsx"
+  ]
 }

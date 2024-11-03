@@ -1,14 +1,14 @@
 import CardDataStats from '../../components/CardDataStats';
 import { PiPackage } from 'react-icons/pi';
-import UserIcon from '../../assets/icon/UserIcon';
 import { useEffect, useState } from 'react';
 import ExchangeModal from './ExchangeModal';
 import ConvartModal from './ConvartModal';
 import axiosInstance from '../../utils/axiosConfig';
-import { ApiResponse } from '../../types/global';
 import IconWallet from '../../assets/icon/IconWallet';
 import SwapToDeposit from './SwapToDeposit';
 import UserToUserDeposit from './UserToUserDeposit';
+import MyWalletToDeposit from './MyWalletToDeposit';
+import DepositWalletWithdraw from './DepositWalletWithdraw';
 
 const Wallets = ({
   setGetWallet,
@@ -24,6 +24,9 @@ const Wallets = ({
   const [isSwap, setIsSwap] = useState(false);
   const [isUserToUser, setIsUserToUser] = useState(false);
 
+  const [isMyWalletToDeposit, setIsMyWalletToDeposit] = useState(false);
+  const [isDepositWalletWithdraw, setIsDepositWalletWithdraw] = useState(false);
+
   const openAndCloseExchangeModal = (data: boolean) => {
     setIsExchangeOpen(data);
   };
@@ -37,6 +40,14 @@ const Wallets = ({
   };
   const openAndCloseUserToUserModal = (data: boolean) => {
     setIsUserToUser(data);
+  };
+
+  const openAndCloseMyWalletTOdepositModal = (data: boolean) => {
+    setIsMyWalletToDeposit(data);
+  };
+
+  const openAndCloseDepositWalletWithdraw = (data: boolean) => {
+    setIsDepositWalletWithdraw(data);
   };
 
   const fetchData = async () => {
@@ -75,6 +86,14 @@ const Wallets = ({
                 <p className="text-sm md:text-[18px] font-medium">
                   Deposit Wallet
                 </p>
+
+                <button
+                  onClick={() => openAndCloseDepositWalletWithdraw(true)}
+                  className="items-center mr-2 text-sm mt-2 justify-center rounded-md bg-success py-1.5 px-3 text-center lg:font-medium text-white hover:bg-opacity-90 lg:px-6 xl:px-10"
+                >
+                  Withdraw
+                </button>
+
                 <button
                   onClick={() => openAndCloseUserToUserModal(true)}
                   className="items-center text-sm mt-2 justify-center rounded-md bg-success py-1.5 px-3 text-center lg:font-medium text-white hover:bg-opacity-90 lg:px-6 xl:px-10"
@@ -121,7 +140,7 @@ const Wallets = ({
           </CardDataStats>
         </div> */}
 
-        <div>
+        {/* <div>
           <CardDataStats
             title="MY Wallet"
             total={`${
@@ -130,6 +149,30 @@ const Wallets = ({
           >
             <UserIcon />
           </CardDataStats>
+        </div> */}
+
+        <div>
+          <div className="rounded-md cursor-pointer border border-stroke bg-white py-2 px-3 lg:py-6 lg:px-4.5 shadow-default dark:border-strokedark dark:bg-boxdark">
+            <div className="mt-0 flex items-center justify-between">
+              <div className="flex h-10 w-10 lg:h-11.5 lg:w-11.5 items-center justify-center rounded-full bg-meta-2 dark:bg-meta-3">
+                <IconWallet />
+              </div>
+              <div className="text-end">
+                <h4 className="text-[14px] md:text-[20px] font-semibold text-black dark:text-white">
+                  {`${
+                    wallet?.icoWallet ? wallet?.icoWallet.toFixed(2) : '00'
+                  } TIZARA`}
+                </h4>
+                <p className="text-sm md:text-[18px] font-medium">My Wallet</p>
+                <button
+                  onClick={() => setIsMyWalletToDeposit(true)}
+                  className="items-center text-sm mt-2 justify-center rounded-md bg-success py-1.5 px-3 text-center lg:font-medium text-white hover:bg-opacity-90 lg:px-6 xl:px-10"
+                >
+                  Convart to Deposit
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
 
         <div>
@@ -241,6 +284,21 @@ const Wallets = ({
             wallet={wallet}
             setGetWallet={setGetWallet}
             openAndCloseUserToUserModal={openAndCloseUserToUserModal}
+          />
+        )}
+        {isMyWalletToDeposit && (
+          <MyWalletToDeposit
+            wallet={wallet}
+            setGetWallet={setGetWallet}
+            openAndCloseSwapModal={openAndCloseMyWalletTOdepositModal}
+          />
+        )}
+
+        {isDepositWalletWithdraw && (
+          <DepositWalletWithdraw
+            wallet={wallet}
+            setGetWallet={setGetWallet}
+            openAndCloseSwapModal={openAndCloseDepositWalletWithdraw}
           />
         )}
       </div>
