@@ -1,12 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import { useState } from 'react';
 import InputField from '../../components/Forms/InputField';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { PuffLoader } from 'react-spinners';
-import SelectOptions from '../../Ui/SelectOptions';
 import axiosInstance from '../../utils/axiosConfig';
 import Swal from 'sweetalert2';
-import { ICoinPrice } from '../../types/dashboard';
-import { ApiResponse } from '../../types/global';
 
 const DepositWalletWithdraw = ({
   setGetWallet,
@@ -19,9 +16,11 @@ const DepositWalletWithdraw = ({
 
   const { register, handleSubmit } = useForm<any>();
 
+  const fee = userAmount * 0.05;
+  const receivedAmount = userAmount - fee;
+
   const onSubmit: SubmitHandler<any> = async (data: any) => {
     console.log(data);
-    return;
 
     if (data.usd == 0) {
       Swal.fire({
@@ -34,9 +33,13 @@ const DepositWalletWithdraw = ({
     }
     const payload = {
       amount: Number(data.amount),
+      address: data.address,
     };
     try {
-      const response = await axiosInstance.post('/ ', payload);
+      const response = await axiosInstance.post(
+        '/deposit-wallet/transfer-deposit-wallet',
+        payload,
+      );
       if (response.data.statusCode == 200) {
         Swal.fire({
           title: 'success',
@@ -100,6 +103,7 @@ const DepositWalletWithdraw = ({
                 name="amount"
                 register={register}
                 required
+                min={1}
                 type="number"
                 onChange={(e: { target: { value: number } }) => {
                   setUserAmount(e.target.value);
@@ -111,8 +115,15 @@ const DepositWalletWithdraw = ({
                 name="RecivedAmount"
                 register={register}
                 required
-                value={`${userAmount}`}
+                value={receivedAmount}
                 readonly
+              />
+
+              <InputField
+                label="Wallet Address"
+                name="address"
+                register={register}
+                required
               />
 
               <div className="flex justify-center gap-4">

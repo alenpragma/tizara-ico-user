@@ -39,8 +39,6 @@ const MyWalletToDeposit = ({
 
   const onSubmit: SubmitHandler<any> = async (data: any) => {
     console.log(data);
-    return;
-
     if (data.usd == 0) {
       Swal.fire({
         title: 'failed',
@@ -53,8 +51,12 @@ const MyWalletToDeposit = ({
     const payload = {
       amount: Number(data.amount),
     };
+    setLodaing(true);
     try {
-      const response = await axiosInstance.post('/ ', payload);
+      const response = await axiosInstance.post(
+        '/my-wallet/convart-to-usd',
+        payload,
+      );
       if (response.data.statusCode == 200) {
         Swal.fire({
           title: 'success',
@@ -64,6 +66,7 @@ const MyWalletToDeposit = ({
         await setGetWallet(true);
         await openAndCloseSwapModal(false);
       }
+      setLodaing(true);
     } catch (error: any) {
       openAndCloseSwapModal(false);
       Swal.fire({

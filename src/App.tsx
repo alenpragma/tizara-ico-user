@@ -47,7 +47,8 @@ import Withdraw from './pages/Transaction/Withdraw';
 import Profile from './pages/Profile/Profile';
 import PaymentSuccess from './pages/PaymentSuccess';
 import Payment from './pages/Deposits/Payment';
-import SpecialRcm from './pages/SpecialRcm/specialRcm';
+import DepositUsdTransferHistory from './pages/Historys/DepositUsdTransferHistory';
+import SpecialRcm from './pages/SpecialRcm/SpecialRcm';
 
 function App() {
   const { pathname } = useLocation();
@@ -347,6 +348,18 @@ function App() {
                   <PageTitle title="Transfer" />
                   <ProtectedRoute>
                     <TransferHistory />
+                  </ProtectedRoute>
+                </>
+              }
+            />
+
+            <Route
+              path="/history/usd-transfer-history"
+              element={
+                <>
+                  <PageTitle title="USD Transfer" />
+                  <ProtectedRoute>
+                    <DepositUsdTransferHistory />
                   </ProtectedRoute>
                 </>
               }
