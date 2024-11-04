@@ -20,15 +20,13 @@ const DepositWalletWithdraw = ({
   const receivedAmount = userAmount - fee;
 
   const onSubmit: SubmitHandler<any> = async (data: any) => {
-    console.log(data);
-
-    if (data.usd == 0) {
+    if (data.amount > wallet.depositWallet) {
       Swal.fire({
-        title: 'failed',
-        text: 'Balance is low',
+        title: 'Failed',
+        text: 'Insufficient Deposit Wallet',
         icon: 'warning',
       });
-      openAndCloseSwapModal(false);
+      // openAndCloseSwapModal(false);
       return;
     }
     const payload = {
@@ -36,6 +34,7 @@ const DepositWalletWithdraw = ({
       address: data.address,
     };
     try {
+      setLodaing(true);
       const response = await axiosInstance.post(
         '/deposit-wallet/transfer-deposit-wallet',
         payload,
@@ -46,11 +45,14 @@ const DepositWalletWithdraw = ({
           text: response.data.message,
           icon: 'success',
         });
+        setLodaing(true);
         await setGetWallet(true);
         await openAndCloseSwapModal(false);
       }
     } catch (error: any) {
-      openAndCloseSwapModal(false);
+      // openAndCloseSwapModal(false);
+      setLodaing(false);
+
       Swal.fire({
         title: 'Failed',
         text: error.message,
