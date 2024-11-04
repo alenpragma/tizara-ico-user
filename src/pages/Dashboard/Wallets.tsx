@@ -89,14 +89,14 @@ const Wallets = ({
 
                 <button
                   onClick={() => openAndCloseDepositWalletWithdraw(true)}
-                  className="items-center mr-2 text-sm mt-2 justify-center rounded-md bg-success py-1.5 px-3 text-center lg:font-medium text-white hover:bg-opacity-90 lg:px-6 xl:px-10"
+                  className="items-center mr-2 text-sm mt-2 justify-center rounded-md bg-success py-1.5 px-3 text-center lg:font-medium text-white hover:bg-opacity-90 lg:px-6 xl:px-5"
                 >
                   Withdraw
                 </button>
 
                 <button
                   onClick={() => openAndCloseUserToUserModal(true)}
-                  className="items-center text-sm mt-2 justify-center rounded-md bg-success py-1.5 px-3 text-center lg:font-medium text-white hover:bg-opacity-90 lg:px-6 xl:px-10"
+                  className="items-center text-sm mt-2 justify-center rounded-md bg-success py-1.5 px-3 text-center lg:font-medium text-white hover:bg-opacity-90 lg:px-6 xl:px-5"
                 >
                   Transfer
                 </button>
@@ -122,7 +122,7 @@ const Wallets = ({
                 <p className="text-sm md:text-[18px] font-medium">
                   Native Wallet
                 </p>
-                <button className="items-center text-sm mt-2 justify-center rounded-md bg-success py-1.5 px-3 text-center lg:font-medium text-white hover:bg-opacity-90 lg:px-6 xl:px-10">
+                <button className="items-center text-sm mt-2 justify-center rounded-md bg-success py-1.5 px-3 text-center lg:font-medium text-white hover:bg-opacity-90 lg:px-6 xl:px-5">
                   Stake Now
                 </button>
               </div>
@@ -166,7 +166,7 @@ const Wallets = ({
                 <p className="text-sm md:text-[18px] font-medium">My Wallet</p>
                 <button
                   onClick={() => setIsMyWalletToDeposit(true)}
-                  className="items-center text-sm mt-2 justify-center rounded-md bg-success py-1.5 px-3 text-center lg:font-medium text-white hover:bg-opacity-90 lg:px-6 xl:px-10"
+                  className="items-center text-sm mt-2 justify-center rounded-md bg-success py-1.5 px-3 text-center lg:font-medium text-white hover:bg-opacity-90 lg:px-6 xl:px-4"
                 >
                   Convart to Deposit
                 </button>

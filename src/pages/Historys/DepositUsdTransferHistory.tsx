@@ -8,6 +8,7 @@ import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
 import Skeleton from 'react-loading-skeleton';
 import TableRow from '../../components/Tables/TableRow';
 import { formatToLocalDate } from '../../hooks/formatDate';
+import StatusBadge from '../../components/Tables/StatusBadge';
 
 const DepositUsdTransferHistory = () => {
   const [search, setSearch] = useState('');
@@ -27,7 +28,7 @@ const DepositUsdTransferHistory = () => {
     try {
       setLoading(true);
       const response = await axiosInstance.get(
-        `/exchange-settings/get-exchagne-history?page=${
+        `/deposit-wallet/transfer-history?page=${
           currentPage + 1
         }&limit=${perPage}`,
       );
@@ -45,7 +46,7 @@ const DepositUsdTransferHistory = () => {
 
   return (
     <DefaultLayout>
-      <Breadcrumb pageName="Transfer to My wallet History" />
+      <Breadcrumb pageName="USD Withdraw History" />
 
       <div className="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
         <div className="max-w-full overflow-x-auto">
@@ -60,14 +61,23 @@ const DepositUsdTransferHistory = () => {
                   <th className="min-w-[90px] py-4 px-4 font-medium text-black dark:text-white ">
                     SL NO
                   </th>
-                  <th className="min-w-[220px] py-4 px-4 font-medium text-black dark:text-white ">
+                  <th className="min-w-[150px] py-4 px-4 font-medium text-black dark:text-white ">
                     Date
                   </th>
                   <th className="min-w-[220px] py-4 px-4 font-medium text-black dark:text-white ">
                     Email
                   </th>
-                  <th className="min-w-[220px] py-4 px-4 font-medium text-black dark:text-white ">
+                  <th className="min-w-[120px] py-4 px-4 font-medium text-black dark:text-white ">
                     Amount
+                  </th>
+                  <th className="min-w-[120px] py-4 px-4 font-medium text-black dark:text-white ">
+                    Fee 5 %
+                  </th>
+                  <th className="min-w-[120px] py-4 px-4 font-medium text-black dark:text-white ">
+                    Recived
+                  </th>
+                  <th className="min-w-[120px] py-4 px-4 font-medium text-black dark:text-white ">
+                    Status
                   </th>
                 </tr>
               </thead>
@@ -80,6 +90,13 @@ const DepositUsdTransferHistory = () => {
                     />
                     <TableRow data={profitHistory?.user?.email} />
                     <TableRow data={profitHistory?.amount} />
+                    <TableRow data={profitHistory?.fee} />
+                    <TableRow data={profitHistory?.recived} />
+                    {/* <TableRow data={profitHistory?.status} /> */}
+
+                    <TableRow data={''}>
+                      <StatusBadge status={profitHistory?.status} />
+                    </TableRow>
                   </tr>
                 ))}
               </tbody>

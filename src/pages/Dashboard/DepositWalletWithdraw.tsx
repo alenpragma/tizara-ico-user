@@ -90,16 +90,16 @@ const DepositWalletWithdraw = ({
               className="flex  flex-col w-full gap-5.5 p-6.5"
             >
               <InputField
-                label="Deposit Wallet $"
+                label="Abailable"
                 name="depositWallet"
                 register={register}
                 required
-                defaultValue={`${wallet.depositWallet}`}
+                defaultValue={`$ ${wallet.depositWallet}`}
                 readonly
               />
 
               <InputField
-                label="Amount (Min 10)"
+                label="Amount (Min $10)"
                 name="amount"
                 register={register}
                 required

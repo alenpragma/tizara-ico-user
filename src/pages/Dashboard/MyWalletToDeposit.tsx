@@ -121,11 +121,12 @@ const MyWalletToDeposit = ({
               />
 
               <InputField
-                label="Transfer Amount (Min 500)"
+                label="Transfer Amount (Min 1000)"
                 name="amount"
                 register={register}
                 required
                 type="number"
+                min={1000}
                 onChange={(e: { target: { value: number } }) => {
                   setUserAmount(e.target.value);
                 }}
