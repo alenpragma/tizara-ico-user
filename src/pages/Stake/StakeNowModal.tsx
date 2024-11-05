@@ -38,11 +38,11 @@ export const StakeNowModal = ({
       value: 'mywallet',
       label: `MY wallet ${wallet?.icoWallet}`,
     },
-    {
-      balance: `${wallet?.newIcoWallet}`,
-      value: 'icowallet',
-      label: `ICO wallet ${wallet?.newIcoWallet}`,
-    },
+    // {
+    //   balance: `${wallet?.newIcoWallet}`,
+    //   value: 'icowallet',
+    //   label: `ICO wallet ${wallet?.newIcoWallet}`,
+    // },
   ]);
 
   const [lodaing, setLoading] = useState(false);
