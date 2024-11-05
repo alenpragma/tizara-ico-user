@@ -122,7 +122,7 @@ const DepositWalletWithdraw = ({
               />
 
               <InputField
-                label="Wallet Address"
+                label="Wallet Address (Bep 20)"
                 name="address"
                 register={register}
                 required
