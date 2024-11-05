@@ -164,9 +164,10 @@ const Wallets = ({
                 <p className="text-sm md:text-[18px] font-medium">My Wallet</p>
                 <button
                   onClick={() => setIsMyWalletToDeposit(true)}
-                  className="items-center text-sm mt-2 justify-center rounded-md bg-success py-1.5 px-3 text-center lg:font-medium text-white hover:bg-opacity-90 lg:px-6 xl:px-4"
+                  className="items-center text-sm mt-2 justify-center rounded-md bg-success py-1.5 px-2 text-center lg:font-medium text-white hover:bg-opacity-90 lg:px-6 xl:px-4"
                 >
-                  Convart to Deposit
+                  {/* Convart to Deposit */}
+                  Swap to USD
                 </button>
               </div>
             </div>
