@@ -77,7 +77,7 @@ const SwapToDeposit = ({
           <div className="min-w-full w-[370px] lg:w-[600px] border-b border-stroke py-4 px-1 dark:border-strokedark">
             <div className="w-full flex justify-between px-3 place-items-center py-3">
               <h2 className="text-xl font-bold text-black dark:text-white">
-                Swap to Deposit
+                Transfer to Deposit
               </h2>
 
               <strong

@@ -10,6 +10,7 @@ import UserToUserDeposit from './UserToUserDeposit';
 import MyWalletToDeposit from './MyWalletToDeposit';
 import DepositWalletWithdraw from './DepositWalletWithdraw';
 import { FaWallet } from 'react-icons/fa6';
+import { Link } from 'react-router-dom';
 
 const Wallets = ({
   setGetWallet,
@@ -120,9 +121,11 @@ const Wallets = ({
               <p className="text-sm md:text-[18px] font-medium">
                 Native Wallet
               </p>
-              <button className="items-center text-sm mt-2 justify-center rounded-md bg-success py-1.5 px-3 text-center lg:font-medium text-white hover:bg-opacity-90 lg:px-6 xl:px-5">
-                Stake Now
-              </button>
+              <Link to="/stack-coin">
+                <button className="items-center text-sm mt-2 justify-center rounded-md bg-success py-1.5 px-3 text-center lg:font-medium text-white hover:bg-opacity-90 lg:px-6 xl:px-5">
+                  Stake Now
+                </button>
+              </Link>
             </div>
           </div>
         </div>
@@ -220,9 +223,9 @@ const Wallets = ({
                 <div className="flex gap-1">
                   <button
                     onClick={() => openAndCloseSwapModal(true)}
-                    className="items-center text-sm mt-2 justify-center rounded-md bg-success py-1.5 px-4 text-center lg:font-medium text-white hover:bg-opacity-90 lg:px-6 xl:px-7"
+                    className="items-center text-sm mt-2 justify-center rounded-md bg-success py-1.5 px-2 text-center lg:font-medium text-white hover:bg-opacity-90 lg:px-6 xl:px-7"
                   >
-                    Swap
+                    Transfer
                   </button>
 
                   <button
