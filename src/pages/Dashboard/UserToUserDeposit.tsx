@@ -31,6 +31,7 @@ const UserToUserDeposit = ({
       amount: Number(data.amount),
       email: data.email,
     };
+    setLodaing(true);
     try {
       const response = await axiosInstance.post(
         '/usd-transfer/user-to-user-deposit',
@@ -45,6 +46,7 @@ const UserToUserDeposit = ({
         setGetWallet(true);
         openAndCloseUserToUserModal(false);
       }
+      setLodaing(false);
     } catch (error: any) {
       openAndCloseUserToUserModal(false);
       Swal.fire({
@@ -53,6 +55,7 @@ const UserToUserDeposit = ({
         icon: 'error',
       });
     }
+    setLodaing(false);
   };
 
   return (
@@ -69,7 +72,7 @@ const UserToUserDeposit = ({
           <div className="min-w-full w-[370px] lg:w-[600px] border-b border-stroke py-4 px-1 dark:border-strokedark">
             <div className="w-full flex justify-between px-3 place-items-center py-3">
               <h2 className="text-xl font-bold text-black dark:text-white">
-                User to user Transfer
+                User To User Transfer
               </h2>
 
               <strong
@@ -98,17 +101,19 @@ const UserToUserDeposit = ({
               /> */}
 
               <InputField
-                label="Transfer Amount"
+                label="Transfer Amount (Min $5)"
                 name="amount"
                 register={register}
                 required
                 type="number"
+                min={5}
                 max={10000}
               />
 
               <InputField
                 label="Enter Recevier email"
                 name="email"
+                type="email"
                 register={register}
                 required
               />
