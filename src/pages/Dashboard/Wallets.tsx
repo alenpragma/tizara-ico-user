@@ -89,12 +89,12 @@ const Wallets = ({
                   Deposit Wallet
                 </p>
 
-                <button
+                {/* <button
                   onClick={() => openAndCloseDepositWalletWithdraw(true)}
                   className="items-center mr-2 text-sm mt-2 justify-center rounded-md bg-success py-1.5 px-3 text-center lg:font-medium text-white hover:bg-opacity-90 lg:px-6 xl:px-5"
                 >
                   Withdraw
-                </button>
+                </button> */}
 
                 <button
                   onClick={() => openAndCloseUserToUserModal(true)}
@@ -106,7 +106,6 @@ const Wallets = ({
             </div>
           </div>
         </div>
-
         <div className="rounded-md cursor-pointer border border-stroke bg-white py-2 px-3 lg:py-6 lg:px-4.5 shadow-default dark:border-strokedark dark:bg-boxdark">
           <div className="mt-0 flex items-center justify-between">
             <div className="flex h-10 w-10 lg:h-11.5 lg:w-11.5 items-center justify-center rounded-full bg-meta-2 dark:bg-meta-3">
@@ -129,7 +128,6 @@ const Wallets = ({
             </div>
           </div>
         </div>
-
         {/* <div>
           <CardDataStats
             title="Native Wallet"
@@ -140,7 +138,6 @@ const Wallets = ({
             <PiPackage className="lg:text-2xl dark:text-white text-primary" />
           </CardDataStats>
         </div> */}
-
         {/* <div>
           <CardDataStats
             title="MY Wallet"
@@ -151,7 +148,6 @@ const Wallets = ({
             <UserIcon />
           </CardDataStats>
         </div> */}
-
         <div>
           <div className="rounded-md cursor-pointer border border-stroke bg-white py-2 px-3 lg:py-6 lg:px-4.5 shadow-default dark:border-strokedark dark:bg-boxdark">
             <div className="mt-0 flex items-center justify-between">
@@ -176,7 +172,6 @@ const Wallets = ({
             </div>
           </div>
         </div>
-
         <div>
           <CardDataStats
             title="Stake Wallet"
@@ -187,7 +182,6 @@ const Wallets = ({
             <PiPackage className="lg:text-2xl dark:text-white text-primary" />
           </CardDataStats>
         </div>
-
         <div className="rounded-md cursor-pointer border border-stroke bg-white py-6 px-3 lg:py-6 lg:px-4.5 shadow-default dark:border-strokedark dark:bg-boxdark">
           <div className="mt-0 flex items-center justify-between">
             <div className="flex h-10 w-10 lg:h-11.5 lg:w-11.5 items-center justify-center rounded-full bg-meta-2 dark:bg-meta-3">
@@ -207,7 +201,6 @@ const Wallets = ({
             </div>
           </div>
         </div>
-
         <div>
           <div className="rounded-md cursor-pointer border border-stroke bg-white py-2 px-3 lg:py-6 lg:px-4.5 shadow-default dark:border-strokedark dark:bg-boxdark">
             <div className="mt-0 flex items-center justify-between">
@@ -239,7 +232,6 @@ const Wallets = ({
             </div>
           </div>
         </div>
-
         {/* <div>
         <CardDataStats
           title="Nft Wallet"
@@ -250,7 +242,6 @@ const Wallets = ({
           <PiPackage className="lg:text-2xl dark:text-white text-primary" />
         </CardDataStats>
       </div> */}
-
         {isExchangeOpen && (
           <ExchangeModal
             wallet={wallet}
@@ -259,7 +250,6 @@ const Wallets = ({
             openAndCloseExchangeModal={openAndCloseExchangeModal}
           />
         )}
-
         {isConvartOpen && (
           <ConvartModal
             wallet={wallet}
@@ -267,7 +257,6 @@ const Wallets = ({
             openAndCloseConvartModal={openAndCloseConvartModal}
           />
         )}
-
         {isSwap && (
           <SwapToDeposit
             wallet={wallet}
@@ -289,14 +278,14 @@ const Wallets = ({
             openAndCloseSwapModal={openAndCloseMyWalletTOdepositModal}
           />
         )}
-
-        {isDepositWalletWithdraw && (
+        {/*  transfer to welcome section component */}
+        {/* {isDepositWalletWithdraw && (
           <DepositWalletWithdraw
             wallet={wallet}
             setGetWallet={setGetWallet}
             openAndCloseSwapModal={openAndCloseDepositWalletWithdraw}
           />
-        )}
+        )} */}
       </div>
     </>
   );

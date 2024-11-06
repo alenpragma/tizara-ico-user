@@ -4,8 +4,9 @@ import Swal from 'sweetalert2';
 import { FaRegCopy } from 'react-icons/fa6';
 import userImage from '../../images/user.jpg';
 import rcmImage from '../../assets/Rcm-01.png';
-import ConvartModal from './ConvartModal';
+// import ConvartModal from './ConvartModal';
 import SwapModal from './SwapModal';
+import DepositWalletWithdraw from './DepositWalletWithdraw';
 
 const WelcomeSection = ({ setGetWallet, wallet, profile }: any) => {
   const [isDepositModalOpen, setIsDepositModalOpen] = useState(false);
@@ -47,6 +48,12 @@ const WelcomeSection = ({ setGetWallet, wallet, profile }: any) => {
       console.error('Failed to copy: ', err);
       setCopySuccess('Copy failed');
     }
+  };
+
+  const [isDepositWalletWithdraw, setIsDepositWalletWithdraw] = useState(false);
+
+  const toggleDepositWalletWithdraw = (data: boolean) => {
+    setIsDepositWalletWithdraw(data);
   };
 
   return (
@@ -106,6 +113,25 @@ const WelcomeSection = ({ setGetWallet, wallet, profile }: any) => {
             >
               Bridge
             </button>
+
+            {/* <button
+              onClick={() => toggleDepositWalletWithdraw(true)}
+              // className="items-center justify-center rounded-md bg-success py-2 px-7 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
+              className="flex items-center justify-center rounded-md bg-success py-2 px-8 text-center font-medium text-white hover:bg-opacity-90 hover:bg-meta-8 transition-all duration-300 ease-in-out"
+            >
+              Withdraw
+            </button> */}
+
+            <div
+              onClick={() => toggleDepositWalletWithdraw(true)}
+              className="cursor-pointer px-5 py-2.5 relative rounded group font-medium text-white  inline-block"
+            >
+              <span className="absolute top-0 left-0 w-full h-full rounded opacity-50 filter blur-sm bg-gradient-to-br from-[#10B981] to-[#eacf72]"></span>
+              <span className="h-full w-full inset-0 absolute mt-0.5 ml-0.5 bg-gradient-to-br filter group-active:opacity-0 rounded opacity-50 from-[#10B981] to-[#eacf72]"></span>
+              <span className="absolute inset-0 w-full h-full transition-all duration-200 ease-out rounded shadow-xl bg-gradient-to-br filter group-active:opacity-0 group-hover:blur-sm from-[#10B981] to-[#eacf72]"></span>
+              <span className="absolute inset-0 w-full h-full transition duration-200 ease-out rounded bg-gradient-to-br to-[#10B981] from-[#eacf72]"></span>
+              <span className="relative">Withdraw</span>
+            </div>
           </div>
         </div>
       </div>
@@ -120,6 +146,14 @@ const WelcomeSection = ({ setGetWallet, wallet, profile }: any) => {
             setGetWallet={setGetWallet}
             wallet={wallet}
             toggleSwapModal={toggleSwapModal}
+          />
+        )}
+
+        {isDepositWalletWithdraw && (
+          <DepositWalletWithdraw
+            wallet={wallet}
+            setGetWallet={setGetWallet}
+            openAndCloseSwapModal={toggleDepositWalletWithdraw}
           />
         )}
       </div>
