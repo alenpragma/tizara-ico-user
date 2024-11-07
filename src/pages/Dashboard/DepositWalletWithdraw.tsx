@@ -101,7 +101,7 @@ const DepositWalletWithdraw = ({
               />
 
               <InputField
-                label="Amount (Min $10)"
+                label="Amount (Min $5)"
                 name="amount"
                 register={register}
                 required
