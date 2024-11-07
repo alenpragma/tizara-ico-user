@@ -96,16 +96,16 @@ const DepositWalletWithdraw = ({
                 name="depositWallet"
                 register={register}
                 required
-                defaultValue={`$ ${wallet.depositWallet}`}
+                defaultValue={`$ ${wallet?.depositWallet ?? 0}`}
                 readonly
               />
 
               <InputField
-                label="Amount (Min $5)"
+                label="Amount (Min $10)"
                 name="amount"
                 register={register}
                 required
-                min={1}
+                min={10}
                 type="number"
                 onChange={(e: { target: { value: number } }) => {
                   setUserAmount(e.target.value);

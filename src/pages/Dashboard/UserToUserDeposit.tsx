@@ -89,7 +89,7 @@ const UserToUserDeposit = ({
               className="flex  flex-col w-full gap-5.5 p-6.5"
             >
               <p className="font-semibold">
-                Available balance {wallet.depositWallet} USD
+                Available balance {wallet?.depositWallet} USD
               </p>
               {/* <InputField
                 label="NFT Wallet"
