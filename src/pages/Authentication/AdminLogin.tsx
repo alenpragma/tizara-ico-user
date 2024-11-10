@@ -20,28 +20,8 @@ const AdminLogin: React.FC = () => {
   const [loding, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  const [isValid, setIsValid] = useState(false);
-  const [error, setError] = useState('');
-  const [enteredVal, setEnteredVal] = useState('');
-  const [captcha, setCaptcha] = useState('');
-
   const token = getTizaraUserToken();
   const userStatus = localStorage.getItem('userStatus');
-
-  useEffect(() => {
-    if (token && userStatus == 'true') {
-      navigate('/dashboard');
-    }
-  }, [userStatus]);
-
-  const handleValidate = (valid: any) => {
-    valid.preventDefault();
-    setIsValid(valid);
-  };
-
-  const handleError = (message: string) => {
-    setError(message);
-  };
 
   const {
     register,
@@ -77,7 +57,6 @@ const AdminLogin: React.FC = () => {
       }
     } catch (error: any) {
       setLoading(false);
-      console.log(error);
 
       if (error.statusCode == 400) {
         Swal.fire({
