@@ -71,11 +71,12 @@ const SignUp: React.FC = () => {
   console.log(errors);
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    // Swal.fire({
-    //   title: 'Website Maintenance Notice',
-    //   text: 'Sign Up are temporarily suspended until August 10th for feature upgrades. Thank you for your patience!',
-    //   icon: 'warning',
-    // });
+    Swal.fire({
+      title: 'Website Maintenance Notice',
+      text: 'Sign Up are temporarily suspended until August 10th for feature upgrades. Thank you for your patience!',
+      icon: 'warning',
+    });
+    return;
 
     if (value && isValidPhoneNumber(value)) {
     } else {

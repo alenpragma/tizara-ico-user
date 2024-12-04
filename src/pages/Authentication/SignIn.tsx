@@ -50,6 +50,13 @@ const SignIn: React.FC = () => {
   } = useForm<Inputs>();
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
+    Swal.fire({
+      title: 'Website Maintenance Notice',
+      text: 'Sign In are temporarily suspended until August 10th for feature upgrades. Thank you for your patience!',
+      icon: 'warning',
+    });
+
+    return;
     const isValid = enteredVal.toUpperCase() === captcha.toUpperCase();
     if (!isValid) {
       setError('Captcha verification failed. Please try again.');
