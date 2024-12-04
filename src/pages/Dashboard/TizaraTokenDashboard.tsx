@@ -10,6 +10,7 @@ import { IROYHistory } from '../RoyHistory/RoyHistory';
 import axiosInstance from '../../utils/axiosConfig';
 import { logout } from '../../utils/auth';
 import { IWallet } from '../../types/wallet';
+import PopUpModal from './PopUpModal';
 
 interface ApiResponse<T> {
   statusCode: number;
@@ -52,12 +53,28 @@ interface UserProfile {
 
 const TizaraTokenDashboard: React.FC = () => {
   const [getWallet, setGetWallet] = useState<boolean>(false);
+
+  const [popup, setPopup] = useState<any | null>(null);
+
   const [profile, setProfile] = useState<UserProfile | null>(null);
   const [royHistorys, setRoyHistorys] = useState<IROYHistory[]>([]);
   const [history, setHistory] = useState<any>([]);
   const [depositHistory, setDepositHistory] = useState<any>();
   const [nFTWallet, setNFTWallet] = useState<any>();
   const navigate = useNavigate();
+
+  const fetchPopup = async () => {
+    try {
+      const response = await axiosInstance.get('/popup');
+      console.log(response);
+
+      if (response?.data?.success) {
+        return response?.data?.data;
+      }
+    } catch (error) {
+      console.error('Error fetching profile data:', error);
+    }
+  };
 
   const fetchProfileData = async () => {
     try {
@@ -156,6 +173,9 @@ const TizaraTokenDashboard: React.FC = () => {
 
   useEffect(() => {
     const fetchData = async () => {
+      const popup = await fetchPopup();
+      setPopup(popup);
+
       const profileData = await fetchProfileData();
       setProfile(profileData);
 
@@ -210,6 +230,25 @@ const TizaraTokenDashboard: React.FC = () => {
   useEffect(() => {
     fetchData();
   }, [getWallet]);
+
+  const [isActivePopup, setIsActivePopup] = useState(false);
+
+  useEffect(() => {
+    const hasPopupBeenShown = localStorage.getItem('popupShown');
+
+    if (hasPopupBeenShown) {
+      const timer = setTimeout(() => {
+        setIsActivePopup(true);
+      }, 2000);
+
+      return () => clearTimeout(timer);
+    }
+  }, []);
+
+  const openAndClosePopupModal = () => {
+    setIsActivePopup(false);
+    localStorage.removeItem('popupShown');
+  };
 
   return (
     <DefaultLayout>
@@ -366,6 +405,14 @@ const TizaraTokenDashboard: React.FC = () => {
         {/* <LastestDeposits /> */}
         <div className="mt-5">{/* <LatestPurchaseHistory /> */}</div>
       </div>
+
+      {popup && isActivePopup && popup?.isActive && (
+        <PopUpModal
+          data={popup}
+          isActivePopup={isActivePopup}
+          openAndClosePopupModal={openAndClosePopupModal}
+        />
+      )}
     </DefaultLayout>
   );
 };

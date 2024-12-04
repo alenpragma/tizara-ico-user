@@ -65,10 +65,9 @@ const SignIn: React.FC = () => {
     setLoading(true);
     try {
       const responseData = await axiosInstance.post('/auth/login', data);
-      // console.log(responseData.data);
-
       setLoading(false);
       if (responseData?.data?.success) {
+        localStorage.setItem('popupShown', 'true');
         localStorage.setItem(
           'tizaraUserToken',
           responseData?.data?.data?.token,
@@ -79,11 +78,10 @@ const SignIn: React.FC = () => {
             title: 'success',
             text: 'You are not verified Please varfied email',
             icon: 'success',
-          }).then(() => {
+          }).then(async () => {
             navigate('/verify-token');
           });
           setLoading(false);
-
           return;
         }
 
@@ -96,14 +94,11 @@ const SignIn: React.FC = () => {
             navigate('/dashboard');
           });
           setLoading(false);
-
           return;
         }
       }
     } catch (error: any) {
       setLoading(false);
-      console.log(error);
-
       if (error.statusCode == 400) {
         Swal.fire({
           title: 'Error',
