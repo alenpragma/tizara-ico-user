@@ -73,7 +73,7 @@ const SignUp: React.FC = () => {
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     Swal.fire({
       title: 'Website Maintenance Notice',
-      text: 'Sign Up are temporarily suspended until August 10th for feature upgrades. Thank you for your patience!',
+      text: 'Sign In are temporarily suspended for feature upgrades. Thank you for your patience!',
       icon: 'warning',
     });
     return;
