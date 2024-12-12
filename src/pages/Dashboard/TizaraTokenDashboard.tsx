@@ -406,13 +406,13 @@ const TizaraTokenDashboard: React.FC = () => {
         <div className="mt-5">{/* <LatestPurchaseHistory /> */}</div>
       </div>
 
-      {popup && isActivePopup && popup?.isActive && (
-        <PopUpModal
-          data={popup}
-          isActivePopup={isActivePopup}
-          openAndClosePopupModal={openAndClosePopupModal}
-        />
-      )}
+      {/* {popup && isActivePopup && popup?.isActive && ( */}
+      <PopUpModal
+        data={popup}
+        isActivePopup={!isActivePopup}
+        openAndClosePopupModal={openAndClosePopupModal}
+      />
+      {/* )} */}
     </DefaultLayout>
   );
 };

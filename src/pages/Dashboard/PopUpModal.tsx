@@ -20,7 +20,7 @@ const PopUpModal = ({ data, isActivePopup, openAndClosePopupModal }: any) => {
       >
         {/* Modal content */}
         <div className="modal rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark overflow-auto">
-          <div className="min-w-full w-[370px] lg:w-[600px] border-b border-stroke py-4 px-1 dark:border-strokedark">
+          <div className="min-w-full w-[370px] lg:w-[600px] border-b border-stroke pb-2 px-1 dark:border-strokedark">
             <div className="w-full flex justify-between px-3 place-items-center py-3">
               <h2 className="text-xl font-bold text-black dark:text-white">
                 Announcement
@@ -35,10 +35,12 @@ const PopUpModal = ({ data, isActivePopup, openAndClosePopupModal }: any) => {
             </div>
             <hr />
             <div className="pb-5 mt-3">
-              <h2 className="title2 text-lg font-bold text-[#fff] mx-auto px-2 mt-3">
+              <p className="text-lg font-bold text-[#1e6f30] dark:text-[#39c858] mx-auto px-2 mt-3">
                 {data?.title}
-              </h2>
-              <p className="p-2">{data?.message}</p>
+              </p>
+              <p className="p-2 text-[#1e6f30] dark:text-[#39c858] font-normal">
+                {data?.message}
+              </p>
             </div>
           </div>
         </div>
