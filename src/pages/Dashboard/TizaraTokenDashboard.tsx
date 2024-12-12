@@ -409,7 +409,7 @@ const TizaraTokenDashboard: React.FC = () => {
       {/* {popup && isActivePopup && popup?.isActive && ( */}
       <PopUpModal
         data={popup}
-        isActivePopup={!isActivePopup}
+        isActivePopup={isActivePopup}
         openAndClosePopupModal={openAndClosePopupModal}
       />
       {/* )} */}
