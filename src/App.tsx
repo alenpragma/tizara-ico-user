@@ -50,6 +50,9 @@ import Payment from './pages/Deposits/Payment';
 import DepositUsdTransferHistory from './pages/Historys/DepositUsdTransferHistory';
 import SpecialRcm from './pages/SpecialRcm/SpecialRcm';
 import AdminLogin from './pages/Authentication/AdminLogin';
+import Support from './pages/Support/Support';
+import CreateTicket from './pages/Support/CreateTicket';
+import TicketShow from './pages/Support/TicketShow';
 
 function App() {
   const { pathname } = useLocation();
@@ -511,12 +514,42 @@ function App() {
                 </>
               }
             />
-            <Route
+            {/* <Route
               path="/special-rcm"
               element={
                 <>
                   <PageTitle title="Special rcm" />
                   <SpecialRcm />
+                </>
+              }
+            /> */}
+
+            <Route
+              path="/support"
+              element={
+                <>
+                  <PageTitle title="Support" />
+                  <Support />
+                </>
+              }
+            />
+
+            <Route
+              path="/ticket/show/:id"
+              element={
+                <>
+                  <PageTitle title="Ticket Show" />
+                  <TicketShow />
+                </>
+              }
+            />
+
+            <Route
+              path="/create-ticket"
+              element={
+                <>
+                  <PageTitle title="Create ticket" />
+                  <CreateTicket />
                 </>
               }
             />

@@ -52,7 +52,7 @@ export const StakeNowModal = ({
 
   // // dayly Reward
   const yearlyRoy = (amount / 100) * selectedPlan.apy;
-  const dailyRoy = yearlyRoy / 365;
+  const dailyRoy = yearlyRoy / 730;
   // dayly Reward
 
   const onSubmit: SubmitHandler<Inputs> = async (data: Inputs) => {

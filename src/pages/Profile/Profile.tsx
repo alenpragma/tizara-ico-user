@@ -1,13 +1,7 @@
-import { useContext, useEffect, useState } from 'react';
-import userImage from '../../images/user.jpg';
-
-import { SubmitHandler, useForm } from 'react-hook-form';
-import Swal from 'sweetalert2';
-import { MdVerifiedUser } from 'react-icons/md';
+import { useEffect, useState } from 'react';
 import axiosInstance from '../../utils/axiosConfig';
 import DefaultLayout from '../../layout/DefaultLayout';
 import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
-import { baseUrl } from '../../utils/api';
 import ProfileDetails from '../../components/Profile/ProfileDetails';
 import PasswordChange from '../../components/Profile/PasswordChange';
 import Kyc from '../../components/Profile/Kyc';

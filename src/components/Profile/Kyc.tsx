@@ -17,8 +17,6 @@ type UpdateUserProfile = {
 };
 
 const Kyc = ({ profile, fetchData }: any) => {
-  console.log(profile);
-
   const [loading, setLoading] = useState(false);
   const {
     register,
