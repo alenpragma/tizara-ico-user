@@ -53,6 +53,8 @@ import AdminLogin from './pages/Authentication/AdminLogin';
 import Support from './pages/Support/Support';
 import CreateTicket from './pages/Support/CreateTicket';
 import TicketShow from './pages/Support/TicketShow';
+import MyTeamTree from './pages/MyTeam/MyTeamTree';
+import StakeLogs from './pages/Stake/StakeLogs';
 
 function App() {
   const { pathname } = useLocation();
@@ -286,6 +288,18 @@ function App() {
             />
 
             <Route
+              path="/my-stack-logs"
+              element={
+                <>
+                  <PageTitle title="My stake logs" />
+                  <ProtectedRoute>
+                    <StakeLogs />
+                  </ProtectedRoute>
+                </>
+              }
+            />
+
+            <Route
               path="/roi-history"
               element={
                 <>
@@ -375,11 +389,23 @@ function App() {
                 <>
                   <PageTitle title="My Team" />
                   <ProtectedRoute>
-                    <MyTeam />
+                    <MyTeamTree />
                   </ProtectedRoute>
                 </>
               }
             />
+
+            {/* <Route
+              path="/my-team"
+              element={
+                <>
+                  <PageTitle title="My Team" />
+                  <ProtectedRoute>
+                    <MyTeam />
+                  </ProtectedRoute>
+                </>
+              }
+            /> */}
 
             {/* <Route
               path="/deposit-wallet-history"

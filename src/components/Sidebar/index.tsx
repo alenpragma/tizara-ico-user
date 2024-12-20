@@ -249,6 +249,36 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                   Stake History
                 </NavLink>
               </li>
+
+              <li>
+                <NavLink
+                  to="/stake-logs-reward"
+                  className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+                    (pathname === '/stake-logs-reward' ||
+                      pathname.includes('stake-logs-reward')) &&
+                    'bg-graydark dark:bg-meta-4'
+                  }'
+                    }`}
+                >
+                  <StackNowIcon />
+                  Stake logs reward
+                </NavLink>
+              </li>
+
+              <li>
+                <NavLink
+                  to="/my-stack-logs"
+                  className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+                    (pathname === '/my-stack-logs' ||
+                      pathname.includes('my-stack-logs')) &&
+                    'bg-graydark dark:bg-meta-4'
+                  }'
+                    }`}
+                >
+                  <StackNowIcon />
+                  Stake logs
+                </NavLink>
+              </li>
               <li>
                 <NavLink
                   to="/my-team"
@@ -359,6 +389,18 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                               }
                             >
                               Reward History
+                            </NavLink>
+                          </li>
+
+                          <li>
+                            <NavLink
+                              to="/my-stack-logs"
+                              className={({ isActive }) =>
+                                'group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ' +
+                                (isActive && '!text-white')
+                              }
+                            >
+                              stake logs Reward
                             </NavLink>
                           </li>
 
