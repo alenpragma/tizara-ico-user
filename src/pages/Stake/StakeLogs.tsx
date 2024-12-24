@@ -27,7 +27,7 @@ const StakeLogs = () => {
     setLoading(true);
     try {
       const response = await axiosInstance.get(
-        `/stack-now?page=${currentPage + 1}&limit=${perPage}`,
+        `/stake-logs?page=${currentPage + 1}&limit=${perPage}`,
       );
       setLoading(false);
       setStakes(response?.data?.data?.data);

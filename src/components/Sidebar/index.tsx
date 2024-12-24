@@ -9,6 +9,7 @@ import RefferalIcon from '../../images/sidebarIcon/RefferalIcon';
 import RewardIcon from '../../images/sidebarIcon/RewardIcon';
 import StackNowIcon from '../../images/sidebarIcon/StackNowIcon';
 import DownArrow from '../../assets/icon/DownArrow';
+import { PiSelectionBackgroundBold } from 'react-icons/pi';
 
 interface SidebarProps {
   sidebarOpen: boolean;
@@ -252,21 +253,6 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
 
               <li>
                 <NavLink
-                  to="/stake-logs-reward"
-                  className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-                    (pathname === '/stake-logs-reward' ||
-                      pathname.includes('stake-logs-reward')) &&
-                    'bg-graydark dark:bg-meta-4'
-                  }'
-                    }`}
-                >
-                  <StackNowIcon />
-                  Stake logs reward
-                </NavLink>
-              </li>
-
-              <li>
-                <NavLink
                   to="/my-stack-logs"
                   className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
                     (pathname === '/my-stack-logs' ||
@@ -279,6 +265,22 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                   Stake logs
                 </NavLink>
               </li>
+
+              <li>
+                <NavLink
+                  to="/stake-logs-roi"
+                  className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+                    (pathname === '/stake-logs-roi' ||
+                      pathname.includes('stake-logs-roi')) &&
+                    'bg-graydark dark:bg-meta-4'
+                  }'
+                    }`}
+                >
+                  <PiSelectionBackgroundBold />
+                  Stake logs reward
+                </NavLink>
+              </li>
+
               <li>
                 <NavLink
                   to="/my-team"

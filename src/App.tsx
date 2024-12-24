@@ -55,6 +55,7 @@ import CreateTicket from './pages/Support/CreateTicket';
 import TicketShow from './pages/Support/TicketShow';
 import MyTeamTree from './pages/MyTeam/MyTeamTree';
 import StakeLogs from './pages/Stake/StakeLogs';
+import StakeLogsRewordHistory from './pages/RoyHistory/StakeLogsRewordHistory';
 
 function App() {
   const { pathname } = useLocation();
@@ -306,6 +307,18 @@ function App() {
                   <PageTitle title="stake coin" />
                   <ProtectedRoute>
                     <RoyHistory />
+                  </ProtectedRoute>
+                </>
+              }
+            />
+
+            <Route
+              path="/stake-logs-roi"
+              element={
+                <>
+                  <PageTitle title="stake logs roi" />
+                  <ProtectedRoute>
+                    <StakeLogsRewordHistory />
                   </ProtectedRoute>
                 </>
               }
