@@ -11,7 +11,7 @@ type User = {
   name: string;
   email: string;
   phone: string;
-  message: string | null;
+  rank: string | null;
   referralCode: string;
   myReferralCode: string;
   stakes: Stake[];
@@ -46,7 +46,7 @@ const TreeNode: React.FC<TreeNodeProps> = ({ user }) => {
             <strong>Phone:</strong> {user.phone}
           </p>
           <p>
-            <strong>Message:</strong> {user.message || 'N/A'}
+            <strong>Rank:</strong> {user.rank || 'N/A'}
           </p>
           <p>
             <strong>Referral Code:</strong> {user.referralCode}

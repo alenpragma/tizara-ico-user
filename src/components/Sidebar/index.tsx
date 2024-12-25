@@ -402,7 +402,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                                 (isActive && '!text-white')
                               }
                             >
-                              stake logs Reward
+                              Stake Logs Profit Bounty
                             </NavLink>
                           </li>
 

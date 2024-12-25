@@ -85,6 +85,7 @@ const Header = (props: {
 
         <div className="flex lg:ms-auto items-center gap-3 2xsm:gap-5">
           <ul className="flex items-center gap-2 2xsm:gap-4">
+            <p className="text-white">{profile?.rank}</p>
             {/* <!-- Dark Mode Toggler --> */}
             <DarkModeSwitcher />
             {/* <!-- Dark Mode Toggler --> */}
