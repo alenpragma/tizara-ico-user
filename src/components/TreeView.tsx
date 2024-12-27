@@ -42,11 +42,9 @@ const TreeNode: React.FC<TreeNodeProps> = ({ user }) => {
       {/* Node Details */}
       {expanded && (
         <div className="ml-6 mt-2 space-y-2 text-gray-700">
+          <p>{/* <strong>Phone:</strong> {user.phone} */}</p>
           <p>
-            <strong>Phone:</strong> {user.phone}
-          </p>
-          <p>
-            <strong>Rank:</strong> {user.rank || 'N/A'}
+            <strong>Rank:</strong> {user.rank}
           </p>
           <p>
             <strong>Referral Code:</strong> {user.referralCode}
