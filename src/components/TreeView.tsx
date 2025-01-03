@@ -44,6 +44,8 @@ const TreeNode: React.FC<TreeNodeProps> = ({ user }) => {
         <div className="ml-6 mt-2 space-y-2 text-gray-700">
           <p>{/* <strong>Phone:</strong> {user.phone} */}</p>
           <p>
+            {/* <strong>id:</strong> {user.id}
+            <br /> */}
             <strong>Rank:</strong> {user.rank}
           </p>
           <p>
@@ -60,7 +62,7 @@ const TreeNode: React.FC<TreeNodeProps> = ({ user }) => {
               <ul className="ml-4 list-disc">
                 {user.stakes.map((stake, index) => (
                   <li key={index}>
-                    Amount: ${stake.stakeAmount.toLocaleString()}, Created:{' '}
+                    Amount: {stake.stakeAmount.toLocaleString()}, Date:
                     {new Date(stake.createdAt).toLocaleDateString()}
                   </li>
                 ))}
