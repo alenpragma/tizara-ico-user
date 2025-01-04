@@ -8,7 +8,6 @@ import IconWallet from '../../assets/icon/IconWallet';
 import SwapToDeposit from './SwapToDeposit';
 import UserToUserDeposit from './UserToUserDeposit';
 import MyWalletToDeposit from './MyWalletToDeposit';
-import DepositWalletWithdraw from './DepositWalletWithdraw';
 import { FaWallet } from 'react-icons/fa6';
 import { Link } from 'react-router-dom';
 
@@ -77,7 +76,7 @@ const Wallets = ({
               <div className="flex h-10 w-10 lg:h-11.5 lg:w-11.5 items-center justify-center rounded-full bg-meta-2 dark:bg-meta-3">
                 <IconWallet />
               </div>
-              <div className="text-end">
+              <div className="text-end pb-10">
                 <h4 className="text-[14px] md:text-[20px] font-semibold text-black dark:text-white">
                   {`${
                     wallet?.depositWallet
@@ -96,12 +95,12 @@ const Wallets = ({
                   Withdraw
                 </button> */}
 
-                <button
+                {/* <button
                   onClick={() => openAndCloseUserToUserModal(true)}
                   className="items-center text-sm mt-2 justify-center rounded-md bg-success py-1.5 px-3 text-center lg:font-medium text-white hover:bg-opacity-90 lg:px-6 xl:px-5"
                 >
                   Transfer
-                </button>
+                </button> */}
               </div>
             </div>
           </div>
@@ -271,6 +270,8 @@ const Wallets = ({
             openAndCloseUserToUserModal={openAndCloseUserToUserModal}
           />
         )}
+
+        {/*  */}
         {isMyWalletToDeposit && (
           <MyWalletToDeposit
             wallet={wallet}

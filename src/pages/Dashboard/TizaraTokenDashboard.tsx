@@ -66,7 +66,7 @@ const TizaraTokenDashboard: React.FC = () => {
   const fetchPopup = async () => {
     try {
       const response = await axiosInstance.get('/popup');
-      console.log(response);
+      // console.log(response);
 
       if (response?.data?.success) {
         return response?.data?.data;
@@ -252,11 +252,11 @@ const TizaraTokenDashboard: React.FC = () => {
 
   return (
     <DefaultLayout>
-      <WelcomeSection
+      {/* <WelcomeSection
         setGetWallet={setGetWallet}
         wallet={wallet}
         profile={profile}
-      />
+      /> */}
 
       {/**
        *
@@ -275,7 +275,7 @@ const TizaraTokenDashboard: React.FC = () => {
           <Wallets wallet={wallet} setGetWallet={setGetWallet} />
         </div>
         <div className="col-span-2 rounded-sm border border-stroke bg-white py-5 px-6 shadow-default dark:border-strokedark dark:bg-boxdark">
-          <TizaraCoin setGetWallet={setGetWallet} />
+          {/* <TizaraCoin setGetWallet={setGetWallet} /> */}
         </div>
       </div>
 

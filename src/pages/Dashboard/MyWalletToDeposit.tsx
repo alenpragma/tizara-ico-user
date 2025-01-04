@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import InputField from '../../components/Forms/InputField';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { PuffLoader } from 'react-spinners';
-import SelectOptions from '../../Ui/SelectOptions';
 import axiosInstance from '../../utils/axiosConfig';
 import Swal from 'sweetalert2';
 import { ICoinPrice } from '../../types/dashboard';
@@ -14,11 +13,8 @@ const MyWalletToDeposit = ({
   openAndCloseSwapModal,
 }: any) => {
   const [lodaing, setLodaing] = useState<boolean>(false);
-
   const [userAmount, setUserAmount] = useState(0);
-
   const { register, handleSubmit } = useForm<any>();
-
   const [coinPrice, setCoinPrice] = useState<ICoinPrice[] | any>();
 
   useEffect(() => {
@@ -78,7 +74,7 @@ const MyWalletToDeposit = ({
   };
 
   if (!coinPrice) {
-    return <p>Lodaind...</p>;
+    return;
   }
   return (
     <div className="modal-container fixed left-0 top-0 z-999 flex h-full min-h-screen w-full items-center justify-center bg-black/90 py-5">
@@ -119,7 +115,6 @@ const MyWalletToDeposit = ({
                 defaultValue={`${wallet.icoWallet}`}
                 readonly
               />
-
               <InputField
                 label="Transfer Amount (Min 1000)"
                 name="amount"
@@ -131,7 +126,6 @@ const MyWalletToDeposit = ({
                   setUserAmount(e.target.value);
                 }}
               />
-
               <InputField
                 label=""
                 name="Recived amount"
