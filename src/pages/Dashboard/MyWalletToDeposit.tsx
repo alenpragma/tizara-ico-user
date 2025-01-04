@@ -115,6 +115,7 @@ const MyWalletToDeposit = ({
                 defaultValue={`${wallet.icoWallet}`}
                 readonly
               />
+
               <InputField
                 label="Transfer Amount (Min 1000)"
                 name="amount"
@@ -126,6 +127,7 @@ const MyWalletToDeposit = ({
                   setUserAmount(e.target.value);
                 }}
               />
+
               <InputField
                 label=""
                 name="Recived amount"
