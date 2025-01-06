@@ -91,7 +91,7 @@ type TreeViewProps = {
 
 const TreeView: React.FC<TreeViewProps> = ({ data }) => {
   return (
-    <div className="p-4">
+    <div className="p-1">
       {data.map((user) => (
         <TreeNode key={user.id} user={user} />
       ))}

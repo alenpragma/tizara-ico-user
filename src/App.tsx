@@ -39,7 +39,6 @@ import BuyNft from './pages/StoreNft/BuyNft';
 import NftHistory from './pages/StoreNft/NftHistory';
 import DailyNftRoiHistory from './pages/StoreNft/DailyNftRoiHistory';
 import NftlevelBonus from './pages/StoreNft/NftlevelBonus';
-import axios from 'axios';
 import ProfitBounty from './pages/Historys/ProfitBounty';
 import NftProfitBounty from './pages/StoreNft/NftProfitBounty';
 import TransferHistory from './pages/Historys/TransferHistory';
@@ -48,7 +47,7 @@ import Profile from './pages/Profile/Profile';
 import PaymentSuccess from './pages/PaymentSuccess';
 import Payment from './pages/Deposits/Payment';
 import DepositUsdTransferHistory from './pages/Historys/DepositUsdTransferHistory';
-import SpecialRcm from './pages/SpecialRcm/SpecialRcm';
+// import SpecialRcm from './pages/SpecialRcm/SpecialRcm';
 import AdminLogin from './pages/Authentication/AdminLogin';
 import Support from './pages/Support/Support';
 import CreateTicket from './pages/Support/CreateTicket';
@@ -56,6 +55,7 @@ import TicketShow from './pages/Support/TicketShow';
 import MyTeamTree from './pages/MyTeam/MyTeamTree';
 import StakeLogs from './pages/Stake/StakeLogs';
 import StakeLogsRewordHistory from './pages/RoyHistory/StakeLogsRewordHistory';
+import LogsProfitBounty from './pages/Historys/LogsProfitBounty';
 
 function App() {
   const { pathname } = useLocation();
@@ -337,6 +337,18 @@ function App() {
             />
 
             <Route
+              path="/logs-profit-bounty-history"
+              element={
+                <>
+                  <PageTitle title="Stake Logs Profit Bounty" />
+                  <ProtectedRoute>
+                    <LogsProfitBounty />
+                  </ProtectedRoute>
+                </>
+              }
+            />
+
+            <Route
               path="/stake-reward"
               element={
                 <>
@@ -408,17 +420,17 @@ function App() {
               }
             />
 
-            {/* <Route
-              path="/my-team"
+            <Route
+              path="/my-referrals"
               element={
                 <>
-                  <PageTitle title="My Team" />
+                  <PageTitle title="My Referrals" />
                   <ProtectedRoute>
                     <MyTeam />
                   </ProtectedRoute>
                 </>
               }
-            /> */}
+            />
 
             {/* <Route
               path="/deposit-wallet-history"

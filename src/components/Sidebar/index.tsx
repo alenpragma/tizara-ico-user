@@ -11,6 +11,9 @@ import StackNowIcon from '../../images/sidebarIcon/StackNowIcon';
 import DownArrow from '../../assets/icon/DownArrow';
 import { PiSelectionBackgroundBold } from 'react-icons/pi';
 
+import { TiGroup } from 'react-icons/ti';
+import { MdOutlineGroupAdd } from 'react-icons/md';
+
 interface SidebarProps {
   sidebarOpen: boolean;
   setSidebarOpen: (arg: boolean) => void;
@@ -283,6 +286,21 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
 
               <li>
                 <NavLink
+                  to="/my-referrals"
+                  className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+                    (pathname === '/my-referrals' ||
+                      pathname.includes('my-referrals')) &&
+                    'bg-graydark dark:bg-meta-4'
+                  }'
+                    }`}
+                >
+                  <MdOutlineGroupAdd />
+                  My Referrals
+                </NavLink>
+              </li>
+
+              <li>
+                <NavLink
                   to="/my-team"
                   className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
                     (pathname === '/my-team' || pathname.includes('my-team')) &&
@@ -290,8 +308,9 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                   }'
                     }`}
                 >
-                  <RefferalIcon />
-                  My Referrals
+                  {/* <RefferalIcon /> */}
+                  <TiGroup />
+                  My Teams
                 </NavLink>
               </li>
 
@@ -396,7 +415,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
 
                           <li>
                             <NavLink
-                              to="/my-stack-logs"
+                              to="/logs-profit-bounty-history"
                               className={({ isActive }) =>
                                 'group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ' +
                                 (isActive && '!text-white')

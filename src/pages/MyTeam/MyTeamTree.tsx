@@ -4,6 +4,9 @@ import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
 import axiosInstance from '../../utils/axiosConfig';
 import { IMeta } from '../../types/common';
 import TreeView from '../../components/TreeView';
+import Loader from '../../common/Loader';
+import Lazyloding from '../../components/Lazyloding';
+import { PuffLoader } from 'react-spinners';
 
 const MyTeamTree = () => {
   const [teams, setTeams] = useState([]);
@@ -11,7 +14,6 @@ const MyTeamTree = () => {
 
   // pagination calculate
   const [currentPage, setCurrentPage] = useState(0);
-  const [perPage, setparePage] = useState(25);
 
   const [meta, setMeta] = useState<IMeta>({
     total: 1,
@@ -24,7 +26,6 @@ const MyTeamTree = () => {
     try {
       const response = await axiosInstance.get(`/test`);
       setLoading(false);
-      console.log(response?.data?.data);
 
       if (response?.data?.success) {
         setTeams(response?.data?.data);
@@ -40,10 +41,15 @@ const MyTeamTree = () => {
 
   return (
     <DefaultLayout>
-      <Breadcrumb pageName="My Referrals" />
+      <Breadcrumb pageName="My Team" />
 
-      <div className="p-8">
-        <h1 className="text-2xl font-bold mb-4">User Tree View</h1>
+      {loading && (
+        <div>
+          <PuffLoader className="mx-auto" color="#36d7b7" size={40} />
+        </div>
+      )}
+      <div className="p-2">
+        {/* <h1 className="text-2xl font-bold mb-4">User</h1> */}
         <TreeView data={teams} />
       </div>
     </DefaultLayout>
