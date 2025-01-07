@@ -265,7 +265,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                     }`}
                 >
                   <StackNowIcon />
-                  Stake logs
+                  Omega Stake
                 </NavLink>
               </li>
 
@@ -280,7 +280,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                     }`}
                 >
                   <PiSelectionBackgroundBold />
-                  Stake logs reward
+                  Omega Stake reward
                 </NavLink>
               </li>
 
@@ -421,7 +421,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                                 (isActive && '!text-white')
                               }
                             >
-                              Stake Logs Profit Bounty
+                              Omega Stake Logs Bounty
                             </NavLink>
                           </li>
 
