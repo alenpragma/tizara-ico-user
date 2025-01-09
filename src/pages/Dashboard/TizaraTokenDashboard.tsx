@@ -60,6 +60,7 @@ const TizaraTokenDashboard: React.FC = () => {
   const [royHistorys, setRoyHistorys] = useState<IROYHistory[]>([]);
   const [history, setHistory] = useState<any>([]);
   const [depositHistory, setDepositHistory] = useState<any>();
+  const [count, setCount] = useState<any>();
   const [nFTWallet, setNFTWallet] = useState<any>();
   const navigate = useNavigate();
 
@@ -171,6 +172,17 @@ const TizaraTokenDashboard: React.FC = () => {
     }
   };
 
+  const fetchCount = async () => {
+    try {
+      const response = await axiosInstance.get('/home/user/count');
+      if (response?.data?.success) {
+        return response.data.data;
+      }
+    } catch (error) {
+      console.error('Error fetching count data:', error);
+    }
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       const popup = await fetchPopup();
@@ -187,6 +199,9 @@ const TizaraTokenDashboard: React.FC = () => {
 
       const depositData = await fetchDepositData();
       setDepositHistory(depositData);
+
+      const counts = await fetchCount();
+      setCount(counts);
     };
 
     fetchData();
@@ -326,6 +341,29 @@ const TizaraTokenDashboard: React.FC = () => {
             <PiPackage className="text-2xl dark:text-white text-primary" />
           </CardDataStats>
         </Link>
+
+        {/* "dailyBonusCount": 0,
+        "profitBountyHistory": 0,
+        "dailyStakeLogsBonus": 0,
+        "StakeLogsBountyHistory": 0 */}
+        {/* <CardDataStats
+          title="Total Profit"
+          total={`${
+            count.dailyBonusCount +
+            count.profitBountyHistory +
+            count.dailyStakeLogsBonus +
+            count.StakeLogsBountyHistory
+          }`}
+        >
+          <PiPackage className="text-2xl dark:text-white text-primary" />
+        </CardDataStats> */}
+        {/* 
+        <CardDataStats
+          title="Join & Refferal Bonus"
+          total={`${count.transactionHistoryCount}`}
+        >
+          <PiPackage className="text-2xl dark:text-white text-primary" />
+        </CardDataStats> */}
       </div>
 
       <hr className="my-5 border-success border-[1px]" />

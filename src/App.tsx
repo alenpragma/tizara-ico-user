@@ -8,7 +8,7 @@ import ProtectedRoute from './hooks/ProtectedRoute';
 import 'react-loading-skeleton/dist/skeleton.css';
 import 'react-phone-number-input/style.css';
 
-// const Profile = lazy(() => import('./pages/Profile'));
+const Profile = lazy(() => import('./pages/Profile'));
 
 import MyContext from './hooks/MyContext';
 import { SkeletonTheme } from 'react-loading-skeleton';
@@ -20,7 +20,7 @@ import IcoWallet from './pages/WalletHistory/IcoWallet';
 import TizaraTokenDashboard from './pages/Dashboard/TizaraTokenDashboard';
 import Transaction from './pages/Transaction/Transaction';
 import MyTeam from './pages/MyTeam/MyTeam';
-import DepositWalletHistory from './pages/Deposits/DepositWalletHistory';
+// import DepositWalletHistory from './pages/Deposits/DepositWalletHistory';
 import BuyTokenHistory from './pages/BuyTokenHistory/BuyTokenHistory';
 import Stake from './pages/Stake/Stake';
 import AllStake from './pages/Stake/AllStake';
@@ -43,7 +43,7 @@ import ProfitBounty from './pages/Historys/ProfitBounty';
 import NftProfitBounty from './pages/StoreNft/NftProfitBounty';
 import TransferHistory from './pages/Historys/TransferHistory';
 import Withdraw from './pages/Transaction/Withdraw';
-import Profile from './pages/Profile/Profile';
+// import Profile from './pages/Profile/Profile';
 import PaymentSuccess from './pages/PaymentSuccess';
 import Payment from './pages/Deposits/Payment';
 import DepositUsdTransferHistory from './pages/Historys/DepositUsdTransferHistory';
@@ -107,9 +107,7 @@ function App() {
   }, [profile?.status]);
 
   const [colorMode] = useColorMode();
-
   const [theme, setTheme] = useState<string | any>(colorMode);
-
   const contextValues = {
     theme,
     setTheme,
