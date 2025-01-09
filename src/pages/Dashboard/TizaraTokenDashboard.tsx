@@ -327,7 +327,7 @@ const TizaraTokenDashboard: React.FC = () => {
         <Link to={'/deposit-wallet-history'}>
           <CardDataStats
             title="Total Deposit"
-            total={`${totalDeposit ? totalDeposit : '00'}`}
+            total={`${totalDeposit ? totalDeposit.toFixed(2) : '00'}`}
           >
             <PiPackage className="text-2xl dark:text-white text-primary" />
           </CardDataStats>
@@ -342,28 +342,26 @@ const TizaraTokenDashboard: React.FC = () => {
           </CardDataStats>
         </Link>
 
-        {/* "dailyBonusCount": 0,
-        "profitBountyHistory": 0,
-        "dailyStakeLogsBonus": 0,
-        "StakeLogsBountyHistory": 0 */}
-        {/* <CardDataStats
-          title="Total Profit"
-          total={`${
-            count.dailyBonusCount +
-            count.profitBountyHistory +
-            count.dailyStakeLogsBonus +
-            count.StakeLogsBountyHistory
-          }`}
-        >
-          <PiPackage className="text-2xl dark:text-white text-primary" />
-        </CardDataStats> */}
-        {/* 
         <CardDataStats
-          title="Join & Refferal Bonus"
-          total={`${count.transactionHistoryCount}`}
+          title="Total Reward"
+          total={`${count?.dailyBonusCount?._sum?.amount ?? '00'}`}
         >
           <PiPackage className="text-2xl dark:text-white text-primary" />
-        </CardDataStats> */}
+        </CardDataStats>
+
+        <CardDataStats
+          title="Refferal Bonus"
+          total={`${count?.transactionHistoryCount?._sum?.amount ?? '00'}`}
+        >
+          <PiPackage className="text-2xl dark:text-white text-primary" />
+        </CardDataStats>
+
+        <CardDataStats
+          title="Omega Reward"
+          total={`${count?.dailyStakeLogsBonus?._sum?.amount ?? '00'}`}
+        >
+          <PiPackage className="text-2xl dark:text-white text-primary" />
+        </CardDataStats>
       </div>
 
       <hr className="my-5 border-success border-[1px]" />
