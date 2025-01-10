@@ -8,7 +8,7 @@ import ProtectedRoute from './hooks/ProtectedRoute';
 import 'react-loading-skeleton/dist/skeleton.css';
 import 'react-phone-number-input/style.css';
 
-const Profile = lazy(() => import('./pages/Profile'));
+const Profile = lazy(() => import('./pages/Profile/Profile'));
 
 import MyContext from './hooks/MyContext';
 import { SkeletonTheme } from 'react-loading-skeleton';
