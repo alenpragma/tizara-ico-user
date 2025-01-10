@@ -310,7 +310,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                 >
                   {/* <RefferalIcon /> */}
                   <TiGroup />
-                  My Teams
+                  My Team Stake
                 </NavLink>
               </li>
 
