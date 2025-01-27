@@ -298,10 +298,10 @@ const Kyc = ({ profile, fetchData }: any) => {
               <PuffLoader className="mx-auto" color="#36d7b7" size={40} />
             ) : (
               <button
-                // disabled={
-                //   profile?.kycStatus == 'PENDING' ||
-                //   profile?.kycStatus == 'APPROVE'
-                // }
+                disabled={
+                  profile?.kycStatus == 'PENDING' ||
+                  profile?.kycStatus == 'APPROVE'
+                }
                 className="flex px-7 mx-auto justify-center rounded bg-primary p-3 font-medium text-gray hover:bg-opacity-90"
               >
                 Submit
