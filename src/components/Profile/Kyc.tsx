@@ -1,9 +1,10 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import FileUploder from '../../pages/FileUploder';
 import Swal from 'sweetalert2';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { PuffLoader } from 'react-spinners';
 import axiosInstance from '../../utils/axiosConfig';
+import { ApiResponse } from '../../types/global';
 
 type UpdateUserProfile = {
   id: string;
@@ -14,6 +15,11 @@ type UpdateUserProfile = {
   profileImage?: any;
   nidPassFront?: any;
   nidPassback?: any;
+};
+type IKyc = {
+  totalApprovedPayment: number;
+  totalTokensBought: number;
+  userLogs: null;
 };
 
 const Kyc = ({ profile, fetchData }: any) => {
@@ -29,6 +35,30 @@ const Kyc = ({ profile, fetchData }: any) => {
     nidPassFront: null,
     nidPassback: null,
   });
+
+  const [kycReq, setkycReq] = useState<IKyc>({
+    totalApprovedPayment: 0,
+    totalTokensBought: 0,
+    userLogs: null,
+  });
+
+  const fetchKycData = async () => {
+    try {
+      const response = await axiosInstance.get<ApiResponse<any>>(
+        '/all-users/get-kyc-requirment',
+      );
+
+      if (response?.data?.success) {
+        setkycReq(response.data.data);
+      }
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
+
+  useEffect(() => {
+    fetchKycData();
+  }, []);
 
   const fileSelectedHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, files } = e.target;
@@ -53,6 +83,30 @@ const Kyc = ({ profile, fetchData }: any) => {
     const profileimg = data['profileImage'];
     const nidPassFront = data['nidPassFront'];
     const nidPassback = data['nidPassback'];
+
+    if (
+      kycReq.totalApprovedPayment < 50 ||
+      kycReq.totalTokensBought > 3000 ||
+      !kycReq.userLogs
+    ) {
+      let errorMessage = '';
+
+      if (kycReq.totalApprovedPayment < 50) {
+        errorMessage += 'Minimum deposit of $50 is required. ';
+      }
+      if (kycReq.totalTokensBought < 3000) {
+        errorMessage += 'Minimum purchase of 3000 coins is required. ';
+      }
+      if (!kycReq.userLogs) {
+        errorMessage += 'At least one staking is required. ';
+      }
+
+      return Swal.fire({
+        title: 'kyc Requirements',
+        text: errorMessage.trim(),
+        icon: 'info',
+      });
+    }
 
     const obj = {
       identificationNo: data.identificationNo,
@@ -244,10 +298,10 @@ const Kyc = ({ profile, fetchData }: any) => {
               <PuffLoader className="mx-auto" color="#36d7b7" size={40} />
             ) : (
               <button
-                disabled={
-                  profile?.kycStatus == 'PENDING' ||
-                  profile?.kycStatus == 'APPROVE'
-                }
+                // disabled={
+                //   profile?.kycStatus == 'PENDING' ||
+                //   profile?.kycStatus == 'APPROVE'
+                // }
                 className="flex px-7 mx-auto justify-center rounded bg-primary p-3 font-medium text-gray hover:bg-opacity-90"
               >
                 Submit
