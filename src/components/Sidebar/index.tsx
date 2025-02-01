@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import SidebarLinkGroup from './SidebarLinkGroup';
 import DashboardIcon from '../../images/sidebarIcon/DashboardIcon';
@@ -13,6 +13,7 @@ import { PiSelectionBackgroundBold } from 'react-icons/pi';
 
 import { TiGroup } from 'react-icons/ti';
 import { MdOutlineGroupAdd } from 'react-icons/md';
+import MyContext from '../../hooks/MyContext';
 
 interface SidebarProps {
   sidebarOpen: boolean;
@@ -30,6 +31,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
   const [sidebarExpanded, setSidebarExpanded] = useState(
     storedSidebarExpanded === null ? false : storedSidebarExpanded === 'true',
   );
+
+  const { profile } = useContext(MyContext);
 
   // close on click outside
   useEffect(() => {
@@ -481,20 +484,22 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               </SidebarLinkGroup>
               {/* Users */}
 
-              {/* <li>
-                <NavLink
-                  to="/special-rcm"
-                  className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-                    (pathname === '/special-rcm' ||
-                      pathname.includes('/special-rcm')) &&
-                    'bg-graydark dark:bg-meta-4'
-                  }'
+              {profile?.isSpecialRcm && (
+                <li>
+                  <NavLink
+                    to="/special-rcm"
+                    className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+                      (pathname === '/special-rcm' ||
+                        pathname.includes('/special-rcm')) &&
+                      'bg-graydark dark:bg-meta-4'
+                    }'
                     }`}
-                >
-                  <StakeNowIcon />
-                  Special Rcm
-                </NavLink>
-              </li> */}
+                  >
+                    <StakeNowIcon />
+                    Special Rcm
+                  </NavLink>
+                </li>
+              )}
 
               <li>
                 <NavLink

@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import DropdownUser from './DropdownUser';
 import DarkModeSwitcher from './DarkModeSwitcher';
 import { useContext } from 'react';
+import { GiDwarfKing } from 'react-icons/gi';
 
 import MyContext from '../../hooks/MyContext';
 
@@ -77,20 +78,21 @@ const Header = (props: {
             </span>
           </button>
           {/* <!-- Hamburger Toggle BTN --> */}
-
           <Link className="block flex-shrink-0 lg:hidden" to="/">
             {/* <img className="w-8" src={LogoIcon} alt="Logo" /> */}
           </Link>
         </div>
-
         <div className="flex lg:ms-auto items-center gap-3 2xsm:gap-5">
+          {profile?.isSpecialRcm && (
+            <GiDwarfKing className="size-14 dark:text-yellow-500" />
+          )}
+
           <ul className="flex items-center gap-2 2xsm:gap-4">
             <p className="text-white">{profile?.rank}</p>
             {/* <!-- Dark Mode Toggler --> */}
             <DarkModeSwitcher />
             {/* <!-- Dark Mode Toggler --> */}
           </ul>
-
           {/* <!-- User Area --> */}
           <DropdownUser profile={profile} />
           {/* <!-- User Area --> */}

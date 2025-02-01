@@ -56,6 +56,7 @@ import MyTeamTree from './pages/MyTeam/MyTeamTree';
 import StakeLogs from './pages/Stake/StakeLogs';
 import StakeLogsRewordHistory from './pages/RoyHistory/StakeLogsRewordHistory';
 import LogsProfitBounty from './pages/Historys/LogsProfitBounty';
+import SpecialRcm from './pages/SpecialRcm/SpecialRcm';
 
 function App() {
   const { pathname } = useLocation();
@@ -255,6 +256,18 @@ function App() {
               element={
                 <>
                   <PageTitle title="Buy-NFT" />
+                  <ProtectedRoute>
+                    <BuyNft />
+                  </ProtectedRoute>
+                </>
+              }
+            />
+
+            <Route
+              path="/special-rcm/last-sponsors"
+              element={
+                <>
+                  <PageTitle title="last-sponsors" />
                   <ProtectedRoute>
                     <BuyNft />
                   </ProtectedRoute>
@@ -563,7 +576,7 @@ function App() {
                 </>
               }
             />
-            {/* <Route
+            <Route
               path="/special-rcm"
               element={
                 <>
@@ -571,7 +584,7 @@ function App() {
                   <SpecialRcm />
                 </>
               }
-            /> */}
+            />
 
             <Route
               path="/support"

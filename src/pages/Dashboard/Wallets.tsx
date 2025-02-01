@@ -1,6 +1,6 @@
 import CardDataStats from '../../components/CardDataStats';
 import { PiPackage } from 'react-icons/pi';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import ExchangeModal from './ExchangeModal';
 import ConvartModal from './ConvartModal';
 import axiosInstance from '../../utils/axiosConfig';
@@ -10,6 +10,8 @@ import UserToUserDeposit from './UserToUserDeposit';
 import MyWalletToDeposit from './MyWalletToDeposit';
 import { FaWallet } from 'react-icons/fa6';
 import { Link } from 'react-router-dom';
+import RcmWalletTransfer from './RcmWalletTransfer';
+import MyContext from '../../hooks/MyContext';
 
 const Wallets = ({
   setGetWallet,
@@ -27,6 +29,14 @@ const Wallets = ({
 
   const [isMyWalletToDeposit, setIsMyWalletToDeposit] = useState(false);
   const [isDepositWalletWithdraw, setIsDepositWalletWithdraw] = useState(false);
+
+  const [rcmTransferModal, setRcmTransferModal] = useState(false);
+
+  const { profile } = useContext(MyContext);
+
+  const openAndClosesetRcmTransferModal = () => {
+    setRcmTransferModal(!rcmTransferModal);
+  };
 
   const openAndCloseExchangeModal = (data: boolean) => {
     setIsExchangeOpen(data);
@@ -200,6 +210,7 @@ const Wallets = ({
             </div>
           </div>
         </div>
+
         <div>
           <div className="rounded-md cursor-pointer border border-stroke bg-white py-2 px-3 lg:py-6 lg:px-4.5 shadow-default dark:border-strokedark dark:bg-boxdark">
             <div className="mt-0 flex items-center justify-between">
@@ -231,6 +242,35 @@ const Wallets = ({
             </div>
           </div>
         </div>
+
+        {profile?.isSpecialRcm && (
+          <div>
+            <div className="rounded-md cursor-pointer border border-stroke bg-white py-2 px-3 lg:py-6 lg:px-4.5 shadow-default dark:border-strokedark dark:bg-boxdark">
+              <div className="mt-0 flex items-center justify-between">
+                <div className="flex h-10 w-10 lg:h-11.5 lg:w-11.5 items-center justify-center rounded-full bg-meta-2 dark:bg-meta-3">
+                  <FaWallet className="text-black dark:text-white  " />
+                </div>
+
+                <div className="text-end ms-auto">
+                  <h4 className="text-[14px] md:text-[20px] font-semibold text-black dark:text-white">
+                    {wallet?.rcmWallet ? wallet?.rcmWallet.toFixed(2) : '00'}
+                  </h4>
+                  <p className="text-sm md:text-[18px] font-medium">
+                    RCM Wallet
+                  </p>
+                  <div className="flex gap-1">
+                    <button
+                      onClick={() => openAndClosesetRcmTransferModal()}
+                      className="items-center text-sm mt-2 justify-center rounded-md bg-success py-1.5 px-2 text-center lg:font-medium text-white hover:bg-opacity-90 lg:px-6 xl:px-7"
+                    >
+                      Transfer
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
         {/* <div>
         <CardDataStats
           title="Nft Wallet"
@@ -279,6 +319,17 @@ const Wallets = ({
             openAndCloseSwapModal={openAndCloseMyWalletTOdepositModal}
           />
         )}
+
+        {/* rcmTransferModal */}
+        {rcmTransferModal && (
+          <RcmWalletTransfer
+            wallet={wallet}
+            setGetWallet={setGetWallet}
+            openAndCloseSwapModal={openAndClosesetRcmTransferModal}
+          />
+        )}
+        {/* rcmTransferModal */}
+
         {/*  transfer to welcome section component */}
         {/* {isDepositWalletWithdraw && (
           <DepositWalletWithdraw
