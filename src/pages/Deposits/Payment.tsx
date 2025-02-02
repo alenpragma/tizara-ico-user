@@ -117,7 +117,9 @@ const Payment = () => {
                         <TableRow data={depositHistory?.user?.name}></TableRow>
                         <TableRow data={depositHistory?.orderId}></TableRow>
 
-                        <TableRow data={depositHistory?.priceAmount}></TableRow>
+                        <TableRow
+                          data={depositHistory?.payAmountNum}
+                        ></TableRow>
 
                         <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                           <p

@@ -19,7 +19,7 @@ type UpdateUserProfile = {
 type IKyc = {
   totalApprovedPayment: number;
   totalTokensBought: number;
-  userLogs: null;
+  userLogs: null | number;
 };
 
 const Kyc = ({ profile, fetchData }: any) => {
@@ -86,7 +86,7 @@ const Kyc = ({ profile, fetchData }: any) => {
 
     if (
       kycReq.totalApprovedPayment < 50 ||
-      kycReq.totalTokensBought > 3000 ||
+      kycReq.totalTokensBought < 3000 ||
       !kycReq.userLogs
     ) {
       let errorMessage = '';
@@ -101,11 +101,12 @@ const Kyc = ({ profile, fetchData }: any) => {
         errorMessage += 'At least one staking is required. ';
       }
 
-      return Swal.fire({
+      Swal.fire({
         title: 'kyc Requirements',
         text: errorMessage.trim(),
         icon: 'info',
       });
+      return;
     }
 
     const obj = {

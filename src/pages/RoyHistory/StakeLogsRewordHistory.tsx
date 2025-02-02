@@ -104,7 +104,7 @@ const StakeLogsRewordHistory = () => {
 
                     <TableRow data={purchaseHistory?.userStake?.stakeAmount} />
 
-                    <TableRow data={purchaseHistory?.userStake?.apy} />
+                    <TableRow data={`${purchaseHistory?.userStake?.apy} %`} />
 
                     <TableRow data={purchaseHistory?.userStake?.dailyRoy} />
                   </tr>
