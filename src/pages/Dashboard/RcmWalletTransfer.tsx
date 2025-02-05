@@ -4,8 +4,6 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { PuffLoader } from 'react-spinners';
 import axiosInstance from '../../utils/axiosConfig';
 import Swal from 'sweetalert2';
-import { ICoinPrice } from '../../types/dashboard';
-import { ApiResponse } from '../../types/global';
 
 const RcmWalletTransfer = ({
   setGetWallet,
@@ -62,7 +60,7 @@ const RcmWalletTransfer = ({
           <div className="min-w-full w-[370px] lg:w-[600px] border-b border-stroke py-4 px-1 dark:border-strokedark">
             <div className="w-full flex justify-between px-3 place-items-center py-3">
               <h2 className="text-xl font-bold text-black dark:text-white">
-                RCM Wallet
+                RCM Wallet Balance
               </h2>
 
               <strong
@@ -78,7 +76,7 @@ const RcmWalletTransfer = ({
               className="flex  flex-col w-full gap-5.5 p-6.5"
             >
               <InputField
-                label="RCM Wallet"
+                label="Available RCM Wallet"
                 name="rcmWallet"
                 register={register}
                 required
@@ -95,7 +93,7 @@ const RcmWalletTransfer = ({
                       className="btn flex justify-center rounded bg-primary py-2 px-6 font-medium text-gray hover:shadow-1"
                       type="submit"
                     >
-                      Submit
+                      Check & Transfer
                     </button>
                   )}
                 </div>

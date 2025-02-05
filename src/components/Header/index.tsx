@@ -2,8 +2,7 @@ import { Link } from 'react-router-dom';
 import DropdownUser from './DropdownUser';
 import DarkModeSwitcher from './DarkModeSwitcher';
 import { useContext } from 'react';
-import { GiDwarfKing } from 'react-icons/gi';
-
+import image from '../../assets/rcm.png';
 import MyContext from '../../hooks/MyContext';
 
 const Header = (props: {
@@ -84,7 +83,8 @@ const Header = (props: {
         </div>
         <div className="flex lg:ms-auto items-center gap-3 2xsm:gap-5">
           {profile?.isSpecialRcm && (
-            <GiDwarfKing className="size-14 dark:text-yellow-500" />
+            // <GiDwarfKing className="size-14 dark:text-yellow-500" />
+            <img className="w-14 h-14" src={image} alt="" />
           )}
 
           <ul className="flex items-center gap-2 2xsm:gap-4">
