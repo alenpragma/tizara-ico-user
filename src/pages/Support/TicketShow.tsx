@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import DefaultLayout from '../../layout/DefaultLayout';
 import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
-import InputField from '../../components/Forms/InputField';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import TextAreaField from '../../components/Forms/TextAreaField';
 import FileUploder from '../FileUploder';
@@ -45,6 +44,18 @@ const TicketShow = () => {
 
   const onSubmit: SubmitHandler<any> = async (data) => {
     console.log(data);
+    data.ticketId = id;
+    console.log(data);
+
+    try {
+      const response = await axiosInstance.post(`/ticket/create-replay`, data);
+
+      if (response?.data?.success) {
+        setDatas(response.data.data);
+      }
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
   };
 
   const fetchData = async () => {
@@ -63,24 +74,27 @@ const TicketShow = () => {
     fetchData();
   }, []);
 
-  console.log(datas);
-
   return (
     <DefaultLayout>
       <Breadcrumb pageName="Details" />
 
-      <div className="border rounded-md bg-opacity-95 p-3 flex justify-between place-items-center">
+      <div className="border rounded-md bg-opacity-95 p-1 flex justify-between place-items-center">
         <div>
           <h2 className="text-md font-semibold">{datas?.title}</h2>
         </div>
 
         <Button btnName="Mark it close" />
       </div>
-      <div>
+      <div className="my-5  flex flex-col gap-2">
         {datas?.updates?.map((data: any) => {
           return (
-            <div key={data.id} className="bg-red-600">
-              <h2> asd{data.message}</h2>
+            <div
+              key={data.id}
+              className={`bg-graydark p-2 w-fit rounded-md ${
+                data.role == 'ADMIN' ? 'ms-auto' : ''
+              }`}
+            >
+              <h2>{data.message}</h2>
             </div>
           );
         })}
@@ -89,8 +103,8 @@ const TicketShow = () => {
       <div>
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-3">
           <TextAreaField
-            label="description"
-            name="description"
+            label="message"
+            name="message"
             register={register}
             required
             error={errors}
@@ -102,7 +116,6 @@ const TicketShow = () => {
             placeholder="image"
             register={register}
             error={errors.image}
-            required
             fileSelectedHandler={fileSelectedHandler}
           />
           <div className="mb-5">
