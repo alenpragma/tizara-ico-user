@@ -258,7 +258,7 @@ const Wallets = ({
                   <p className="text-sm md:text-[18px] font-medium">
                     RCM Wallet
                   </p>
-                  <div className="flex gap-1">
+                  <div className="">
                     <button
                       onClick={() => openAndClosesetRcmTransferModal()}
                       className="items-center text-sm mt-2 justify-center rounded-md bg-success py-1.5 px-2 text-center lg:font-medium text-white hover:bg-opacity-90 lg:px-6 xl:px-7"
