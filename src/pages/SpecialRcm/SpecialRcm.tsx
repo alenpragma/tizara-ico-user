@@ -83,23 +83,23 @@ const SpecialRcm = () => {
   return (
     <DefaultLayout>
       <Breadcrumb pageName="Special Rcm" />
-      <div className="mt-4 flex gap-3">
-        <div className="border border-cyan-600 w-fit  p-3 rounded-md bg-meta-4 font-semibold">
+      <div className="mt-4 w-full grid grid-cols-2 md:grid-cols-4 gap-1 lg:gap-3">
+        <div className="border border-cyan-600 md:w-60  p-1 md:p-3 rounded-md bg-meta-4 font-normal">
           <p> Last Month Team stake</p>
           <p>{teamTotalStake?.lastMonthStakeSumTotal}</p>
         </div>
 
-        <div className="border border-cyan-600 w-fit  p-3 rounded-md bg-meta-4 font-semibold">
+        <div className="border border-cyan-600 md:w-60  p-1 md:p-3 rounded-md bg-meta-4 font-normal">
           <p> Curent Month Team stake</p>
           <p>{teamTotalStake?.currentMonthStakeSumTotal}</p>
         </div>
 
-        <div className="border border-cyan-600 w-fit  p-3 rounded-md bg-meta-4 font-semibold">
+        <div className="border border-cyan-600 md:w-60  p-1 md:p-3 rounded-md bg-meta-4 font-normal">
           <p> Last Month total NFT purches</p>
           <p>{teamTotalStake?.lastMonthNFTSum}</p>
         </div>
 
-        <div className="border border-cyan-600 w-fit  p-3 rounded-md bg-meta-4 font-semibold">
+        <div className="border border-cyan-600 md:w-60  p-1 md:p-3 rounded-md bg-meta-4 font-normal">
           <p> Curent Month NFT purchese</p>
           <p>{teamTotalStake?.currentMonthNFTSum}</p>
         </div>
