@@ -108,7 +108,7 @@ const MyWalletToDeposit = ({
               className="flex  flex-col w-full gap-5.5 p-6.5"
             >
               <InputField
-                label="NFT Wallet"
+                label="My Wallet"
                 name="icoWallet"
                 register={register}
                 required

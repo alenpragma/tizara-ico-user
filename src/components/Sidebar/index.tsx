@@ -268,7 +268,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                     }`}
                 >
                   <StackNowIcon />
-                  Omega Stake
+                  Omega Stake Logs
                 </NavLink>
               </li>
 

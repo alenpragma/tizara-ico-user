@@ -98,6 +98,9 @@ const Payment = () => {
                   <th className="min-w-[120px] py-4 px-4 font-medium text-black dark:text-white">
                     Amount
                   </th>
+                  <th className="min-w-[100px] py-4 px-4 font-medium text-black dark:text-white">
+                    Paid
+                  </th>
                   <th className="min-w-[120px] py-4 px-4 font-medium text-black dark:text-white">
                     Status
                   </th>
@@ -120,6 +123,7 @@ const Payment = () => {
                         <TableRow
                           data={depositHistory?.payAmountNum}
                         ></TableRow>
+                        <TableRow data={depositHistory?.payAmount}></TableRow>
 
                         <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                           <p
