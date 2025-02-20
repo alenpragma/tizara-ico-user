@@ -51,6 +51,7 @@ const Support = () => {
             <div className="flex justify-between place-items-center border-t  border-meta-4 p-2">
               <div className="flex gap-3 place-items-center">
                 <MdSupport className="text-4xl" />
+                <img className="w-40 md:w-60" src={data?.image} alt="" />{' '}
                 <div className="flex place-items-center gap-4">
                   <div>
                     <p className="dark:text-white font-semibold">

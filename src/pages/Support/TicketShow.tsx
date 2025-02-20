@@ -12,7 +12,8 @@ import Button from '../../Ui/Button';
 const TicketShow = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [datas, setDatas] = useState<any>();
-  const { id } = useParams<{ id: string }>();
+  const { id } = useParams();
+  console.log(id);
 
   const {
     register,
@@ -21,38 +22,56 @@ const TicketShow = () => {
     reset,
   } = useForm();
 
-  const [selectedFiles, setSelectedFiles] = useState({
-    image: null,
-  });
+  // const [selectedFiles, setSelectedFiles] = useState({
+  //   image: null,
+  // });
 
-  const fileSelectedHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, files } = e.target;
+  // const fileSelectedHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   const { name, files } = e.target;
 
-    if (files && files[0]) {
-      if (files[0].size > 1024 * 1024) {
-        alert('File size should be less than 1 MB');
-        e.target.value = '';
-        return;
-      }
+  //   if (files && files[0]) {
+  //     if (files[0].size > 1024 * 1024) {
+  //       alert('File size should be less than 1 MB');
+  //       e.target.value = '';
+  //       return;
+  //     }
 
-      setSelectedFiles((prevFiles) => ({
-        ...prevFiles,
-        [name]: files[0],
-      }));
-    }
-  };
+  //     setSelectedFiles((prevFiles) => ({
+  //       ...prevFiles,
+  //       [name]: files[0],
+  //     }));
+  //   }
+  // };
 
   const onSubmit: SubmitHandler<any> = async (data) => {
-    console.log(data);
-    data.ticketId = id;
-    console.log(data);
+    const image = data['image'];
+    console.log(image.length);
+
+    const formData = new FormData();
+    if (image.length) {
+      console.log('file found');
+
+      formData.append('image', image[0] as Blob);
+    }
+    formData.append('message', data.message);
+    formData.append('ticketId', id!);
 
     try {
-      const response = await axiosInstance.post(`/ticket/create-replay`, data);
+      const response = await axiosInstance.post(
+        `/ticket/create-replay`,
+        formData,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        },
+      );
 
       if (response?.data?.success) {
         setDatas(response.data.data);
       }
+      reset();
+      alert('dsfsdf');
     } catch (error) {
       console.error('Error fetching data:', error);
     }
@@ -78,12 +97,15 @@ const TicketShow = () => {
     <DefaultLayout>
       <Breadcrumb pageName="Details" />
 
-      <div className="border rounded-md bg-opacity-95 p-1 flex justify-between place-items-center">
+      <div className="border bg-slate-500 rounded-md bg-opacity-95 p-1 flex justify-between place-items-center">
         <div>
           <h2 className="text-md font-semibold">{datas?.title}</h2>
         </div>
 
         <Button btnName="Mark it close" />
+      </div>
+      <div>
+        <h2 className="text-title-xl font-medium">Responses</h2>
       </div>
       <div className="my-5  flex flex-col gap-2">
         {datas?.updates?.map((data: any) => {
@@ -91,9 +113,12 @@ const TicketShow = () => {
             <div
               key={data.id}
               className={`bg-graydark p-2 w-fit rounded-md ${
-                data.role == 'ADMIN' ? 'ms-auto' : ''
+                data.role != 'USER' ? 'ms-auto' : ''
               }`}
             >
+              {data.image && (
+                <img className="w-40 h-50" src={data.image} alt="" />
+              )}
               <h2>{data.message}</h2>
             </div>
           );
@@ -116,7 +141,7 @@ const TicketShow = () => {
             placeholder="image"
             register={register}
             error={errors.image}
-            fileSelectedHandler={fileSelectedHandler}
+            // fileSelectedHandler={fileSelectedHandler}
           />
           <div className="mb-5">
             {!loading ? (

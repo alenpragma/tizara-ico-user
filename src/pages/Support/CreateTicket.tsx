@@ -8,10 +8,11 @@ import { PuffLoader } from 'react-spinners';
 import TextAreaField from '../../components/Forms/TextAreaField';
 import Swal from 'sweetalert2';
 import FileUploder from '../FileUploder';
+import { useNavigate } from 'react-router-dom';
 
 const CreateTicket = () => {
   const [loading, setLoading] = useState<boolean>(false);
-
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -19,26 +20,26 @@ const CreateTicket = () => {
     reset,
   } = useForm();
 
-  const [selectedFiles, setSelectedFiles] = useState({
-    image: null,
-  });
+  // const [selectedFiles, setSelectedFiles] = useState({
+  //   image: null,
+  // });
 
-  const fileSelectedHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, files } = e.target;
+  // const fileSelectedHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   const { name, files } = e.target;
 
-    if (files && files[0]) {
-      if (files[0].size > 1024 * 1024) {
-        alert('File size should be less than 1 MB');
-        e.target.value = '';
-        return;
-      }
+  //   if (files && files[0]) {
+  //     if (files[0].size > 1024 * 1024) {
+  //       alert('File size should be less than 1 MB');
+  //       e.target.value = '';
+  //       return;
+  //     }
 
-      setSelectedFiles((prevFiles) => ({
-        ...prevFiles,
-        [name]: files[0],
-      }));
-    }
-  };
+  //     setSelectedFiles((prevFiles) => ({
+  //       ...prevFiles,
+  //       [name]: files[0],
+  //     }));
+  //   }
+  // };
 
   const onSubmit: SubmitHandler<any> = async (data) => {
     const image = data['image'];
@@ -70,6 +71,7 @@ const CreateTicket = () => {
           text: 'Successfully updated',
           icon: 'success',
         });
+        navigate('/support');
       }
     } catch (error: any) {
       setLoading(false);
@@ -132,7 +134,7 @@ const CreateTicket = () => {
             register={register}
             error={errors.image}
             required
-            fileSelectedHandler={fileSelectedHandler}
+            // fileSelectedHandler={fileSelectedHandler}
           />
 
           <div className="mb-5">
