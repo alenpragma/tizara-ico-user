@@ -57,6 +57,7 @@ import StakeLogs from './pages/Stake/StakeLogs';
 import StakeLogsRewordHistory from './pages/RoyHistory/StakeLogsRewordHistory';
 import LogsProfitBounty from './pages/Historys/LogsProfitBounty';
 import SpecialRcm from './pages/SpecialRcm/SpecialRcm';
+import { ToastContainer } from 'react-toastify';
 
 function App() {
   const { pathname } = useLocation();
@@ -115,47 +116,11 @@ function App() {
     profile,
   };
 
-  // const createAddress = async (profile: any) => {
-  //   if (!profile?.privateKey && !profile?.address && profile.isVerified) {
-  //     try {
-  //       const data = { uid: profile.id };
-
-  //       const addressResponse = await axios.post(
-  //         'https://web3.blockmaster.info/api/create-address',
-  //         data,
-  //       );
-
-  //       const address = addressResponse.data;
-  //       // console.log('New address created:', address);
-
-  //       try {
-  //         const response = await axiosInstance.patch(
-  //           `/profile/create-address/${profile.id}`,
-  //           address,
-  //         );
-  //         // console.log('Profile updated with new address:', response.data);
-  //         if (response.data.statusCode == 200) {
-  //           fetchData();
-  //         }
-  //       } catch (error) {
-  //         console.error('Error updating profile:', error);
-  //       }
-  //     } catch (error) {
-  //       console.error('Error creating address:', error);
-  //     }
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   if (profile?.id && !loading && profile.isVerified) {
-  //     createAddress(profile);
-  //   }
-  // }, [profile?.id, loading]);
-
   return loading ? (
     <Loader />
   ) : (
     <>
+      <ToastContainer />
       <MyContext.Provider value={contextValues}>
         <SkeletonTheme
           baseColor={`${colorMode === 'light' ? '#e5e6ea' : '#1d2a39'}`}

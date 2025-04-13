@@ -6,13 +6,16 @@ import TextAreaField from '../../components/Forms/TextAreaField';
 import FileUploder from '../FileUploder';
 import { PuffLoader } from 'react-spinners';
 import axiosInstance from '../../utils/axiosConfig';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import Button from '../../Ui/Button';
+import Swal from 'sweetalert2';
 
 const TicketShow = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [datas, setDatas] = useState<any>();
-  const { id } = useParams<{ id: string }>();
+  const { id } = useParams();
+
+  const router = useNavigate();
 
   const {
     register,
@@ -21,40 +24,28 @@ const TicketShow = () => {
     reset,
   } = useForm();
 
-  const [selectedFiles, setSelectedFiles] = useState({
-    image: null,
-  });
-
-  const fileSelectedHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, files } = e.target;
-
-    if (files && files[0]) {
-      if (files[0].size > 1024 * 1024) {
-        alert('File size should be less than 1 MB');
-        e.target.value = '';
-        return;
-      }
-
-      setSelectedFiles((prevFiles) => ({
-        ...prevFiles,
-        [name]: files[0],
-      }));
-    }
-  };
-
-  const onSubmit: SubmitHandler<any> = async (data) => {
-    console.log(data);
-    data.ticketId = id;
-    console.log(data);
-
+  const handelUpdate = async () => {
+    const newData = {
+      status: 'CLOSED',
+    };
     try {
-      const response = await axiosInstance.post(`/ticket/create-replay`, data);
+      const response = await axiosInstance.patch(
+        `/ticket/${datas.id}`,
+        newData,
+      );
 
-      if (response?.data?.success) {
-        setDatas(response.data.data);
-      }
+      Swal.fire({
+        title: 'Success',
+        text: 'Successfully closed',
+        icon: 'info',
+      });
+      router('/support');
     } catch (error) {
-      console.error('Error fetching data:', error);
+      Swal.fire({
+        title: 'Failed',
+        text: 'Somthing wrong',
+        icon: 'error',
+      });
     }
   };
 
@@ -70,6 +61,39 @@ const TicketShow = () => {
     }
   };
 
+  const onSubmit: SubmitHandler<any> = async (data) => {
+    const image = data['image'];
+
+    const formData = new FormData();
+    if (image.length) {
+      console.log('file found');
+
+      formData.append('image', image[0] as Blob);
+    }
+    formData.append('message', data.message);
+    formData.append('ticketId', id!);
+
+    try {
+      const response = await axiosInstance.post(
+        `/ticket/create-replay`,
+        formData,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        },
+      );
+
+      if (response?.data?.success) {
+        setDatas(response.data.data);
+      }
+      reset();
+      fetchData();
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
+
   useEffect(() => {
     fetchData();
   }, []);
@@ -78,22 +102,32 @@ const TicketShow = () => {
     <DefaultLayout>
       <Breadcrumb pageName="Details" />
 
-      <div className="border rounded-md bg-opacity-95 p-1 flex justify-between place-items-center">
+      <div className="border bg-slate-500 rounded-md bg-opacity-95 p-1 flex justify-between place-items-center">
         <div>
           <h2 className="text-md font-semibold">{datas?.title}</h2>
         </div>
 
-        <Button btnName="Mark it close" />
+        {datas?.status == 'CLOSED' ? (
+          <Button btnName={`${datas?.status}`} />
+        ) : (
+          <div onClick={() => handelUpdate()}>
+            <Button btnName="Mark it close" />
+          </div>
+        )}
       </div>
+
+      <hr className="mt-4" />
       <div className="my-5  flex flex-col gap-2">
         {datas?.updates?.map((data: any) => {
           return (
             <div
               key={data.id}
-              className={`bg-graydark p-2 w-fit rounded-md ${
-                data.role == 'ADMIN' ? 'ms-auto' : ''
-              }`}
+              className={`bg-graydark p-2 w-fit rounded-md ${data.role != 'USER' ? 'ms-auto' : ''
+                }`}
             >
+              {data.image && (
+                <img className="w-40 h-50" src={data.image} alt="" />
+              )}
               <h2>{data.message}</h2>
             </div>
           );
@@ -116,14 +150,15 @@ const TicketShow = () => {
             placeholder="image"
             register={register}
             error={errors.image}
-            fileSelectedHandler={fileSelectedHandler}
+          // fileSelectedHandler={fileSelectedHandler}
           />
           <div className="mb-5">
             {!loading ? (
               <input
+                disabled={datas?.status == 'CLOSED'}
                 type="submit"
-                value="Update"
-                className="w-full cursor-pointer rounded-lg border border-primary bg-primary p-3 text-white transition hover:bg-opacity-90"
+                value="Send"
+                className={`w-full cursor-pointer rounded-lg border p-3 text-white transition hover:bg-opacity-90 ${datas?.status == 'CLOSED' ? ' border-graydark bg-zinc-600 ' : 'border-primary bg-primary '}`}
               />
             ) : (
               <PuffLoader className="mx-auto" color="#36d7b7" size={40} />

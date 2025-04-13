@@ -3,10 +3,8 @@ import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
 import DefaultLayout from '../../layout/DefaultLayout';
 import axiosInstance from '../../utils/axiosConfig';
 import { formatToLocalDate } from '../../hooks/formatDate';
-import { FaBookOpen, FaLariSign, FaSupple } from 'react-icons/fa6';
-import { MdOutlineSupport, MdSupport } from 'react-icons/md';
-import { BsEyeFill } from 'react-icons/bs';
-import { IoEyeOutline } from 'react-icons/io5';
+import { FaReplyAll } from 'react-icons/fa6';
+import { IoTicketOutline } from 'react-icons/io5';
 import { Link } from 'react-router-dom';
 
 const Support = () => {
@@ -14,6 +12,7 @@ const Support = () => {
 
   const [loading, setLoading] = useState<boolean>(false);
   const fetchData = async () => {
+    setLoading(true);
     try {
       const response = await axiosInstance.get('/ticket');
 
@@ -23,6 +22,7 @@ const Support = () => {
     } catch (error) {
       console.error('Error fetching data:', error);
     }
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -50,7 +50,14 @@ const Support = () => {
           return (
             <div className="flex justify-between place-items-center border-t  border-meta-4 p-2">
               <div className="flex gap-3 place-items-center">
-                <MdSupport className="text-4xl" />
+                <div className="border-2 p-1 rounded-full">
+                  <IoTicketOutline className="text-4xl" />
+                </div>
+                <img
+                  className="w-40 md:w-60 rounded-md"
+                  src={data?.image}
+                  alt=""
+                />{' '}
                 <div className="flex place-items-center gap-4">
                   <div>
                     <p className="dark:text-white font-semibold">
@@ -60,17 +67,18 @@ const Support = () => {
                       {formatToLocalDate(data.createdAt)}
                     </span>
                   </div>
-                  <span className="text-sm font-semibold bg-success px-4 rounded-full">
+                  <span className="text-sm  text-white font-semibold bg-success px-4 rounded-full">
                     {data.status}
                   </span>
                 </div>
               </div>
 
-              <div className="flex gap-3 text-2xl">
-                <FaBookOpen />
-                <Link to={`/ticket/show/${data.id}`}>
-                  <IoEyeOutline />
-                </Link>
+              <div className="flex  gap-3 text-2xl">
+                <div className="border-2 p-2 rounded-full">
+                  <Link to={`/ticket/show/${data.id}`}>
+                    <FaReplyAll />
+                  </Link>
+                </div>
               </div>
             </div>
           );

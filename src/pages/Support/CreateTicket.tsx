@@ -8,10 +8,11 @@ import { PuffLoader } from 'react-spinners';
 import TextAreaField from '../../components/Forms/TextAreaField';
 import Swal from 'sweetalert2';
 import FileUploder from '../FileUploder';
+import { useNavigate } from 'react-router-dom';
 
 const CreateTicket = () => {
   const [loading, setLoading] = useState<boolean>(false);
-
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -19,39 +20,16 @@ const CreateTicket = () => {
     reset,
   } = useForm();
 
-  const [selectedFiles, setSelectedFiles] = useState({
-    image: null,
-  });
-
-  const fileSelectedHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, files } = e.target;
-
-    if (files && files[0]) {
-      if (files[0].size > 1024 * 1024) {
-        alert('File size should be less than 1 MB');
-        e.target.value = '';
-        return;
-      }
-
-      setSelectedFiles((prevFiles) => ({
-        ...prevFiles,
-        [name]: files[0],
-      }));
-    }
-  };
-
   const onSubmit: SubmitHandler<any> = async (data) => {
     const image = data['image'];
     const obj = {
       title: data.title,
       description: data.description,
     };
-
     const formData = new FormData();
     if (image) {
       formData.append('image', image[0] as Blob);
     }
-
     formData.append('title', obj.title);
     formData.append('description', obj.description);
 
@@ -62,14 +40,15 @@ const CreateTicket = () => {
           'Content-Type': 'multipart/form-data',
         },
       });
-
       if (response) {
         setLoading(false);
         Swal.fire({
           title: 'Success',
-          text: 'Successfully updated',
+          text: 'Successfully ticket created',
           icon: 'success',
         });
+        reset();
+        navigate('/support');
       }
     } catch (error: any) {
       setLoading(false);
@@ -94,7 +73,6 @@ const CreateTicket = () => {
   return (
     <DefaultLayout>
       <Breadcrumb pageName="Ticket" />
-
       <div>
         <form
           onSubmit={handleSubmit(onSubmit)}
@@ -114,16 +92,6 @@ const CreateTicket = () => {
             required
             error={errors}
           />
-          {/* <InputField
-            label="Image"
-            name="image"
-            register={register}
-            required
-            type="file"
-            placeholder="Select an image file"
-            error={errors}
-          /> */}
-
           <FileUploder
             type="file"
             label="image"
@@ -132,9 +100,7 @@ const CreateTicket = () => {
             register={register}
             error={errors.image}
             required
-            fileSelectedHandler={fileSelectedHandler}
           />
-
           <div className="mb-5">
             {!loading ? (
               <input
