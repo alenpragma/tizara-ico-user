@@ -6,14 +6,16 @@ import TextAreaField from '../../components/Forms/TextAreaField';
 import FileUploder from '../FileUploder';
 import { PuffLoader } from 'react-spinners';
 import axiosInstance from '../../utils/axiosConfig';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import Button from '../../Ui/Button';
+import Swal from 'sweetalert2';
 
 const TicketShow = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [datas, setDatas] = useState<any>();
   const { id } = useParams();
-  console.log(id);
+
+  const router = useNavigate();
 
   const {
     register,
@@ -22,30 +24,45 @@ const TicketShow = () => {
     reset,
   } = useForm();
 
-  // const [selectedFiles, setSelectedFiles] = useState({
-  //   image: null,
-  // });
+  const handelUpdate = async () => {
+    const newData = {
+      status: 'CLOSED',
+    };
+    try {
+      const response = await axiosInstance.patch(
+        `/ticket/${datas.id}`,
+        newData,
+      );
 
-  // const fileSelectedHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   const { name, files } = e.target;
+      Swal.fire({
+        title: 'Success',
+        text: 'Successfully closed',
+        icon: 'info',
+      });
+      router('/support');
+    } catch (error) {
+      Swal.fire({
+        title: 'Failed',
+        text: 'Somthing wrong',
+        icon: 'error',
+      });
+    }
+  };
 
-  //   if (files && files[0]) {
-  //     if (files[0].size > 1024 * 1024) {
-  //       alert('File size should be less than 1 MB');
-  //       e.target.value = '';
-  //       return;
-  //     }
+  const fetchData = async () => {
+    try {
+      const response = await axiosInstance.get(`/ticket/${id}`);
 
-  //     setSelectedFiles((prevFiles) => ({
-  //       ...prevFiles,
-  //       [name]: files[0],
-  //     }));
-  //   }
-  // };
+      if (response?.data?.success) {
+        setDatas(response.data.data);
+      }
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
 
   const onSubmit: SubmitHandler<any> = async (data) => {
     const image = data['image'];
-    console.log(image.length);
 
     const formData = new FormData();
     if (image.length) {
@@ -71,19 +88,7 @@ const TicketShow = () => {
         setDatas(response.data.data);
       }
       reset();
-      alert('dsfsdf');
-    } catch (error) {
-      console.error('Error fetching data:', error);
-    }
-  };
-
-  const fetchData = async () => {
-    try {
-      const response = await axiosInstance.get(`/ticket/${id}`);
-
-      if (response?.data?.success) {
-        setDatas(response.data.data);
-      }
+      fetchData();
     } catch (error) {
       console.error('Error fetching data:', error);
     }
@@ -102,19 +107,23 @@ const TicketShow = () => {
           <h2 className="text-md font-semibold">{datas?.title}</h2>
         </div>
 
-        <Button btnName="Mark it close" />
+        {datas?.status == 'CLOSED' ? (
+          <Button btnName={`${datas?.status}`} />
+        ) : (
+          <div onClick={() => handelUpdate()}>
+            <Button btnName="Mark it close" />
+          </div>
+        )}
       </div>
-      <div>
-        <h2 className="text-title-xl font-medium">Responses</h2>
-      </div>
+
+      <hr className="mt-4" />
       <div className="my-5  flex flex-col gap-2">
         {datas?.updates?.map((data: any) => {
           return (
             <div
               key={data.id}
-              className={`bg-graydark p-2 w-fit rounded-md ${
-                data.role != 'USER' ? 'ms-auto' : ''
-              }`}
+              className={`bg-graydark p-2 w-fit rounded-md ${data.role != 'USER' ? 'ms-auto' : ''
+                }`}
             >
               {data.image && (
                 <img className="w-40 h-50" src={data.image} alt="" />
@@ -141,14 +150,15 @@ const TicketShow = () => {
             placeholder="image"
             register={register}
             error={errors.image}
-            // fileSelectedHandler={fileSelectedHandler}
+          // fileSelectedHandler={fileSelectedHandler}
           />
           <div className="mb-5">
             {!loading ? (
               <input
+                disabled={datas?.status == 'CLOSED'}
                 type="submit"
-                value="Update"
-                className="w-full cursor-pointer rounded-lg border border-primary bg-primary p-3 text-white transition hover:bg-opacity-90"
+                value="Send"
+                className={`w-full cursor-pointer rounded-lg border p-3 text-white transition hover:bg-opacity-90 ${datas?.status == 'CLOSED' ? ' border-graydark bg-zinc-600 ' : 'border-primary bg-primary '}`}
               />
             ) : (
               <PuffLoader className="mx-auto" color="#36d7b7" size={40} />

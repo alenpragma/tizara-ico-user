@@ -57,6 +57,7 @@ import StakeLogs from './pages/Stake/StakeLogs';
 import StakeLogsRewordHistory from './pages/RoyHistory/StakeLogsRewordHistory';
 import LogsProfitBounty from './pages/Historys/LogsProfitBounty';
 import SpecialRcm from './pages/SpecialRcm/SpecialRcm';
+import { ToastContainer } from 'react-toastify';
 
 function App() {
   const { pathname } = useLocation();
@@ -119,6 +120,7 @@ function App() {
     <Loader />
   ) : (
     <>
+      <ToastContainer />
       <MyContext.Provider value={contextValues}>
         <SkeletonTheme
           baseColor={`${colorMode === 'light' ? '#e5e6ea' : '#1d2a39'}`}
