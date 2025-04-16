@@ -62,6 +62,10 @@ const TicketShow = () => {
   };
 
   const onSubmit: SubmitHandler<any> = async (data) => {
+
+    setLoading(true);
+
+
     const image = data['image'];
 
     const formData = new FormData();
@@ -91,7 +95,9 @@ const TicketShow = () => {
       fetchData();
     } catch (error) {
       console.error('Error fetching data:', error);
+      setLoading(false);
     }
+    setLoading(false);
   };
 
   useEffect(() => {

@@ -58,11 +58,14 @@ const Support = () => {
                   src={data?.image}
                   alt=""
                 />{' '}
-                <div className="flex place-items-center gap-4">
-                  <div>
+                <div className=" gap-4">
                     <p className="dark:text-white font-semibold">
-                      {data.title}
+                      Title: {data.title}
                     </p>
+                    <p className="dark:text-white font-semibold">
+                    Description: {data.description}
+                    </p>
+                  <div>
                     <span className="text-sm ">
                       {formatToLocalDate(data.createdAt)}
                     </span>
