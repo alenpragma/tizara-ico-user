@@ -58,6 +58,7 @@ import StakeLogsRewordHistory from './pages/RoyHistory/StakeLogsRewordHistory';
 import LogsProfitBounty from './pages/Historys/LogsProfitBounty';
 import SpecialRcm from './pages/SpecialRcm/SpecialRcm';
 import { ToastContainer } from 'react-toastify';
+import RankBonus from './pages/Historys/RankBonus';
 
 function App() {
   const { pathname } = useLocation();
@@ -379,6 +380,18 @@ function App() {
                   <PageTitle title="USD Transfer" />
                   <ProtectedRoute>
                     <DepositUsdTransferHistory />
+                  </ProtectedRoute>
+                </>
+              }
+            />
+          
+            <Route
+              path="/history/rank-bonus"
+              element={
+                <>
+                  <PageTitle title="Rank Bonus" />
+                  <ProtectedRoute>
+                    <RankBonus />
                   </ProtectedRoute>
                 </>
               }
