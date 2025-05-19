@@ -165,6 +165,24 @@ const SpecialRcm = () => {
                             </span>
                           );
                         })}
+                        
+                        {team?.deposit.map((p: any, index: number) => {
+                          const isCurrent = isCurrentMonth(p.createdAt);
+                          const isPrevious = isPreviousMonth(p.createdAt);
+
+                          return (
+                            <span
+                              key={p.id || index} // Ensure unique keys
+                              className={`${
+                                isCurrent ? 'text-green-500 font-bold' : ''
+                              } 
+                      ${isPrevious ? 'text-red-500 font-bold' : ''}`}
+                            >
+                              {p.amount}
+                              {index < team.payment.length - 1 && ', '}
+                            </span>
+                          );
+                        })}
                       </TableRow>
                     </tr>
                   ))}
