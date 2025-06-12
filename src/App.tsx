@@ -386,7 +386,7 @@ function App() {
             />
           
             <Route
-              path="/history/rank-bonus"
+              path="/rank-bonus"
               element={
                 <>
                   <PageTitle title="Rank Bonus" />

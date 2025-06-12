@@ -8,13 +8,14 @@ import StakeNowIcon from '../../images/sidebarIcon/StakeNowIcon';
 import RewardIcon from '../../images/sidebarIcon/RewardIcon';
 import StackNowIcon from '../../images/sidebarIcon/StackNowIcon';
 import DownArrow from '../../assets/icon/DownArrow';
-import { PiSelectionBackgroundBold } from 'react-icons/pi';
-import { CiUser } from 'react-icons/ci';
+import { PiCrownBold, PiSelectionBackgroundBold } from 'react-icons/pi';
+import { SiSinglestore } from "react-icons/si";
 
 import { TiGroup } from 'react-icons/ti';
 import { MdOutlineGroupAdd } from 'react-icons/md';
 import MyContext from '../../hooks/MyContext';
 import { IoTicketOutline } from 'react-icons/io5';
+import { FaRegUser, FaScrollTorah } from 'react-icons/fa6';
 
 interface SidebarProps {
   sidebarOpen: boolean;
@@ -249,7 +250,9 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                     }'
                     }`}
                 >
-                  <StackNowIcon />
+                  {/* <StackNowIcon /> */}
+                  <SiSinglestore />
+
                   Stake History
                 </NavLink>
               </li>
@@ -465,21 +468,6 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                               USD Withdraw History
                             </NavLink>
                           </li>
-
-                          {profile?.rank &&
-                            <li>
-                              <NavLink
-                                to="/history/rank-bonus"
-                                className={({ isActive }) =>
-                                  'group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ' +
-                                  (isActive && '!text-white')
-                                }
-                              >
-                                Rank Bonus
-                              </NavLink>
-                            </li>}
-
-
                         </ul>
                       </div>
                       {/* <!-- Dropdown Menu End --> */}
@@ -499,8 +487,27 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                       }'
                     }`}
                   >
-                    <StakeNowIcon />
+                    {/* <StakeNowIcon /> */}
+                    <FaScrollTorah />
+
                     Special Rcm
+                  </NavLink>
+                </li>
+              )}
+
+
+              {profile?.rank && (
+                <li>
+                  <NavLink
+                    to="/rank-bonus"
+                    className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${(pathname === '/rank-bonus' ||
+                      pathname.includes('/rank-bonus')) &&
+                      'bg-graydark dark:bg-meta-4'
+                      }'
+                    }`}
+                  >
+                    <PiCrownBold />
+                    Rank Bonus
                   </NavLink>
                 </li>
               )}
@@ -511,7 +518,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                   className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${pathname.includes('profile') && 'bg-graydark dark:bg-meta-4'
                     }`}
                 >
-                  <CiUser />
+                  <FaRegUser />
                   Profile
                 </NavLink>
               </li>
