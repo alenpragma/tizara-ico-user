@@ -57,7 +57,7 @@ const TizaraTokenDashboard: React.FC = () => {
   const [popup, setPopup] = useState<any | null>(null);
 
   const [profile, setProfile] = useState<UserProfile | null>(null);
-  const [royHistorys, setRoyHistorys] = useState<IROYHistory[]>([]);
+  // const [royHistorys, setRoyHistorys] = useState<IROYHistory[]>([]);
   const [history, setHistory] = useState<any>([]);
   const [depositHistory, setDepositHistory] = useState<any>();
   const [count, setCount] = useState<any>();
@@ -119,9 +119,9 @@ const TizaraTokenDashboard: React.FC = () => {
     }
   }, [profile?.isVerified]);
 
-  const [teams, setTeams] = useState([]);
+  const [teams, setTeams] = useState<any>();
   const [loading, setLoading] = useState<boolean>(false);
-
+ 
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
@@ -139,16 +139,16 @@ const TizaraTokenDashboard: React.FC = () => {
     fetchData();
   }, []);
 
-  const fetchRoyHistoryData = async () => {
-    try {
-      const response = await axiosInstance.get('/roy-bonus-historys');
-      if (response?.data?.success) {
-        return response.data.data;
-      }
-    } catch (error) {
-      console.error('Error fetching roy-bonus-historys data:', error);
-    }
-  };
+  // const fetchRoyHistoryData = async () => {
+  //   try {
+  //     const response = await axiosInstance.get('/roy-bonus-historys');
+  //     if (response?.data?.success) {
+  //       return response.data.data;
+  //     }
+  //   } catch (error) {
+  //     console.error('Error fetching roy-bonus-historys data:', error);
+  //   }
+  // };
 
   const fetchStakeLevelBonus = async () => {
     try {
@@ -191,8 +191,8 @@ const TizaraTokenDashboard: React.FC = () => {
       const profileData = await fetchProfileData();
       setProfile(profileData);
 
-      const royHistoryData = await fetchRoyHistoryData();
-      setRoyHistorys(royHistoryData);
+      // const royHistoryData = await fetchRoyHistoryData();
+      // setRoyHistorys(royHistoryData);
 
       const stakeLevelBonusData = await fetchStakeLevelBonus();
       setHistory(stakeLevelBonusData);
@@ -207,11 +207,11 @@ const TizaraTokenDashboard: React.FC = () => {
     fetchData();
   }, []);
 
-  // sum the dailyRoy values
-  let totalRoy = 0;
-  for (let i = 0; i < royHistorys?.length; i++) {
-    totalRoy += royHistorys[i]?.dailyRoy;
-  }
+  // // sum the dailyRoy values
+  // let totalRoy = 0;
+  // for (let i = 0; i < royHistorys?.length; i++) {
+  //   totalRoy += royHistorys[i]?.dailyRoy;
+  // }
 
   // sum the level bonusAmount values
   let stakeLevelBonus = 0;
@@ -309,20 +309,20 @@ const TizaraTokenDashboard: React.FC = () => {
         <Link to="/my-team">
           <CardDataStats
             title="Direct Refer"
-            total={`${teams?.length ? teams?.length : '00'}`}
+            total={`${teams?.meta?.total ? teams?.meta?.total : '00'}`}
           >
             <PiPackage className="text-2xl dark:text-white text-primary" />
           </CardDataStats>
         </Link>
 
-        <Link to={'/roi-history'}>
+        {/* <Link to={'/roi-history'}>
           <CardDataStats
             title="Total Reward"
             total={`${totalRoy ? totalRoy.toFixed(2) : '00'}`}
           >
             <PiPackage className="text-2xl dark:text-white text-primary" />
           </CardDataStats>
-        </Link>
+        </Link> */}
 
         <Link to={'/deposit-wallet-history'}>
           <CardDataStats
@@ -344,7 +344,7 @@ const TizaraTokenDashboard: React.FC = () => {
 
         <CardDataStats
           title="Total Reward"
-          total={`${count?.dailyBonusCount?._sum?.amount ?? '00'}`}
+          total={`${count?.dailyBonusCount?._sum?.dailyRoy?.toFixed(2) ?? '00'}`}
         >
           <PiPackage className="text-2xl dark:text-white text-primary" />
         </CardDataStats>
@@ -358,7 +358,7 @@ const TizaraTokenDashboard: React.FC = () => {
 
         <CardDataStats
           title="Omega Reward"
-          total={`${count?.dailyStakeLogsBonus?._sum?.amount ?? '00'}`}
+          total={`${count?.dailyStakeLogsBonus?._sum?.dailyRoy?.toFixed(2) ?? '00'}`}
         >
           <PiPackage className="text-2xl dark:text-white text-primary" />
         </CardDataStats>

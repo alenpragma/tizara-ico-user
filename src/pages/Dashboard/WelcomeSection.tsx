@@ -60,7 +60,7 @@ const WelcomeSection = ({ setGetWallet, wallet, profile }: any) => {
     <>
       <div className="flex flex-col lg:flex-row  gap-4 py-4 lg:place-items-center justify-between">
         <div className="flex  lg:place-items-center flex-col lg:flex-row gap-3 ">
-          <div className="flex gap-3">
+          {/* <div className="flex gap-3">
             <img
               src={profile?.profileImage ?? userImage}
               alt=""
@@ -74,11 +74,12 @@ const WelcomeSection = ({ setGetWallet, wallet, profile }: any) => {
                 className="w-30 border-4 h-30 rounded-full"
               />
             )}
-          </div>
+          </div> */}
           <div>
             {/* <p>Address: {profile?.address}</p> */}
             <h2 className="text-title-md capitalize lg:text-2xl font-semibold">
-              Welcome to Tizara, {profile?.name}!
+              Welcome to Tizara
+              {/* {profile?.name}! */}
             </h2>
             <div className="flex gap-2">
               <p>
