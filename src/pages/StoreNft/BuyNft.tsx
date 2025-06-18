@@ -4,6 +4,11 @@ import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
 import { useEffect, useState } from 'react';
 import axiosInstance from '../../utils/axiosConfig';
 import { BuyModal } from './BuyModal';
+import Loader from '../../common/Loader';
+import dome from '../../videos/dome.mp4';
+import wagon from '../../videos/wagon.mp4';
+import hotelAndResort from '../../videos/hotelAndResort.mp4';
+import land from '../../videos/land.mp4';
 
 export type INft = {
   id: string;
@@ -55,6 +60,8 @@ const BuyNft = () => {
     <DefaultLayout>
       <Breadcrumb pageName="Buy NFT" />
       <>
+        {loading && <Loader />}
+
         <div className="grid grid-cols-1 md:grid-cols-1 xl:grid-cols-3 gap-3 justify-items-center">
           {nfts
             ?.slice()
@@ -65,11 +72,58 @@ const BuyNft = () => {
                   key={i}
                   className="border border-bodydark1 cursor-pointer dark:hover:bg-opacity-50 dark:border-strokedark dark:bg-boxdark bg-[#ffff]  p-5   rounded-2xl max-w-full w-[320px] xl:w-[390px]"
                 >
-                  <img
+                  {/* <img
                     className="transition-transform w-full h-55 duration-500 hover:scale-[1.1] rounded-md"
                     src={nft.img}
                     alt=""
-                  />
+                  /> */}
+
+                  <div className="w-full h-[220px] overflow-hidden rounded-md mb-4">
+                    {nft.walletName === 'dome' && (
+                      <video
+                        className="w-full h-full object-cover rounded-md"
+                        src={dome}
+                        // controls
+                        autoPlay
+                        muted
+                        loop
+                      />
+                    )}
+
+                    {nft.walletName == 'hotelAndResort' && (
+                      <video
+                        className="w-full h-full object-cover rounded-md"
+                        src={hotelAndResort}
+                        // controls
+                        autoPlay
+                        muted
+                        loop
+                      />
+                    )}
+
+                    {nft.walletName == 'wagon' && (
+                      <video
+                        className="w-full h-full object-cover rounded-md"
+                        src={wagon}
+                        // controls
+                        autoPlay
+                        muted
+                        loop
+                      />
+                    )}
+
+                    {nft.walletName == 'land' && (
+                      <video
+                        className="w-full h-full object-cover rounded-md"
+                        src={land}
+                        // controls
+                        autoPlay
+                        muted
+                        loop
+                      />
+                    )}
+                  </div>
+
                   <div className=" mt-5">
                     <div className="flex justify-between items-center">
                       <h2 className="font-bold text-black dark:text-white text-title-lg">

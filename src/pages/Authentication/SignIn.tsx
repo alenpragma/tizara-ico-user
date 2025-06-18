@@ -9,8 +9,6 @@ import { Captcha } from './Captcha';
 import axiosInstance from '../../utils/axiosConfig';
 import { getTizaraUserToken } from '../../hooks/getTokenFromstorage';
 
-// import { Captcha } from './Captcha';
-
 type Inputs = {
   email: string;
   password: string;
@@ -43,20 +41,9 @@ const SignIn: React.FC = () => {
     setError(message);
   };
 
-  const {
-    register,
-    handleSubmit,
-    // formState
-  } = useForm<Inputs>();
+  const { register, handleSubmit } = useForm<Inputs>();
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    // Swal.fire({
-    //   title: 'Website Maintenance Notice',
-    //   text: 'Sign In are temporarily suspended for feature upgrades. Thank you for your patience',
-    //   icon: 'warning',
-    // });
-
-    // return;
     const isValid = enteredVal.toUpperCase() === captcha.toUpperCase();
     if (!isValid) {
       setError('Captcha verification failed. Please try again.');
