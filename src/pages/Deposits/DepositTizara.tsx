@@ -12,7 +12,7 @@ interface ComponentProps {
 type IDeposit = {
   amount: number;
 };
-const DepositRequest: React.FC<ComponentProps> = ({ closeModal }) => {
+const DepositTizara: React.FC<ComponentProps> = ({ closeModal }) => {
   const {
     register,
     formState: { errors },
@@ -28,11 +28,15 @@ const DepositRequest: React.FC<ComponentProps> = ({ closeModal }) => {
     };
     setLoading(true);
     try {
-      const response = await axiosInstance.post('/pay/create-payment', paylode);
+      const response = await axiosInstance.post(
+        '/autoPayRoutes/create-invoice',
+        paylode,
+      );
+      console.log(response.data);
 
       // Check the API response for success and show success message
       if (response.data.success) {
-        const invoiceUrl = response.data.data.invoice_url;
+        const invoiceUrl = response.data.data.pay_url;
 
         setTimeout(() => {
           window.location.href = invoiceUrl;
@@ -67,7 +71,7 @@ const DepositRequest: React.FC<ComponentProps> = ({ closeModal }) => {
             <div className="w-full flex justify-between px-3 place-items-center py-3">
               <div className=" flex justify-end">
                 <h2 className="text-xl font-bold dark:text-white text-black ">
-                  Deposit
+                  Deposit Tizara
                 </h2>
               </div>
               <strong
@@ -91,6 +95,7 @@ const DepositRequest: React.FC<ComponentProps> = ({ closeModal }) => {
                 <InputField
                   label="Amount"
                   name="amount"
+                  placeholder="Tizara amount"
                   register={register}
                   type="number"
                   required
@@ -129,4 +134,4 @@ const DepositRequest: React.FC<ComponentProps> = ({ closeModal }) => {
   );
 };
 
-export default DepositRequest;
+export default DepositTizara;

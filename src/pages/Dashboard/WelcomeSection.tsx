@@ -7,6 +7,7 @@ import rcmImage from '../../assets/Rcm-01.png';
 // import ConvartModal from './ConvartModal';
 import SwapModal from './SwapModal';
 import DepositWalletWithdraw from './DepositWalletWithdraw';
+import DepositTizara from '../Deposits/DepositTizara';
 
 const WelcomeSection = ({ setGetWallet, wallet, profile }: any) => {
   const [isDepositModalOpen, setIsDepositModalOpen] = useState(false);
@@ -51,9 +52,17 @@ const WelcomeSection = ({ setGetWallet, wallet, profile }: any) => {
   };
 
   const [isDepositWalletWithdraw, setIsDepositWalletWithdraw] = useState(false);
+  const [isAutoPay, setIsAutoPay] = useState(false);
 
   const toggleDepositWalletWithdraw = (data: boolean) => {
     setIsDepositWalletWithdraw(data);
+  };
+
+  const toggleAutoPaymentModal = (data: boolean) => {
+    setIsAutoPay(data);
+  };
+  const closeAutoPaymentModal = () => {
+    setIsAutoPay(false);
   };
 
   return (
@@ -124,6 +133,17 @@ const WelcomeSection = ({ setGetWallet, wallet, profile }: any) => {
             </button> */}
 
             <div
+              onClick={() => toggleAutoPaymentModal(true)}
+              className="cursor-pointer px-5 py-2.5 relative rounded group font-medium text-white  inline-block"
+            >
+              <span className="absolute top-0 left-0 w-full h-full rounded opacity-50 filter blur-sm bg-gradient-to-br from-[#10B981] to-[#eacf72]"></span>
+              <span className="h-full w-full inset-0 absolute mt-0.5 ml-0.5 bg-gradient-to-br filter group-active:opacity-0 rounded opacity-50 from-[#10B981] to-[#eacf72]"></span>
+              <span className="absolute inset-0 w-full h-full transition-all duration-200 ease-out rounded shadow-xl bg-gradient-to-br filter group-active:opacity-0 group-hover:blur-sm from-[#10B981] to-[#eacf72]"></span>
+              <span className="absolute inset-0 w-full h-full transition duration-200 ease-out rounded bg-gradient-to-br to-[#10B981] from-[#eacf72]"></span>
+              <span className="relative">Payment</span>
+            </div>
+
+            <div
               onClick={() => toggleDepositWalletWithdraw(true)}
               className="cursor-pointer px-5 py-2.5 relative rounded group font-medium text-white  inline-block"
             >
@@ -157,6 +177,8 @@ const WelcomeSection = ({ setGetWallet, wallet, profile }: any) => {
             openAndCloseSwapModal={toggleDepositWalletWithdraw}
           />
         )}
+
+        {isAutoPay && <DepositTizara closeModal={closeAutoPaymentModal} />}
       </div>
     </>
   );
