@@ -4,6 +4,7 @@ import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
 import { useEffect, useState } from 'react';
 import axiosInstance from '../../utils/axiosConfig';
 import { BuyModal } from './BuyModal';
+
 import Loader from '../../common/Loader';
 import dome from '../../videos/dome.mp4';
 import wagon from '../../videos/wagon.mp4';
@@ -78,15 +79,19 @@ const BuyNft = () => {
                     alt=""
                   /> */}
 
-                  <div className="w-full h-[220px] overflow-hidden rounded-md mb-4">
+                  <div
+                    onContextMenu={(e) => e.preventDefault()}
+                    className="w-full h-[220px] overflow-hidden rounded-md mb-4"
+                  >
                     {nft.walletName === 'dome' && (
                       <video
                         className="w-full h-full object-cover rounded-md"
                         src={dome}
-                        // controls
                         autoPlay
                         muted
                         loop
+                        controlsList="nodownload nofullscreen noremoteplayback"
+                        disablePictureInPicture
                       />
                     )}
 
@@ -94,10 +99,11 @@ const BuyNft = () => {
                       <video
                         className="w-full h-full object-cover rounded-md"
                         src={hotelAndResort}
-                        // controls
                         autoPlay
                         muted
                         loop
+                        controlsList="nodownload nofullscreen noremoteplayback"
+                        disablePictureInPicture
                       />
                     )}
 
@@ -105,10 +111,11 @@ const BuyNft = () => {
                       <video
                         className="w-full h-full object-cover rounded-md"
                         src={wagon}
-                        // controls
                         autoPlay
                         muted
                         loop
+                        controlsList="nodownload nofullscreen noremoteplayback"
+                        disablePictureInPicture
                       />
                     )}
 
@@ -116,10 +123,11 @@ const BuyNft = () => {
                       <video
                         className="w-full h-full object-cover rounded-md"
                         src={land}
-                        // controls
                         autoPlay
                         muted
                         loop
+                        controlsList="nodownload nofullscreen noremoteplayback"
+                        disablePictureInPicture
                       />
                     )}
                   </div>

@@ -3,6 +3,11 @@ import axiosInstance from '../../utils/axiosConfig';
 import Swal from 'sweetalert2';
 import { PuffLoader } from 'react-spinners';
 
+import dome from '../../videos/dome.mp4';
+import wagon from '../../videos/wagon.mp4';
+import hotelAndResort from '../../videos/hotelAndResort.mp4';
+import land from '../../videos/land.mp4';
+
 export const BuyModal = ({ fetchData, closeModal, data }: any) => {
   const [lodaing, setLoading] = useState(false);
   const totalRoy = (data.price / 100) * data.dailyRoi;
@@ -82,7 +87,53 @@ export const BuyModal = ({ fetchData, closeModal, data }: any) => {
             <hr />
             <div className="flex flex-col lg:flex-row  gap-3 lg:gap-4 p-5 lg:items-center justify-evenly">
               <div className="p-2 rounded-md bg-gradient-to-r from-blue-500 to-purple-500">
-                <img className="w-90 h-70 rounded-md" src={data.img} alt="" />
+                {data.walletName === 'dome' && (
+                  <video
+                    className="w-full h-full object-cover rounded-md"
+                    src={dome}
+                    autoPlay
+                    muted
+                    loop
+                    controlsList="nodownload nofullscreen noremoteplayback"
+                    disablePictureInPicture
+                  />
+                )}
+
+                {data.walletName == 'hotelAndResort' && (
+                  <video
+                    className="w-full h-full object-cover rounded-md"
+                    src={hotelAndResort}
+                    autoPlay
+                    muted
+                    loop
+                    controlsList="nodownload nofullscreen noremoteplayback"
+                    disablePictureInPicture
+                  />
+                )}
+
+                {data.walletName == 'wagon' && (
+                  <video
+                    className="w-full h-full object-cover rounded-md"
+                    src={wagon}
+                    autoPlay
+                    muted
+                    loop
+                    controlsList="nodownload nofullscreen noremoteplayback"
+                    disablePictureInPicture
+                  />
+                )}
+
+                {data.walletName == 'land' && (
+                  <video
+                    className="w-full h-full object-cover rounded-md"
+                    src={land}
+                    autoPlay
+                    muted
+                    loop
+                    controlsList="nodownload nofullscreen noremoteplayback"
+                    disablePictureInPicture
+                  />
+                )}
               </div>
 
               <div className="mt-4 flex flex-col gap-1 ">
