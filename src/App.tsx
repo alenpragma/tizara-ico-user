@@ -1,64 +1,65 @@
 import { Suspense, lazy, useEffect, useState } from 'react';
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 
-import PageTitle from './components/PageTitle';
-import SignIn from './pages/Authentication/SignIn';
-import SignUp from './pages/Authentication/SignUp';
-import ProtectedRoute from './hooks/ProtectedRoute';
 import 'react-loading-skeleton/dist/skeleton.css';
 import 'react-phone-number-input/style.css';
+import PageTitle from './components/PageTitle';
+import ProtectedRoute from './hooks/ProtectedRoute';
+import SignIn from './pages/Authentication/SignIn';
+import SignUp from './pages/Authentication/SignUp';
 
 const Profile = lazy(() => import('./pages/Profile/Profile'));
 
-import MyContext from './hooks/MyContext';
 import { SkeletonTheme } from 'react-loading-skeleton';
-import useColorMode from './hooks/useColorMode';
 import Lazyloding from './components/Lazyloding';
-import DepositWallet from './pages/WalletHistory/DepositWallet';
-import NativeWallet from './pages/WalletHistory/NativeWallet';
-import IcoWallet from './pages/WalletHistory/IcoWallet';
+import MyContext from './hooks/MyContext';
+import useColorMode from './hooks/useColorMode';
 import TizaraTokenDashboard from './pages/Dashboard/TizaraTokenDashboard';
-import Transaction from './pages/Transaction/Transaction';
 import MyTeam from './pages/MyTeam/MyTeam';
+import Transaction from './pages/Transaction/Transaction';
+import DepositWallet from './pages/WalletHistory/DepositWallet';
+import IcoWallet from './pages/WalletHistory/IcoWallet';
+import NativeWallet from './pages/WalletHistory/NativeWallet';
 // import DepositWalletHistory from './pages/Deposits/DepositWalletHistory';
-import BuyTokenHistory from './pages/BuyTokenHistory/BuyTokenHistory';
-import Stake from './pages/Stake/Stake';
-import AllStake from './pages/Stake/AllStake';
-import StakeBonusHistory from './pages/StakeBonusHistory/StakeBonusHistory';
-import RoyHistory from './pages/RoyHistory/RoyHistory';
+import Loader from './common/Loader';
+import NotFound from './components/NotFound/NotFound';
+import { getTizaraUserToken } from './hooks/getTokenFromstorage';
 import ForgotPass from './pages/Authentication/ForgotPass';
 import ResetPassword from './pages/Authentication/ResetPassword';
-import NotFound from './components/NotFound/NotFound';
-import Verify from './pages/Verify';
 import Tokenverify from './pages/Authentication/Tokenverify';
-import Loader from './common/Loader';
-import axiosInstance from './utils/axiosConfig';
-import { getTizaraUserToken } from './hooks/getTokenFromstorage';
-import { logout } from './utils/auth';
-import BuyNft from './pages/StoreNft/BuyNft';
-import NftHistory from './pages/StoreNft/NftHistory';
-import DailyNftRoiHistory from './pages/StoreNft/DailyNftRoiHistory';
-import NftlevelBonus from './pages/StoreNft/NftlevelBonus';
+import BuyTokenHistory from './pages/BuyTokenHistory/BuyTokenHistory';
 import ProfitBounty from './pages/Historys/ProfitBounty';
-import NftProfitBounty from './pages/StoreNft/NftProfitBounty';
 import TransferHistory from './pages/Historys/TransferHistory';
+import RoyHistory from './pages/RoyHistory/RoyHistory';
+import AllStake from './pages/Stake/AllStake';
+import Stake from './pages/Stake/Stake';
+import StakeBonusHistory from './pages/StakeBonusHistory/StakeBonusHistory';
+import BuyNft from './pages/StoreNft/BuyNft';
+import DailyNftRoiHistory from './pages/StoreNft/DailyNftRoiHistory';
+import NftHistory from './pages/StoreNft/NftHistory';
+import NftlevelBonus from './pages/StoreNft/NftlevelBonus';
+import NftProfitBounty from './pages/StoreNft/NftProfitBounty';
 import Withdraw from './pages/Transaction/Withdraw';
+import Verify from './pages/Verify';
+import { logout } from './utils/auth';
+import axiosInstance from './utils/axiosConfig';
 // import Profile from './pages/Profile/Profile';
-import PaymentSuccess from './pages/PaymentSuccess';
 import Payment from './pages/Deposits/Payment';
 import DepositUsdTransferHistory from './pages/Historys/DepositUsdTransferHistory';
+import PaymentSuccess from './pages/PaymentSuccess';
 // import SpecialRcm from './pages/SpecialRcm/SpecialRcm';
-import AdminLogin from './pages/Authentication/AdminLogin';
-import Support from './pages/Support/Support';
-import CreateTicket from './pages/Support/CreateTicket';
-import TicketShow from './pages/Support/TicketShow';
-import MyTeamTree from './pages/MyTeam/MyTeamTree';
-import StakeLogs from './pages/Stake/StakeLogs';
-import StakeLogsRewordHistory from './pages/RoyHistory/StakeLogsRewordHistory';
-import LogsProfitBounty from './pages/Historys/LogsProfitBounty';
-import SpecialRcm from './pages/SpecialRcm/SpecialRcm';
 import { ToastContainer } from 'react-toastify';
+import AdminLogin from './pages/Authentication/AdminLogin';
+import LogsProfitBounty from './pages/Historys/LogsProfitBounty';
 import RankBonus from './pages/Historys/RankBonus';
+import Incoice from './pages/Incoice';
+import MyTeamTree from './pages/MyTeam/MyTeamTree';
+import StakeLogsRewordHistory from './pages/RoyHistory/StakeLogsRewordHistory';
+import SpecialRcm from './pages/SpecialRcm/SpecialRcm';
+import StakeLogs from './pages/Stake/StakeLogs';
+import CreateTicket from './pages/Support/CreateTicket';
+import Support from './pages/Support/Support';
+import TicketShow from './pages/Support/TicketShow';
 
 function App() {
   const { pathname } = useLocation();
@@ -384,7 +385,7 @@ function App() {
                 </>
               }
             />
-          
+
             <Route
               path="/rank-bonus"
               element={
@@ -489,6 +490,16 @@ function App() {
                   <ProtectedRoute>
                     <IcoWallet />
                   </ProtectedRoute>
+                </>
+              }
+            />
+
+            <Route
+              path="/invoice"
+              element={
+                <>
+                  <PageTitle title="invoice" />
+                  <Incoice />
                 </>
               }
             />

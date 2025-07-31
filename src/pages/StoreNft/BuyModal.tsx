@@ -86,7 +86,10 @@ export const BuyModal = ({ fetchData, closeModal, data }: any) => {
             </div>
             <hr />
             <div className="flex flex-col lg:flex-row  gap-3 lg:gap-4 p-5 lg:items-center justify-evenly">
-              <div className="p-2 rounded-md bg-gradient-to-r from-blue-500 to-purple-500">
+              <div
+                onContextMenu={(e) => e.preventDefault()}
+                className="p-2 rounded-md bg-gradient-to-r from-blue-500 to-purple-500"
+              >
                 {data.walletName === 'dome' && (
                   <video
                     className="w-full h-full object-cover rounded-md"
