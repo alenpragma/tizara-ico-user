@@ -1,9 +1,9 @@
-import Swal from 'sweetalert2';
 import { useState } from 'react';
-import axiosInstance from '../../utils/axiosConfig';
-import InputField from '../../components/Forms/InputField';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { PuffLoader } from 'react-spinners';
+import Swal from 'sweetalert2';
+import InputField from '../../components/Forms/InputField';
+import axiosInstance from '../../utils/axiosConfig';
 
 interface ComponentProps {
   closeModal: () => void;
@@ -32,11 +32,14 @@ const DepositTizara: React.FC<ComponentProps> = ({ closeModal }) => {
         '/autoPayRoutes/create-invoice',
         paylode,
       );
-      console.log(response.data);
+      console.log(response.data.data.data.invoice_id);
 
       // Check the API response for success and show success message
       if (response.data.success) {
-        const invoiceUrl = response.data.data.pay_url;
+        const invoiceId = response.data.data.data.invoice_id;
+
+        const invoiceUrl = `http://localhost:4000/invoice?id=${invoiceId}`;
+        console.log(invoiceUrl);
 
         setTimeout(() => {
           window.location.href = invoiceUrl;

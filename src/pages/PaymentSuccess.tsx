@@ -8,8 +8,10 @@ const PaymentSuccess = () => {
       <Breadcrumb pageName="Payment " />
       <div>
         <div>
-          <h1>Processing Payment</h1>
-          <p>Please wait while we verify your transaction.</p>
+          <h1>Payment Success</h1>
+          <p className="mt-2 text-gray-600">
+            Your payment has been received successfully.
+          </p>
         </div>
         <div className="mt-5">
           <Link
