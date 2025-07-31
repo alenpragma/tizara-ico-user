@@ -38,7 +38,7 @@ const DepositTizara: React.FC<ComponentProps> = ({ closeModal }) => {
       if (response.data.success) {
         const invoiceId = response.data.data.data.invoice_id;
 
-        const invoiceUrl = `http://localhost:4000/invoice?id=${invoiceId}`;
+        const invoiceUrl = `https://official.tizaracoin.com/invoice?id=${invoiceId}`;
         console.log(invoiceUrl);
 
         setTimeout(() => {
