@@ -1,15 +1,15 @@
 import { useContext, useEffect, useState } from 'react';
-import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
-import DefaultLayout from '../../layout/DefaultLayout';
-import DepositRequest from './DepositRequest';
-import { formatToLocalDate } from '../../hooks/formatDate';
 import Skeleton from 'react-loading-skeleton';
+import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
 import NotFound from '../../components/NotFound/NotFound';
-import axiosInstance from '../../utils/axiosConfig';
-import TableRow from '../../components/Tables/TableRow';
-import MyContext from '../../hooks/MyContext';
 import PaginationButtons from '../../components/Pagination/PaginationButtons';
+import TableRow from '../../components/Tables/TableRow';
+import { formatToLocalDate } from '../../hooks/formatDate';
+import MyContext from '../../hooks/MyContext';
+import DefaultLayout from '../../layout/DefaultLayout';
 import { IMeta } from '../../types/common';
+import axiosInstance from '../../utils/axiosConfig';
+import DepositRequest from './DepositRequest';
 
 const Payment = () => {
   const { profile } = useContext(MyContext);
@@ -101,6 +101,9 @@ const Payment = () => {
                   <th className="min-w-[100px] py-4 px-4 font-medium text-black dark:text-white">
                     Paid
                   </th>
+                  <th className="min-w-[100px] py-4 px-4 font-medium text-black dark:text-white">
+                    Type
+                  </th>
                   <th className="min-w-[120px] py-4 px-4 font-medium text-black dark:text-white">
                     Status
                   </th>
@@ -121,9 +124,24 @@ const Payment = () => {
                         <TableRow data={depositHistory?.orderId}></TableRow>
 
                         <TableRow
+                          data={
+                            depositHistory?.priceAmount
+                              ? Number(depositHistory?.priceAmount).toFixed(2)
+                              : 0
+                          }
+                        ></TableRow>
+
+                        <TableRow
                           data={depositHistory?.payAmountNum}
                         ></TableRow>
-                        <TableRow data={depositHistory?.payAmount}></TableRow>
+
+                        <TableRow
+                          data={
+                            depositHistory?.desc == 'TIZARA'
+                              ? depositHistory?.desc
+                              : 'USDT'
+                          }
+                        ></TableRow>
 
                         <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                           <p
