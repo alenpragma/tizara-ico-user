@@ -23,6 +23,8 @@ const Incoice = () => {
   const [email, setEmail] = useState('');
   const [showMoreDetails, setShowMoreDetails] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [isExpired, setIsExpired] = useState(false); // ✅ Move here
+
   const navigate = useNavigate();
 
   const [searchParams] = useSearchParams();
@@ -101,7 +103,7 @@ const Incoice = () => {
       }
     };
     fetchInvoice();
-  }, []);
+  }, [invoiceId]);
 
   if (loading) {
     return (
@@ -119,7 +121,29 @@ const Incoice = () => {
     );
   }
 
-  const { wallet_address, amount, created_at, token_name } = data;
+  const { wallet_address, amount, token_name } = data;
+
+  useEffect(() => {
+    if (!data?.created_at) return; // 🛡 prevent invalid hook logic
+
+    const createdAt = new Date(data.created_at);
+    const expiryTime = new Date(createdAt.getTime() + 20 * 60 * 1000);
+
+    const checkExpiry = () => {
+      const now = new Date();
+      setIsExpired(now > expiryTime);
+    };
+
+    checkExpiry();
+    const interval = setInterval(checkExpiry, 1000);
+
+    return () => clearInterval(interval);
+  }, [data?.created_at]); // also safe dependency
+
+  const formatDateTime = (dateString: string) => {
+    const date = new Date(dateString);
+    return date.toLocaleString(); // e.g., "8/1/2025, 10:20:00 AM"
+  };
 
   return (
     <>
@@ -139,11 +163,23 @@ const Incoice = () => {
               </h1>
             </div>
 
-            <div className="flex items-center space-x-2 text-blue-500">
-              <div className="w-6 h-6 bg-blue-100 rounded-full flex items-center justify-center">
-                <div className="w-3 h-3 border-2 border-blue-500 rounded-full animate-spin border-t-transparent" />
-              </div>
-              <span className="text-sm font-medium">Waiting for payment</span>
+            <div>
+              <div>{formatDateTime(data.created_at)}</div>
+
+              {!isExpired ? (
+                <div className="flex items-center space-x-2 text-blue-500">
+                  <div className="w-6 h-6 bg-blue-100 rounded-full flex items-center justify-center">
+                    <div className="w-3 h-3 border-2 border-blue-500 rounded-full animate-spin border-t-transparent" />
+                  </div>
+                  <span className="text-sm font-medium">
+                    Waiting for payment
+                  </span>
+                </div>
+              ) : (
+                <div className="text-red-500 text-sm font-medium">
+                  Invoice expired
+                </div>
+              )}
             </div>
           </div>
 
@@ -183,10 +219,10 @@ const Incoice = () => {
 
                 <div className="flex-1 space-y-4">
                   <div>
-                    <div className="flex items-center justify-between mb-2">
+                    {/* <div className="flex items-center justify-between mb-2">
                       <span className="text-sm text-gray-500">Amount</span>
                       <span className="text-sm text-gray-400">~${0.0}</span>
-                    </div>
+                    </div> */}
                     <div className="flex items-center space-x-2">
                       <span className="text-lg font-semibold text-gray-900">
                         {amount} {token_name}
@@ -253,29 +289,6 @@ const Incoice = () => {
                   </div>
                 )}
               </div>
-
-              {/* Email Notification
-              <div className="mt-8">
-                <p className="text-gray-600 mb-4">
-                  Leave your email and we'll notify you when the seller receives
-                  your payment
-                </p>
-                <div className="flex space-x-3">
-                  <input
-                    type="email"
-                    placeholder="Email for status updates"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  />
-                  <button
-                    onClick={handleEmailConfirm}
-                    className="px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors"
-                  >
-                    Confirm
-                  </button>
-                </div>
-              </div> */}
             </div>
 
             {/* Right Section - Payment Status */}

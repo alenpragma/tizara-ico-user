@@ -1,13 +1,11 @@
 import { useState } from 'react';
-import DepositRequest from '../Deposits/DepositRequest';
-import Swal from 'sweetalert2';
 import { FaRegCopy } from 'react-icons/fa6';
-import userImage from '../../images/user.jpg';
-import rcmImage from '../../assets/Rcm-01.png';
+import Swal from 'sweetalert2';
+import DepositRequest from '../Deposits/DepositRequest';
 // import ConvartModal from './ConvartModal';
-import SwapModal from './SwapModal';
-import DepositWalletWithdraw from './DepositWalletWithdraw';
 import DepositTizara from '../Deposits/DepositTizara';
+import DepositWalletWithdraw from './DepositWalletWithdraw';
+import SwapModal from './SwapModal';
 
 const WelcomeSection = ({ setGetWallet, wallet, profile }: any) => {
   const [isDepositModalOpen, setIsDepositModalOpen] = useState(false);
@@ -109,7 +107,7 @@ const WelcomeSection = ({ setGetWallet, wallet, profile }: any) => {
         </div>
 
         <div>
-          <div className="flex gap-2">
+          <div className="flex flex-wrap gap-2">
             <button
               onClick={() => openEditModal()}
               className="items-center justify-center rounded-md bg-meta-8 py-2 px-6 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
