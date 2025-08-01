@@ -7,6 +7,7 @@ import { FaCopy } from 'react-icons/fa6';
 import { FiCopy } from 'react-icons/fi';
 import QRCode from 'react-qr-code';
 import { useNavigate, useSearchParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 type InvoiceData = {
   wallet_address: string;
@@ -16,7 +17,7 @@ type InvoiceData = {
 };
 
 type paymentStatus = {
-  paymentStatus: 'pending' | 'processing' | 'success'; // 🆕
+  paymentStatus: 'pending' | 'processing' | 'success' | 'expired'; // 🆕
 };
 
 const Incoice = () => {
@@ -24,6 +25,7 @@ const Incoice = () => {
   const [showMoreDetails, setShowMoreDetails] = useState(false);
   const [loading, setLoading] = useState(true);
   const [isExpired, setIsExpired] = useState(false); // ✅ Move here
+  const [timeLeft, setTimeLeft] = useState(''); // ⏳ Time left in mm:ss format
 
   const navigate = useNavigate();
 
@@ -41,11 +43,12 @@ const Incoice = () => {
     let interval: NodeJS.Timeout;
 
     const fetchInvoiceStatus = async () => {
+      if (!invoiceId || isExpired) return; // ✅ Prevent polling if expired
+
       try {
         const res = await axios.get(
           `https://evm.blockmaster.info/api/payments/${invoiceId}`,
         );
-        console.log(res.data);
 
         // Example response:
         // res.data = { status: true, payment_status: "complete" }
@@ -76,15 +79,22 @@ const Incoice = () => {
 
     // Cleanup on unmount
     return () => clearInterval(interval);
-  }, [invoiceId]);
+  }, [invoiceId, isExpired]);
 
   const handleCopy = (text: string) => {
-    navigator.clipboard.writeText(text);
-  };
+    if (!navigator?.clipboard) {
+      toast.error('Clipboard API not supported!');
+      return;
+    }
 
-  const handleEmailConfirm = () => {
-    if (!email) return alert('Please enter your email');
-    alert(`Confirmation email set: ${email}`);
+    navigator.clipboard
+      .writeText(text)
+      .then(() => {
+        toast.success('Successfully copied!');
+      })
+      .catch(() => {
+        toast.error('Failed to copy text!');
+      });
   };
 
   useEffect(() => {
@@ -105,6 +115,42 @@ const Incoice = () => {
     fetchInvoice();
   }, [invoiceId]);
 
+  useEffect(() => {
+    if (!data?.created_at) return;
+
+    const createdAt = new Date(data.created_at);
+    const expiryTime = new Date(createdAt.getTime() + 20 * 60 * 1000);
+
+    const updateTimeLeft = () => {
+      const now = new Date();
+      const remaining = expiryTime.getTime() - now.getTime();
+
+      if (remaining <= 0) {
+        setIsExpired(true);
+        setTimeLeft('00:00');
+        setStatus({ paymentStatus: 'expired' }); // ✅ update status
+
+        return;
+      }
+
+      const minutes = Math.floor(remaining / 1000 / 60);
+      const seconds = Math.floor((remaining / 1000) % 60);
+
+      const format = (n: number) => n.toString().padStart(2, '0');
+      setTimeLeft(`${format(minutes)}:${format(seconds)}`);
+    };
+
+    updateTimeLeft(); // initial call
+    const interval = setInterval(updateTimeLeft, 1000); // update every second
+
+    return () => clearInterval(interval);
+  }, [data?.created_at]);
+
+  const formatDateTime = (dateString: string) => {
+    const date = new Date(dateString);
+    return date.toLocaleString(); // e.g., "8/1/2025, 10:20:00 AM"
+  };
+
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center text-gray-500 text-lg">
@@ -122,28 +168,6 @@ const Incoice = () => {
   }
 
   const { wallet_address, amount, token_name } = data;
-
-  useEffect(() => {
-    if (!data?.created_at) return; // 🛡 prevent invalid hook logic
-
-    const createdAt = new Date(data.created_at);
-    const expiryTime = new Date(createdAt.getTime() + 20 * 60 * 1000);
-
-    const checkExpiry = () => {
-      const now = new Date();
-      setIsExpired(now > expiryTime);
-    };
-
-    checkExpiry();
-    const interval = setInterval(checkExpiry, 1000);
-
-    return () => clearInterval(interval);
-  }, [data?.created_at]); // also safe dependency
-
-  const formatDateTime = (dateString: string) => {
-    const date = new Date(dateString);
-    return date.toLocaleString(); // e.g., "8/1/2025, 10:20:00 AM"
-  };
 
   return (
     <>
@@ -164,15 +188,17 @@ const Incoice = () => {
             </div>
 
             <div>
-              <div>{formatDateTime(data.created_at)}</div>
+              {/* <div>{formatDateTime(data.created_at)}</div> */}
 
               {!isExpired ? (
                 <div className="flex items-center space-x-2 text-blue-500">
                   <div className="w-6 h-6 bg-blue-100 rounded-full flex items-center justify-center">
                     <div className="w-3 h-3 border-2 border-blue-500 rounded-full animate-spin border-t-transparent" />
                   </div>
+
                   <span className="text-sm font-medium">
-                    Waiting for payment
+                    Waiting for payment{' '}
+                    <span className="font-mono">{timeLeft}</span>
                   </span>
                 </div>
               ) : (
@@ -193,10 +219,11 @@ const Incoice = () => {
                 <div className="flex items-center space-x-1 text-gray-500">
                   <BsClock className="w-4 h-4" />
                   <span className="text-sm">
-                    {new Date().toLocaleTimeString([], {
-                      hour: '2-digit',
-                      minute: '2-digit',
-                    })}
+                    {data?.created_at &&
+                      new Date(data.created_at).toLocaleTimeString([], {
+                        hour: '2-digit',
+                        minute: '2-digit',
+                      })}
                   </span>
                 </div>
               </div>
@@ -294,124 +321,136 @@ const Incoice = () => {
             {/* Right Section - Payment Status */}
             <div className="lg:col-span-1">
               <div className="space-y-6">
-                {['pending', 'processing', 'success'].map((step, index) => {
-                  const isActive = status.paymentStatus === step;
-                  const isCompleted =
-                    (step === 'pending' &&
-                      ['processing', 'success'].includes(
-                        status.paymentStatus,
-                      )) ||
-                    (step === 'processing' &&
-                      status.paymentStatus === 'success');
+                {status.paymentStatus === 'expired' ? (
+                  <div className="relative pl-10">
+                    <div className="flex items-center space-x-3">
+                      {/* Red dot for expired */}
+                      <div className="w-8 h-8 rounded-full flex items-center justify-center bg-red-100">
+                        <div className="w-4 h-4 bg-red-500 rounded-full" />
+                      </div>
+                      <span className="font-medium text-red-600">
+                        Invoice expired ⌛
+                      </span>
+                    </div>
+                  </div>
+                ) : (
+                  ['pending', 'processing', 'success'].map((step, index) => {
+                    const isActive = status.paymentStatus === step;
+                    const isCompleted =
+                      (step === 'pending' &&
+                        ['processing', 'success'].includes(
+                          status.paymentStatus,
+                        )) ||
+                      (step === 'processing' &&
+                        status.paymentStatus === 'success');
 
-                  const stepMap: Record<string, string> = {
-                    pending: 'Waiting for payment',
-                    processing: 'Processing payment',
-                    success: 'Success! 🎉',
-                  };
+                    const stepMap: Record<string, string> = {
+                      pending: 'Waiting for payment',
+                      processing: 'Processing payment',
+                      success: 'Success!',
+                    };
 
-                  const colorMap: Record<string, string> = {
-                    pending: 'blue',
-                    processing: 'yellow',
-                    success: 'green',
-                  };
+                    const colorMap: Record<string, string> = {
+                      pending: 'blue',
+                      processing: 'yellow',
+                      success: 'green',
+                    };
 
-                  const color = colorMap[step];
+                    const color = colorMap[step];
 
-                  return (
-                    <div key={step} className="relative pl-10">
-                      {/* Vertical connector - KEEP only this */}
-                      {index !== 0 && (
-                        <div
-                          className="absolute top-0 left-4 w-px h-full"
-                          style={{
-                            backgroundColor:
-                              isCompleted || isActive
-                                ? color === 'blue'
-                                  ? '#3B82F6'
-                                  : color === 'yellow'
-                                  ? '#F59E0B'
-                                  : '#10B981'
-                                : '#E5E7EB', // gray-200
-                          }}
-                        />
-                      )}
-
-                      <div className="flex items-center space-x-3">
-                        {/* Circle status */}
-                        <div
-                          className={`w-8 h-8 rounded-full flex items-center justify-center ${
-                            isActive || isCompleted
-                              ? `bg-${color}-100`
-                              : 'bg-gray-100'
-                          }`}
-                        >
-                          {/* Spinner for active step (waiting or processing) */}
-                          {(step === 'pending' || step === 'processing') &&
-                            isActive && (
-                              <div
-                                className={`w-4 h-4 border-2 ${
-                                  step === 'processing'
-                                    ? 'border-yellow-600'
-                                    : 'border-blue-500'
-                                } rounded-full animate-spin border-t-transparent`}
-                              />
-                            )}
-
-                          {/* Success checkmark */}
-                          {step === 'success' && isActive && (
-                            <svg
-                              className="w-4 h-4 text-green-600"
-                              fill="none"
-                              stroke="currentColor"
-                              strokeWidth="2"
-                              viewBox="0 0 24 24"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                d="M5 13l4 4L19 7"
-                              />
-                            </svg>
-                          )}
-
-                          {/* Completed dot */}
-                          {!isActive && isCompleted && (
-                            <div
-                              className="w-4 h-4 rounded-full"
-                              style={{
-                                backgroundColor:
-                                  color === 'blue'
+                    return (
+                      <div key={step} className="relative pl-10">
+                        {/* Connector line */}
+                        {index !== 0 && (
+                          <div
+                            className="absolute top-0 left-4 w-px h-full"
+                            style={{
+                              backgroundColor:
+                                isCompleted || isActive
+                                  ? color === 'blue'
                                     ? '#3B82F6'
                                     : color === 'yellow'
                                     ? '#F59E0B'
-                                    : '#10B981',
-                              }}
-                            />
-                          )}
+                                    : '#10B981'
+                                  : '#E5E7EB',
+                            }}
+                          />
+                        )}
 
-                          {/* Inactive */}
-                          {!isActive && !isCompleted && (
-                            <div className="w-4 h-4 bg-gray-300 rounded-full" />
-                          )}
+                        <div className="flex items-center space-x-3">
+                          <div
+                            className={`w-8 h-8 rounded-full flex items-center justify-center ${
+                              isActive || isCompleted
+                                ? `bg-${color}-100`
+                                : 'bg-gray-100'
+                            }`}
+                          >
+                            {/* Spinner */}
+                            {(step === 'pending' || step === 'processing') &&
+                              isActive && (
+                                <div
+                                  className={`w-4 h-4 border-2 ${
+                                    step === 'processing'
+                                      ? 'border-yellow-600'
+                                      : 'border-blue-500'
+                                  } rounded-full animate-spin border-t-transparent`}
+                                />
+                              )}
+
+                            {/* Checkmark */}
+                            {step === 'success' && isActive && (
+                              <svg
+                                className="w-4 h-4 text-green-600"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth="2"
+                                viewBox="0 0 24 24"
+                              >
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  d="M5 13l4 4L19 7"
+                                />
+                              </svg>
+                            )}
+
+                            {/* Completed dot */}
+                            {!isActive && isCompleted && (
+                              <div
+                                className="w-4 h-4 rounded-full"
+                                style={{
+                                  backgroundColor:
+                                    color === 'blue'
+                                      ? '#3B82F6'
+                                      : color === 'yellow'
+                                      ? '#F59E0B'
+                                      : '#10B981',
+                                }}
+                              />
+                            )}
+
+                            {/* Inactive dot */}
+                            {!isActive && !isCompleted && (
+                              <div className="w-4 h-4 bg-gray-300 rounded-full" />
+                            )}
+                          </div>
+
+                          <span
+                            className={`font-medium ${
+                              isActive
+                                ? `text-${color}-600`
+                                : isCompleted
+                                ? `text-${color}-500`
+                                : 'text-gray-400'
+                            }`}
+                          >
+                            {stepMap[step]}
+                          </span>
                         </div>
-
-                        {/* Label */}
-                        <span
-                          className={`font-medium ${
-                            isActive
-                              ? `text-${color}-600`
-                              : isCompleted
-                              ? `text-${color}-500`
-                              : 'text-gray-400'
-                          }`}
-                        >
-                          {stepMap[step]}
-                        </span>
                       </div>
-                    </div>
-                  );
-                })}
+                    );
+                  })
+                )}
               </div>
             </div>
           </div>
