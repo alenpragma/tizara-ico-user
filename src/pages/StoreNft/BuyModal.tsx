@@ -1,28 +1,60 @@
-import { useState } from 'react';
-import axiosInstance from '../../utils/axiosConfig';
-import Swal from 'sweetalert2';
+import { useEffect, useMemo, useState } from 'react';
 import { PuffLoader } from 'react-spinners';
+import Swal from 'sweetalert2';
+import axiosInstance from '../../utils/axiosConfig';
 
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { useGeneralSettings } from '../../store/useCoinPrice';
+import SelectOptions from '../../Ui/SelectOptions';
 import dome from '../../videos/dome.mp4';
-import wagon from '../../videos/wagon.mp4';
 import hotelAndResort from '../../videos/hotelAndResort.mp4';
 import land from '../../videos/land.mp4';
+import wagon from '../../videos/wagon.mp4';
 
-export const BuyModal = ({ fetchData, closeModal, data }: any) => {
+type Inputs = {
+  wallet: { value: string; label: string } | null;
+};
+
+export const BuyModal = ({
+  wallet,
+  getWllet,
+  fetchData,
+  closeModal,
+  data,
+}: any) => {
   const [lodaing, setLoading] = useState(false);
+  const { fetchGeneralSettings, generalSettings } = useGeneralSettings();
+
+  useEffect(() => {
+    if (!generalSettings) {
+      fetchGeneralSettings();
+    }
+  }, [fetchGeneralSettings, generalSettings]);
+
+  const wallets = useMemo(() => {
+    return [
+      {
+        balance: wallet?.nativeWallet || 0,
+        value: 'nativewallet',
+        label: `Native wallet (${wallet?.nativeWallet.toFixed(2) || 0})`,
+      },
+      {
+        balance: wallet?.icoWallet || 0,
+        value: 'mywallet',
+        label: `MY wallet (${wallet?.icoWallet.toFixed(2) || 0})`,
+      },
+    ];
+  }, [wallet]);
+
   const totalRoy = (data.price / 100) * data.dailyRoi;
 
   const monthlyRoi = Number((totalRoy / data.duration).toFixed(2));
 
-  const purchaseNFT = async () => {
+  const purchaseNFT = async (walletValue: string) => {
     setLoading(true);
+
     const nftdata = {
-      // name: data.name,
-      // title: data.title,
-      // quantity: 1,
-      // price: data.price,
-      // dailyRoi: data.dailyRoi,
-      // duration: data.duration,
+      payby: walletValue,
       walletName: data.walletName,
       nftId: data.id,
     };
@@ -32,6 +64,7 @@ export const BuyModal = ({ fetchData, closeModal, data }: any) => {
 
       if (responseData?.data?.success) {
         fetchData();
+        getWllet();
         Swal.fire({
           title: 'Success',
           text: 'Successfully purchased',
@@ -57,6 +90,29 @@ export const BuyModal = ({ fetchData, closeModal, data }: any) => {
         icon: 'error',
       });
     }
+  };
+
+  console.log(wallets);
+
+  const { register, handleSubmit, control } = useForm<Inputs>({
+    defaultValues: {
+      wallet: null,
+    },
+  });
+
+  const onSubmit: SubmitHandler<Inputs> = async (formData) => {
+    const selectedWallet = formData.wallet?.value;
+
+    if (!selectedWallet) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Missing Wallet',
+        text: 'Please select a wallet to purchase from',
+      });
+      return;
+    }
+
+    await purchaseNFT(selectedWallet); // 👈 Pass wallet value here
   };
 
   return (
@@ -150,12 +206,12 @@ export const BuyModal = ({ fetchData, closeModal, data }: any) => {
 
                 <div className="flex justify-between  gap-1 mb-0.5 text-xl font-medium text-black dark:text-white">
                   <p className="">Quantity:</p>
-                  <p>{data.quantity}</p>
+                  <p>{data.quantity} NFT</p>
                 </div>
 
                 <div className="flex justify-between  gap-1 mb-0.5 text-xl font-medium text-black dark:text-white">
                   <p className="">Duration:</p>
-                  <p>{data.duration}</p>
+                  <p>{data.duration} Month</p>
                 </div>
 
                 <div className="flex justify-between  gap-1 mb-0.5 text-xl font-medium text-black dark:text-white">
@@ -164,53 +220,55 @@ export const BuyModal = ({ fetchData, closeModal, data }: any) => {
                 </div>
                 <div className="flex justify-between  gap-2 mb-0.5 text-xl font-medium text-black dark:text-white">
                   <p className="">Monthly Reward:</p>
-                  <p>{monthlyRoi}</p>
+                  <p>$ {monthlyRoi}</p>
                 </div>
 
                 <div className="flex justify-between  gap-1 mb-0.5 text-xl font-medium text-black dark:text-white">
                   <p className="">Price:</p>
-                  <p>{data.price}</p>
-                </div>
-
-                {/* <p className="mb-0.5 block text-xl font-medium text-black dark:text-white">
-                  Duration: {data.duration} Month
-                </p>
-                <p className="mb-0.5 block text-xl font-medium text-black dark:text-white">
-                  Total Reward: {data.dailyRoi} %
-                </p>
-
-                <p className="mb-0.5 block text-xl font-medium text-black dark:text-white">
-                  Monthly Reward: ${monthlyRoi}
-                </p>
-
-                <p className="mb-0.5 block text-xl font-medium text-black dark:text-white">
-                  Price: {data.price}
-                </p> */}
-              </div>
-            </div>
-
-            <div className="flex  flex-col w-full gap-5.5 p-6.5">
-              <div className="flex justify-center gap-4">
-                <div>
-                  {lodaing ? (
-                    <PuffLoader className="mx-auto" color="#36d7b7" size={40} />
-                  ) : (
-                    // <button
-                    //   onClick={() => purchaseNFT()}
-                    //   className="btn flex justify-center rounded bg-primary py-2 px-6 font-medium text-gray hover:shadow-1"
-                    // >
-                    //   Purchase
-                    // </button>
-                    <button
-                      onClick={() => purchaseNFT()}
-                      className="btn flex justify-center rounded bg-gradient-to-r from-blue-500 to-purple-500 py-2 px-6 font-medium text-gray hover:shadow-1"
-                    >
-                      Purchase
-                    </button>
-                  )}
+                  <p>
+                    {Number(data.price / generalSettings!?.coinPrice).toFixed(
+                      2,
+                    )}{' '}
+                    Tizara
+                  </p>
                 </div>
               </div>
             </div>
+            <form
+              onSubmit={handleSubmit(onSubmit)}
+              className="flex flex-col w-full  p-2 lg:p-6.5"
+            >
+              <div>
+                <SelectOptions
+                  control={control}
+                  options={wallets}
+                  label="Select Wallet"
+                  name="wallet"
+                  placeholder={'Select Wallet...'}
+                />
+              </div>
+
+              <div className="flex  flex-col w-full gap-5.5 p-6.5">
+                <div className="flex justify-center gap-4">
+                  <div>
+                    {lodaing ? (
+                      <PuffLoader
+                        className="mx-auto"
+                        color="#36d7b7"
+                        size={40}
+                      />
+                    ) : (
+                      <button
+                        type="submit" // ✅ Let form submission trigger
+                        className="btn flex justify-center rounded bg-gradient-to-r from-blue-500 to-purple-500 py-2 px-6 font-medium text-gray hover:shadow-1"
+                      >
+                        Purchase
+                      </button>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </form>
           </div>
         </div>
       </div>

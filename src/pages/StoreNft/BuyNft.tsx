@@ -1,5 +1,5 @@
-import DefaultLayout from '../../layout/DefaultLayout';
 import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
+import DefaultLayout from '../../layout/DefaultLayout';
 
 import { useEffect, useState } from 'react';
 import axiosInstance from '../../utils/axiosConfig';
@@ -7,9 +7,9 @@ import { BuyModal } from './BuyModal';
 
 import Loader from '../../common/Loader';
 import dome from '../../videos/dome.mp4';
-import wagon from '../../videos/wagon.mp4';
 import hotelAndResort from '../../videos/hotelAndResort.mp4';
 import land from '../../videos/land.mp4';
+import wagon from '../../videos/wagon.mp4';
 
 export type INft = {
   id: string;
@@ -56,6 +56,24 @@ const BuyNft = () => {
   const closeModal = () => {
     setIsBuy(false);
   };
+
+  const [wallet, setWallet] = useState<any>();
+
+  const getWllet = async () => {
+    try {
+      const response = await axiosInstance.get('/user-wallet');
+
+      if (response?.data?.success) {
+        setWallet(response.data.data);
+      }
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
+
+  useEffect(() => {
+    getWllet();
+  }, []);
 
   return (
     <DefaultLayout>
@@ -198,6 +216,8 @@ const BuyNft = () => {
           fetchData={fetchData}
           closeModal={closeModal}
           data={data}
+          wallet={wallet}
+          getWllet={getWllet}
         ></BuyModal>
       )}
     </DefaultLayout>
