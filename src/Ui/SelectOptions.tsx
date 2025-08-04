@@ -11,10 +11,11 @@ type selectType = {
   name: string;
   control: any;
   label: string;
-  defaultValue: number | string;
+  defaultValue?: number | string; // ✅ optional now
   placeholder: string;
   options: IOptions | any;
   onChange?: (value: any) => void; // Optional onChange prop
+  required?: boolean; // <-- new
 };
 
 const SelectOptions = ({
@@ -25,6 +26,7 @@ const SelectOptions = ({
   defaultValue,
   placeholder = 'Select...',
   onChange,
+  required = false, // <-- new
 }: selectType) => {
   const { theme } = useContext(MyContext);
 
@@ -60,13 +62,17 @@ const SelectOptions = ({
       <Controller
         name={name}
         control={control}
-        defaultValue={options[defaultValue]}
+        defaultValue={
+          typeof defaultValue !== 'undefined' ? options[defaultValue] : null
+        }
+        rules={required ? { required: 'This field is required' } : {}}
         render={({ field }) => (
           <Select
             {...field}
             styles={customStyles}
             options={options}
             placeholder={placeholder}
+            required={true}
             theme={(theme) => ({
               ...theme,
               borderRadius: 0,

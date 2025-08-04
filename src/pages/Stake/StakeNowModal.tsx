@@ -1,11 +1,11 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import Swal from 'sweetalert2';
 import { PuffLoader } from 'react-spinners';
-import { getTizaraUserToken } from '../../hooks/getTokenFromstorage';
-import { baseUrl } from '../../utils/api';
+import Swal from 'sweetalert2';
 import InputField from '../../components/Forms/InputField';
+import { getTizaraUserToken } from '../../hooks/getTokenFromstorage';
 import SelectOptions from '../../Ui/SelectOptions';
+import { baseUrl } from '../../utils/api';
 
 type Inputs = {
   id: number;
