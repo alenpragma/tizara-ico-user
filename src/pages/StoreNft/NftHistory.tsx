@@ -1,14 +1,13 @@
-import DefaultLayout from '../../layout/DefaultLayout';
-import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
 import { useEffect, useState } from 'react';
-import axiosInstance from '../../utils/axiosConfig';
-import { formatToLocalDate } from '../../hooks/formatDate';
-import NotFound from '../../components/NotFound/NotFound';
 import Skeleton from 'react-loading-skeleton';
+import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
+import NotFound from '../../components/NotFound/NotFound';
 import TableRow from '../../components/Tables/TableRow';
+import { formatToLocalDate } from '../../hooks/formatDate';
+import DefaultLayout from '../../layout/DefaultLayout';
+import axiosInstance from '../../utils/axiosConfig';
 
 const NftHistory = () => {
-  const [search, setSearch] = useState('');
   const [loading, setLoading] = useState(false);
   const [historys, setHistorys] = useState([]);
 
@@ -95,31 +94,35 @@ const NftHistory = () => {
                 </tr>
               </thead>
               <tbody>
-                {historys?.map((stake: any, key: any) => (
+                {historys?.map((historys: any, key: any) => (
                   <tr key={key}>
                     <TableRow data={key + 1} />
-                    <TableRow data={formatToLocalDate(stake?.createdAt)} />
+                    <TableRow data={formatToLocalDate(historys?.createdAt)} />
                     <TableRow
-                      data={formatToLocalDate(stake?.lastDistributionDate)}
+                      data={formatToLocalDate(historys?.lastDistributionDate)}
                     />
-                    <TableRow data={stake?.name} />
-                    <TableRow data={stake?.title} />
-                    <TableRow data={stake?.price} />
-                    <TableRow data={`${stake?.duration} Month`} />
-                    <TableRow data={stake?.dailyRoi + ' %'} />
-                    <TableRow data={stake?.totalRoi} />
-                    <TableRow data={stake?.monthlyRoi} />
-                    <TableRow data={stake?.quantity} />
+                    <TableRow data={historys?.name} />
+                    <TableRow data={historys?.title} />
+                    <TableRow
+                      data={`${historys?.price} ${
+                        historys.paidBy ? 'TIzara' : 'USDT'
+                      }`}
+                    />
+                    <TableRow data={`${historys?.duration} Month`} />
+                    <TableRow data={historys?.dailyRoi + ' %'} />
+                    <TableRow data={historys?.totalRoi} />
+                    <TableRow data={historys?.monthlyRoi} />
+                    <TableRow data={historys?.quantity} />
 
                     <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                       <p
                         className={`inline-flex rounded-full bg-opacity-10 py-1 px-3 text-sm font-medium ${
-                          stake.status == 'ACTIVE'
+                          historys.status == 'ACTIVE'
                             ? 'bg-success text-success'
                             : 'bg-danger text-danger'
                         }`}
                       >
-                        {stake.status == 'ACTIVE' ? 'Runing' : 'Closed'}
+                        {historys.status == 'ACTIVE' ? 'Runing' : 'Closed'}
                       </p>
                     </td>
                   </tr>
