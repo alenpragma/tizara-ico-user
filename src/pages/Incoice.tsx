@@ -74,8 +74,8 @@ const Incoice = () => {
     // Initial fetch
     fetchInvoiceStatus();
 
-    // Poll every 10 seconds
-    interval = setInterval(fetchInvoiceStatus, 15000);
+    // Poll every 5 seconds
+    interval = setInterval(fetchInvoiceStatus, 5000);
 
     // Cleanup on unmount
     return () => clearInterval(interval);
