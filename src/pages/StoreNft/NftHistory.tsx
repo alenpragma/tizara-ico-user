@@ -110,8 +110,8 @@ const NftHistory = () => {
                     />
                     <TableRow data={`${historys?.duration} Month`} />
                     <TableRow data={historys?.dailyRoi + ' %'} />
-                    <TableRow data={historys?.totalRoi} />
-                    <TableRow data={historys?.monthlyRoi} />
+                    <TableRow data={historys?.totalRoi + ' USDT'} />
+                    <TableRow data={historys?.monthlyRoi + ' USDT'} />
                     <TableRow data={historys?.quantity} />
 
                     <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
