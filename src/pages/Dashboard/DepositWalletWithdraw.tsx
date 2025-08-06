@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import InputField from '../../components/Forms/InputField';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { PuffLoader } from 'react-spinners';
-import axiosInstance from '../../utils/axiosConfig';
 import Swal from 'sweetalert2';
+import InputField from '../../components/Forms/InputField';
+import axiosInstance from '../../utils/axiosConfig';
 
 const DepositWalletWithdraw = ({
   setGetWallet,
@@ -16,7 +16,7 @@ const DepositWalletWithdraw = ({
 
   const { register, handleSubmit } = useForm<any>();
 
-  const fee = userAmount * 0.05;
+  const fee = userAmount * 0.07;
   const receivedAmount = userAmount - fee;
 
   const onSubmit: SubmitHandler<any> = async (data: any) => {
