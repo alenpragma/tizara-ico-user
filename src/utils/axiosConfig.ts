@@ -1,7 +1,7 @@
 import axios from 'axios';
-import { logout } from './auth';
 import { getTizaraUserToken } from '../hooks/getTokenFromstorage';
 import { baseUrl } from './api';
+import { logout } from './auth';
 
 export type IGenericErrorResponse = {
   statusCode?: number;
@@ -20,6 +20,7 @@ const axiosInstance = axios.create({
   headers: {
     'Content-Type': 'application/json',
   },
+  withCredentials: true,
 });
 
 // Request interceptor to add the token to headers
