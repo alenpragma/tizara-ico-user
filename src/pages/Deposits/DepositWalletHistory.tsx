@@ -1,20 +1,19 @@
-import { useContext, useEffect, useState } from 'react';
-import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
-import DefaultLayout from '../../layout/DefaultLayout';
-import DepositRequest from './DepositRequest';
-import { formatToLocalDate } from '../../hooks/formatDate';
-import { getTizaraUserToken } from '../../hooks/getTokenFromstorage';
+import { useEffect, useState } from 'react';
+import { PiCopyDuotone } from 'react-icons/pi';
 import Skeleton from 'react-loading-skeleton';
+import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
 import NotFound from '../../components/NotFound/NotFound';
-import axiosInstance from '../../utils/axiosConfig';
 import TableRow from '../../components/Tables/TableRow';
 import TableRowCopy from '../../components/Tables/TableRowCopy';
+import { formatToLocalDate } from '../../hooks/formatDate';
+import { getTizaraUserToken } from '../../hooks/getTokenFromstorage';
+import DefaultLayout from '../../layout/DefaultLayout';
 import { copyToClipboard, sliceHash } from '../../utils';
-import { PiCopyDuotone } from 'react-icons/pi';
-import MyContext from '../../hooks/MyContext';
+import axiosInstance from '../../utils/axiosConfig';
+import DepositRequest from './DepositRequest';
 
 const DepositWalletHistory = () => {
-  const { profile } = useContext(MyContext);
+  // const { profile } = useContext(MyContext);
 
   const [depositHistorys, setDepositHistorys] = useState<any>();
   const [isDepositModalOpen, setIsDepositModalOpen] = useState(false);

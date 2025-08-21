@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import userImage from '../../images/user.jpg';
-import { removeTizaraUserToken } from '../../hooks/getTokenFromstorage';
+import { logout } from '../../utils/auth';
 
 const DropdownUser = ({ profile }: any) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -35,13 +35,13 @@ const DropdownUser = ({ profile }: any) => {
     document.addEventListener('keydown', keyHandler);
     return () => document.removeEventListener('keydown', keyHandler);
   });
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
-  const logout = () => {
-    removeTizaraUserToken();
-    localStorage.removeItem('userStatus');
-    navigate('/');
-  };
+  // const logout = () => {
+  //   removeTizaraUserToken();
+  //   localStorage.removeItem('userStatus');
+  //   navigate('/');
+  // };
 
   return (
     <div className="relative">
@@ -122,7 +122,7 @@ const DropdownUser = ({ profile }: any) => {
           </li>
         </ul>
         <button
-          onClick={logout}
+          onClick={() => logout()}
           className="flex items-center gap-3.5 px-6 py-4 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base"
         >
           <svg
