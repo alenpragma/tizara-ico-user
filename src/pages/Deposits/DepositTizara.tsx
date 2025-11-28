@@ -32,14 +32,12 @@ const DepositTizara: React.FC<ComponentProps> = ({ closeModal }) => {
         '/autoPayRoutes/create-invoice',
         paylode,
       );
-      console.log(response.data.data.data.invoice_id);
 
       // Check the API response for success and show success message
       if (response.data.success) {
         const invoiceId = response.data.data.data.invoice_id;
 
         const invoiceUrl = `https://official.tizaracoin.com/invoice?id=${invoiceId}`;
-        console.log(invoiceUrl);
 
         setTimeout(() => {
           window.location.href = invoiceUrl;
