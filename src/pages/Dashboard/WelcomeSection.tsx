@@ -130,7 +130,7 @@ const WelcomeSection = ({ setGetWallet, wallet, profile }: any) => {
               Withdraw
             </button> */}
 
-            <div
+            {/* <div
               onClick={() => toggleAutoPaymentModal(true)}
               className="cursor-pointer px-5 py-2.5 relative rounded group font-medium text-white  inline-block"
             >
@@ -139,7 +139,7 @@ const WelcomeSection = ({ setGetWallet, wallet, profile }: any) => {
               <span className="absolute inset-0 w-full h-full transition-all duration-200 ease-out rounded shadow-xl bg-gradient-to-br filter group-active:opacity-0 group-hover:blur-sm from-[#10B981] to-[#eacf72]"></span>
               <span className="absolute inset-0 w-full h-full transition duration-200 ease-out rounded bg-gradient-to-br to-[#10B981] from-[#eacf72]"></span>
               <span className="relative">Payment</span>
-            </div>
+            </div> */}
 
             <div
               onClick={() => toggleDepositWalletWithdraw(true)}
