@@ -1,6 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
 @layer base {
   body {
     @apply font-satoshi font-normal text-base text-body bg-whiten relative z-1;
@@ -8,29 +9,35 @@
 
   /* Light and dark mode background color for country select box */
   .phoneInput .PhoneInputCountrySelect {
-    @apply bg-white text-black border-none outline-none; /* Light mode */
-    @apply dark:bg-graydark dark:text-white; /* Dark mode */
+    @apply bg-white text-black border-none outline-none;
+    /* Light mode */
+    @apply dark:bg-graydark dark:text-white;
+    /* Dark mode */
   }
 
   /* Selected country button (light and dark mode styles) */
   .phoneInput .PhoneInputCountry {
-    @apply bg-inherit text-inherit border-none outline-none; /* Light mode */
-    @apply dark:bg-inherit dark:text-inherit; /* Dark mode */
+    @apply bg-inherit text-inherit border-none outline-none;
+    /* Light mode */
+    @apply dark:bg-inherit dark:text-inherit;
+    /* Dark mode */
   }
 }
 
-@layer components {
-}
+@layer components {}
 
 @layer utilities {
+
   /* Chrome, Safari and Opera */
   .no-scrollbar::-webkit-scrollbar {
     display: none;
   }
 
   .no-scrollbar {
-    -ms-overflow-style: none; /* IE and Edge */
-    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    scrollbar-width: none;
+    /* Firefox */
   }
 }
 
@@ -41,9 +48,11 @@
   background-repeat: no-repeat;
   background-size: 20px;
 }
+
 .custom-input-date-1::-webkit-calendar-picker-indicator {
   background-image: url(./images/icon/icon-calendar.svg);
 }
+
 .custom-input-date-2::-webkit-calendar-picker-indicator {
   background-image: url(./images/icon/icon-arrow-down.svg);
 }
@@ -78,6 +87,7 @@ input[type='number'] {
 }
 
 @media only screen and (max-width: 600px) {
+
   .paginationButton,
   .pageButton a {
     width: 20px;
@@ -103,4 +113,61 @@ select {
   background-color: inherit;
   border: none;
   outline: none;
+}
+
+
+
+
+
+.container {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #0f172a, #1e293b);
+  padding: 20px;
+}
+
+.card {
+  background: #ffffff;
+  padding: 50px 40px;
+  border-radius: 20px;
+  text-align: center;
+  max-width: 500px;
+  width: 100%;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+}
+
+.icon {
+  font-size: 50px;
+  margin-bottom: 20px;
+}
+
+h1 {
+  font-size: 28px;
+  margin-bottom: 10px;
+  color: #0f172a;
+}
+
+.subtitle {
+  font-size: 16px;
+  color: #475569;
+  margin-bottom: 25px;
+}
+
+.timerBox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: #f1f5f9;
+  padding: 12px 20px;
+  border-radius: 12px;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.smallText {
+  font-size: 14px;
+  color: #64748b;
 }

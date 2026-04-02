@@ -50,6 +50,7 @@ import PaymentSuccess from './pages/PaymentSuccess';
 // import SpecialRcm from './pages/SpecialRcm/SpecialRcm';
 import { ToastContainer } from 'react-toastify';
 import AdminLogin from './pages/Authentication/AdminLogin';
+import Maintainance from './pages/Authentication/Maintainance';
 import LogsProfitBounty from './pages/Historys/LogsProfitBounty';
 import RankBonus from './pages/Historys/RankBonus';
 import Incoice from './pages/Incoice';
@@ -133,8 +134,10 @@ function App() {
               index
               element={
                 <>
-                  <PageTitle title="SignIn" />
-                  <SignIn />
+                  {/* <PageTitle title="SignIn" /> */}
+                  {/* <SignIn /> */}
+                  <Maintainance />
+                  <PageTitle title="Maintainance" />
                 </>
               }
             />
